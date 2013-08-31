@@ -2,7 +2,6 @@
 #include "ErrorLogHandler.h"
 #include "SdlSurfaceManager.h"
 
-
 //nueva superficie segun las constantes ANCHO y ALTO
 Superficie::Superficie(){
 	superficie = NULL;
@@ -48,7 +47,8 @@ void Superficie::setTransparency(Uint8 alpha){
 
 //dibuja en las pocisiones x/yDestino el rectOrigen de sup (rectOrigen pude ser NULL si se desea copiar toda la superficie sup)
 void Superficie::dibujarSupreficie(Superficie* sup,Rectangulo* rectOrigen,int xDestino,int yDestino){
-	SdlSurfaceManager::blitSurfaces(sup->superficie,this->superficie,rectOrigen,xDestino,yDestino);
+	if((this->superficie!=NULL)&&(sup->superficie!=NULL))
+		SdlSurfaceManager::blitSurfaces(sup->superficie,this->superficie,rectOrigen,xDestino,yDestino);
 }
 
 //dibuja en las pocisiones x/yDestino el rectOrigen de sup (rectOrigen pude ser NULL si se desea copiar toda la superficie sup)
@@ -56,10 +56,8 @@ void Superficie::dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,i
 	SdlSurfaceManager::blitSurfaces(img->superficie,this->superficie,rectOrigen,xDestino,yDestino);
 }
 
-
 //devuelve una copia rotada de la imagen
 Superficie* Superficie::rotarSuperficie(double ang){
-	
 	Superficie* sup = new Superficie();
 	sup->superficie = SdlSurfaceManager::rotar(superficie,ang);
 	if(SdlSurfaceManager::huboFallas()){

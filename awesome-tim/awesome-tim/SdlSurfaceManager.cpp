@@ -21,7 +21,7 @@ void SdlSurfaceManager::fallar(){
 
 //devuelve el pixel xy de la superficie
 Uint32 SdlSurfaceManager::getPixel( SDL_Surface *surface, int x, int y ){
-	if((x>=surface->w)||(x<0)||(y<0)||(y>=surface->h))return 0;
+	if((surface==NULL)||(x>=surface->w)||(x<0)||(y<0)||(y>=surface->h))return 0;
 	Uint32 *pixels = (Uint32 *)surface->pixels;
 	return pixels[ ( y * surface->w ) + x ];
 }
@@ -29,7 +29,7 @@ Uint32 SdlSurfaceManager::getPixel( SDL_Surface *surface, int x, int y ){
 //pone el pixel en el xy de la superficie
 void SdlSurfaceManager::putPixel( SDL_Surface *surface,int x, int y, Uint32 pixel ){
 			
-	if((x>=surface->w)||(x<0)||(y<0)||(y>=surface->h))return;
+	if((surface==NULL)||(x>=surface->w)||(x<0)||(y<0)||(y>=surface->h))return;
 	Uint32 *pixels = (Uint32 *)surface->pixels;
 	pixels[ ( y * surface->w ) + x ] = pixel;
 }
@@ -131,6 +131,7 @@ SDL_Surface* SdlSurfaceManager::rotarLock(SDL_Surface* sur,double angulo){
 
 //imprime en la las coordenadas x/yDestino de la superficie destino el rectoOrigen de la superficieOrigen
 void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDestino,Rectangulo* rectOrigen,int xDestino,int yDestino){
+	if((supOrigen==NULL)||(supDestino==NULL))return;
 	SDL_Rect* rO;
 	SDL_Rect rectO,rectD;
 	if(rectOrigen == NULL) rO = NULL;
@@ -319,6 +320,7 @@ Uint32 SdlSurfaceManager::blendPixels(SDL_PixelFormat* format,Uint32 pixel1,Uint
 }
 
 SDL_Surface* SdlSurfaceManager::scale(SDL_Surface* superficie,int pixelesAncho,int pixelesAlto){
+	if(superficie==NULL)return NULL;
 	double relacionPixelX = pixelesAncho/(double(superficie->w));
 	double relacionPixelY = pixelesAlto/(double(superficie->h));
 	

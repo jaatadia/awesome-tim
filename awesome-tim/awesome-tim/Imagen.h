@@ -33,6 +33,8 @@ private:
 public:
 	
 	Imagen(const char* ruta);//crea una imagen a partir del directorio pasado en caso de no lograrse se pone como fallado
+	Imagen(const char* texto,int alto,int r,int g,int b);//crea una imagen a partir del texto pasado
+	
 	~Imagen(void);
 	int getAlto(); //devuelve el alto de la imagen
 	int getAncho(); //devuelve el ancho de la imagen
