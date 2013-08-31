@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include "Fallable.h"
 #include "Rectangulo.h"
-#include "imagen.h"
+#include "Imagen.h"
 
 #define SUPERFICIE_TAG "Superficie"
 

@@ -42,9 +42,9 @@ Programa::~Programa(void)
 void Programa::correr(){
 	
 	while((running)&&(!this->huboFallos())){
+		onEvent();
 		onLoop();
 		onRender();
-		onEvent();
 	}
 }
 
@@ -60,7 +60,6 @@ void Programa:: onRender(){
 	Imagen* temp ;
 	if(rot<360)	temp = img->rotarImagen(rot);
 	else temp = img->rotarCuadradoImagen(rot);
-
 	superficie->dibujarImagen(temp,NULL,0,0);
 	delete temp;
 	ventana->dibujar(superficie);
