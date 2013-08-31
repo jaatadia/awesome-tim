@@ -285,7 +285,7 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 		}	
 	}
 	
-	/*
+	
 	for(int i=0;i<img->w;i++){
 		for(int j=0;j<img->h;j++){
 			if(getPixel(img,i,j)==alpha){
@@ -296,7 +296,7 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 				}
 			}
 		}	
-	}*/
+	}
 	
 	SDL_UnlockSurface(sur); 
 	SDL_UnlockSurface(img); 
