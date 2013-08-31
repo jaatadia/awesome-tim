@@ -57,7 +57,7 @@ void Programa:: onLoop(){
 //dibuja en pantalla
 void Programa:: onRender(){
 	superficie->restore();
-	Imagen* temp ;
+	Imagen* temp;
 	if(rot<360)	temp = img->rotarImagen(rot);
 	else temp = img->rotarCuadradoImagen(rot);
 	superficie->dibujarImagen(temp,NULL,0,0);

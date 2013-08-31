@@ -1,6 +1,7 @@
 #include "Imagen.h"
 #include "ErrorLogHandler.h"
 #include "SdlSurfaceManager.h"
+#include "SDL_ttf.h"
 
 //crea una imagen sin superficie
 Imagen::Imagen(){
@@ -14,6 +15,20 @@ Imagen::Imagen(const char* file)
 	if (SdlSurfaceManager::huboFallas()){
 		fallar();
 	}
+}
+
+//crea una imagen a partir del texto pasado
+Imagen::Imagen(const char* texto,int alto,int r,int g,int b){
+	TTF_Init();
+	TTF_Font* font = TTF_OpenFont("../images/font.ttf", alto);
+	if(font ==NULL){
+		ErrorLogHandler::addError(IMAGEN_TAG,TTF_GetError());
+	}else{
+		SDL_Color text_color = {r,g,b};
+		this->superficie =  TTF_RenderText_Solid(font, texto,text_color);
+		TTF_CloseFont(font);
+	}
+	TTF_Quit();
 }
 
 //destructor que libera la memoria de la superfice
