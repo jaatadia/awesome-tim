@@ -223,16 +223,48 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="nuevo"
+				>
+				<File
+					RelativePath=".\Botonera.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Comandos.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Contenedor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Evento.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Figura.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Juego.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ManejadorYaml.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Terreno.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Archivos de encabezado"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\Constantes.h"
-				>
-			</File>
 			<Filter
 				Name="Vista"
 				>
@@ -274,6 +306,74 @@
 				>
 				<File
 					RelativePath=".\ErrorLogHandler.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="nuevo"
+				>
+				<File
+					RelativePath=".\Botonera.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Cambiable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Comandos.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Constantes.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Contenedor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Dibujable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Dimension.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Evento.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Figura.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Imprimible.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Juego.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ManejadorEvento.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ManejadorYaml.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Posicion.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Terreno.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Validable.h"
 					>
 				</File>
 			</Filter>
