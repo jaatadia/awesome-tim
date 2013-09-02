@@ -28,6 +28,8 @@ public:
 	bool cargar();
 	bool guardar();
 
+	void quit();
+
 private:
 	void onEvent();//maneja los eventos
 	void onLoop();//actualiza el modelo
