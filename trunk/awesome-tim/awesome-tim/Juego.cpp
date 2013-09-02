@@ -49,10 +49,13 @@ void Juego:: onRender(){
 
 //manejo de eventos
 void Juego:: onEvent(){
-	
 }
 
 //manejo de eventos
 void Juego:: onLoop(){
 	
+}
+
+void Juego::quit(){
+	running = false;
 }
