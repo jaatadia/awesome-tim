@@ -4,13 +4,14 @@
 #include "Validable.h"
 #include "Cambiable.h"
 
-class Botonera: public Imprimible,Validable,Cambiable
+class Botonera: public Imprimible,public Validable,public Cambiable
 {
 private:
-	Imagen* img;
+	int ancho,alto;
+	Superficie* sup;
 
 public:
-	Botonera(void);
-	void setFondo(Imagen* img);
+	Botonera(int ancho,int alto);
 	~Botonera(void);
+	Superficie* getImpresion();
 };

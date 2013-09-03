@@ -12,7 +12,7 @@ Programa::Programa(const char* file)
 	}
 	
 	ventana = new Ventana();
-	superficie = new Superficie(ANCHO,ALTO);
+	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
 	img = new Imagen("../images/test.jpg");
 	rot = 0;
 

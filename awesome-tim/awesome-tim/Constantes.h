@@ -1,8 +1,26 @@
 #pragma once
 
 #define NOMBRE_JUEGO "The Incredible Machine"
-#define ANCHO 1000 //ancho de la superficie
-#define ALTO 500 //alto de la superficie
+
+#define ANCHO_PANTALLA 600 //ancho de la superficie
+#define ALTO_PANTALLA 600 //alto de la superficie
+
+#define SEPARACION 10
+
+#define X_TERRENO (SEPARACION)
+#define Y_TERRENO (SEPARACION)
+#define ANCHO_TERRENO 500
+#define ALTO_TERRENO 500
+
+#define X_BOTONERA (X_TERRENO + ANCHO_TERRENO + SEPARACION)
+#define Y_BOTONERA (SEPARACION)
+#define ANCHO_BOTONERA (ANCHO_PANTALLA - X_BOTONERA - SEPARACION)
+#define ALTO_BOTONERA (ALTO_TERRENO)
+
+#define X_COMANDOS SEPARACION
+#define Y_COMANDOS (Y_TERRENO + ALTO_TERRENO + SEPARACION)
+#define ANCHO_COMANDOS (ANCHO_PANTALLA - 2*SEPARACION)
+#define ALTO_COMANDOS (ALTO_PANTALLA - Y_COMANDOS - SEPARACION)
 
 class Constantes
 {

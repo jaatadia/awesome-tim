@@ -12,26 +12,29 @@
 class Juego: public Fallable
 {
 private:
+	
 	bool running;
 	const char* file;
+	
 	Ventana* ventana;
 	Superficie* superficie;
 	Terreno* terreno;
-	Botonera* botones;
+	Botonera* botonera;
 	Comandos* comandos;
 	Figura* figuraEnAire;
-	
+
 public:
 	Juego(const char* file);//se crea el juego
 	~Juego(void);
-	bool correr();//ejecuta el juego, devualve false si hubo error
+	bool isRunning();
+
 	bool cargar();
 	bool guardar();
 
 	void quit();
 
-private:
 	void onEvent();//maneja los eventos
 	void onLoop();//actualiza el modelo
 	void onRender();//dibuja en la ventana
+
 };

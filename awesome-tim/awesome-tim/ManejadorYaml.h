@@ -9,7 +9,7 @@ class ManejadorYaml
 {
 public:
 	
-	static bool cargarJuego(char* file,Botonera* botonera,Terreno* terreno);
-	static void guardarJuego(char* file,Botonera* botonera,Terreno* terreno);
+	static bool cargarJuego(const char* file,Botonera* botonera,Terreno* terreno);
+	static void guardarJuego(const char* file,Botonera* botonera,Terreno* terreno);
 	
 };
