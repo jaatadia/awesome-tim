@@ -2,6 +2,8 @@
 
 #include "Botonera.h"
 #include "Terreno.h"
+#include "yaml-cpp/yaml.h"
+
 
 class ManejadorYaml
 {

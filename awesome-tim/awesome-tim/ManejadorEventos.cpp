@@ -10,7 +10,7 @@ ManejadorEventos::~ManejadorEventos(void)
 
 bool ManejadorEventos::onEvent(Juego* juego){
 
-SDL_Event* evento;
+//SDL_Event* evento;
 
 //while (SDL_PollEvent(evento) != NULL){
 //
