@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -175,6 +175,18 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\Cambiable.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Imprimible.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Validable.cpp"
+				>
+			</File>
 			<Filter
 				Name="Vista"
 				>
