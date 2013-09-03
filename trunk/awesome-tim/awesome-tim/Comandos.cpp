@@ -1,9 +1,15 @@
 #include "Comandos.h"
 
-Comandos::Comandos(void)
-{
+Comandos::Comandos(int ancho,int alto){
+	this->ancho = ancho;
+	this->alto = alto;
+	sup = new Superficie(ancho,alto);
 }
 
-Comandos::~Comandos(void)
-{
+Comandos::~Comandos(void){
+	delete sup;
+}
+
+Superficie* Comandos::getImpresion(){
+	return sup;
 }
