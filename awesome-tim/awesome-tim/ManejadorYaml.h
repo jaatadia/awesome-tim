@@ -5,11 +5,10 @@
 #include "yaml-cpp/yaml.h"
 
 
-class ManejadorYaml
-{
+class ManejadorYaml{
 public:
 	
 	static bool cargarJuego(const char* file,Botonera* botonera,Terreno* terreno);
-	static void guardarJuego(const char* file,Botonera* botonera,Terreno* terreno);
+	static bool guardarJuego(const char* file,Botonera* botonera,Terreno* terreno);
 	
 };

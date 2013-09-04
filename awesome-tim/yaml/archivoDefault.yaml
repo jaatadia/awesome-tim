@@ -1,0 +1,18 @@
+juego:
+  autor: todos
+  posiciones:
+    - pos: pos1
+      posX: 700
+      posY: 130
+    - pos: pos2
+      posX: 100
+      posY: 400
+    - pos: pos3
+      posX: 1000
+      posY: 30
+    - pos: pos4
+      posX: 1000
+      posY: 30
+    - pos: pos4
+      posX: 1000
+      posY: 30
