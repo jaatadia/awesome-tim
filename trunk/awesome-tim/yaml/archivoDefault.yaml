@@ -1,5 +1,5 @@
 juego:
-  autor: todos
+  fondo: Sin Fondo
   posiciones:
     - pos: pos1
       posX: 700
