@@ -17,18 +17,17 @@ bool ManejadorYaml::cargarJuego(const char* file,Botonera* botonera,Terreno* ter
 	
 	parser.GetNextDocument(doc);
 
+	//Busco el nodo raiz, al que estan asociados los demas nodos
 	const YAML::Node& nodoRaiz = doc["juego"];
-	std::string autor;
-	nodoRaiz["autor"] >> autor;
-	std::cout << autor;
+	std::string fondo;
+	nodoRaiz["fondo"] >> fondo;
+	std::cout << fondo; //Imprimo en pantalla la ruta del fondo
 
 	const YAML::Node& nodoPos = nodoRaiz["posiciones"];
 	int posX, posY;
 	for(unsigned i=0;i<nodoPos.size();i++) {
 		nodoPos[i]["posX"] >> posX;
 		nodoPos[i]["posY"] >> posY;
-		std::cout << posX;
-		std::cout << posY;
 		Posicion(posX,posY);
 	}
 
