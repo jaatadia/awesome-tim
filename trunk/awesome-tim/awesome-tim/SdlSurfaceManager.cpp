@@ -89,6 +89,99 @@ SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
 	return sur;
 }
 
+//crea una sdl surface de anchoxalto
+SDL_Surface* SdlSurfaceManager::crearSup(){
+	SDL_Surface* sup = crearSup(100,100);
+	Uint32 rojo = SDL_MapRGBA(sup->format,255,0,0,255);
+	Uint32 blanco = SDL_MapRGBA(sup->format,255,255,255,255);
+	Uint32 negro = SDL_MapRGBA(sup->format,0,0,0,255);
+
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.h = sup->h;
+	rect.w = sup->w;
+	SDL_FillRect(sup,&rect,blanco);
+	
+	
+	dibujarDiagonales(sup,rojo,negro);
+
+	return sup;
+}
+
+
+void SdlSurfaceManager::dibujarDiagonales(SDL_Surface* sup,Uint32 colorD,Uint32 colorB){
+	
+	SDL_LockSurface(sup); 
+	
+	int inicio = sup->w/3;
+	int fin = sup->w*2/3;
+	
+	putPixel(sup,inicio,inicio-3,colorB);
+	putPixel(sup,inicio,inicio-2,colorB);
+	putPixel(sup,inicio,inicio-1,colorB);
+	putPixel(sup,inicio,inicio,colorB);
+	putPixel(sup,inicio,inicio+1,colorB);
+	putPixel(sup,inicio,inicio+2,colorB);
+	putPixel(sup,inicio,inicio+3,colorB);
+
+	putPixel(sup,inicio,sup->h-(inicio-3),colorB);
+	putPixel(sup,inicio,sup->h-(inicio-2),colorB);
+	putPixel(sup,inicio,sup->h-(inicio-1),colorB);
+	putPixel(sup,inicio,sup->h-inicio,colorB);
+	putPixel(sup,inicio,sup->h-(inicio+1),colorB);
+	putPixel(sup,inicio,sup->h-(inicio+2),colorB);
+	putPixel(sup,inicio,sup->h-(inicio+3),colorB);
+
+	for(int i = inicio;i<fin;i++){
+		putPixel(sup,i,i-3,colorB);
+		putPixel(sup,i,i-2,colorD);
+		putPixel(sup,i,i-1,colorD);
+		putPixel(sup,i,i,colorD);
+		putPixel(sup,i,i+1,colorD);
+		putPixel(sup,i,i+2,colorD);
+		putPixel(sup,i,i+3,colorB);
+
+		putPixel(sup,i,sup->h-(i-3),colorB);
+		putPixel(sup,i,sup->h-(i-2),colorD);
+		putPixel(sup,i,sup->h-(i-1),colorD);
+		putPixel(sup,i,sup->h-i,colorD);
+		putPixel(sup,i,sup->h-(i+1),colorD);
+		putPixel(sup,i,sup->h-(i+2),colorD);
+		putPixel(sup,i,sup->h-(i+3),colorB);
+
+	}
+	
+	putPixel(sup,fin,fin-3,colorB);
+	putPixel(sup,fin,fin-2,colorB);
+	putPixel(sup,fin,fin-1,colorB);
+	putPixel(sup,fin,fin,colorB);
+	putPixel(sup,fin,fin+1,colorB);
+	putPixel(sup,fin,fin+2,colorB);
+	putPixel(sup,fin,fin+3,colorB);
+
+	putPixel(sup,fin,sup->h-(fin-3),colorB);
+	putPixel(sup,fin,sup->h-(fin-2),colorB);
+	putPixel(sup,fin,sup->h-(fin-1),colorB);
+	putPixel(sup,fin,sup->h-fin,colorB);
+	putPixel(sup,fin,sup->h-(fin+1),colorB);
+	putPixel(sup,fin,sup->h-(fin+2),colorB);
+	putPixel(sup,fin,sup->h-(fin+3),colorB);
+
+
+	for(int i=0;i<sup->w;i++){
+		putPixel(sup,i,1,colorB);	
+		putPixel(sup,i,sup->h-2,colorB);
+	}
+
+	for(int i=0;i<sup->h;i++){
+		putPixel(sup,1,i,colorB);	
+		putPixel(sup,sup->w-2,i,colorB);
+	}
+
+	SDL_UnlockSurface(sup); 
+}
+
 //rota la imagen 90 grados
 SDL_Surface* SdlSurfaceManager::rotar90(SDL_Surface *sur){
 	return  rotar90(sur,false);

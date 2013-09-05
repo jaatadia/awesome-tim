@@ -13,7 +13,7 @@ Imagen::Imagen(const char* file)
 {
 	superficie = SdlSurfaceManager::cargarImagen(file);
 	if (SdlSurfaceManager::huboFallas()){
-		fallar();
+		superficie = SdlSurfaceManager::crearSup();
 	}
 }
 
@@ -23,6 +23,7 @@ Imagen::Imagen(const char* texto,int alto,int r,int g,int b){
 	TTF_Font* font = TTF_OpenFont("../images/font.ttf", alto);
 	if(font ==NULL){
 		ErrorLogHandler::addError(IMAGEN_TAG,TTF_GetError());
+		superficie = SdlSurfaceManager::crearSup();
 	}else{
 		SDL_Color text_color = {r,g,b};
 		this->superficie =  TTF_RenderText_Solid(font, texto,text_color);
