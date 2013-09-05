@@ -12,7 +12,7 @@ void VistaFigura::dibujar(Superficie *canvas){
 		redraw();			
 	}
 	this->fig->setCambio(false);
-	canvas->dibujarImagen(img,NULL,fig->pos.getX(),fig->pos.getY());
+	canvas->dibujarImagen(img,NULL,int(fig->pos.getX()),int(fig->pos.getY()));
 }
 
 void VistaFigura::dibujar(Superficie *canvas,double unidadesLogicas){
@@ -21,8 +21,8 @@ void VistaFigura::dibujar(Superficie *canvas,double unidadesLogicas){
 	}
 	this->fig->setCambio(false);
 
-	int calcX = fig->pos.getX()* canvas->getAncho()/unidadesLogicas;
-	int calcY = fig->pos.getY()* canvas->getAlto()/unidadesLogicas;
+	int calcX = int(fig->pos.getX()* canvas->getAncho()/unidadesLogicas);
+	int calcY = int(fig->pos.getY()* canvas->getAlto()/unidadesLogicas);
 
 	canvas->dibujarImagen(img,NULL,calcX,calcY);
 }

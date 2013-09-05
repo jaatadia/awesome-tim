@@ -13,7 +13,8 @@ Programa::Programa(const char* file)
 	
 	ventana = new Ventana();
 	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
-	img = new Imagen("../images/test.jpg");
+	//img = new Imagen("../images/test.jpg");
+	img = new Imagen("-1");
 	rot = 0;
 
 	if(superficie->huboFallos()||ventana->huboFallos()||img->huboFallos()){

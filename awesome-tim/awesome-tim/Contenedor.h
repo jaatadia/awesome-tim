@@ -14,7 +14,7 @@ public:
 
 private:
 	
-	std::map<int,int> mapa;
+	std::map<char* ,void*> mapa;
 	
 	Contenedor(void);
 	~Contenedor(void);

@@ -22,7 +22,8 @@ public:
 		
 	static SDL_Surface* cargarImagen(const char* cadena);//carga la imagen
 	static SDL_Surface* crearSup (int ancho,int alto);//crea una superficie de las dimensiones pasadas
-	
+	static SDL_Surface* crearSup ();//crea una superficie dedault	
+
 	static SDL_Surface* rotar90(SDL_Surface *sur);//rota la imagen 90 grados
 	static SDL_Surface* rotar180(SDL_Surface *sur);//rota la imagen 180 grados
 	static SDL_Surface* rotar270(SDL_Surface *sur);//rota la imagen 270 grados
@@ -50,4 +51,6 @@ private:
 	static SDL_Surface* rotar180(SDL_Surface *sur,bool mismaSup);//rota la imagen 180 grados
 	static SDL_Surface* rotar270(SDL_Surface *sur,bool mismaSup);//rota la imagen 270 grados
 	static SDL_Surface* rotar(SDL_Surface* sur,double angulo,bool mismaSup);// rota la imagen
+
+	static void dibujarDiagonales(SDL_Surface* sup,Uint32 colorD,Uint32 colorB);
 };
