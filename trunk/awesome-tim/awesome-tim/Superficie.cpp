@@ -11,6 +11,7 @@ Superficie::Superficie(){
 Superficie::Superficie(int ancho,int alto){
 	superficie = SdlSurfaceManager::crearSup(ancho,alto);
 	if(SdlSurfaceManager::huboFallas())	fallar();
+	else restore();
 }
 
 //destructor de la superficie
@@ -22,12 +23,7 @@ Superficie::~Superficie(void){
 //repinta el fondo de la imagen
 void Superficie::restore(){
 	Uint32 alpha = SDL_MapRGBA(superficie->format,0,0,0,255);
-	SDL_Rect rect;
-    rect.x = 0;
-    rect.y = 0;
-    rect.h = getAlto();
-    rect.w = getAncho();
-    SDL_FillRect(superficie,&rect,alpha);
+	SdlSurfaceManager::pintarSup(superficie,alpha);
 }
 
 //devuelve el alto de la superficie
