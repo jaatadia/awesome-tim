@@ -102,8 +102,15 @@ SDL_Surface* SdlSurfaceManager::crearSup(){
 	Uint32 blanco = SDL_MapRGBA(sup->format,255,255,255,255);
 	Uint32 negro = SDL_MapRGBA(sup->format,0,0,0,255);
 
-	pintarSup(sup,blanco);
-	
+	SDL_LockSurface(sup);
+	double r2 = pow(double(50),2);
+	for(int i=0;i<100;i++){
+		for(int j=0;j<100;j++){
+			if( pow(double(i-50),2)+pow(double(j-50),2) <= r2) putPixel(sup,i,j,blanco);
+		}
+	}
+	SDL_UnlockSurface(sup);
+
 	dibujarDiagonales(sup,rojo,negro);
 
 	return sup;
@@ -167,17 +174,6 @@ void SdlSurfaceManager::dibujarDiagonales(SDL_Surface* sup,Uint32 colorD,Uint32 
 	putPixel(sup,fin,sup->h-(fin+1),colorB);
 	putPixel(sup,fin,sup->h-(fin+2),colorB);
 	putPixel(sup,fin,sup->h-(fin+3),colorB);
-
-
-	for(int i=0;i<sup->w;i++){
-		putPixel(sup,i,1,colorB);	
-		putPixel(sup,i,sup->h-2,colorB);
-	}
-
-	for(int i=0;i<sup->h;i++){
-		putPixel(sup,1,i,colorB);	
-		putPixel(sup,sup->w-2,i,colorB);
-	}
 
 	SDL_UnlockSurface(sup); 
 }
