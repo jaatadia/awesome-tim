@@ -5,8 +5,7 @@ class Cambiable
 private:
 	bool cambios;
 public:
-	void cambio(){cambios = true;}
-	void noCambio(){cambios = false;}
+	void setCambio(bool state){cambios = state;}
 	bool huboCambios(){return cambios;}
 	
 };
