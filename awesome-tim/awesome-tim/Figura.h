@@ -19,12 +19,12 @@ private:
 	Dimension* dimension;
 	Posicion pos;
 	double angulo;
-	char* dirImagen;
+	const char* ID;
 	VistaFigura* myVista;
 
 public:
-	Figura(char* dir,int angulo,double posX,double posY);
+	Figura(const char* ID,Dimension* dim,int angulo,double posX,double posY);
 	~Figura(void);
 
-	void dibujar(Superficie* super){};
+	void dibujar(Superficie* super);
 };

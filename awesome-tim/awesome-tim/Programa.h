@@ -3,6 +3,7 @@
 #include "Ventana.h"
 #include "Superficie.h"
 #include "Rectangulo.h"
+#include "Figura.h"
 
 #define PROGRAMA_TAG "Programa"
 
@@ -18,8 +19,9 @@ private:
 	Ventana* ventana;
 	Superficie* superficie;
 	bool running;
-	Imagen* img;
+	//Imagen* img;
 	Uint16 rot;
+	Figura* fig;
 
 public:
 	Programa(const char* file);//incia el programa

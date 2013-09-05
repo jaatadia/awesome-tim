@@ -3,5 +3,6 @@
 class Dimension
 {
 public:
-	virtual Dimension* getDimension()=0;
+	virtual double getAncho()=0;
+	virtual double getAlto()=0;
 };

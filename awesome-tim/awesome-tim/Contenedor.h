@@ -8,17 +8,15 @@ class Contenedor
 private:
 	static Contenedor* cont;
 public:
-	static void putMultimedia(char* ID,void* medio);
-	static void* getMultimedia(char* ID);
+	static void putMultimedia(const char* ID,void* medio);
+	static void* getMultimedia(const char* ID);
 	static void deleteContenedor();
 
 private:
 	
-	std::map<char* ,void*> mapa;
+	std::map<const char* ,void*> mapa;
 	
 	Contenedor(void);
 	~Contenedor(void);
-	void put(char* ID,void* medio);
-	void* get(char* ID);
-
+	
 };
