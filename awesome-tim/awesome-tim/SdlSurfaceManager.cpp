@@ -34,6 +34,17 @@ void SdlSurfaceManager::putPixel( SDL_Surface *surface,int x, int y, Uint32 pixe
 	pixels[ ( y * surface->w ) + x ] = pixel;
 }
 
+//pinta la superficie de un color
+void SdlSurfaceManager::pintarSup(SDL_Surface *sup, Uint32 color){
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.h = sup->h;
+	rect.w = sup->w;
+	SDL_FillRect(sup,&rect,color);
+}
+
+
 //carga una imagen de direccion cadena
 SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){
 	SDL_Surface* temp = NULL; 
@@ -78,12 +89,7 @@ SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
 		}else{
 			SDL_SetSurfaceBlendMode(sur,SDL_BLENDMODE_BLEND);
 			Uint32 alpha = SDL_MapRGBA(sur->format,0,0,0,0);
-			SDL_Rect rect;
-			rect.x = 0;
-			rect.y = 0;
-			rect.h = sur->h;
-			rect.w = sur->w;
-			SDL_FillRect(sur,&rect,alpha);
+			pintarSup(sur,alpha);
 		}
 	}
 	return sur;
@@ -96,13 +102,7 @@ SDL_Surface* SdlSurfaceManager::crearSup(){
 	Uint32 blanco = SDL_MapRGBA(sup->format,255,255,255,255);
 	Uint32 negro = SDL_MapRGBA(sup->format,0,0,0,255);
 
-	SDL_Rect rect;
-	rect.x = 0;
-	rect.y = 0;
-	rect.h = sup->h;
-	rect.w = sup->w;
-	SDL_FillRect(sup,&rect,blanco);
-	
+	pintarSup(sup,blanco);
 	
 	dibujarDiagonales(sup,rojo,negro);
 
