@@ -25,4 +25,6 @@ private:
 public:
 	Figura(char* dir,int angulo,double posX,double posY);
 	~Figura(void);
+
+	void dibujar(Superficie* super){};
 };
