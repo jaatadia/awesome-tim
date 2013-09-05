@@ -1,0 +1,10 @@
+juego:
+  botonera:
+    ancho: num
+	alto: num
+	lista_botones:
+	  -boton: boton 1
+      -boton: boton 2	  
+  terreno:
+    ancho: num
+	alto: num
