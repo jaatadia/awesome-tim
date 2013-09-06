@@ -17,4 +17,5 @@ double Circulo::getAlto(){
 }
 
 bool Circulo::puntoPertenece(double pos_X, double pos_Y){
+return false;
 }

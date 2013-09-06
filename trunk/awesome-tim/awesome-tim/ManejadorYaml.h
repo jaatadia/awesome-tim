@@ -3,7 +3,13 @@
 #include "Botonera.h"
 #include "Terreno.h"
 #include "yaml-cpp/yaml.h"
-
+#include <fstream>
+#include <stdio.h>
+#include <string.h>
+#include <vector>
+#include "Posicion.h"
+#include "Cuadrado.h"
+#include "Circulo.h"
 
 class ManejadorYaml{
 public:

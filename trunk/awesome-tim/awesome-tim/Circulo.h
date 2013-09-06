@@ -12,4 +12,4 @@ public:
 	double getAncho();
 	double getAlto();
 	bool puntoPertenece(double pos_X, double pos_Y);
-}
+};
