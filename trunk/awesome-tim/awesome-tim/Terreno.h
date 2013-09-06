@@ -25,7 +25,7 @@ public:
 
 	Superficie* getImpresion();
 
-	void setFondo(Imagen* img);
+	void setFondo(const char* img);
 
 	void agregarFigura(Figura* fig);
 	void rotarFigura(Figura* fig);
