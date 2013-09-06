@@ -44,7 +44,6 @@ public:
 	static Uint32 getPixel( SDL_Surface* surface,int x,int y );//devueleve el pixel que se encuentra en la posicion xy
 	static void putPixel(SDL_Surface* surface,int x,int y, Uint32 pixel );//pone en la posicion xy el pixel
 	static Uint32 blendPixels(SDL_PixelFormat* format,Uint32 pixel1,Uint32 pixel2);//devuelve la mescla de dos pixles
-
 	
 private:
 	static void fallar();//le indica que tiene que fallar(uso interno)
