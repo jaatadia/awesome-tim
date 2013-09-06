@@ -23,8 +23,8 @@ bool Figura::esMiPosicion(double x,double y)
 	return dimension->puntoPertenece( x, y);
 }
 
-void Figura::dibujar(Superficie* super){
-	myVista->dibujar(super);
+void Figura::dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas){
+	myVista->dibujarEnPixel(super,escalas);
 }
 
 void Figura::dibujar(Superficie* super,EscalasDeEjes* escalas){

@@ -4,6 +4,7 @@
 #include "Superficie.h"
 #include "Rectangulo.h"
 #include "Figura.h"
+#include "EscalasDeEjes.h"
 
 #define PROGRAMA_TAG "Programa"
 
@@ -22,6 +23,7 @@ private:
 	//Imagen* img;
 	Uint16 rot;
 	Figura* fig;
+	EscalasDeEjes* escalas;
 
 public:
 	Programa(const char* file);//incia el programa

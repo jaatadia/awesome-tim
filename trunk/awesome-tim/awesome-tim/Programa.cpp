@@ -5,6 +5,7 @@
 #include "Contenedor.h"
 #include "Cuadrado.h"
 
+
 //crea el programa
 Programa::Programa(const char* file)
 {
@@ -29,6 +30,9 @@ Programa::Programa(const char* file)
 		delete ventana;
 		fallar();
 	}
+
+	escalas = new EscalasDeEjes();
+
 	running = true;
 }
 
@@ -39,6 +43,7 @@ Programa::~Programa(void)
 		delete ventana;
 		delete superficie;
 		//delete img;
+		delete escalas;
 		SDL_Quit();
 	}
 	ErrorLogHandler::closeLog();
@@ -68,7 +73,7 @@ void Programa:: onRender(){
 	//else temp = img->rotarCuadradoImagen(rot);
 	//superficie->dibujarImagen(temp,NULL,0,0);
 	//delete temp;
-	fig->dibujar(superficie);
+	fig->dibujar(superficie,escalas);
 	ventana->dibujar(superficie);
 }
 
