@@ -2,6 +2,7 @@
 
 #include "Imagen.h"
 #include "Figura.h"
+#include "EscalasDeEjes.h"
 
 class Figura;
 
@@ -18,9 +19,11 @@ public:
 	~VistaFigura(void);
 
 	void dibujar(Superficie* canvas);
-	void dibujar(Superficie* canvas,double unidadesLogicas);
+	void dibujar(Superficie* canvas,EscalasDeEjes* unidadesLogicas);
 private:
 	void redraw();
+	void redraw(EscalasDeEjes* unidadesLogicas);
+
 };
 
 

@@ -6,6 +6,7 @@
 #include "Dimension.h"
 #include "Cambiable.h"
 #include "VistaFigura.h"
+#include "EscalasDeEjes.h"
 
 class VistaFigura;
 
@@ -17,14 +18,18 @@ public:
 private:
 	
 	Dimension* dimension;
-	Posicion pos;
-	double angulo;
+//	Posicion pos;//las del cntro de la figura termino dentro de dimension
+//	double angulo;// tambien dentro de dimension
 	const char* ID;
 	VistaFigura* myVista;
 
 public:
-	Figura(const char* ID,Dimension* dim,int angulo,double posX,double posY);
+	Figura(const char* ID,Dimension* dim);
 	~Figura(void);
 
+	void cambiarPosicion(double x,double y);
+	bool esMiPosicion(double x,double y);
+
 	void dibujar(Superficie* super);
+	void dibujar(Superficie* super,EscalasDeEjes* escalas);
 };

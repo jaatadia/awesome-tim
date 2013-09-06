@@ -52,7 +52,7 @@ private:
 
 private: 
 	std::ofstream myFile;//file stream del singleton
-	
+
 private:
 	ErrorLogHandler();//constructor que incializa el estado de variables internas 
 	~ErrorLogHandler();//destructor que llama a los metodos para terminar de escribir cosas y cerrar el archivo

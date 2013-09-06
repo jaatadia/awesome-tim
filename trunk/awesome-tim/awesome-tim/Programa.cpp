@@ -19,7 +19,7 @@ Programa::Programa(const char* file)
 	rot = 0;
 	
 	Contenedor::putMultimedia("../images/test.jpg",new Imagen("../images/test.jpg"));
-	this->fig = new Figura("../images/test.jg",new Cuadrado(200,200),20,200,300);
+	this->fig = new Figura("../images/test.jg",new Cuadrado(200,200,200,300,20));
 	
 
 	if(superficie->huboFallos()||ventana->huboFallos()/*||img->huboFallos()*/){

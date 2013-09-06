@@ -1,15 +1,24 @@
 #pragma once
 
-#include "Juego.h"
-#include "Evento.h"
+#include <iostream>
+#include "SDL.h"
+#include "EscalasDeEjes.h"
+
 
 class ManejadorEventos
 {
+private:
+	static EscalasDeEjes* escalasDeEjes;
+
 public:
 
 ManejadorEventos(void);
 ~ManejadorEventos(void);
 
-bool onEvent(Juego* juego);
+virtual void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas);
+
+virtual void quit();
+
+virtual bool categorizarEvento(SDL_Event evento);
 };
 

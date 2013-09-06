@@ -9,10 +9,11 @@ private:
 	double alto;
 
 public:
-	Cuadrado(double ancho,double alto);
+	Cuadrado(double ancho,double alto,double X,double Y, double angulo);
 	~Cuadrado(void);
 
 	double getAncho();
 	double getAlto();
 
+	bool puntoPertenece(double X, double Y);
 };
