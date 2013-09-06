@@ -21,6 +21,7 @@ juego:
           - prop: valor_propiedad2
       - figura: CUADRADO
         imagen: ruta
+        angulo: valor
         posicion:
 		  posX: num
 		  posY: num
