@@ -16,7 +16,7 @@ Juego::Juego(const char *file){
 	
 	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO);
-	botonera = new Botonera(ANCHO_BOTONERA,ALTO_BOTONERA);
+	botonera = new Botonera(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	
 	cargar();
