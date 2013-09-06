@@ -38,9 +38,12 @@ public:
 	void agregarBoton(int tipo, Superficie * img);
 	~Botonera(void);
 	Superficie* getImpresion();
+	Superficie* getImpresion(EscalasDeEjes* escalas);
+
 	void updateBotonera();
 	Figura * obtenerFigura(double x, double y);
 	void setScrollDirection(int direction);
+
 };
 
 #endif //__BOTONERA_H__

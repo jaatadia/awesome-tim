@@ -13,3 +13,7 @@ Comandos::~Comandos(void){
 Superficie* Comandos::getImpresion(){
 	return sup;
 }
+
+Superficie* Comandos::getImpresion(EscalasDeEjes* escalas){
+	return sup;
+}

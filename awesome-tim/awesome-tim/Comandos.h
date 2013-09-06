@@ -14,4 +14,5 @@ public:
 	Comandos(int ancho,int alto);
 	~Comandos(void);
 	Superficie* getImpresion();
+	Superficie* getImpresion(EscalasDeEjes* escalas);
 };

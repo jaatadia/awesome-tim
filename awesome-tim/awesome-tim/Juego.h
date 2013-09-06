@@ -6,6 +6,8 @@
 #include "Botonera.h"
 #include "Comandos.h"
 #include "Figura.h"
+#include "EscalasDeEjes.h"
+#include "Contenedor.h"
 
 #define JUEGO_TAG "Juego"
 
@@ -23,6 +25,8 @@ private:
 	Comandos* comandos;
 	Figura* figuraEnAire;
 
+	EscalasDeEjes* escalas;
+
 public:
 	Juego(const char* file);//se crea el juego
 	~Juego(void);
@@ -32,9 +36,9 @@ public:
 	bool guardar();
 
 	void quit();
+	void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas);
 
 	void onEvent();//maneja los eventos
 	void onLoop();//actualiza el modelo
 	void onRender();//dibuja en la ventana
-
 };

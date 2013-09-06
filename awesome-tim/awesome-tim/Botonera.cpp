@@ -120,4 +120,8 @@ Botonera::~Botonera() {
 		this->figuraActual = 0;
 	}
 	this->lstFiguras.clear();
+
+
+Superficie* Botonera::getImpresion(EscalasDeEjes* escalas){
+	return sup;
 }
