@@ -1,11 +1,5 @@
 #include "ManejadorYaml.h"
-#include "Posicion.h"
-#include "Cuadrado.h"
-#include "Circulo.h"
-#include <fstream>
-#include <stdio.h>
-#include <string.h>
-#include <vector>
+
 
 #define RUTA_DEFAULT "../yaml/archivoDefault.yaml"
 
