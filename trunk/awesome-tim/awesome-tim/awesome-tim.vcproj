@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -178,10 +178,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Cuadrado.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\VistaFigura.cpp"
 				>
 			</File>
@@ -241,11 +237,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Circulo.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Comandos.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Contenedor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Cuadrado.cpp"
 					>
 				</File>
 				<File
@@ -279,10 +283,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\Cuadrado.h"
-				>
-			</File>
 			<File
 				RelativePath=".\VistaFigura.h"
 				>
@@ -343,6 +343,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Circulo.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Comandos.h"
 					>
 				</File>
@@ -352,6 +356,10 @@
 				</File>
 				<File
 					RelativePath=".\Contenedor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Cuadrado.h"
 					>
 				</File>
 				<File
