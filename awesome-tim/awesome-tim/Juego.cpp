@@ -21,7 +21,7 @@ Juego::Juego(const char *file){
 	escalas = new EscalasDeEjes();
 	figuraEnAire=NULL;
 
-	cargar();
+//	cargar();
 
 	if(superficie->huboFallos()||ventana->huboFallos()){
 		if(superficie->huboFallos()) ErrorLogHandler::addError("Programa","No se pudieron crear la superficie");
@@ -33,9 +33,9 @@ Juego::Juego(const char *file){
 
 /******************para test de arrastrar figura por el terreno**********************/
 
-	//Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
-	//Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
-	//terreno->agregarFigura(fig);
+	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
+	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
+	terreno->agregarFigura(fig);
 }
 
 bool Juego::cargar(){

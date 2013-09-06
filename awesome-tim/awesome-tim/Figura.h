@@ -30,6 +30,6 @@ public:
 	void cambiarPosicion(double x,double y);
 	bool esMiPosicion(double x,double y);
 
-	void dibujar(Superficie* super);
+	void dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas);
 	void dibujar(Superficie* super,EscalasDeEjes* escalas);
 };

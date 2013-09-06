@@ -3,12 +3,12 @@
 #include "ManejadorYaml.h"
 
 int main(int argc, char* argv[]){
-/*	
+/*		
 	Programa prog = Programa(argv[0]);//creo el programa
 	prog.correr();//lo corro (duhh)
-
+*/
 	//ManejadorYaml::cargarJuego("archivoYaml.yaml", NULL, NULL); //Linea para poder probar el YAML!!
-	
+/*
 	Juego juego = Juego(argv[0]);
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		juego.onEvent();
