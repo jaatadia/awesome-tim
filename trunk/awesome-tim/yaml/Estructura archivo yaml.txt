@@ -1,10 +1,30 @@
 juego:
   botonera:
     ancho: num
-	alto: num
-	lista_botones:
-	  -boton: boton 1
-      -boton: boton 2	  
+    alto: num
+    lista_botones:
+      -boton: boton 1
+        imagen: ruta
+      -boton: boton 2
+        imagen: ruta	  
   terreno:
-    ancho: num
-	alto: num
+    imagen: ruta
+    lista_figuras:
+      - figura: nombre_figura
+        imagen: ruta
+        posicion:
+		  posX: num
+		  posY: num
+        dimension: nombre_dim
+		propiedades:
+          - prop: valor_propiedad
+          - prop: valor_propiedad2
+      - figura: CUADRADO
+        imagen: ruta
+        posicion:
+		  posX: num
+		  posY: num
+        dimension: CUADRADO
+		propiedades:
+          - prop: ancho
+          - prop: alto
