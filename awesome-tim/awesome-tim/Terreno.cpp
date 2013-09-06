@@ -10,6 +10,7 @@ Terreno::Terreno(int ancho,int alto){
 }
 
 Terreno::~Terreno(void){
+	delete img;
 	delete sup;
 }
 
@@ -17,7 +18,9 @@ Superficie* Terreno::getImpresion(){
 	return sup;
 }
 
-//void Terreno::setFondo(Imagen* img); ni idea que tiene q hacer esto
+void Terreno::setFondo(const char* ruta_img){
+	this->img = new Imagen(ruta_img);
+}
 
 void Terreno::agregarFigura(Figura* fig){
 
