@@ -178,6 +178,18 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\CargadorYaml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EscalasDeEjes.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneradorYAML.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaFigura.cpp"
 				>
 			</File>
@@ -283,6 +295,18 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CargadorYaml.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EscalasDeEjes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneradorYAML.h"
+				>
+			</File>
 			<File
 				RelativePath=".\VistaFigura.h"
 				>

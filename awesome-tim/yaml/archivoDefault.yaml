@@ -2,18 +2,15 @@ juego:
   botonera:
     ancho: 10
     alto: 20
-    lista_botones:
-      -boton: boton 1
-        imagen: ruta
   terreno:
     imagen: rutaimg.jpg
     lista_figuras:
       - figura: CUADRADO
         imagen: ruta
         posicion:
-		  posX: 15
-		  posY: 15
+          posX: 15
+          posY: 15
         dimension: nombre_dim
-		propiedades:
+        propiedades:
           - prop: 10
           - prop: 12
