@@ -1,8 +1,9 @@
 #include "Juego.h"
 #include "ErrorLogHandler.h"
 #include "Constantes.h"
-#include "ManejadorYaml.h"
 #include "Cuadrado.h"
+#include "CargadorYaml.h"
+#include "GeneradorYaml.h"
 
 Juego::Juego(const char *file){
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
@@ -39,12 +40,12 @@ Juego::Juego(const char *file){
 }
 
 bool Juego::cargar(){
-	ManejadorYaml::cargarJuego(file,botonera,terreno);
+	CargadorYaml::cargarJuego(file,botonera,terreno);
 	return true;
 }
 
 bool Juego::guardar(){
-	ManejadorYaml::guardarJuego(file,botonera,terreno);
+	GeneradorYaml::guardarJuego(file,botonera,terreno);
 	return true;
 }
 
