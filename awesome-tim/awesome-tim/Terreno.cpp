@@ -7,6 +7,7 @@ Terreno::Terreno(int ancho,int alto){
 	this->alto = alto;
 	sup = new Superficie(ancho,alto);
 	this->figuras = std::list<Figura*>();
+	figuraActiva=NULL;
 	img=NULL;
 }
 
@@ -33,6 +34,9 @@ Superficie* Terreno::getImpresion(EscalasDeEjes* escalas){
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		(*iteradorLista)->dibujar(this->sup, escalas);
 	}
+	//por ultimo dibujo la que estoy manipulando;
+	if (figuraActiva)
+		figuraActiva->dibujar(this->sup,escalas);
 
 	return sup;
 }
@@ -55,7 +59,48 @@ void Terreno::agregarFigura(Figura* fig){
 	};
 }
 
-//void Terreno::rotarFigura(Figura* fig);
+void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
+	//practicamente lo mismo que arrastraFigura
+	if (hayFiguras()){
+		if (figuraActiva == NULL){
+			Figura* figuraAMover = NULL;
+
+			bool figuraEncontrada = false;
+
+			std::list<Figura*>::reverse_iterator iteradorLista;
+			iteradorLista = figuras.rbegin();
+
+			while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+				
+				figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
+				figuraAMover = (*iteradorLista);
+				
+				iteradorLista++;
+			}
+
+			if (figuraEncontrada){
+				eliminarFigura(figuraAMover);
+				figuraActiva=figuraAMover;
+
+				double X2,Y2;
+				X2 = posClickX + cantMovX;
+				Y2 = posClickY + cantMovY;
+
+				figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+			}
+		}else{
+			//calculo el angulo y se lo pongo a figura
+			double X2,Y2;
+			X2 = posClickX + cantMovX;
+			Y2 = posClickY + cantMovY;
+
+			figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+		}
+
+		setCambio(true);
+	}
+}
+
 
 void Terreno::eliminarFigura(Figura* fig){
 
@@ -70,27 +115,50 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 {
 	//recorro lista de figuras hasta saber si hay alguna en esta posicion
 	//a la primera que encuentro la saco de la lista le cambio la pos
-	//y la vuelvo a meter en ultimo lugar para que si se superpone que arriba al dibujarse
-	Figura* figuraAMover = NULL;
+	//y la vuelvo a meter en ultimo lugar cuando se suelta el boton (ver onEvent de juego)
+	//para que si se superpone quede arriba al dibujarse
+	if(hayFiguras()){	
+		if (figuraActiva == NULL){
+			Figura* figuraAMover = NULL;
 
-	std::list<Figura*>::iterator iteradorLista;
-	iteradorLista = figuras.begin();
+			bool figuraEncontrada = false;
+			//recorro al reves asi "agarro" la figura dibujada arriba
+			std::list<Figura*>::reverse_iterator iteradorLista;
+			iteradorLista = figuras.rbegin();
 
-	bool figuraEncontrada = false;
+			while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+				
+				figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
+				figuraAMover = (*iteradorLista);
+				
+				iteradorLista++;
+			}
 
-	while (iteradorLista != figuras.end() && !figuraEncontrada ) {
-		
-		figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
-		figuraAMover = (*iteradorLista);
-		
-		iteradorLista++;
+			if (figuraEncontrada){
+				eliminarFigura(figuraAMover);
+				figuraActiva=figuraAMover;
+				figuraActiva->cambiarPosicion(cantMovX, cantMovY);
+			}
+		}else{
+			figuraActiva->cambiarPosicion(cantMovX, cantMovY);
+		}
+
+		setCambio(true);
 	}
+}
 
-	if (figuraEncontrada){
-		figuras.erase(--iteradorLista);
-		figuraAMover->cambiarPosicion(cantMovX, cantMovY);
-		figuras.push_back(figuraAMover);
+void Terreno::soltarFigura()
+{
+	if (figuraActiva){
+		agregarFigura(figuraActiva);
+		figuraActiva=NULL;
 	}
+}
 
-	setCambio(true);
+bool Terreno::hayFiguras(){
+
+	if ((figuraActiva != NULL)||(!figuras.empty()))
+		return true;
+
+	return false;
 }

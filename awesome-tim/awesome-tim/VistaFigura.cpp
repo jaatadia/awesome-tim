@@ -42,7 +42,7 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	if((unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())!= temp->getAncho())||
 		(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())!= temp->getAlto())){
 		Imagen* temp3 = temp2->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
-		delete temp2;
+		delete temp2;//comentar para rotar figura... 
 		temp2 = temp3;
 	}
 	img = temp2;
