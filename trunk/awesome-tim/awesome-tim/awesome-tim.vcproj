@@ -190,6 +190,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Validable.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaFigura.cpp"
 				>
 			</File>

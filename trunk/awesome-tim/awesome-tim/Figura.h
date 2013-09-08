@@ -1,14 +1,15 @@
 #pragma once
 
-
 #include "Posicion.h"
 #include "Dibujable.h"
 #include "Dimension.h"
 #include "Cambiable.h"
 #include "VistaFigura.h"
 #include "EscalasDeEjes.h"
+#include "GeneradorYaml.h"
 
 class VistaFigura;
+class Validable;
 
 class Figura: public Dibujable,public Cambiable
 {

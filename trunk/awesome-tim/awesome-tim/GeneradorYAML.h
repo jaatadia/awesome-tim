@@ -4,6 +4,9 @@
 #include "Terreno.h"
 #include "Figura.h"
 
+class Botonera;
+class Terreno;
+
 class GeneradorYaml{
 
 private:

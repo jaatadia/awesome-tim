@@ -17,10 +17,8 @@ bool GeneradorYaml::guardarJuego(const char* file,Botonera* botonera,Terreno* te
 
 YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 /*out << YAML::BeginMap;
-out << YAML::Key << "x";
-out << YAML::Value << posicion.getX();
-out << YAML::Key << "y";
-out << YAML::Value << posicion.getY();
+out << YAML::Key << "ID";
+out << YAML::Value << fig->ID;
 out << YAML::EndMap;*/
 return out;
 };
@@ -40,14 +38,16 @@ lista_fig.push_back(fig2);
 
 //creacion del arhchivo
 std::ofstream arch;
-arch.open("GameState.yaml",std::ios::out);
+arch.open("../yaml/GameState.yaml",std::ios::out);
 
 //creacion del emiter
 YAML::Emitter out;
 
 //llenar el emiter con lo que nos interesa
 out << YAML::BeginDoc;
-//out;
+//out << fig1;
+//out << fig2;
+
 
 
 //pasar el emiter al archivo
@@ -56,8 +56,6 @@ arch << out.c_str() << "\n";
 //cerrar el archivo
 arch.close();
 
-delete dim_cuad;
-delete dim_circ;
 delete fig1;
 delete fig2;
 
