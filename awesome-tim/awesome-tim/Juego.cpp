@@ -104,7 +104,7 @@ while(SDL_PollEvent(&evento)){
 	switch(evento.type){
 		case SDL_WINDOWEVENT:
 		{
-			actuarVentana(evento.window.windowID,evento.window,this->escalas);//tipo escala
+			actuarVentana(evento.window.windowID,evento.window,this->escalas);
 			//actualiza las escalas si fue un resize
 			break;
 		}
@@ -193,8 +193,9 @@ while(SDL_PollEvent(&evento)){
 
 			break;
 		}
-		case SDL_QUIT: //salir del juego
+		case SDL_QUIT: 
 		{
+			//salir del juego
 			quit();
 			break;
 		}
@@ -210,8 +211,30 @@ void Juego::quit(){
 
 void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas){
 
-	if(evento.event == SDL_WINDOWEVENT_CLOSE){
-		if (evento.windowID == ventana->getID())
-			quit();
+	switch (evento.event){
+		case SDL_WINDOWEVENT_CLOSE:
+		{
+			if (evento.windowID == ventana->getID())
+				quit();
+
+			break;
+		}	
+		//INVESTIGAR ESTE CASO
+
+		//case SDL_WINDOWEVENT_SIZE_CHANGED:
+		//{
+		//	//cambio las escalas
+
+		//break;
+		//}
+		case SDL_WINDOWEVENT_RESIZED:
+		{
+			double anchoActual= evento.data1;
+			double altoActual= evento.data2;
+
+			escalas->setEscalaX(120/anchoActual); //CONSTANTE UNIDADES LOGICAS TOTALES
+			escalas->setEscalaY(120/altoActual);
+		break;
+		}
 	}
 }

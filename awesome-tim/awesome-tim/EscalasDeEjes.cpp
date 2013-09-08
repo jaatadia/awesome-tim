@@ -30,3 +30,11 @@ int EscalasDeEjes::getCantidadUnidadesFisicasY(double posY)
 {
 	return posY/escalaY;
 }
+
+void EscalasDeEjes::setEscalaX(double relX){
+	escalaX = relX;
+}
+
+void EscalasDeEjes::setEscalaY(double relY){
+	escalaY = relY;
+}
