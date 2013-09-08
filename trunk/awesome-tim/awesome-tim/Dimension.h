@@ -5,7 +5,7 @@
 class Dimension: public Posicion
 {
 private:
-	double angulo;
+	double angulo; // de 0 a 360 !!
 
 public:
 	Dimension(double X, double Y,double angulo):Posicion(X,Y){
@@ -17,6 +17,9 @@ public:
 
 	virtual double getAngulo(){
 		return angulo;
+	};
+	virtual void setAngulo(double ang){
+		this->angulo=ang;
 	};
 
 	virtual bool puntoPertenece(double X, double Y)=0;

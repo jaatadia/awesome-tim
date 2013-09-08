@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "Rectangulo.h"
+#include "Constantes.h"
 
 
 #define SSM_TAG "SdlSurfaceManager"

@@ -3,10 +3,10 @@
 #include "CargadorYaml.h"
 
 int main(int argc, char* argv[]){
-		
+/*		
 	Programa prog = Programa(argv[0]);//creo el programa
 	prog.correr();//lo corro (duhh)
-
+*/
 	//CargadorYaml::cargarJuego("archivoYaml.yaml", NULL, NULL); //Linea para poder probar el YAML!!
 
 	Juego juego = Juego(argv[0]);
@@ -15,6 +15,6 @@ int main(int argc, char* argv[]){
 		juego.onLoop();
 		juego.onRender();
 	}
-	
+
 	return 0;
 }

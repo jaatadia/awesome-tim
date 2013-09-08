@@ -16,7 +16,7 @@ private:
 	Imagen* img;
 	Superficie* sup;
 	std::list<Figura*> figuras;
-	//agregar figura que se esta moviendo o rotando dentro del terreno
+	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
 
 public:
 	Terreno(int ancho,int alto);
@@ -28,10 +28,15 @@ public:
 	void setFondo(const char* img);
 
 	void agregarFigura(Figura* fig);
-	void rotarFigura(Figura* fig);
 	void eliminarFigura(Figura* fig);
 
-	void arrastrarFigura(double posClickX,double posClickY,double cantMovX,double cantMovY);
+	//NOta para mi mismo: considerar como unir estos dos tienen demasiado codigo en comun	
+	void rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
+	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
 
+	void soltarFigura();
+
+private:
+	bool hayFiguras();
 
 };

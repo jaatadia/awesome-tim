@@ -322,7 +322,7 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 	while(ang>=360) ang -= 360;
 	while(ang<0) ang += 360;
 
-	double PI = 3.1415926535897932384626433832795028841971693993751058209749;
+	//double PI = 3.1415926535897932384626433832795028841971693993751058209749;
 	double angulo = (ang*PI/180);
 	
 	double alto, ancho;
