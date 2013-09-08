@@ -32,12 +32,14 @@ Juego::Juego(const char *file){
 		fallar();
 	}
 
+	shiftPressed = false;
+
 /******************para prueba de arrastrar y rotar figura por el terreno**********************/
-/*
+
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
-*/
+
 }
 
 bool Juego::cargar(){
@@ -108,7 +110,16 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_KEYDOWN: 
 		{
-			//averiguar como leer un shift...
+			if ((evento.key.keysym.sym == SDLK_LSHIFT) || (evento.key.keysym.sym == SDLK_RSHIFT))
+				shiftPressed = true;
+
+			break;
+		}
+		case SDL_KEYUP: 
+		{
+			if ((evento.key.keysym.sym == SDLK_LSHIFT) || (evento.key.keysym.sym == SDLK_RSHIFT))
+				shiftPressed = false;
+
 			break;
 		}
 		case SDL_TEXTINPUT:
@@ -143,12 +154,16 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEBUTTONDOWN:
 		{
 			//verificar que boton es el apretado!!!
+			//verificar shift o no!!!
 
 			posClickX = escalas->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = escalas->getCantidadUnidadesLogicasY(evento.button.y);
 
 			if (posClickX>=X_TERRENO && posClickX<=ANCHO_TERRENO+X_TERRENO && posClickY>=Y_TERRENO && posClickY<=ALTO_TERRENO+Y_TERRENO)
 				//es del terreno
+				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed))
+					//click izq y shift
+					terreno->borrarFigura(posClickX,posClickY);
 
 			if ((posClickX>=X_BOTONERA && posClickX<=ANCHO_BOTONERA+X_BOTONERA && posClickY>=Y_BOTONERA && posClickY<=ALTO_BOTONERA+Y_BOTONERA))
 				//es de la botonera

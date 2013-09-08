@@ -162,3 +162,31 @@ bool Terreno::hayFiguras(){
 
 	return false;
 }
+
+void Terreno::borrarFigura(double posClickX, double posClickY){
+//aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
+	if(hayFiguras()){	
+		Figura* figuraABorrar = NULL;
+
+		bool figuraEncontrada = false;
+		//recorro al reves asi "agarro" la figura dibujada arriba
+		std::list<Figura*>::reverse_iterator iteradorLista;
+		iteradorLista = figuras.rbegin();
+
+		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+			
+			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
+			figuraABorrar = (*iteradorLista);
+			
+			iteradorLista++;
+		}
+
+		if (figuraEncontrada){
+			//saco de la lista y libero memoria
+			eliminarFigura(figuraABorrar);
+			delete figuraABorrar;
+		}
+
+	setCambio(true);
+	}
+}

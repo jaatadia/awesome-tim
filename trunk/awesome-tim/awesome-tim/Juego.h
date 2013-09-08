@@ -27,6 +27,8 @@ private:
 
 	EscalasDeEjes* escalas;
 
+	bool shiftPressed;
+
 public:
 	Juego(const char* file);//se crea el juego
 	~Juego(void);

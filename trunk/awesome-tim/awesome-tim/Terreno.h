@@ -30,9 +30,11 @@ public:
 	void agregarFigura(Figura* fig);
 	void eliminarFigura(Figura* fig);
 
-	//NOta para mi mismo: considerar como unir estos dos tienen demasiado codigo en comun	
+	//NOta para mi mismo: considerar como unir estos tres tienen demasiado codigo en comun
+	//respuesta metodo privada Figura* buscarFigura(double posX, double posY);
 	void rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
 	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
+	void borrarFigura(double posClickX, double posClickY);
 
 	void soltarFigura();
 
