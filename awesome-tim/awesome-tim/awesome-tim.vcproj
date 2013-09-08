@@ -186,7 +186,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GeneradorYAML.cpp"
+				RelativePath=".\GeneradorYaml.cpp"
 				>
 			</File>
 			<File
@@ -281,10 +281,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\ManejadorYaml.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Terreno.cpp"
 					>
 				</File>
@@ -304,7 +300,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GeneradorYAML.h"
+				RelativePath=".\GeneradorYaml.h"
 				>
 			</File>
 			<File
@@ -412,10 +408,6 @@
 				</File>
 				<File
 					RelativePath=".\ManejadorEventos.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ManejadorYaml.h"
 					>
 				</File>
 				<File
