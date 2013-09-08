@@ -14,6 +14,9 @@ public:
 	EscalasDeEjes(void);
 	~EscalasDeEjes(void);
 
+	void setEscalaX(double relX);
+	void setEscalaY(double relY);
+
 	double getCantidadUnidadesLogicasX(Sint32 pixelX);
 	double getCantidadUnidadesLogicasY(Sint32 pixelY);
 
