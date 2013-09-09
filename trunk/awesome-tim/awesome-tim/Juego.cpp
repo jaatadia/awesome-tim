@@ -238,3 +238,7 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 		}
 	}
 }
+
+void Juego::setFondo(const char* dir){
+	terreno->setFondo(dir);
+}

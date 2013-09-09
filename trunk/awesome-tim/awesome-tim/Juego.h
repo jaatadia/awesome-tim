@@ -11,6 +11,8 @@
 
 #define JUEGO_TAG "Juego"
 
+class Comandos;
+
 class Juego: public Fallable
 {
 private:
@@ -43,4 +45,6 @@ public:
 	void onEvent();//maneja los eventos
 	void onLoop();//actualiza el modelo
 	void onRender();//dibuja en la ventana
+
+	void setFondo(const char* dir);
 };
