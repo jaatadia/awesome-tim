@@ -1,16 +1,26 @@
 juego:
   botonera:
-    ancho: 10
-    alto: 20
+    ancho: 20
+    alto: 30
   terreno:
-    imagen: rutaimg.jpg
+    ancho: 40
+    alto: 50    
+    imagen: ruta.jpg
     lista_figuras:
-      - figura: CUADRADO
-        imagen: ruta
-        posicion:
-          posX: 15
-          posY: 15
-        dimension: nombre_dim
+      - figura: FiguraGeometrica
+        ID: circulo.png
+        dimension: CIRCULO
+        posX: 20
+        posY: 15
+        angulo: 10
         propiedades:
-          - prop: 10
-          - prop: 12
+          - prop: 15
+      - figura: FiguraGeometrica
+        ID: cuadrado.png
+        dimension: CUADRADO
+        posX: 30
+        posY: 17
+        angulo: 90
+        propiedades:
+          - prop: 15
+          - prop: 20
