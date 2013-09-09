@@ -156,3 +156,11 @@ bool Figura::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 	//por defecto asumo que es positivo
 	return true;
 }
+
+
+const char* Figura::getID(){
+	return (this->ID);
+};
+Dimension* Figura::getDimension(){
+	return (this->dimension);
+};

@@ -3,6 +3,8 @@
 #include "CargadorYaml.h"
 
 int main(int argc, char* argv[]){
+
+	GeneradorYaml::pruebayaml();
 /*		
 	Programa prog = Programa(argv[0]);//creo el programa
 	prog.correr();//lo corro (duhh)
