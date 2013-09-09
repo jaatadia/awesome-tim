@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Imprimible.h"
-#include "Validable.h"
 #include "Cambiable.h"
 
-class Comandos: public Imprimible,public Validable,public Cambiable
+class Comandos: public Imprimible,public Cambiable
 {
 private:
 	int ancho,alto;

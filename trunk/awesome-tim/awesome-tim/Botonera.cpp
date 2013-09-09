@@ -4,7 +4,7 @@ Botonera::Botonera(int ancho,int alto, int cantBotonesMostrados, double factorAr
 	this->ancho = ancho;
 	this->alto = alto;
 	this->x = this->y = this->scrollBot = this->scrollTop = 0;
-	this->altoAreaFiguras = factorAreaFiguras*this->alto;
+	this->altoAreaFiguras = int(factorAreaFiguras*this->alto);
 	this->altoAreaScroll = this->alto - this->altoAreaFiguras;
 	this->altoBoton = this->altoAreaFiguras / cantBotonesMostrados;
 	this->scrollStep = this->altoBoton / this->FACTOR_SCROLL;
@@ -20,7 +20,7 @@ Superficie* Botonera::getImpresion(){
 }
 
 void Botonera::updateBotonera(){
-	if (this->scrollBot & this->scrollTop == 0) {
+	if ((this->scrollBot & this->scrollTop) == 0) {
 		if (this->scrollBot) {
 			int resto = this->alturaMax - this->y - this->altoAreaFiguras;
 			int paso = (resto > this->scrollStep) ? this->scrollStep : (this->scrollStep - resto);
