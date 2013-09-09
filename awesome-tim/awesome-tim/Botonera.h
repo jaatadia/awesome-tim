@@ -4,14 +4,14 @@
 #include <iostream>
 #include <list>
 #include "Imprimible.h"
-#include "Validable.h"
 #include "Cambiable.h"
 #include "Rectangulo.h"
 #include "Figura.h"
 
 using namespace std;
+class Figura;
 
-class Botonera: public Imprimible,public Validable,public Cambiable
+class Botonera: public Imprimible,public Cambiable
 {
 private:
 

@@ -9,7 +9,6 @@
 #include "GeneradorYaml.h"
 
 class VistaFigura;
-class Validable;
 
 class Figura: public Dibujable,public Cambiable
 {

@@ -23,12 +23,12 @@ double EscalasDeEjes::getCantidadUnidadesLogicasY(Sint32 pixelY)
 
 int EscalasDeEjes::getCantidadUnidadesFisicasX(double posX)
 {
-	return posX/escalaX;
+	return int(posX/escalaX);
 }
 
 int EscalasDeEjes::getCantidadUnidadesFisicasY(double posY)
 {
-	return posY/escalaY;
+	return int(posY/escalaY);
 }
 
 void EscalasDeEjes::setEscalaX(double relX){

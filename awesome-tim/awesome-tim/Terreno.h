@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Imprimible.h"
-#include "Validable.h"
 #include "Cambiable.h"
+#include "Figura.h"
 #include <list>
 
 /* terreno es el que contiene todas las figuras
 y tiene las funciones necesarias para que le roten algun objeto le eliminen y dibuje todos los objetos en una superficie
 */
 
-class Terreno: public Imprimible,public Validable,public Cambiable
+class Terreno: public Imprimible,public Cambiable
 {
 private:
 	int ancho,alto;

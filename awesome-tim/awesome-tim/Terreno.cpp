@@ -53,7 +53,7 @@ void Terreno::agregarFigura(Figura* fig){
 
 	try{
 	(this->figuras).push_back(fig);
-	} catch (std::exception& e) {
+	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
 		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
 	};
@@ -106,7 +106,7 @@ void Terreno::eliminarFigura(Figura* fig){
 
 	try{
 	(this->figuras).remove(fig);
-	} catch (std::exception& e) {
+	} catch (...) {
 		ErrorLogHandler::addError("eliminarFigura","excepcion al eliminar una figura de la lista (figuras.remove)");
 	};
 }
