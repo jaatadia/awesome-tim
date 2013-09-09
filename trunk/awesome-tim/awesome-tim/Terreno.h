@@ -38,6 +38,9 @@ public:
 
 	void soltarFigura();
 
+	int getAncho();
+	int getAlto();
+
 private:
 	bool hayFiguras();
 

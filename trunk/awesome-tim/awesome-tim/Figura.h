@@ -37,6 +37,9 @@ public:
 	void dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas);
 	void dibujar(Superficie* super,EscalasDeEjes* escalas);
 
+	const char* getID();
+	Dimension* getDimension();
+
 private:
 	//defino positivo en sentido horario
 	bool anguloEsPositivo(double X1, double Y1, double X2, double Y2); 

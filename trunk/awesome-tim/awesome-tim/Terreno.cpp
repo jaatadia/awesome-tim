@@ -190,3 +190,10 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 	setCambio(true);
 	}
 }
+
+int Terreno::getAncho(){
+	return (this->ancho);
+};
+int Terreno::getAlto(){
+	return (this->alto);
+};
