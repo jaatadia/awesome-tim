@@ -44,6 +44,15 @@ void SdlSurfaceManager::pintarSup(SDL_Surface *sup, Uint32 color){
 	SDL_FillRect(sup,&rect,color);
 }
 
+void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int ancho,int alto,Uint32 color){
+	SDL_Rect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.h = alto;
+	rect.w = ancho;
+	SDL_FillRect(sup,&rect,color);
+
+}
 
 //carga una imagen de direccion cadena
 SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){

@@ -30,6 +30,7 @@ public:
 	Superficie(int ancho,int alto);//nueva superficie de las dimensiones pasadas
 	~Superficie(void); //destructor de la superficie
 	void restore();//repinta el fondo de la imagen
+	void restoreGris();//repinta el fondo de la imagen
 	int getAlto(); //devuelve el alto de la superficie
 	int getAncho(); //devuelve el ancho de la superficie
 	void setTransparency(Uint8 alpha);//transparenta toda la superficie a lo pedido (0 completamente transparente 255 completamente opaco)
@@ -38,6 +39,8 @@ public:
 	void dibujarSupreficie(Superficie* sup,Rectangulo* rectOrigen,int xDestino,int yDestino);
 	//dibuja en las pocisiones x/yDestino el rectOrigen de img (rectOrigen pude ser NULL si se desea copiar toda la superficie sup)
 	void dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,int yDestino);
+
+	void dibujarCuadradoNegro(int x, int y, int ancho,int alto);
 
 	//las siguientes devuelve NULL en caso de error
 	Superficie* rotarSuperficie(double angulo);//devuelve una copia rotada de la imagen

@@ -56,7 +56,7 @@ Juego::~Juego(){
 	delete ventana;
 	delete superficie;
 	delete terreno;
-	delete botonera;
+	//delete botonera;
 	delete comandos;
 	delete escalas;
 	if(figuraEnAire!=NULL)delete figuraEnAire;
@@ -81,9 +81,9 @@ void Juego:: onRender(){
 		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,X_BOTONERA,Y_BOTONERA);
 	}
 	
-	if(comandos->huboCambios()){
+	//if(comandos->huboCambios()){
 		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,X_COMANDOS,Y_COMANDOS);
-	}
+	//}
 
 	ventana->dibujar(superficie);
 	

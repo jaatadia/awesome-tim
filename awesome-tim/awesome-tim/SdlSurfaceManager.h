@@ -25,6 +25,7 @@ public:
 	static SDL_Surface* crearSup (int ancho,int alto);//crea una superficie de las dimensiones pasadas
 	static SDL_Surface* crearSup ();//crea una superficie dedault	
 	static void pintarSup(SDL_Surface* sup, Uint32 color);//pinta la superficie de un color
+	static void dibujarCuadrado(SDL_Surface* sup, int x, int y, int ancho,int alto,Uint32 color);
 
 	static SDL_Surface* rotar90(SDL_Surface *sur);//rota la imagen 90 grados
 	static SDL_Surface* rotar180(SDL_Surface *sur);//rota la imagen 180 grados
