@@ -88,3 +88,13 @@ Superficie* Superficie::rotarCuadradoSuperficie(double ang){
 	}
 	return sup;
 }
+
+void Superficie::dibujarCuadradoNegro(int x, int y, int ancho,int alto){
+	Uint32 negro = SDL_MapRGBA(this->superficie->format,0,0,0,255);
+	SdlSurfaceManager::dibujarCuadrado(superficie,x,y,ancho,alto,negro);
+}
+
+void Superficie::restoreGris(){
+	Uint32 gris = SDL_MapRGBA(this->superficie->format,200,200,200,255);
+	SdlSurfaceManager::pintarSup(superficie,gris);
+}
