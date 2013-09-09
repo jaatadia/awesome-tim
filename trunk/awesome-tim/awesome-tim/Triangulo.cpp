@@ -61,3 +61,21 @@ double Triangulo::sentido_circulacion(Posicion* A1,Posicion* A2,Posicion* A3){
 	return ((A1x - A3x) * (A2y - A3y) - (A1y - A3y) * (A2x - A3x)); 
 
 }
+
+//A implementar!!!!!!!!!!!!!!!!!!!!!!
+double Triangulo::getAncho(void){
+	return 0;
+}
+
+double Triangulo::getAlto(void){
+	return 0;
+}
+
+
+double Triangulo::getAngulo(void){
+		return this->angulo;
+}
+
+void Triangulo::setAngulo(double ang){
+		this->angulo=ang;
+}

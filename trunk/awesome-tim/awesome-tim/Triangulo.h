@@ -26,4 +26,8 @@ public:
 
 	bool puntoPertenece(double X, double Y);
 
+	double getAncho(void);
+	double getAlto(void);
+	double getAngulo(void);
+	void setAngulo(double ang);
 };
