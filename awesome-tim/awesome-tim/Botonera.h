@@ -9,16 +9,16 @@
 #include "Figura.h"
 
 using namespace std;
-// class Figura;
+class Figura;
 
 class Botonera: public Imprimible,public Cambiable
 {
 private:
 
 	// Maty <
-	static const int TRIANGULO = 0;
-	static const int CUADRADO  = TRIANGULO + 1;
-	static const int CIRCULO   = CUADRADO + 1;
+	//static const int TRIANGULO = 0;
+	//static const int CUADRADO  = TRIANGULO + 1;
+	//static const int CIRCULO   = CUADRADO + 1;
 	// Maty > -- Esto deberia ir en alguna otra parte
 
 	static const int FACTOR_SCROLL = 10;

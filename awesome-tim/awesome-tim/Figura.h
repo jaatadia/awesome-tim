@@ -1,10 +1,19 @@
 #pragma once
 
+#include "Posicion.h"
 #include "Dibujable.h"
 #include "Dimension.h"
 #include "Cambiable.h"
 #include "VistaFigura.h"
 #include "EscalasDeEjes.h"
+#include "GeneradorYaml.h"
+
+#define CIRCULO 0
+#define TRIANGULO 1
+#define CUADRADO 2
+
+
+class VistaFigura;
 
 class Figura: public Dibujable,public Cambiable
 {
@@ -34,6 +43,8 @@ public:
 	void dibujar(Superficie* super,EscalasDeEjes* escalas);
 
 	const char* getID();
+	
+	virtual int getTipoDimension(){return -1;};
 	Dimension* getDimension();
 
 private:

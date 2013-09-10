@@ -9,27 +9,27 @@ Comandos::Comandos(int ancho,int alto){
 	dir[0] = '\0';
 	
 	
-	SEPARACION = 5;
+	SEP = 5;
 
 	ANCHO_TBOX = ancho/3;
 	ALTO_TBOX = alto *3/4;
-	X_TBOX = SEPARACION;
+	X_TBOX = SEP;
 	Y_TBOX = alto/8 ;
 	
 	ANCHO_B_OK = ancho/8;
 	ALTO_B_OK = ALTO_TBOX;
-	X_B_OK = X_TBOX + ANCHO_TBOX + SEPARACION;
+	X_B_OK = X_TBOX + ANCHO_TBOX + SEP;
 	Y_B_OK = Y_TBOX;
 
 
 	ANCHO_B_SAVE = ANCHO_B_OK;
 	ALTO_B_SAVE = ALTO_TBOX;
-	X_B_SAVE = ancho - (ANCHO_B_SAVE*2+2*SEPARACION);
+	X_B_SAVE = ancho - (ANCHO_B_SAVE*2+2*SEP);
 	Y_B_SAVE = Y_TBOX;
 
 	ANCHO_B_QUIT = ANCHO_B_OK;
 	ALTO_B_QUIT = ALTO_TBOX;
-	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEPARACION;
+	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEP;
 	Y_B_QUIT = Y_TBOX;
 
 	

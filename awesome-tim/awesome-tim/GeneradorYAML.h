@@ -10,10 +10,10 @@
 
 #include "yaml-cpp/yaml.h"
 
-/*
+
 class Botonera;
 class Terreno;
-*/
+
 class GeneradorYaml{
 
 private:

@@ -380,6 +380,8 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 				int nuevoX = int((nuevoCentroX + temp1 - (j-centroY)*seno)+0.99);
 				int nuevoY = int((nuevoCentroY + temp2 + (j-centroY)*coseno)+0.99);
 				putPixel(img,nuevoX,nuevoY,pixel);
+			}else if((pixel!=alpha)){
+				putPixel(img,int(nuevoCentroX),int(nuevoCentroX),pixel);
 			}
 		}	
 	}

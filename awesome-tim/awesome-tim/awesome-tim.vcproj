@@ -186,6 +186,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FiguraCircular.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraCuadrada.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraTriangular.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GeneradorYaml.cpp"
 				>
 			</File>
@@ -309,6 +321,18 @@
 			</File>
 			<File
 				RelativePath=".\EscalasDeEjes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraCircular.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraCuadrada.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraTriangular.h"
 				>
 			</File>
 			<File
