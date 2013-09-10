@@ -1,4 +1,6 @@
 #include "Triangulo.h"
+#include "Constantes.h"
+#include <math.h>
 
 Triangulo::Triangulo(double X, double Y, double angulo, double base, double altura): Dimension(X,Y,angulo){
 	this->centroX = X;
@@ -6,11 +8,31 @@ Triangulo::Triangulo(double X, double Y, double angulo, double base, double altu
 	this->angulo = angulo;
 	this->base = base;
 	this->altura = altura;
-	calcular_puntos();
+	crear_puntos_iniciales();
+	recalcular_puntos_rotados();
+
 }
 
-void Triangulo::calcular_puntos(void){
-	//FIXME: No calcula los puntos si hay angulo distinto de 0
+void Triangulo::rotar_punto(Posicion* punto, double angulo){
+	double x = punto->getX();
+	double y = punto->getY();
+
+	double angle = (PI*angulo) / 180.0;
+
+	x = this->centroX + ((x - this->centroX) * cos(angle)) - ((this->centroY - y) * sin(angle));
+	y = this->centroY + ((this->centroY - y) * cos(angle)) - ((x - this->centroX) * sin(angle));
+
+	punto->setX(x);
+	punto->setY(y);
+}
+
+void Triangulo::recalcular_puntos_rotados(void){
+	rotar_punto(this->A1,this->angulo);
+	rotar_punto(this->A2,this->angulo);
+	rotar_punto(this->A3,this->angulo);
+}
+
+void Triangulo::crear_puntos_iniciales(void){
 
 	double A1x, A1y, A2x, A2y, A3x, A3y;
 
@@ -110,5 +132,5 @@ double Triangulo::getAngulo(void){
 
 void Triangulo::setAngulo(double ang){
 	this->angulo = ang;
-	calcular_puntos();
+	recalcular_puntos_rotados();
 }

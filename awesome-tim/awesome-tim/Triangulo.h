@@ -21,7 +21,9 @@ private:
 	static double sentido_circulacion(Posicion* A1,Posicion* A2,Posicion* A3);
 	static bool orientaciones_iguales(double Origen,double circ1,double circ2,double circ3);
 	static bool puntoPerteneceAlPerimetro(double x,double y);
-	void calcular_puntos(void);
+	void recalcular_puntos_rotados(void);
+	void crear_puntos_iniciales(void);
+	void rotar_punto(Posicion* punto, double angulo);
 
 public:
 	Triangulo(double X, double Y, double angulo, double base, double altura);
