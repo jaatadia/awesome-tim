@@ -34,16 +34,19 @@ void VistaFigura::dibujar(Superficie *canvas,EscalasDeEjes* unidadesLogicas){
 }
 
 void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
+	
 	delete img;
+
+	bool deleteTemp = false;
 	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID));
 	Imagen* temp2 = temp;
 	
-	if(fig->dimension->getAngulo()!=0) temp2 = temp->rotarCuadradoImagen(fig->dimension->getAngulo());
 	if((unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())!= temp->getAncho())||
 		(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())!= temp->getAlto())){
-		Imagen* temp3 = temp2->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
-		delete temp2;//comentar para rotar figura... 
-		temp2 = temp3;
+		temp2 = temp->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
+		deleteTemp = true;
 	}
-	img = temp2;
+
+	img = temp2->rotarImagen(fig->dimension->getAngulo());
+	if(deleteTemp) delete temp2;
 }
