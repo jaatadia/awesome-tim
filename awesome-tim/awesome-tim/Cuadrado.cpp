@@ -5,21 +5,10 @@ Cuadrado::Cuadrado(double ancho,double alto,double X, double Y, double angulo): 
 	this->ancho = ancho;
 	this->alto = alto;
 
-	diagonal = sqrt(alto*alto + ancho*ancho);
+	diagonal = sqrt(alto*alto + ancho*ancho)/2;
 	anguloDiagonal = 45;
 
-	vertice1.setX(ancho/2);
-	vertice1.setY(-alto/2);
-
-	vertice2.setX(-ancho/2);
-	vertice2.setY(-alto/2);
-
-	vertice3.setX(-ancho/2);
-	vertice3.setY(alto/2);
-
-	vertice4.setX(ancho/2);
-	vertice4.setY(alto/2);
-
+	setAngulo(angulo);
 }
 
 Cuadrado::~Cuadrado(void){
@@ -34,7 +23,7 @@ double Cuadrado::getAlto(){
 }
 
 bool Cuadrado::puntoPertenece(double X, double Y){
-/*
+
 	bool pertenece = true;
 
 	Recta r1(vertice1.getX(), vertice1.getY(), vertice2.getX(), vertice2.getY());
@@ -74,10 +63,10 @@ bool Cuadrado::puntoPertenece(double X, double Y){
 	}
 
 	return pertenece;
-*/
+
 
 //si no esta rotado vale lo de abajo
-
+/*
 	double bordeLeft,bordeRight,bordeUp,bordeDown;
 
 	bordeLeft = getX() - getAncho()/2 ;
@@ -89,7 +78,7 @@ bool Cuadrado::puntoPertenece(double X, double Y){
 		return true;
 
 	return false;
-
+*/
 }
 
 void Cuadrado::setAngulo(double anguloRecibido){
@@ -99,20 +88,18 @@ void Cuadrado::setAngulo(double anguloRecibido){
 	//reduzco a 90 grados ya que despues se repite el area ocupada y convierto a radianes 
 	while (anguloRecibido >= 90) anguloRecibido-=90;
 
-	this->anguloDiagonal = anguloDiagonal+anguloRecibido;
-
-	double ang = (anguloDiagonal*PI/180);
+	double ang = (anguloRecibido*PI/180);
 	
-	vertice1.setX(diagonal*cos(ang));
-	vertice1.setY(-diagonal*sin(ang));
+	vertice1.setX(diagonal*cos(ang+PI/4+0*PI/2));
+	vertice1.setY(-diagonal*sin(ang+PI/4+0*PI/2));
 
-	vertice2.setX(-diagonal*cos(ang));
-	vertice2.setY(-diagonal*sin(ang));
+	vertice2.setX(diagonal*cos(ang+PI/4+1*PI/2));
+	vertice2.setY(-diagonal*sin(ang+PI/4+1*PI/2));
 
-	vertice3.setX(-diagonal*cos(ang));
-	vertice3.setY(diagonal*sin(ang));
+	vertice3.setX(diagonal*cos(ang+PI/4+2*PI/2));
+	vertice3.setY(-diagonal*sin(ang+PI/4+2*PI/2));
 
-	vertice4.setX(diagonal*cos(ang));
-	vertice4.setY(diagonal*sin(ang));
+	vertice4.setX(diagonal*cos(ang+PI/4+3*PI/2));
+	vertice4.setY(-diagonal*sin(ang+PI/4+3*PI/2));
 
 }
