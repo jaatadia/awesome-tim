@@ -16,12 +16,15 @@ Juego::Juego(const char *file){
 
 	ventana = new Ventana();
 	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
+	
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO);
+	terreno->setFondo("../images/test.jpg");
+	
 	botonera = new Botonera(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	escalas = new EscalasDeEjes();
 	figuraEnAire=NULL;
-
+	
 	cargar();
 
 	if(superficie->huboFallos()||ventana->huboFallos()){
