@@ -194,6 +194,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Test_Triangulo.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Triangulo.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaFigura.cpp"
 				>
 			</File>
@@ -309,6 +317,14 @@
 			</File>
 			<File
 				RelativePath=".\Recta.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Test_Triangulo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Triangulo.h"
 				>
 			</File>
 			<File
