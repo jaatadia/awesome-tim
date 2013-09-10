@@ -28,9 +28,6 @@ bool Test_Triangulo::prueba_dentro_del_triangulo(void){
 
 	bool pertenece = triangulo->puntoPertenece(1,0.5);
 
-	delete(punto1);
-	delete(punto2);
-	delete(punto3);
 	delete(triangulo);
 	return pertenece;
 }
@@ -45,9 +42,6 @@ bool Test_Triangulo::prueba_fuera_del_triangulo(void){
 
 	bool pertenece = (!triangulo->puntoPertenece(4,5));
 
-	delete(punto1);
-	delete(punto2);
-	delete(punto3);
 	delete(triangulo);
 	return pertenece;
 }
@@ -62,9 +56,6 @@ bool Test_Triangulo::prueba_perimetro(void){
 
 	bool pertenece = (!triangulo->puntoPertenece(0.5,0.5));
 
-	delete(punto1);
-	delete(punto2);
-	delete(punto3);
 	delete(triangulo);
 	return pertenece;
 }
@@ -79,9 +70,6 @@ bool Test_Triangulo::prueba_rectangulo_exterior(void){
 
 	bool pertenece = (!triangulo->puntoPertenece(0.05,0.06));
 
-	delete(punto1);
-	delete(punto2);
-	delete(punto3);
 	delete(triangulo);
 	return pertenece;
 	
