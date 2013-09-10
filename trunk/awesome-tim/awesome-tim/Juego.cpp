@@ -36,6 +36,7 @@ Juego::Juego(const char *file){
 	}
 
 	shiftPressed = false;
+	scroll = NO_SCROLL;
 }
 
 bool Juego::cargar(){
@@ -172,7 +173,7 @@ while(SDL_PollEvent(&evento)){
 
 			if (enBotonera(posClickX,posClickY)){
 				//es de la botonera
-				//poner un while apretado para el scroll
+				//poner un while apretado para el scroll?
 			}
 
 			if (enComandos(posClickX,posClickY))
@@ -181,7 +182,6 @@ while(SDL_PollEvent(&evento)){
 					//como comandos trabaja con pixels (?) lo paso sin convertir
 					//y por cierto: REFERENCIA CIRCULAAAAR!!!
 					comandos->click(evento.button.x - X_COMANDOS, evento.button.y - Y_COMANDOS, this);
-
 				}
 
 			break;
