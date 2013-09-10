@@ -26,7 +26,13 @@ bool Test_Triangulo::prueba_dentro_del_triangulo(void){
 
 	Triangulo* triangulo = new Triangulo(0,0,0,punto1,punto2,punto3);
 
-	return (triangulo->puntoPertenece(1,0.5));
+	bool pertenece = triangulo->puntoPertenece(1,0.5);
+
+	delete(punto1);
+	delete(punto2);
+	delete(punto3);
+	delete(triangulo);
+	return pertenece;
 }
 
 bool Test_Triangulo::prueba_fuera_del_triangulo(void){
@@ -37,8 +43,13 @@ bool Test_Triangulo::prueba_fuera_del_triangulo(void){
 
 	Triangulo* triangulo = new Triangulo(0,0,0,punto1,punto2,punto3);
 
-	return (!triangulo->puntoPertenece(4,5));
+	bool pertenece = (!triangulo->puntoPertenece(4,5));
 
+	delete(punto1);
+	delete(punto2);
+	delete(punto3);
+	delete(triangulo);
+	return pertenece;
 }
 
 bool Test_Triangulo::prueba_perimetro(void){
@@ -49,8 +60,13 @@ bool Test_Triangulo::prueba_perimetro(void){
 
 	Triangulo* triangulo = new Triangulo(0,0,0,punto1,punto2,punto3);
 
-	return (!triangulo->puntoPertenece(0.5,0.5));
+	bool pertenece = (!triangulo->puntoPertenece(0.5,0.5));
 
+	delete(punto1);
+	delete(punto2);
+	delete(punto3);
+	delete(triangulo);
+	return pertenece;
 }
 
 bool Test_Triangulo::prueba_rectangulo_exterior(void){
@@ -61,6 +77,12 @@ bool Test_Triangulo::prueba_rectangulo_exterior(void){
 
 	Triangulo* triangulo = new Triangulo(0,0,0,punto1,punto2,punto3);
 
-	return (!triangulo->puntoPertenece(0.05,0.06));
+	bool pertenece = (!triangulo->puntoPertenece(0.05,0.06));
 
+	delete(punto1);
+	delete(punto2);
+	delete(punto3);
+	delete(triangulo);
+	return pertenece;
+	
 }
