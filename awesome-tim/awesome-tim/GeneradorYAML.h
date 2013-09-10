@@ -1,16 +1,19 @@
 #pragma once
-#include "yaml-cpp/yaml.h"
+
+#include "Figura.h"
 #include "Botonera.h"
 #include "Terreno.h"
-#include "Figura.h"
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include <iostream>
 #include <fstream>
 
+#include "yaml-cpp/yaml.h"
+
+/*
 class Botonera;
 class Terreno;
-
+*/
 class GeneradorYaml{
 
 private:
