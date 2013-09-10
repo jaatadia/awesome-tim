@@ -55,6 +55,7 @@ Juego::~Juego(){
 	//delete botonera;
 	delete comandos;
 	delete escalas;
+	Contenedor::deleteContenedor();
 	if(figuraEnAire!=NULL)delete figuraEnAire;
 	SDL_Quit();
 	ErrorLogHandler::closeLog();
