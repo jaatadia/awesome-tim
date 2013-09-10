@@ -105,12 +105,7 @@ out << YAML::BeginMap;
 			out << YAML::Key << "terreno";
 			out << YAML::Value << terr; //adentro de terreno
 		out << YAML::EndMap;
-		/*
-		out << YAML::BeginMap;
-			out << YAML::Key << "comandos";
-			out << YAML::Value << com; //adentro de cuadro de comandos
-		out << YAML::EndMap;
-		*/
+
 	out << YAML::EndSeq;
 out << YAML::EndMap;
 

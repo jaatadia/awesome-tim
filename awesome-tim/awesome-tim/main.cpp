@@ -10,6 +10,7 @@ void test(void){
 	//CargadorYaml::cargarJuego("archivoYaml.yaml", NULL, NULL); //Linea para poder probar el YAML!!
 	GeneradorYaml::pruebayaml();
 	Test_Triangulo::prueba_triangulo();
+	Contenedor::pruebaContenedor();
 }
 
 int main(int argc, char* argv[]){

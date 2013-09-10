@@ -12,6 +12,8 @@ public:
 	static void* getMultimedia(const char* ID);
 	static void deleteContenedor();
 
+	static void pruebaContenedor();
+
 private:
 	
 	std::map<const char* ,void*> mapa;
