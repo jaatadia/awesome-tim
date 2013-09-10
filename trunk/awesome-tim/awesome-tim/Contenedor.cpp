@@ -7,7 +7,7 @@ Contenedor* Contenedor::cont = NULL;
 void Contenedor::putMultimedia(const char* ID,void* medio){
 	if (cont == NULL){
 		cont = new Contenedor();
-		cont->mapa["NONE"] = new Imagen("NONE");
+		cont->mapa["NONE"] = new Imagen();
 	}
 	cont->mapa[ID]=medio;
 }

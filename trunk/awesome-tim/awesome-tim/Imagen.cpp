@@ -4,8 +4,13 @@
 #include "SDL_ttf.h"
 
 //crea una imagen sin superficie
-Imagen::Imagen(){
+Imagen::Imagen(bool flag){
 	superficie = NULL;
+}
+
+//crea una imagen sin superficie
+Imagen::Imagen(){
+	superficie = SdlSurfaceManager::crearSup();
 }
 
 //crea una imagen a partir del directorio pasado en caso de no lograrse se pone como fallado
@@ -58,7 +63,7 @@ void Imagen::setTransparency(Uint8 alpha){
 //devuelve una copia rotada de la imagen
 Imagen* Imagen::rotarImagen(double ang){
 	
-	Imagen* img = new Imagen();
+	Imagen* img = new Imagen(false);
 	img->superficie = SdlSurfaceManager::rotar(superficie,ang);
 	if(SdlSurfaceManager::huboFallas()){
 		delete img;
@@ -70,7 +75,7 @@ Imagen* Imagen::rotarImagen(double ang){
 //devuelve una copia rotada de la imagen conservando las dimensiones
 Imagen* Imagen::rotarCuadradoImagen(double ang){
 	
-	Imagen* img = new Imagen();
+	Imagen* img = new Imagen(false);
 	img->superficie = SdlSurfaceManager::rotarLock(superficie,ang);
 	if(SdlSurfaceManager::huboFallas()){
 		delete img;
@@ -81,7 +86,7 @@ Imagen* Imagen::rotarCuadradoImagen(double ang){
 
 //devuelve una copia resizeada de la imagen
 Imagen* Imagen::scaleImagen(int pixelesAncho,int pixelesAlto){
-	Imagen* img = new Imagen();
+	Imagen* img = new Imagen(false);
 	img->superficie = SdlSurfaceManager::scale(this->superficie,pixelesAncho,pixelesAlto);
 	if(SdlSurfaceManager::huboFallas()){
 		delete img;
