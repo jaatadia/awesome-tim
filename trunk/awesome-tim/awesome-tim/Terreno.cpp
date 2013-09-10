@@ -24,10 +24,13 @@ Terreno::~Terreno(void){
 	delete sup;
 }
 
-Superficie* Terreno::getImpresion(EscalasDeEjes* escalas){
+void Terreno::redraw(EscalasDeEjes* escalas){
 	//recorro todas las figuras y las voy dibujando
 
-	sup->restore();//antes repinto todo de negro asi no quedan rastros de movimiento
+	if(this->img == NULL) sup->restore();//antes repinto todo de negro asi no quedan rastros de movimiento
+	else sup->dibujarImagen(this->img,NULL,0,0);
+	
+
 	
 	std::list<Figura*>::iterator iteradorLista;
 
@@ -37,16 +40,30 @@ Superficie* Terreno::getImpresion(EscalasDeEjes* escalas){
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
 		figuraActiva->dibujar(this->sup,escalas);
+}
 
+Superficie* Terreno::getImpresion(EscalasDeEjes* escalas){
+	if(this->huboCambios()) redraw(escalas);
+	this->setCambio(false);
 	return sup;
 }
 
+void Terreno::redraw(){}
+
 Superficie* Terreno::getImpresion(){
+	if(this->huboCambios()) redraw();
+	this->setCambio(false);
 	return sup;
 }
 
 void Terreno::setFondo(const char* ruta_img){
-	this->img = new Imagen(ruta_img);
+	Imagen* temp = new Imagen(ruta_img);
+	if(!temp->huboFallos()){
+		this->setCambio(true);
+		delete this->img;
+		this->img = temp->scaleImagen(this->ancho,this->alto);
+	}
+	delete temp;
 }
 
 void Terreno::agregarFigura(Figura* fig){

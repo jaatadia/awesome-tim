@@ -43,5 +43,7 @@ public:
 
 private:
 	bool hayFiguras();
+	void redraw(EscalasDeEjes* escalas);
+	void redraw();
 
 };
