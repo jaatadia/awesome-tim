@@ -90,16 +90,33 @@ void Cuadrado::setAngulo(double anguloRecibido){
 
 	double ang = (anguloRecibido*PI/180);
 	
-	vertice1.setX(diagonal*cos(ang+PI/4+0*PI/2));
-	vertice1.setY(-diagonal*sin(ang+PI/4+0*PI/2));
+	if (ang != 0){
+		vertice1.setX(diagonal*cos(ang+PI/4+0*PI/2));
+		vertice1.setY(-diagonal*sin(ang+PI/4+0*PI/2));
 
-	vertice2.setX(diagonal*cos(ang+PI/4+1*PI/2));
-	vertice2.setY(-diagonal*sin(ang+PI/4+1*PI/2));
+		vertice2.setX(diagonal*cos(ang+PI/4+1*PI/2));
+		vertice2.setY(-diagonal*sin(ang+PI/4+1*PI/2));
 
-	vertice3.setX(diagonal*cos(ang+PI/4+2*PI/2));
-	vertice3.setY(-diagonal*sin(ang+PI/4+2*PI/2));
+		vertice3.setX(diagonal*cos(ang+PI/4+2*PI/2));
+		vertice3.setY(-diagonal*sin(ang+PI/4+2*PI/2));
 
-	vertice4.setX(diagonal*cos(ang+PI/4+3*PI/2));
-	vertice4.setY(-diagonal*sin(ang+PI/4+3*PI/2));
+		vertice4.setX(diagonal*cos(ang+PI/4+3*PI/2));
+		vertice4.setY(-diagonal*sin(ang+PI/4+3*PI/2));
+
+	}else{
+
+		vertice1.setX(ancho/2);
+		vertice1.setY(-alto/2);
+
+		vertice2.setX(-ancho/2);
+		vertice2.setY(-alto/2);
+
+		vertice3.setX(-ancho/2);
+		vertice3.setY(alto/2);
+
+		vertice4.setX(ancho/2);
+		vertice4.setY(alto/2);
+	}
+
 
 }

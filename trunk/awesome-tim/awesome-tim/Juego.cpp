@@ -37,6 +37,11 @@ Juego::Juego(const char *file){
 
 	shiftPressed = false;
 	scroll = NO_SCROLL;
+
+/***************Test de arrastra y girar figura*************************/
+	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
+	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
+	terreno->agregarFigura(fig);
 }
 
 bool Juego::cargar(){
@@ -155,6 +160,14 @@ while(SDL_PollEvent(&evento)){
 						terreno->rotarFigura(posClickX , posClickY , cantMovX, cantMovY);
 					}
 
+			//chequeo la posicion final del mouse por si hay perdida de foco del terreno
+
+			double posFinalX = posClickX + cantMovX;
+			double posFinalY = posClickY + cantMovY;
+
+			if (!enTerreno(posFinalX,posFinalY))
+				terreno->soltarFigura();
+
 			break;
 		}
 		case SDL_MOUSEBUTTONDOWN:
@@ -239,6 +252,15 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 
 		//break;
 		//}
+		case SDL_WINDOWEVENT_LEAVE:
+		{
+			//mouse salio de la pantalla
+			
+			terreno->soltarFigura();
+			//soltarFiguraViva();
+
+			break;
+		}
 		case SDL_WINDOWEVENT_RESIZED:
 		{
 			double anchoActual= evento.data1;
@@ -246,7 +268,7 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 
 			escalas->setEscalaX(120/anchoActual); //CONSTANTE UNIDADES LOGICAS TOTALES
 			escalas->setEscalaY(120/altoActual);
-		break;
+			break;
 		}
 	}
 }
