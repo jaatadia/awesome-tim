@@ -4,7 +4,7 @@
 
 class Dimension: public Posicion
 {
-private:
+protected:
 	double angulo; // de 0 a 360 !!
 
 public:

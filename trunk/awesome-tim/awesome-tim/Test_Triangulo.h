@@ -12,5 +12,7 @@ public:
 private:
 	static bool prueba_dentro_del_triangulo(void);
 	static bool prueba_fuera_del_triangulo(void);
+	static bool prueba_perimetro(void);
+	static bool prueba_rectangulo_exterior(void);
 
 };

@@ -12,18 +12,27 @@ private:
 	Posicion* A3;
 	double centroX;
 	double centroY;
-	double angulo;
+	double base;
+	double altura;
 
 private:
 	static bool todos_positivos(double num1, double num2, double num3, double num4);
 	static bool todos_negativos(double num1, double num2, double num3, double num4);
 	static double sentido_circulacion(Posicion* A1,Posicion* A2,Posicion* A3);
 	static bool orientaciones_iguales(double Origen,double circ1,double circ2,double circ3);
+	static bool puntoPerteneceAlPerimetro(double x,double y);
+	void calcular_puntos(void);
 
 public:
-	Triangulo(double X, double Y, double angulo, Posicion* punto1, Posicion* punto2, Posicion* punto3);
+	Triangulo(double X, double Y, double angulo, double base, double altura);
+	
+	//No utilizar este constructr salvo para pruebas (no necesariamente el centro es real ya que no lo verifica)
+	Triangulo(double X, double Y, double angulo, Posicion* punto1,Posicion* punto2,Posicion* punto3);
+	
 	~Triangulo(void);
 
+	// Un punto pertenece al triangulo solo si esta en el interior de el. Si pertenece a su perimetro,
+	// entonces no pertenece al triangulo :P
 	bool puntoPertenece(double X, double Y);
 
 	double getAncho(void);
