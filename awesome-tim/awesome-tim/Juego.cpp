@@ -39,9 +39,11 @@ Juego::Juego(const char *file){
 	scroll = NO_SCROLL;
 
 /***************Test de arrastra y girar figura*************************/
+/*
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
+*/
 }
 
 bool Juego::cargar(){
