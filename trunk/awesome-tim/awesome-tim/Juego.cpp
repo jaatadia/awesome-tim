@@ -39,11 +39,11 @@ Juego::Juego(const char *file){
 	scroll = NO_SCROLL;
 
 /***************Test de arrastra y girar figura*************************/
-/*
+
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
-*/
+
 }
 
 bool Juego::cargar(){
@@ -155,12 +155,17 @@ while(SDL_PollEvent(&evento)){
 			// y verificar que el boton izq este apretado o no deberia pasar arrastre, idem boton derecho
 			if (enTerreno(posClickX,posClickY))
 				if (evento.motion.state == SDL_BUTTON_LMASK){				
-				//  terreno->arrastrarFigura(posClickX - X_TERRENO, posClickY - Y_TERRENO, cantMovX, cantMovY);
-					terreno->arrastrarFigura(posClickX , posClickY , cantMovX, cantMovY);
+					terreno->arrastrarFigura(posClickX - escalas->getCantidadUnidadesLogicasX(X_TERRENO), posClickY - escalas->getCantidadUnidadesLogicasY(Y_TERRENO), cantMovX, cantMovY);
 				}else
 					if (evento.motion.state == SDL_BUTTON_RMASK){
-						terreno->rotarFigura(posClickX , posClickY , cantMovX, cantMovY);
+						terreno->rotarFigura(posClickX - escalas->getCantidadUnidadesLogicasX(X_TERRENO), posClickY - escalas->getCantidadUnidadesLogicasY(Y_TERRENO), cantMovX, cantMovY);
 					}
+
+			//muevo la figura voladora, si es que la hay
+			if (figuraEnAire)
+				if (figuraEnAire->esMiPosicion(posClickX,posClickY))
+					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
+
 
 			//chequeo la posicion final del mouse por si hay perdida de foco del terreno
 
@@ -184,11 +189,11 @@ while(SDL_PollEvent(&evento)){
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed))
 					//click izq y shift
-					terreno->borrarFigura(posClickX,posClickY);
+					terreno->borrarFigura(posClickX - escalas->getCantidadUnidadesLogicasX(X_TERRENO),posClickY - escalas->getCantidadUnidadesLogicasY(Y_TERRENO));
 
 			if (enBotonera(posClickX,posClickY)){
 				//es de la botonera
-				//poner un while apretado para el scroll?
+				//scroll o crear figura
 			}
 
 			if (enComandos(posClickX,posClickY))
@@ -206,11 +211,14 @@ while(SDL_PollEvent(&evento)){
 			posClickX = escalas->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = escalas->getCantidadUnidadesLogicasY(evento.button.y);
 
-			if (posClickX>=X_TERRENO && posClickX<=ANCHO_TERRENO+X_TERRENO && posClickY>=Y_TERRENO && posClickY<=ALTO_TERRENO+Y_TERRENO)
-				//es del terreno
+			if (enTerreno(posClickX,posClickY))
+				//O es del terreno
 				terreno->soltarFigura();
 
-			//o es de figura viva
+			if (figuraEnAire)
+				//o es de figura viva
+				//soltarFiguraenAire();
+
 
 			break;
 		}
@@ -259,7 +267,7 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			//mouse salio de la pantalla
 			
 			terreno->soltarFigura();
-			//soltarFiguraViva();
+			//soltarFiguraEnAire() si es que la hay
 
 			break;
 		}
@@ -268,8 +276,8 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			double anchoActual= evento.data1;
 			double altoActual= evento.data2;
 
-			escalas->setEscalaX(120/anchoActual); //CONSTANTE UNIDADES LOGICAS TOTALES
-			escalas->setEscalaY(120/altoActual);
+			escalas->setEscalaX(UNIDADES_LOGICAS_TOTAL/anchoActual);
+			escalas->setEscalaY(UNIDADES_LOGICAS_TOTAL/altoActual);
 			break;
 		}
 	}
