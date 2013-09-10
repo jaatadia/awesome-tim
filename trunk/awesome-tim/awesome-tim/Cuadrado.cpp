@@ -1,8 +1,25 @@
 #include "Cuadrado.h"
 
+
 Cuadrado::Cuadrado(double ancho,double alto,double X, double Y, double angulo): Dimension(X,Y,angulo) {
 	this->ancho = ancho;
 	this->alto = alto;
+
+	diagonal = sqrt(alto*alto + ancho*ancho);
+	anguloDiagonal = 45;
+
+	vertice1.setX(ancho/2);
+	vertice1.setY(-alto/2);
+
+	vertice2.setX(-ancho/2);
+	vertice2.setY(-alto/2);
+
+	vertice3.setX(-ancho/2);
+	vertice3.setY(alto/2);
+
+	vertice4.setX(ancho/2);
+	vertice4.setY(alto/2);
+
 }
 
 Cuadrado::~Cuadrado(void){
@@ -17,6 +34,49 @@ double Cuadrado::getAlto(){
 }
 
 bool Cuadrado::puntoPertenece(double X, double Y){
+/*
+	bool pertenece = true;
+
+	Recta r1(vertice1.getX(), vertice1.getY(), vertice2.getX(), vertice2.getY());
+	Recta r2(vertice2.getX(), vertice2.getY(), vertice3.getX(), vertice3.getY());
+	Recta r3(vertice3.getX(), vertice3.getY(), vertice4.getX(), vertice4.getY());
+	Recta r4(vertice4.getX(), vertice4.getY(), vertice1.getX(), vertice1.getY());
+
+	double XrelCentro,YrelCentro;
+
+	XrelCentro = X - getX();
+	YrelCentro = Y - getY();
+
+	if (r4.vertical()){
+		if (r4.puntoADerecha(XrelCentro,YrelCentro))
+			pertenece = false;
+	}
+	else{
+		if (r4.puntoPorArriba(XrelCentro,YrelCentro))
+			pertenece = false;
+	}
+
+	if (r2.vertical()){
+		if (r2.puntoAIzquierda(XrelCentro,YrelCentro))
+			pertenece = false;
+	}
+	else{
+		if (r2.puntoPorDebajo(XrelCentro,YrelCentro))
+			pertenece = false;
+	}
+
+	if (r1.puntoPorArriba(XrelCentro,YrelCentro)){
+		pertenece = false;
+	}
+
+	if (r3.puntoPorDebajo(XrelCentro,YrelCentro)){
+		pertenece = false;
+	}
+
+	return pertenece;
+*/
+
+//si no esta rotado vale lo de abajo
 
 	double bordeLeft,bordeRight,bordeUp,bordeDown;
 
@@ -29,5 +89,30 @@ bool Cuadrado::puntoPertenece(double X, double Y){
 		return true;
 
 	return false;
+
+}
+
+void Cuadrado::setAngulo(double anguloRecibido){
+
+	this->angulo = anguloRecibido;
+
+	//reduzco a 90 grados ya que despues se repite el area ocupada y convierto a radianes 
+	while (anguloRecibido >= 90) anguloRecibido-=90;
+
+	this->anguloDiagonal = anguloDiagonal+anguloRecibido;
+
+	double ang = (anguloDiagonal*PI/180);
+	
+	vertice1.setX(diagonal*cos(ang));
+	vertice1.setY(-diagonal*sin(ang));
+
+	vertice2.setX(-diagonal*cos(ang));
+	vertice2.setY(-diagonal*sin(ang));
+
+	vertice3.setX(-diagonal*cos(ang));
+	vertice3.setY(diagonal*sin(ang));
+
+	vertice4.setX(diagonal*cos(ang));
+	vertice4.setY(diagonal*sin(ang));
 
 }

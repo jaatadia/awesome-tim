@@ -47,4 +47,9 @@ public:
 	void onRender();//dibuja en la ventana
 
 	void setFondo(const char* dir);
+
+private:
+	bool enTerreno(double posX,double posY);
+	bool enBotonera(double posX,double posY);
+	bool enComandos(double posX,double posY);
 };

@@ -9,7 +9,7 @@
 #include "Figura.h"
 
 using namespace std;
-class Figura;
+// class Figura;
 
 class Botonera: public Imprimible,public Cambiable
 {

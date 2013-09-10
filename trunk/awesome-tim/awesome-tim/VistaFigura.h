@@ -6,8 +6,6 @@
 
 class Figura;
 
-
-
 class VistaFigura{
 
 private:

@@ -1,6 +1,7 @@
 #include "Programa.h"
 #include "Juego.h"
 #include "CargadorYaml.h"
+#include "GeneradorYaml.h"
 
 //Inclusion de Test
 #include "Test_Triangulo.h"
@@ -14,7 +15,7 @@ void test(void){
 int main(int argc, char* argv[]){
 
 	//Activar solo en caso de que se deseen correr las pruebas
-	test();
+//	test();
 
 /*		
 	Programa prog = Programa(argv[0]);//creo el programa

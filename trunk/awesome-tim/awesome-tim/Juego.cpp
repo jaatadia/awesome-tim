@@ -36,13 +36,6 @@ Juego::Juego(const char *file){
 	}
 
 	shiftPressed = false;
-
-/******************para prueba de arrastrar y rotar figura por el terreno**********************/
-
-	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
-	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
-	terreno->agregarFigura(fig);
-
 }
 
 bool Juego::cargar(){
@@ -116,6 +109,10 @@ while(SDL_PollEvent(&evento)){
 			if ((evento.key.keysym.sym == SDLK_LSHIFT) || (evento.key.keysym.sym == SDLK_RSHIFT))
 				shiftPressed = true;
 
+			//si fue backtrace entonces borrar una letra de comandos
+			if (evento.key.keysym.sym == SDLK_BACKSPACE)
+				comandos->borrarLetra();
+
 			break;
 		}
 		case SDL_KEYUP: 
@@ -127,7 +124,11 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_TEXTINPUT:
 		{
-			//para el textbox en comandos
+			char charIngresado;
+
+			charIngresado = evento.text.text[0];
+			comandos->agregarLetra(charIngresado);
+
 			break;
 		}
 		case SDL_MOUSEMOTION:
@@ -143,7 +144,7 @@ while(SDL_PollEvent(&evento)){
 			//averiguar si esta en terreno o figuraViva u otro lado
 				
 			// y verificar que el boton izq este apretado o no deberia pasar arrastre, idem boton derecho
-			if ((posClickX>=escalas->getCantidadUnidadesLogicasX(X_TERRENO)) && (posClickX<=escalas->getCantidadUnidadesLogicasX(ANCHO_TERRENO+X_TERRENO)) && (posClickY>=escalas->getCantidadUnidadesLogicasX(Y_TERRENO)) && (posClickY<=escalas->getCantidadUnidadesLogicasX(ALTO_TERRENO+Y_TERRENO)))
+			if (enTerreno(posClickX,posClickY))
 				if (evento.motion.state == SDL_BUTTON_LMASK){				
 				//  terreno->arrastrarFigura(posClickX - X_TERRENO, posClickY - Y_TERRENO, cantMovX, cantMovY);
 					terreno->arrastrarFigura(posClickX , posClickY , cantMovX, cantMovY);
@@ -162,18 +163,25 @@ while(SDL_PollEvent(&evento)){
 			posClickX = escalas->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = escalas->getCantidadUnidadesLogicasY(evento.button.y);
 
-			if (posClickX>=X_TERRENO && posClickX<=ANCHO_TERRENO+X_TERRENO && posClickY>=Y_TERRENO && posClickY<=ALTO_TERRENO+Y_TERRENO)
+			if (enTerreno(posClickX,posClickY))
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed))
 					//click izq y shift
 					terreno->borrarFigura(posClickX,posClickY);
 
-			if ((posClickX>=X_BOTONERA && posClickX<=ANCHO_BOTONERA+X_BOTONERA && posClickY>=Y_BOTONERA && posClickY<=ALTO_BOTONERA+Y_BOTONERA))
+			if (enBotonera(posClickX,posClickY)){
 				//es de la botonera
 				//poner un while apretado para el scroll
+			}
 
-			if ((posClickX>=X_BOTONERA && posClickX<=ANCHO_BOTONERA+X_BOTONERA && posClickY>=Y_BOTONERA && posClickY<=ALTO_BOTONERA+Y_BOTONERA))
+			if (enComandos(posClickX,posClickY))
 				//es de comandos
+				if (evento.button.state == SDL_BUTTON_LMASK){
+					//como comandos trabaja con pixels (?) lo paso sin convertir
+					//y por cierto: REFERENCIA CIRCULAAAAR!!!
+					comandos->click(evento.button.x - X_COMANDOS, evento.button.y - Y_COMANDOS, this);
+
+				}
 
 			break;
 		}
@@ -244,4 +252,40 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 
 void Juego::setFondo(const char* dir){
 	terreno->setFondo(dir);
+}
+
+bool Juego::enTerreno(double posX,double posY){
+
+	double ppioLogicoX, finalLogicoX, ppioLogicoY, finalLogicoY;
+
+	ppioLogicoX = escalas->getCantidadUnidadesLogicasX( X_TERRENO );
+	finalLogicoX = escalas->getCantidadUnidadesLogicasX(ANCHO_TERRENO + X_TERRENO);
+	ppioLogicoY = escalas->getCantidadUnidadesLogicasY(Y_TERRENO);
+	finalLogicoY = escalas->getCantidadUnidadesLogicasY(ALTO_TERRENO + Y_TERRENO);
+
+	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
+}
+
+bool Juego::enBotonera(double posX,double posY){
+
+	double ppioLogicoX, finalLogicoX, ppioLogicoY, finalLogicoY;
+
+	ppioLogicoX = escalas->getCantidadUnidadesLogicasX( X_BOTONERA );
+	finalLogicoX = escalas->getCantidadUnidadesLogicasX(ANCHO_BOTONERA + X_BOTONERA);
+	ppioLogicoY = escalas->getCantidadUnidadesLogicasY(Y_BOTONERA);
+	finalLogicoY = escalas->getCantidadUnidadesLogicasY(ALTO_BOTONERA + Y_BOTONERA);
+
+	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
+}
+
+bool Juego::enComandos(double posX,double posY){
+	
+	double ppioLogicoX, finalLogicoX, ppioLogicoY, finalLogicoY;
+
+	ppioLogicoX = escalas->getCantidadUnidadesLogicasX( X_COMANDOS);
+	finalLogicoX = escalas->getCantidadUnidadesLogicasX(ANCHO_COMANDOS + X_COMANDOS);
+	ppioLogicoY = escalas->getCantidadUnidadesLogicasY(Y_COMANDOS);
+	finalLogicoY = escalas->getCantidadUnidadesLogicasY(ALTO_COMANDOS + Y_COMANDOS);
+
+	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
 }

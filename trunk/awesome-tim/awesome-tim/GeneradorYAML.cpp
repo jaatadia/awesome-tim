@@ -28,7 +28,7 @@ out << fig->getDimension();
 out << YAML::EndSeq;
 out << YAML::EndMap;
 return out;
-};
+}
 
 /*
 YAML::Emitter& operator << (YAML::Emitter& out,Botonera* botonera){
