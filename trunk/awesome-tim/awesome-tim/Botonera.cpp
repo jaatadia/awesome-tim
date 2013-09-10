@@ -87,14 +87,14 @@ Figura * Botonera::obtenerFigura(double x, double y){
 			++itFig;
 		}
 		switch (*(itFig)) {
-			case this->TRIANGULO:
+			case TRIANGULO:
 				//retorno = new Triangulo();
 				cout << "triangulo" << endl;
 				break;
-			case this->CUADRADO:
+			case CUADRADO:
 				cout << "cuadrado" << endl;
 				break;
-			case this->CIRCULO:
+			case CIRCULO:
 				cout << "circulo" << endl;
 				break;
 		}

@@ -19,7 +19,7 @@ private:
 	Imagen* BotonSave;
 	Imagen* BotonQuit;
 
-	int SEPARACION;
+	int SEP;
 
 	int ANCHO_TBOX;
 	int ALTO_TBOX;
