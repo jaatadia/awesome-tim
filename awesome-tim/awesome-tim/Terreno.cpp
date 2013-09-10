@@ -104,6 +104,7 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 				Y2 = posClickY + cantMovY;
 
 				figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+				setCambio(true);
 			}
 		}else{
 			//calculo el angulo y se lo pongo a figura
@@ -112,9 +113,8 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 			Y2 = posClickY + cantMovY;
 
 			figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+			setCambio(true);
 		}
-
-		setCambio(true);
 	}
 }
 
@@ -155,12 +155,13 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 				eliminarFigura(figuraAMover);
 				figuraActiva=figuraAMover;
 				figuraActiva->cambiarPosicion(cantMovX, cantMovY);
+				setCambio(true);
 			}
 		}else{
 			figuraActiva->cambiarPosicion(cantMovX, cantMovY);
+			setCambio(true);
 		}
 
-		setCambio(true);
 	}
 }
 
@@ -201,10 +202,9 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 		if (figuraEncontrada){
 			//saco de la lista y libero memoria
 			eliminarFigura(figuraABorrar);
+			setCambio(true);
 			delete figuraABorrar;
 		}
-
-	setCambio(true);
 	}
 }
 
