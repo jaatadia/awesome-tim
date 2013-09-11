@@ -1,5 +1,6 @@
 #include "GeneradorYaml.h"
-
+#include "FiguraCuadrada.h"
+#include "FiguraCircular.h"
 
 bool GeneradorYaml::guardarJuego(const char* file,Botonera* botonera,Terreno* terreno){
 
@@ -22,10 +23,10 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 out << YAML::BeginMap;
 out << YAML::Key << "ID";
 out << YAML::Value << fig->getID();
+out << YAML::Key << "tipo_dimension";
+out << YAML::Value << fig->getTipoDimension(); //se imprime un int, tmb se puede hacer q getTipoDimension devuelva el string "cuadrado"/"circ..
 out << YAML::Key << "dimension";
-out << YAML::Value << YAML::BeginSeq;
-out << fig->getDimension();
-out << YAML::EndSeq;
+out << YAML::Value << fig->getDimension();
 out << YAML::EndMap;
 return out;
 }
@@ -46,16 +47,22 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 	//cosas del terreno
 	out << YAML::BeginMap;
 
-		//necesito un metodo para obtener la img de fondo
 		out << YAML::Key << "alto";
 		out << YAML::Value << terreno->getAlto();
 		out << YAML::Key << "ancho";
 		out << YAML::Value << terreno->getAncho();
+		out << YAML::Key << "fondo";
+		out << YAML::Value << terreno->getFondo();
 
 		//lista de figuras
 		out << YAML::Key << "lista_figuras";
 		out << YAML::Value << YAML::BeginSeq;
-			//necesito un metodo de terreno q me itere y devuelva de a una las figuras
+			//itero y imprimo de a una las figuras en sequence
+			std::list<Figura*> lista_figs = terreno->getListaFigs();
+			std::list<Figura*>::iterator iter;
+			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
+				out << (*iter);
+			};
 		out << YAML::EndSeq;
 
 	out << YAML::EndMap;
@@ -65,10 +72,12 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 
 int GeneradorYaml::pruebayaml(){
 
-Cuadrado* dim_cuad = new Cuadrado(10,10,3,3,60);
-Circulo* dim_circ = new Circulo(5,30,40,9);
-Figura* fig1 = new Figura("../img/Cuadrado.jpg",dim_cuad);
-Figura* fig2 = new Figura("../img/Circulo.jpg",dim_circ);
+//Cuadrado* dim_cuad = new Cuadrado(10,10,3,3,60);
+//Circulo* dim_circ = new Circulo(5,30,40,9);
+//Figura* fig1 = new Figura("../images/Cuadrado.jpg",dim_cuad);
+Figura* fig1 = new FiguraCuadrada("../images/Cuadrado.jpg",10,10,3,3,60);
+//Figura* fig2 = new Figura("../images/Circulo.jpg",dim_circ);
+Figura* fig2 = new FiguraCircular("../images/Circulo.jpg",5,30,40,9);
 
 
 std::list<Figura*> lista_fig = std::list<Figura*>();
@@ -95,17 +104,17 @@ YAML::Emitter out;
 out << YAML::BeginMap;
 	out << YAML::Key << "juego";
 	out << YAML::Value << YAML::BeginSeq; //adentro de juego
+
+		out << YAML::BeginMap;
+			out << YAML::Key << "terreno";
+			out << YAML::Value << terr; //adentro de terreno
+		out << YAML::EndMap;
 		/*
 		out << YAML::BeginMap;
 			out << YAML::Key << "botonera";
 			out << YAML::Value << botonera; //adentro de botonera
 		out << YAML::EndMap;
 		*/
-		out << YAML::BeginMap;
-			out << YAML::Key << "terreno";
-			out << YAML::Value << terr; //adentro de terreno
-		out << YAML::EndMap;
-
 	out << YAML::EndSeq;
 out << YAML::EndMap;
 
