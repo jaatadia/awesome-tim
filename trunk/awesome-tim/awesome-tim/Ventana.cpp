@@ -49,3 +49,18 @@ void Ventana::dibujar(Superficie* sup){
 int Ventana::getID(){
 	return SDL_GetWindowID(win);
 }
+
+int Ventana::getAncho(){
+	int ancho;
+	int alto;
+	SDL_GetWindowSize(win,&ancho,&alto);
+	std::cout << "ancho: "<<ancho<<" alto: "<<alto<<"\n";
+	return ancho;
+}
+
+int Ventana::getAlto(){
+	int ancho;
+	int alto;
+	SDL_GetWindowSize(win,&ancho,&alto);
+	return alto;
+}
