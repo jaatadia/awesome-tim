@@ -9,6 +9,7 @@ Terreno::Terreno(int ancho,int alto){
 	this->figuras = std::list<Figura*>();
 	figuraActiva=NULL;
 	img=NULL;
+	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
 }
 
 Terreno::~Terreno(void){
@@ -62,6 +63,7 @@ void Terreno::setFondo(const char* ruta_img){
 		this->setCambio(true);
 		delete this->img;
 		this->img = temp->scaleImagen(this->ancho,this->alto);
+		fondoID = ruta_img;
 	}
 	delete temp;
 }
@@ -213,4 +215,10 @@ int Terreno::getAncho(){
 };
 int Terreno::getAlto(){
 	return (this->alto);
+};
+const char* Terreno::getFondo(){ //si es "" es porq no pusieron ningun fondo (esta el default)
+	return this->fondoID;
+};
+std::list<Figura*> Terreno::getListaFigs(){
+	return this->figuras;
 };
