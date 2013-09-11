@@ -32,4 +32,6 @@ public:
 	~Ventana(void);//destruye la ventana
 	int getID();//devuelve el numero de ID de la ventana
 	void dibujar(Superficie* sup);//dibuja en la ventana la superficie pasada
+	int getAncho();
+	int getAlto();
 };
