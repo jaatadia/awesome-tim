@@ -137,29 +137,16 @@ bool Terreno::hayFiguras(){
 
 void Terreno::borrarFigura(double posClickX, double posClickY){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
-	if(hayFiguras()){	
-		Figura* figuraABorrar = NULL;
 
-		bool figuraEncontrada = false;
-		//recorro al reves asi "agarro" la figura dibujada arriba
-		std::list<Figura*>::reverse_iterator iteradorLista;
-		iteradorLista = figuras.rbegin();
+	Figura* figuraABorrar = buscarFigura(posClickX, posClickY);
 
-		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
-			
-			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
-			figuraABorrar = (*iteradorLista);
-			
-			iteradorLista++;
-		}
-
-		if (figuraEncontrada){
-			//saco de la lista y libero memoria
-			eliminarFigura(figuraABorrar);
-			setCambio(true);
-			delete figuraABorrar;
-		}
+	if (figuraABorrar){
+		//saco de la lista y libero memoria
+		eliminarFigura(figuraABorrar);
+		setCambio(true);
+		delete figuraABorrar;
 	}
+
 }
 
 int Terreno::getAncho(){
@@ -206,24 +193,12 @@ void Terreno::resizear(EscalasDeEjes* escalas){
 }
 
 void Terreno::buscarActiva(double posClickX ,double posClickY){
-
+	//si todavia no hay una
 	if (!figuraActiva){ 
-		Figura* figuraAMover = NULL;
 
-		bool figuraEncontrada = false;
-		//recorro al reves asi "agarro" la figura dibujada arriba
-		std::list<Figura*>::reverse_iterator iteradorLista;
-		iteradorLista = figuras.rbegin();
-
-		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
-			
-			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
-			figuraActiva = (*iteradorLista);
-			
-			iteradorLista++;
-		}
-
-		if (!figuraEncontrada)
+		figuraActiva = buscarFigura(posClickX ,posClickY);
+		//si no la encontre confirmo que es null (o podria no hacer nada...)
+		if (!figuraActiva)
 			figuraActiva=NULL;
 		else
 			eliminarFigura(figuraActiva);
@@ -240,4 +215,28 @@ void Terreno::corregirPosicion(Figura* fig){
 	while (dimension->getY() > ALTO_TERRENO_LOGICO) dimension->setY( dimension->getY() - 1);
 	while (dimension->getY() < 0) dimension->setY( dimension->getY() + 1);
 
+}
+
+Figura* Terreno::buscarFigura(double posClickX, double posClickY){
+
+	if(hayFiguras()){	
+		Figura* figuraBuscada = NULL;
+
+		bool figuraEncontrada = false;
+		//recorro al reves asi "agarro" la figura dibujada arriba
+		std::list<Figura*>::reverse_iterator iteradorLista;
+		iteradorLista = figuras.rbegin();
+
+		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+			
+			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
+			figuraBuscada = (*iteradorLista);
+			
+			iteradorLista++;
+		}
+
+		if (figuraEncontrada)
+			return figuraBuscada;
+	}
+		return NULL;
 }

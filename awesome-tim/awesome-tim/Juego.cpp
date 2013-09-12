@@ -36,7 +36,6 @@ Juego::Juego(const char *file){
 	}
 
 	shiftPressed = false;
-	scroll = NO_SCROLL;
 
 /***************Test de arrastra y girar figura*************************/
 
