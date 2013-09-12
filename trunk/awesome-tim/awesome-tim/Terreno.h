@@ -3,6 +3,7 @@
 #include "Imprimible.h"
 #include "Cambiable.h"
 #include "Figura.h"
+#include "Dimension.h"
 #include <list>
 
 /* terreno es el que contiene todas las figuras
@@ -44,8 +45,15 @@ public:
 	const char* getFondo();
 	std::list<Figura*> getListaFigs();
 
+	void cambioVistaFiguras();
+
+	void resizear(EscalasDeEjes* escalas);
+
+	void buscarActiva(double posClickX ,double posClickY);
+
 private:
 	bool hayFiguras();
+	void corregirPosicion(Figura* fig);
 	void redraw(EscalasDeEjes* escalas);
 	void redraw();
 

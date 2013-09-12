@@ -19,6 +19,7 @@ Terreno::~Terreno(void){
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		delete (*iteradorLista);
 	}
+	//borro imagen del fondo
 	if (img)
 		delete img;
 
@@ -26,11 +27,11 @@ Terreno::~Terreno(void){
 }
 
 void Terreno::redraw(EscalasDeEjes* escalas){
+
 	//recorro todas las figuras y las voy dibujando
 
 	if(this->img == NULL) sup->restore();//antes repinto todo de negro asi no quedan rastros de movimiento
 	else sup->dibujarImagen(this->img,NULL,0,0);
-	
 
 	
 	std::list<Figura*>::iterator iteradorLista;
@@ -70,6 +71,10 @@ void Terreno::setFondo(const char* ruta_img){
 
 void Terreno::agregarFigura(Figura* fig){
 
+//si se fue de rango del terreno lo empujo para dentro
+	Dimension* dim = fig->getDimension();
+	corregirPosicion(fig);
+
 	try{
 	(this->figuras).push_back(fig);
 	} catch (...) {
@@ -80,43 +85,14 @@ void Terreno::agregarFigura(Figura* fig){
 
 void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
 	//practicamente lo mismo que arrastraFigura
-	if (hayFiguras()){
-		if (figuraActiva == NULL){
-			Figura* figuraAMover = NULL;
+	if (figuraActiva != NULL){
+		//calculo el angulo y se lo pongo a figura
+		double X2,Y2;
+		X2 = posClickX + cantMovX;
+		Y2 = posClickY + cantMovY;
 
-			bool figuraEncontrada = false;
-
-			std::list<Figura*>::reverse_iterator iteradorLista;
-			iteradorLista = figuras.rbegin();
-
-			while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
-				
-				figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
-				figuraAMover = (*iteradorLista);
-				
-				iteradorLista++;
-			}
-
-			if (figuraEncontrada){
-				eliminarFigura(figuraAMover);
-				figuraActiva=figuraAMover;
-
-				double X2,Y2;
-				X2 = posClickX + cantMovX;
-				Y2 = posClickY + cantMovY;
-
-				figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
-				setCambio(true);
-			}
-		}else{
-			//calculo el angulo y se lo pongo a figura
-			double X2,Y2;
-			X2 = posClickX + cantMovX;
-			Y2 = posClickY + cantMovY;
-
-			figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
-			setCambio(true);
-		}
+		figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+		this->setCambio(true);
 	}
 }
 
@@ -132,38 +108,14 @@ void Terreno::eliminarFigura(Figura* fig){
 
 void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,double cantMovY)
 {
-	//recorro lista de figuras hasta saber si hay alguna en esta posicion
-	//a la primera que encuentro la saco de la lista le cambio la pos
-	//y la vuelvo a meter en ultimo lugar cuando se suelta el boton (ver onEvent de juego)
-	//para que si se superpone quede arriba al dibujarse
-	if(hayFiguras()){	
-		if (figuraActiva == NULL){
-			Figura* figuraAMover = NULL;
+	if (figuraActiva != NULL){
 
-			bool figuraEncontrada = false;
-			//recorro al reves asi "agarro" la figura dibujada arriba
-			std::list<Figura*>::reverse_iterator iteradorLista;
-			iteradorLista = figuras.rbegin();
+		figuraActiva->cambiarPosicion(cantMovX, cantMovY);
+		//si se fue el centro del terreno lo vuelvo a meter
 
-			while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
-				
-				figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
-				figuraAMover = (*iteradorLista);
-				
-				iteradorLista++;
-			}
+		corregirPosicion(figuraActiva);
 
-			if (figuraEncontrada){
-				eliminarFigura(figuraAMover);
-				figuraActiva=figuraAMover;
-				figuraActiva->cambiarPosicion(cantMovX, cantMovY);
-				setCambio(true);
-			}
-		}else{
-			figuraActiva->cambiarPosicion(cantMovX, cantMovY);
-			setCambio(true);
-		}
-
+		this->setCambio(true);
 	}
 }
 
@@ -222,3 +174,70 @@ const char* Terreno::getFondo(){ //si es "" es porq no pusieron ningun fondo (es
 std::list<Figura*> Terreno::getListaFigs(){
 	return this->figuras;
 };
+
+
+void Terreno::cambioVistaFiguras(){
+
+	std::list<Figura*>::iterator iteradorLista;
+
+	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		(*iteradorLista)->setCambio(true);
+	}
+
+}
+
+void Terreno::resizear(EscalasDeEjes* escalas){
+
+	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
+	ancho = escalas->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
+	alto =  escalas->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
+
+	delete sup;
+	sup = new Superficie(ancho,alto);
+
+	Imagen* temp = NULL;
+
+	temp = img->scaleImagen(ancho,alto);
+
+	delete img;
+
+	img = temp;
+
+}
+
+void Terreno::buscarActiva(double posClickX ,double posClickY){
+
+	if (!figuraActiva){ 
+		Figura* figuraAMover = NULL;
+
+		bool figuraEncontrada = false;
+		//recorro al reves asi "agarro" la figura dibujada arriba
+		std::list<Figura*>::reverse_iterator iteradorLista;
+		iteradorLista = figuras.rbegin();
+
+		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+			
+			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
+			figuraActiva = (*iteradorLista);
+			
+			iteradorLista++;
+		}
+
+		if (!figuraEncontrada)
+			figuraActiva=NULL;
+		else
+			eliminarFigura(figuraActiva);
+	}
+}
+
+void Terreno::corregirPosicion(Figura* fig){
+
+	Dimension* dimension = fig->getDimension();
+
+	while (dimension->getX() > ANCHO_TERRENO_LOGICO) dimension->setX( dimension->getX() - 1);
+	while (dimension->getX() < 0) dimension->setX( dimension->getX() + 1);
+
+	while (dimension->getY() > ALTO_TERRENO_LOGICO) dimension->setY( dimension->getY() - 1);
+	while (dimension->getY() < 0) dimension->setY( dimension->getY() + 1);
+
+}
