@@ -11,5 +11,6 @@ public:
 	~Circulo(void);
 	double getAncho();
 	double getAlto();
+	double getRadio();
 	bool puntoPertenece(double pos_X, double pos_Y);
 };

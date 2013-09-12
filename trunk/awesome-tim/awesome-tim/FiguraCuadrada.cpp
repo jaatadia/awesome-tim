@@ -8,3 +8,7 @@ FiguraCuadrada::FiguraCuadrada(const char* ID,double ancho,double alto,double X,
 FiguraCuadrada::~FiguraCuadrada(void)
 {
 }
+
+Cuadrado* FiguraCuadrada::getDimension(){
+	return (Cuadrado*)  Figura::getDimension();
+}

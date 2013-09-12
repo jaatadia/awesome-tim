@@ -9,4 +9,7 @@ public:
 	~FiguraCuadrada(void);
 
 	int getTipoDimension(){return CUADRADO;};
+	
+	Cuadrado* getDimension();
+	
 };
