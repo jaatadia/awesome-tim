@@ -57,21 +57,21 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 
 	switch (fig->getTipoDimension()) {
 			case CUADRADO:
-				out << YAML::Value << "cuadrado";
+				out << YAML::Value << "CUADRADO";
 
 				out << YAML::Key << "dimension";
 				out << YAML::Value << (Cuadrado*) fig->getDimension();
 				break;
 				
 			case CIRCULO:
-				out << YAML::Value << "circulo";
+				out << YAML::Value << "CIRCULO";
 
 				out << YAML::Key << "dimension";
 				out << YAML::Value << (Circulo*) fig->getDimension();
 				break;
 
 			case TRIANGULO:
-				out << YAML::Value << "triangulo";
+				out << YAML::Value << "TRIANGULO";
 
 				out << YAML::Key << "dimension";
 				out << YAML::Value << (Triangulo*) fig->getDimension();
@@ -130,6 +130,8 @@ bool GeneradorYaml::guardarJuego(const char* file,Botonera* botonera,Terreno* te
 
 	//creacion del emitter
 	YAML::Emitter out;
+	//para cambiar la indentacion
+	//out.SetIndent(4);
 
 	//llenar el emitter
 	out << YAML::BeginMap;
