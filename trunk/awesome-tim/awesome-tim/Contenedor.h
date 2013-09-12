@@ -12,6 +12,8 @@ public:
 	static void* getMultimedia(const char* ID);
 	static void deleteContenedor();
 
+	static bool estaMultimedia(const char* ID);
+
 	static void pruebaContenedor();
 
 private:

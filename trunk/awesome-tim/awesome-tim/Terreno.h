@@ -18,7 +18,7 @@ private:
 	Superficie* sup;
 	std::list<Figura*> figuras;
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
-	const char* fondoID;
+	char* fondoID;
 
 public:
 	Terreno(int ancho,int alto);
@@ -42,7 +42,7 @@ public:
 
 	int getAncho();
 	int getAlto();
-	const char* getFondo();
+	char* getFondo();
 	std::list<Figura*> getListaFigs();
 
 	void cambioVistaFiguras();
