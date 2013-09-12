@@ -2,36 +2,89 @@
 #include "FiguraCuadrada.h"
 #include "FiguraCircular.h"
 
-bool GeneradorYaml::guardarJuego(const char* file,Botonera* botonera,Terreno* terreno){
 
-	return false;
+YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
+out << YAML::BeginMap;
+out << YAML::Key << "ancho";
+out << YAML::Value << cuad->getAncho();
+out << YAML::Key << "alto";
+out << YAML::Value << cuad->getAlto();
+out << YAML::Key << "posX";
+out << YAML::Value << cuad->getX();
+out << YAML::Key << "posY";
+out << YAML::Value << cuad->getY();
+out << YAML::Key << "angulo";
+out << YAML::Value << cuad->getAngulo();
+out << YAML::EndMap;
+return out;
 };
 
-YAML::Emitter& operator << (YAML::Emitter& out,Dimension* dim){
+YAML::Emitter& operator << (YAML::Emitter& out,Circulo* circ){
 out << YAML::BeginMap;
-out << YAML::Key << "angulo";
-out << YAML::Value << dim->getAngulo();
+out << YAML::Key << "radio";
+out << YAML::Value << circ->getRadio();
 out << YAML::Key << "posX";
-out << YAML::Value << dim->getX();
+out << YAML::Value << circ->getX();
 out << YAML::Key << "posY";
-out << YAML::Value << dim->getY();
+out << YAML::Value << circ->getY();
+out << YAML::Key << "angulo";
+out << YAML::Value << circ->getAngulo();
+out << YAML::EndMap;
+return out;
+};
+
+YAML::Emitter& operator << (YAML::Emitter& out,Triangulo* triang){
+out << YAML::BeginMap;
+out << YAML::Key << "posX";
+out << YAML::Value << triang->getX();
+out << YAML::Key << "posY";
+out << YAML::Value << triang->getY();
+out << YAML::Key << "angulo";
+out << YAML::Value << triang->getAngulo();
+out << YAML::Key << "base";
+out << YAML::Value << triang->getAncho();
+out << YAML::Key << "altura";
+out << YAML::Value << triang->getAlto();
 out << YAML::EndMap;
 return out;
 };
 
 YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
-out << YAML::BeginMap;
-out << YAML::Key << "ID";
-out << YAML::Value << fig->getID();
-out << YAML::Key << "tipo_dimension";
-out << YAML::Value << fig->getTipoDimension(); //se imprime un int, tmb se puede hacer q getTipoDimension devuelva el string "cuadrado"/"circ..
-out << YAML::Key << "dimension";
-out << YAML::Value << fig->getDimension();
-out << YAML::EndMap;
-return out;
-}
+	out << YAML::BeginMap;
+	out << YAML::Key << "ID";
+	out << YAML::Value << fig->getID();
+	out << YAML::Key << "tipo_dimension";
 
-/*
+	switch (fig->getTipoDimension()) {
+			case CUADRADO:
+				out << YAML::Value << "cuadrado";
+
+				out << YAML::Key << "dimension";
+				out << YAML::Value << (Cuadrado*) fig->getDimension();
+				break;
+				
+			case CIRCULO:
+				out << YAML::Value << "circulo";
+
+				out << YAML::Key << "dimension";
+				out << YAML::Value << (Circulo*) fig->getDimension();
+				break;
+
+			case TRIANGULO:
+				out << YAML::Value << "triangulo";
+
+				out << YAML::Key << "dimension";
+				out << YAML::Value << (Triangulo*) fig->getDimension();
+				break;
+			
+			default:
+				out << YAML::Value << "";
+		};
+		
+	out << YAML::EndMap;
+	return out;
+};
+
 YAML::Emitter& operator << (YAML::Emitter& out,Botonera* botonera){
 
 	//cosas de la botonera
@@ -40,7 +93,6 @@ YAML::Emitter& operator << (YAML::Emitter& out,Botonera* botonera){
 
 	return out;
 };
-*/
 
 YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 
@@ -70,6 +122,46 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 	return out;
 };
 
+bool GeneradorYaml::guardarJuego(const char* file,Botonera* botonera,Terreno* terreno){
+
+	//creacion del arhchivo
+	std::ofstream arch;
+	arch.open("../yaml/GameState.yaml",std::ios::out); //ERROREEEES???
+
+	//creacion del emitter
+	YAML::Emitter out;
+
+	//llenar el emitter
+	out << YAML::BeginMap;
+		out << YAML::Key << "juego";
+		out << YAML::Value << // YAML::BeginSeq; //adentro de juego
+
+			/*out <<*/YAML::BeginMap;
+				out << YAML::Key << "terreno";
+				out << YAML::Value << terreno; //adentro de terreno
+			out << YAML::EndMap;
+			
+			out << YAML::BeginMap;
+				out << YAML::Key << "botonera";
+				out << YAML::Value << botonera; //adentro de botonera
+			out << YAML::EndMap;
+			
+		// out << YAML::EndSeq;
+	out << YAML::EndMap;
+
+
+	//pasar el emiter al archivo
+	arch << out.c_str(); //<< "\n";
+
+	//cerrar el archivo
+	arch.close();  //ERROREEEES???
+
+	return true;
+};
+
+/*------------------------------------------------------------------------------
+---------------------------PRUEBA GENERADOR YAML--------------------------------
+------------------------------------------------------------------------------*/
 int GeneradorYaml::pruebayaml(){
 
 //Cuadrado* dim_cuad = new Cuadrado(10,10,3,3,60);
@@ -103,9 +195,9 @@ YAML::Emitter out;
 //llenar el emiter con lo que nos interesa
 out << YAML::BeginMap;
 	out << YAML::Key << "juego";
-	out << YAML::Value << YAML::BeginSeq; //adentro de juego
+	out << YAML::Value << //YAML::BeginSeq; //adentro de juego
 
-		out << YAML::BeginMap;
+		/*out <<*/YAML::BeginMap;
 			out << YAML::Key << "terreno";
 			out << YAML::Value << terr; //adentro de terreno
 		out << YAML::EndMap;
@@ -115,12 +207,12 @@ out << YAML::BeginMap;
 			out << YAML::Value << botonera; //adentro de botonera
 		out << YAML::EndMap;
 		*/
-	out << YAML::EndSeq;
+	//out << YAML::EndSeq;
 out << YAML::EndMap;
 
 
 //pasar el emiter al archivo
-arch << out.c_str() << "\n";
+arch << out.c_str(); //<< "\n";
 
 //cerrar el archivo
 arch.close();

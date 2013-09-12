@@ -17,6 +17,10 @@ double Circulo::getAlto(){
 	return (2*(this->radio));
 }
 
+double Circulo::getRadio(){
+	return (this->radio);
+}
+
 bool Circulo::puntoPertenece(double X, double Y){
 
 	double moduloCuadrado = (X-getX())*(X-getX())+ (Y-getY())*(Y-getY());
