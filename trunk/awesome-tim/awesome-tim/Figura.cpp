@@ -37,7 +37,7 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 
 	moduloCuadrado1 = X1RelCentroFig*X1RelCentroFig + Y1RelCentroFig*Y1RelCentroFig;
 	moduloCuadrado2 = X2RelCentroFig*X2RelCentroFig + Y2RelCentroFig*Y2RelCentroFig;
-	//if necesario o puede romperse la raiz
+	//if necesario o puede romperse la raiz, en resumen, si pasa por el centro no cambio el angulo
 	if ((moduloCuadrado1 != 0) && (moduloCuadrado2 != 0)){
 		productoModulo = sqrt(moduloCuadrado1*moduloCuadrado2);
 
@@ -66,8 +66,6 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 		while(dimension->getAngulo() < 0) dimension->setAngulo( dimension->getAngulo() + 360);
 		//cambio la vista!
 		setCambio(true);
-	}else{
-		variacionAngulo = 0;
 	}
 }
 
@@ -87,16 +85,16 @@ void Figura::dibujar(Superficie* super,EscalasDeEjes* escalas){
 int Figura::obtenerCuadranteDeClick(double X, double Y){
 
 if (X>=0 && Y>=0)
-	return 4;
+	return CUADRANTE4;
 
 if (X<=0 && Y>=0)
-	return 3;
+	return CUADRANTE3;
 
 if (X<=0 && Y<=0)
-	return 2;
+	return CUADRANTE2;
 
 if (X>=0 && Y<=0)
-	return 1;
+	return CUADRANTE1;
 
 return -1;
 }
@@ -111,7 +109,7 @@ bool Figura::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 	if (cuadrante1 == cuadrante2){
 		//verificar con las rectas
 		switch (cuadrante1){
-			case 1: case 4:
+			case CUADRANTE1: case CUADRANTE4:
 			{
 				if(recta1.puntoPorDebajo(X2,Y2))
 					return false;
@@ -119,7 +117,7 @@ bool Figura::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 					return true;
 				break;
 			}
-			case 2: case 3:
+			case CUADRANTE2: case CUADRANTE3:
 			{
 				if(recta1.puntoPorDebajo(X2,Y2))
 					return true;
@@ -130,39 +128,39 @@ bool Figura::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 		}
 	}else
 		switch (cuadrante1){
-			case 1:
+			case CUADRANTE1:
 			{
-				if (cuadrante2 == 2)
+				if (cuadrante2 == CUADRANTE2)
 					return true;
 				else
-					if (cuadrante2 == 4)
+					if (cuadrante2 == CUADRANTE4)
 						return false;
 				break;
 			}
-			case 2:
+			case CUADRANTE2:
 			{
-				if (cuadrante2 == 3)
+				if (cuadrante2 == CUADRANTE3)
 					return true;
 				else
-					if (cuadrante2 == 1)
+					if (cuadrante2 == CUADRANTE1)
 						return false;
 				break;
 			}
-			case 3:
+			case CUADRANTE3:
 			{
-				if (cuadrante2 == 4)
+				if (cuadrante2 == CUADRANTE4)
 					return true;
 				else
-					if (cuadrante2 == 2)
+					if (cuadrante2 == CUADRANTE2)
 						return false;
 				break;
 			}
-			case 4:
+			case CUADRANTE4:
 			{
-				if (cuadrante2 == 1)
+				if (cuadrante2 == CUADRANTE1)
 					return true;
 				else
-					if (cuadrante2 == 3)
+					if (cuadrante2 == CUADRANTE3)
 						return false;
 				break;
 			}

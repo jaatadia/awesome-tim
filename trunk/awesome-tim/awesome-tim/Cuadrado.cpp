@@ -63,22 +63,6 @@ bool Cuadrado::puntoPertenece(double X, double Y){
 	}
 
 	return pertenece;
-
-
-//si no esta rotado vale lo de abajo
-/*
-	double bordeLeft,bordeRight,bordeUp,bordeDown;
-
-	bordeLeft = getX() - getAncho()/2 ;
-	bordeRight = getX() + getAncho()/2;
-	bordeUp = getY() + getAlto()/2;
-	bordeDown = getY() - getAlto()/2;
-
-	if  ((X>=bordeLeft) && (X<=bordeRight) && (Y>=bordeDown) && (Y<=bordeUp))
-		return true;
-
-	return false;
-*/
 }
 
 void Cuadrado::setAngulo(double anguloRecibido){
@@ -92,7 +76,7 @@ void Cuadrado::setAngulo(double anguloRecibido){
 	while (anguloRecibido >= 90) anguloRecibido-=90;
 
 	double ang = (anguloRecibido*PI/180);
-	//si el angulo es muy chico falla el calculo en las rectas
+	//si el angulo es cero falla el calculo en las rectas mas adelante por redondeos
 	if (ang != 0 && angulo != 0){
 		vertice1.setX(diagonal*cos(ang+PI/4+0*PI/2));
 		vertice1.setY(-diagonal*sin(ang+PI/4+0*PI/2));
@@ -107,7 +91,7 @@ void Cuadrado::setAngulo(double anguloRecibido){
 		vertice4.setY(-diagonal*sin(ang+PI/4+3*PI/2));
 
 	}else{
-
+		RESETEAR_VERTICES: 
 		vertice1.setX(ancho/2);
 		vertice1.setY(-alto/2);
 
@@ -119,6 +103,16 @@ void Cuadrado::setAngulo(double anguloRecibido){
 
 		vertice4.setX(ancho/2);
 		vertice4.setY(alto/2);
+	}
+
+	//por algun motivo a veces el vertice 4 termina a la izquierda del 1 en lugar de arriba, cosa que geometricamente no puede pasar
+	//aca lo corrijo y los pongo alineados verticales, ya que es el unico caso donde esto se da
+	//tambien puede pasar con los vertices 2 y 3 y/o pueden desfasarse verticalmente
+
+	if ( (vertice4.getX() < vertice1.getX()) || (vertice3.getX() < vertice2.getX()) ||
+		(vertice1.getY() < vertice2.getY()) || (vertice4.getY() < vertice3.getY())){
+
+		goto RESETEAR_VERTICES;
 	}
 
 

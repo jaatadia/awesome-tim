@@ -53,6 +53,7 @@ public:
 
 private:
 	bool hayFiguras();
+	Figura* buscarFigura(double posClickX, double posClickY);
 	void corregirPosicion(Figura* fig);
 	void redraw(EscalasDeEjes* escalas);
 	void redraw();
