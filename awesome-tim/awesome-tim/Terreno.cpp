@@ -1,5 +1,6 @@
 #include "Terreno.h"
 #include "ErrorLogHandler.h"
+#include "Contenedor.h"
 #include <new>
 
 Terreno::Terreno(int ancho,int alto){
@@ -30,10 +31,13 @@ void Terreno::redraw(EscalasDeEjes* escalas){
 
 	//recorro todas las figuras y las voy dibujando
 
-	if(this->img == NULL) sup->restore();//antes repinto todo de negro asi no quedan rastros de movimiento
-	else sup->dibujarImagen(this->img,NULL,0,0);
+	if(this->img == NULL)
+		sup->restore();//antes repinto todo de negro asi no quedan rastros de movimiento
+	else{
+		sup->restore();//por si la imagen tiene partes transparentes
+		sup->dibujarImagen(this->img,NULL,0,0);
+	}
 
-	
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
@@ -59,6 +63,7 @@ Superficie* Terreno::getImpresion(){
 }
 
 void Terreno::setFondo(const char* ruta_img){
+	
 	Imagen* temp = new Imagen(ruta_img);
 	if(!temp->huboFallos()){
 		this->setCambio(true);
@@ -67,6 +72,29 @@ void Terreno::setFondo(const char* ruta_img){
 		fondoID = ruta_img;
 	}
 	delete temp;
+}
+/* ESTUPIDOS PUNTEROS!!!!!!!!!!!!!!!!!!!!
+	//para no abrir el archivo una y otra vez lo guardo en el contenedor
+	if (Contenedor::estaMultimedia(ruta_img) == false){
+		Imagen* temp = new Imagen(ruta_img);
+		if(!temp->huboFallos())
+			Contenedor::putMultimedia(ruta_img,temp);
+	//no libero temp o borro lo del contenedor!!!
+	}
+
+	if (ruta_img != fondoID){
+		//es distinto al fondo puesto
+		Imagen* temp = (Imagen*)(Contenedor::getMultimedia(ruta_img));
+
+		if(temp){
+			this->setCambio(true);
+			delete this->img;
+			this->img = temp->scaleImagen(this->ancho,this->alto);
+			fondoID = ruta_img;
+		}
+	//no libero temp o borro lo del contenedor!!!
+	}
+*/
 }
 
 void Terreno::agregarFigura(Figura* fig){

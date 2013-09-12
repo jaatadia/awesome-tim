@@ -88,3 +88,15 @@ void Contenedor::pruebaContenedor(){ //no se que clase de prueba es esta
 
 	Contenedor::deleteContenedor();
 };
+
+
+bool Contenedor::estaMultimedia(const char* ID){
+
+	if (cont == NULL){
+		cont = new Contenedor();
+	}
+
+	if(cont->mapa.count(ID) == 0) return false;
+
+	return true;
+}

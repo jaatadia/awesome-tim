@@ -53,6 +53,7 @@ public:
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes * esc);
 	void click(double x, double y,Juego* juego);
+	void enterKeyPressed(Juego* juego);
 	void resizear(EscalasDeEjes* escalas);
 private:
 	void redraw(EscalasDeEjes* escalas);

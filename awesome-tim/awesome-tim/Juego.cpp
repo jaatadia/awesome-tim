@@ -124,6 +124,9 @@ while(SDL_PollEvent(&evento)){
 			if (evento.key.keysym.sym == SDLK_BACKSPACE)
 				comandos->borrarLetra();
 
+			if (evento.key.keysym.sym == SDLK_KP_ENTER || evento.key.keysym.sym == SDLK_RETURN)
+				comandos->enterKeyPressed(this);
+
 			break;
 		}
 		case SDL_KEYUP: 

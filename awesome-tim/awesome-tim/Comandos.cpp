@@ -151,3 +151,7 @@ void Comandos::resizear(EscalasDeEjes* escalas){
 	sup = new Superficie(ancho,alto);
 
 }
+
+void Comandos::enterKeyPressed(Juego* juego){
+	juego->setFondo(dir);
+}
