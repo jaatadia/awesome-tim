@@ -85,12 +85,15 @@ void Cuadrado::setAngulo(double anguloRecibido){
 
 	this->angulo = anguloRecibido;
 
+	while (angulo >= 360) angulo -= 360; // o podria aumentar y aumentar
+	while (angulo < 0) angulo += 360;
+
 	//reduzco a 90 grados ya que despues se repite el area ocupada y convierto a radianes 
 	while (anguloRecibido >= 90) anguloRecibido-=90;
 
 	double ang = (anguloRecibido*PI/180);
-	
-	if (ang != 0){
+	//si el angulo es muy chico falla el calculo en las rectas
+	if (ang != 0 && angulo != 0){
 		vertice1.setX(diagonal*cos(ang+PI/4+0*PI/2));
 		vertice1.setY(-diagonal*sin(ang+PI/4+0*PI/2));
 

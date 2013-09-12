@@ -8,10 +8,6 @@
 #include "EscalasDeEjes.h"
 #include "GeneradorYaml.h"
 
-#define CIRCULO 0
-#define TRIANGULO 1
-#define CUADRADO 2
-
 
 class VistaFigura;
 

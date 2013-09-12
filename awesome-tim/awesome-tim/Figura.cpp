@@ -28,6 +28,7 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 	double productoModulo;
 	double productoEscalar;
 	double variacionAngulo;
+	double divisionEscalarModulo;
 
 	X1RelCentroFig = XVector1 - dimension->getX();
 	Y1RelCentroFig = YVector1 - dimension->getY();
@@ -36,25 +37,38 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 
 	moduloCuadrado1 = X1RelCentroFig*X1RelCentroFig + Y1RelCentroFig*Y1RelCentroFig;
 	moduloCuadrado2 = X2RelCentroFig*X2RelCentroFig + Y2RelCentroFig*Y2RelCentroFig;
+	//if necesario o puede romperse la raiz
+	if ((moduloCuadrado1 != 0) && (moduloCuadrado2 != 0)){
+		productoModulo = sqrt(moduloCuadrado1*moduloCuadrado2);
 
-	productoModulo = sqrt(moduloCuadrado1*moduloCuadrado2);
-	productoEscalar = X1RelCentroFig*X2RelCentroFig + Y1RelCentroFig*Y2RelCentroFig;
+		productoEscalar = X1RelCentroFig*X2RelCentroFig + Y1RelCentroFig*Y2RelCentroFig;
+		
+		//por que si por redondeo extraño es mayor que 1 devuelve NaN el acos. 
+		divisionEscalarModulo = productoEscalar/productoModulo;
 
-	variacionAngulo = acos(productoEscalar/productoModulo);
+		if (divisionEscalarModulo > 1)
+			divisionEscalarModulo = 0.99999999999999999999999999999999999;
+	
+		variacionAngulo = acos(divisionEscalarModulo);
 
-	//dado que el movimiento puede haber sido horario o antihorario y ambos dan el mismo valor averiguo hacia que lado fue
-	bool esPositivo = anguloEsPositivo(X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig);
+		//dado que el movimiento puede haber sido horario o antihorario y ambos dan el mismo valor averiguo hacia que lado fue
+		bool esPositivo = anguloEsPositivo(X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig);
 
-	if (!esPositivo)
-		variacionAngulo = -variacionAngulo;
+		if (!esPositivo)
+			variacionAngulo = -variacionAngulo;
 
-	//Paso el angulo a grados desde radianes
-	variacionAngulo = (variacionAngulo*180/PI);
+		//Paso el angulo a grados desde radianes
+		variacionAngulo = (variacionAngulo*180/PI);
 
-	dimension->setAngulo( dimension->getAngulo() + variacionAngulo);
-	//cambio la vista!
-	setCambio(true);
+		dimension->setAngulo(dimension->getAngulo() + variacionAngulo);
 
+		while(dimension->getAngulo() >= 360) dimension->setAngulo( dimension->getAngulo() - 360);
+		while(dimension->getAngulo() < 0) dimension->setAngulo( dimension->getAngulo() + 360);
+		//cambio la vista!
+		setCambio(true);
+	}else{
+		variacionAngulo = 0;
+	}
 }
 
 bool Figura::esMiPosicion(double x,double y)

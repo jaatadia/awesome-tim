@@ -2,6 +2,7 @@
 
 #include "Imprimible.h"
 #include "Cambiable.h"
+#include "EscalasDeEjes.h"
 #include "Juego.h"
 
 class Juego;
@@ -52,7 +53,8 @@ public:
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes * esc);
 	void click(double x, double y,Juego* juego);
+	void resizear(EscalasDeEjes* escalas);
 private:
-	void redraw();
+	void redraw(EscalasDeEjes* escalas);
 	bool in(int x, int y, int ancho,int alto,double x2,double y2);
 };

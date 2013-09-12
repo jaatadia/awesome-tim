@@ -40,6 +40,8 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	bool deleteTemp = false;
 	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID));
 	Imagen* temp2 = temp;
+
+	std::cout<<"angulo:  "<<fig->dimension->getAngulo()<<std::endl;
 	
 	if((unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())!= temp->getAncho())||
 		(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())!= temp->getAlto())){
