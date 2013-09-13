@@ -5,6 +5,9 @@
 #include "CargadorYaml.h"
 #include "GeneradorYaml.h"
 
+#include "FiguraCuadrada.h"
+#include "FiguraTriangular.h"
+
 Juego::Juego(const char *file){
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
 		ErrorLogHandler::addError(JUEGO_TAG,SDL_GetError());
@@ -40,7 +43,11 @@ Juego::Juego(const char *file){
 /***************Test de arrastra y girar figura*************************/
 
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
-	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50- X_TERRENO_LOGICO,50- Y_TERRENO_LOGICO,0));
+	Figura* fig = new FiguraCuadrada("../images/cuadrado.jpg",20,20,0,0,0);
+	terreno->agregarFigura(fig);
+
+	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
+	fig = new FiguraTriangular("../images/triangulo.png",0,0,0,20,20);
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));
