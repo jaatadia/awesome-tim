@@ -85,9 +85,37 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 	return out;
 };
 
-YAML::Emitter& operator << (YAML::Emitter& out,Botonera* botonera){
+YAML::Emitter& operator << (YAML::Emitter& out,BotoneraController* botonera){
 
 	//cosas de la botonera
+	out << YAML::BeginMap;
+
+		out << YAML::Key << "alto";
+		out << YAML::Value << botonera->getAlto();
+		out << YAML::Key << "ancho";
+		out << YAML::Value << botonera->getAncho();
+
+		//lista de figuras
+		out << YAML::Key << "lista_figuras";
+		out << YAML::Value << YAML::BeginSeq;
+			//itero y imprimo de a una las figuras en sequence
+			
+			std::list<int*> lista_figs = botonera->getListaFiguras();
+			std::list<int*>::iterator iter;
+			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
+				out << YAML::BeginMap;
+				out << YAML::Key << "tipo_figura";
+				out << YAML::Value << (*iter)[0]; //obtengo el tipo de figura
+				out << YAML::Key << "cantidad_de_instancias";
+				out << YAML::Value << (*iter)[1]; //obtengo la cant de instancias q se pueden crear de esa fig
+				out << YAML::EndMap;
+			};
+			
+		out << YAML::EndSeq;
+
+	out << YAML::EndMap;
+
+
 	//lista de botones
 	//out << YAML::BeginSeq;
 
@@ -126,7 +154,7 @@ bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,T
 
 	//creacion del arhchivo
 	std::ofstream arch;
-	arch.open("../yaml/GameState.yaml",std::ios::out); //ERROREEEES???
+	arch.open(file,std::ios::out); //ERROREEEES???
 
 	//creacion del emitter
 	YAML::Emitter out;
@@ -136,19 +164,16 @@ bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,T
 	//llenar el emitter
 	out << YAML::BeginMap;
 		out << YAML::Key << "juego";
-		out << YAML::Value << // YAML::BeginSeq; //adentro de juego
-
-			/*out <<*/YAML::BeginMap;
+		out << YAML::Value <<			//adentro de juego
+			
+			YAML::BeginMap;
 				out << YAML::Key << "terreno";
 				out << YAML::Value << terreno; //adentro de terreno
-			out << YAML::EndMap;
-			
-			out << YAML::BeginMap;
+	
 				out << YAML::Key << "botonera";
 				out << YAML::Value << botonera; //adentro de botonera
 			out << YAML::EndMap;
-			
-		// out << YAML::EndSeq;
+
 	out << YAML::EndMap;
 
 
@@ -179,45 +204,15 @@ lista_fig.push_back(fig1);
 lista_fig.push_back(fig2);
 
 
-//Botonera* botonera = new Botonera(10,80,2);
-//botonera->agregarBoton(1, new Superficie(8,30)); //cuadrado
-//botonera->agregarBoton(2, new Superficie(8,30)); //circulo
+BotoneraController* botonera = new BotoneraController(8,80,2);
+botonera->agregarBoton(CUADRADO,10,new Superficie(5,6));
+botonera->agregarBoton(CIRCULO,10,new Superficie(6,6));
 
 Terreno* terr = new Terreno(80,80);
 terr->agregarFigura(fig1);
 terr->agregarFigura(fig2);
 
-//creacion del arhchivo
-std::ofstream arch;
-arch.open("../yaml/GameState.yaml",std::ios::out);
-
-//creacion del emiter
-YAML::Emitter out;
-
-//llenar el emiter con lo que nos interesa
-out << YAML::BeginMap;
-	out << YAML::Key << "juego";
-	out << YAML::Value << //YAML::BeginSeq; //adentro de juego
-
-		/*out <<*/YAML::BeginMap;
-			out << YAML::Key << "terreno";
-			out << YAML::Value << terr; //adentro de terreno
-		out << YAML::EndMap;
-		/*
-		out << YAML::BeginMap;
-			out << YAML::Key << "botonera";
-			out << YAML::Value << botonera; //adentro de botonera
-		out << YAML::EndMap;
-		*/
-	//out << YAML::EndSeq;
-out << YAML::EndMap;
-
-
-//pasar el emiter al archivo
-arch << out.c_str(); //<< "\n";
-
-//cerrar el archivo
-arch.close();
+guardarJuego("../yaml/GameState.yaml",botonera,terr);
 
 delete fig1;
 delete fig2;
