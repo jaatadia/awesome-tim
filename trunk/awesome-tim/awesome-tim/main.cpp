@@ -9,7 +9,7 @@
 #include "Test_Cuadrado.h"
 
 void test(void){
-	//GeneradorYaml::pruebayaml();
+	GeneradorYaml::pruebayaml();
 	//TestCargadorYaml::pruebaCargadorYaml();
 	//Test_Triangulo::prueba_triangulo();
 	//Test_Cuadrado::prueba_cuadrado();
