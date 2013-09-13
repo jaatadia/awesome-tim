@@ -26,7 +26,8 @@ private:
 	Imagen* BotonSave;
 	Imagen* BotonQuit;
 
-	int SEP;
+	int SEPX;
+	int SEPY;
 
 	int ANCHO_TBOX;
 	int ALTO_TBOX;
