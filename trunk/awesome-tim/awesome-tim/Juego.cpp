@@ -63,7 +63,7 @@ Juego::~Juego(){
 	delete ventana;
 	delete superficie;
 	delete terreno;
-	//delete botonera;
+	delete botonera;
 	delete comandos;
 	delete escalas;
 	Contenedor::deleteContenedor();
