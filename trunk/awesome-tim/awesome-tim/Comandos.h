@@ -14,8 +14,14 @@ class Juego;
 class Comandos: public Imprimible,public Cambiable
 {
 private:
+	int anchoOrig,altoOrig;
 	int ancho,alto;
 	Superficie* sup;
+	
+	Imagen* BotonOKOrig;
+	Imagen* BotonSaveOrig;
+	Imagen* BotonQuitOrig;
+	
 	Imagen* BotonOK;
 	Imagen* BotonSave;
 	Imagen* BotonQuit;

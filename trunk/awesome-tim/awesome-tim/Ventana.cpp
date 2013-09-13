@@ -11,6 +11,7 @@ Ventana::Ventana(void)
 		ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
 		fallar();
 	}else{
+		SDL_SetWindowMinimumSize(win,150,150);
 		ren = NULL;
 		ren = SDL_CreateRenderer(win,-1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if(ren == NULL){

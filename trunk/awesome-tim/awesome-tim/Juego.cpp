@@ -211,7 +211,7 @@ while(SDL_PollEvent(&evento)){
 				if (evento.button.state == SDL_BUTTON_LMASK){
 					//como comandos trabaja con pixels (?) lo paso sin convertir
 					//y por cierto: REFERENCIA CIRCULAAAAR!!!
-					comandos->click(posClickX - X_COMANDOS_LOGICO, posClickY - Y_COMANDOS_LOGICO, this);
+					comandos->click(escalas->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), escalas->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 
 			break;
