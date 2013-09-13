@@ -10,6 +10,7 @@ Terreno::Terreno(int ancho,int alto){
 	this->figuras = std::list<Figura*>();
 	figuraActiva=NULL;
 	img=NULL;
+	fondo = NULL;
 	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
 }
 
@@ -21,8 +22,8 @@ Terreno::~Terreno(void){
 		delete (*iteradorLista);
 	}
 	//borro imagen del fondo
-	if (img)
-		delete img;
+	if (img) delete img;
+	if (fondo) delete fondo;
 
 	delete sup;
 }
@@ -65,13 +66,17 @@ Superficie* Terreno::getImpresion(){
 void Terreno::setFondo(const char* ruta_img){
 	
 	Imagen* temp = new Imagen(ruta_img);
+	
 	if(!temp->huboFallos()){
-		this->setCambio(true);
+		delete this->fondo;
 		delete this->img;
-		this->img = temp->scaleImagen(this->ancho,this->alto);
-		fondoID = ruta_img;
+		
+		fondo = temp;
+		this->setCambio(true);
+		this->img = fondo->scaleImagen(this->ancho,this->alto);
+		std::string stemp = ruta_img;
+		fondoID = stemp.c_str();
 	}
-	delete temp;
 }
 /* ESTUPIDOS PUNTEROS!!!!!!!!!!!!!!!!!!!!
 	//para no abrir el archivo una y otra vez lo guardo en el contenedor
@@ -209,14 +214,9 @@ void Terreno::resizear(EscalasDeEjes* escalas){
 	delete sup;
 	sup = new Superficie(ancho,alto);
 
-	Imagen* temp = NULL;
-
-	temp = img->scaleImagen(ancho,alto);
-
+	
 	delete img;
-
-	img = temp;
-
+	img = fondo->scaleImagen(ancho,alto);
 }
 
 void Terreno::buscarActiva(double posClickX ,double posClickY){

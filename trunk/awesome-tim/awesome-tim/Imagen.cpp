@@ -94,3 +94,14 @@ Imagen* Imagen::scaleImagen(int pixelesAncho,int pixelesAlto){
 	}
 	return img;
 }
+
+//rota y zoomea la img
+Imagen* Imagen::rotarZoom(int ancho,int alto,double angulo){
+	Imagen* img = new Imagen(false);
+	img->superficie = SdlSurfaceManager::rotarZoom(this->superficie,ancho,alto,angulo);
+	if(SdlSurfaceManager::huboFallas()){
+		delete img;
+		img = NULL;
+	}
+	return img;
+}

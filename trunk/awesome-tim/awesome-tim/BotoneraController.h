@@ -7,6 +7,8 @@
 #include "Cambiable.h"
 #include "Figura.h"
 
+class Botonera;
+
 class BotoneraController: public Imprimible, public Cambiable
 {
 private:

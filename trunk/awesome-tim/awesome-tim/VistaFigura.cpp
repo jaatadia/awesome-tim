@@ -39,10 +39,11 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 
 	bool deleteTemp = false;
 	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID));
-	Imagen* temp2 = temp;
-
-	std::cout<<"angulo:  "<<fig->dimension->getAngulo()<<std::endl;
 	
+	img = temp->rotarZoom(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())),fig->dimension->getAngulo());
+	
+	/*Imagen* temp2 = temp;
+
 	if((unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())!= temp->getAncho())||
 		(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())!= temp->getAlto())){
 		temp2 = temp->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
@@ -50,5 +51,5 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	}
 
 	img = temp2->rotarImagen(fig->dimension->getAngulo());
-	if(deleteTemp) delete temp2;
+	if(deleteTemp) delete temp2;*/
 }

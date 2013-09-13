@@ -35,6 +35,7 @@ public:
 	static SDL_Surface* rotarLock180(SDL_Surface *sur);//rota la imagen 180 grados mantiene el tamaño original de la imagen
 	static SDL_Surface* rotarLock270(SDL_Surface *sur);//rota la imagen 270 grados mantiene el tamaño original de la imagen
 	static SDL_Surface* rotarLock(SDL_Surface* sur,double angulo);// rota la imagen y mantiene el tamaño original de la imagen
+	static SDL_Surface* rotarZoom(SDL_Surface* sur,int ancho,int alto,double angulo);//rota y zoomea la img
 
 	static SDL_Surface* scale(SDL_Surface* superficie,int pixelesAncho,int pixelesAlto);//escala la superficie
 
@@ -55,4 +56,5 @@ private:
 	static SDL_Surface* rotar(SDL_Surface* sur,double angulo,bool mismaSup);// rota la imagen
 
 	static void dibujarDiagonales(SDL_Surface* sup,Uint32 colorD,Uint32 colorB);
+	static SDL_Surface* scale(SDL_Surface* superficie,int pixelesAncho,int pixelesAlto,int anchoOrig,int altoOrig,double extra);
 };
