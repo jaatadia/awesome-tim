@@ -1,8 +1,8 @@
 #include "Comandos.h"
 
 Comandos::Comandos(int ancho,int alto){
-	this->ancho = ancho;
-	this->alto = alto;
+	anchoOrig = this->ancho = ancho;
+	altoOrig = this->alto = alto;
 	sup = new Superficie(ancho,alto);
 
 	this->posDirActual = 0;
@@ -12,10 +12,10 @@ Comandos::Comandos(int ancho,int alto){
 	//lo puedo harcodear sin afterefects porque esta en el constructor
 	int anchoTemp,altoTemp;
 
-	anchoTemp = ancho/5;
-	altoTemp=alto/5;
+	anchoTemp = ancho;
+	altoTemp=alto;
 
-	SEP = 1;
+	SEP = 5;
 
 	ANCHO_TBOX = anchoTemp/3;
 	ALTO_TBOX = altoTemp *3/4;
@@ -40,17 +40,16 @@ Comandos::Comandos(int ancho,int alto){
 
 	
 	
-	Imagen* temp = new Imagen("../images/botonOK.png");
-	BotonOK = temp->scaleImagen(5*ANCHO_B_OK,5*ALTO_B_OK);
-	delete temp;
+	BotonOKOrig = new Imagen("../images/botonOK.png");
+	BotonOK = BotonOKOrig->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
+	
 
-	temp = new Imagen("../images/botonSave.png");
-	BotonSave = temp->scaleImagen(5*ANCHO_B_SAVE,5*ALTO_B_SAVE);
-	delete temp;
-
-	temp = new Imagen("../images/botonQuit.png");
-	BotonQuit = temp->scaleImagen(5*ANCHO_B_QUIT,5*ALTO_B_QUIT);
-	delete temp;
+	BotonSaveOrig = new Imagen("../images/botonSave.png");
+	BotonSave = BotonSaveOrig->scaleImagen(ANCHO_B_SAVE,ALTO_B_SAVE);
+	
+	BotonQuitOrig = new Imagen("../images/botonQuit.png");
+	BotonQuit = BotonQuitOrig->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
+	
 	
 	
 	this->setCambio(true);
@@ -61,6 +60,9 @@ Comandos::~Comandos(void){
 	delete BotonOK;
 	delete BotonQuit;
 	delete BotonSave;
+	delete BotonOKOrig;
+	delete BotonQuitOrig;
+	delete BotonSaveOrig;
 }
 
 Superficie* Comandos::getImpresion(EscalasDeEjes* escalas){
@@ -76,20 +78,7 @@ Superficie* Comandos::getImpresion(){
 void Comandos::redraw(EscalasDeEjes* escalas){
 
 	sup->restoreGris();
-	
-	int X_TBOX = escalas->getCantidadUnidadesFisicasX(this->X_TBOX);
-	int Y_TBOX = escalas->getCantidadUnidadesFisicasY(this->Y_TBOX);
-	int ANCHO_TBOX = escalas->getCantidadUnidadesFisicasX(this->ANCHO_TBOX);
-	int ALTO_TBOX = escalas->getCantidadUnidadesFisicasY(this->ALTO_TBOX);
-	int X_B_OK = escalas->getCantidadUnidadesFisicasX(this->X_B_OK);
-	int Y_B_OK = escalas->getCantidadUnidadesFisicasY(this->Y_B_OK);
-	int X_B_SAVE = escalas->getCantidadUnidadesFisicasX(this->X_B_SAVE);
-	int Y_B_SAVE = escalas->getCantidadUnidadesFisicasY(this->Y_B_SAVE);
-	int X_B_QUIT = escalas->getCantidadUnidadesFisicasX(this->X_B_QUIT);
-	int Y_B_QUIT = escalas->getCantidadUnidadesFisicasY(this->Y_B_QUIT);
-
 	sup->dibujarCuadradoNegro(X_TBOX,Y_TBOX,ANCHO_TBOX,ALTO_TBOX);
-	
 	sup->dibujarImagen(BotonOK,NULL,X_B_OK,Y_B_OK);
 	sup->dibujarImagen(BotonSave,NULL,X_B_SAVE,Y_B_SAVE);
 	sup->dibujarImagen(BotonQuit,NULL,X_B_QUIT,Y_B_QUIT);
@@ -125,7 +114,6 @@ void Comandos::agregarLetra(char caracter){
 }
 
 void Comandos::click(double x, double y,Juego* juego){
-	
 	if(in(X_B_OK,Y_B_OK,ANCHO_B_OK,ALTO_B_OK,x,y)){
 		juego->setFondo(dir);
 	}else if(in(X_B_SAVE,Y_B_SAVE,ANCHO_B_SAVE,ALTO_B_SAVE,x,y)){
@@ -142,16 +130,55 @@ bool Comandos::in(int x, int y, int ancho, int alto, double x2, double y2){
 
 void Comandos::resizear(EscalasDeEjes* escalas){
 
+	
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
-	ancho = escalas->getCantidadUnidadesFisicasX(ANCHO_COMANDOS_LOGICO);
-	alto =  escalas->getCantidadUnidadesFisicasY(ALTO_COMANDOS_LOGICO);
+	ancho = escalas->getCantidadUnidadesFisicasX(anchoOrig/5);
+	alto =  escalas->getCantidadUnidadesFisicasY(altoOrig/5);
 
 	delete sup;
-
 	sup = new Superficie(ancho,alto);
 
+	int anchoTemp = ancho;
+	int altoTemp = alto;
+
+	SEP = 5;
+
+	ANCHO_TBOX = anchoTemp/3;
+	ALTO_TBOX = altoTemp *3/4;
+	X_TBOX = SEP;
+	Y_TBOX = altoTemp/8 ;
+	
+	ANCHO_B_OK = anchoTemp/8;
+	ALTO_B_OK = ALTO_TBOX;
+	X_B_OK = X_TBOX + ANCHO_TBOX + SEP;
+	Y_B_OK = Y_TBOX;
+
+
+	ANCHO_B_SAVE = ANCHO_B_OK;
+	ALTO_B_SAVE = ALTO_TBOX;
+	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEP);
+	Y_B_SAVE = Y_TBOX;
+
+	ANCHO_B_QUIT = ANCHO_B_OK;
+	ALTO_B_QUIT = ALTO_TBOX;
+	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEP;
+	Y_B_QUIT = Y_TBOX;
+
+	
+	delete BotonOK;
+	BotonOK = BotonOKOrig->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
+
+	delete BotonSave;
+	BotonSave = BotonSaveOrig->scaleImagen(ANCHO_B_SAVE,ALTO_B_SAVE);
+	
+
+	delete BotonQuit;
+	BotonQuit = BotonQuitOrig->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
+	
+	
+	this->setCambio(true);
 }
 
 void Comandos::enterKeyPressed(Juego* juego){
-	juego->setFondo(dir);
+	if(this->posDirActual!=0) juego->setFondo(dir);
 }

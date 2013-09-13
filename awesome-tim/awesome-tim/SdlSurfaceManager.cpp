@@ -407,10 +407,44 @@ Uint32 SdlSurfaceManager::blendPixels(SDL_PixelFormat* format,Uint32 pixel1,Uint
 	
 	SDL_GetRGBA(pixel1,format,&r1,&g1,&b1,&a1);
 	SDL_GetRGBA(pixel2,format,&r2,&g2,&b2,&a2);
+	
+	/*
 	r1=(r1+r2)/2;
 	g1=(g1+g2)/2;
 	b1=(b1+b2)/2;
-	a1 =(a1+a2)/2;
+	if(a2>a1) a1 = a2;
+	*/
+	
+	/*
+	if(r2>r1) r1 = r2;
+	if(g2>g1) g1 = g2;
+	if(b2>b1) b1 = b2;
+	if(a2>a1) a1 = a2;
+	*/	
+	
+	/*
+	if(a2>a1){
+		r1 = r2;
+		g1 = g2;
+		b1 = b2;
+		a1 = a2;
+	}
+	*/
+		
+	if (a1 == 0){
+		r1 = r2;
+		g1 = g2;
+		b1 = b2;
+		a1 = a2;
+	}else if(a2 != 0){
+		if(a2<a1){
+			r1 = r2;
+			g1 = g2;
+			b1 = b2;
+			a1 = a2;
+		}
+	}
+
 
 	return SDL_MapRGBA(format,r1,g1,b1,a1);
 
