@@ -3,24 +3,13 @@ juego:
     ancho: 20
     alto: 30
   terreno:
-    ancho: 40
     alto: 50    
-    imagen: ruta.jpg
+    ancho: 40
+    fondo: ../images/Circulo.png
     lista_figuras:
-      - figura: FiguraGeometrica
-        ID: circulo.png
-        dimension: CIRCULO
-        posX: 20
-        posY: 15
-        angulo: 10
-        propiedades:
-          - prop: 15
-      - figura: FiguraGeometrica
-        ID: cuadrado.png
-        dimension: CUADRADO
-        posX: 30
-        posY: 17
-        angulo: 90
-        propiedades:
-          - prop: 15
-          - prop: 20
+      - ID: ../images/Cuadrado.png
+        tipo_dimension: 2
+        dimension:
+          angulo: 10
+          posX: 20
+          posY: 15
