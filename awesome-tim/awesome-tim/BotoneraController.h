@@ -7,8 +7,6 @@
 #include "Cambiable.h"
 #include "Figura.h"
 
-class Botonera;
-
 class BotoneraController: public Imprimible, public Cambiable
 {
 private:
@@ -33,5 +31,7 @@ public:
 	void agregarBoton(int tipo, int cantidadInstancias, Superficie *img);
 	void setScrollDirection(int direction);
 	Figura * obtenerFiguraActual() {return this->figuraActual;}
+	int getAncho();
+	int getAlto();
 };
 #endif //__BOTONERACONTROLLER_H__
