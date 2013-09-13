@@ -13,29 +13,30 @@ Comandos::Comandos(int ancho,int alto){
 	int anchoTemp,altoTemp;
 
 	anchoTemp = ancho;
-	altoTemp=alto;
+	altoTemp = alto;
 
-	SEP = 5;
+	SEPX = ancho/100;
+	SEPY = alto/10;
 
 	ANCHO_TBOX = anchoTemp/3;
-	ALTO_TBOX = altoTemp *3/4;
-	X_TBOX = SEP;
-	Y_TBOX = altoTemp/8 ;
+	ALTO_TBOX = altoTemp -2*SEPY;
+	X_TBOX = SEPX;
+	Y_TBOX = SEPY;
 	
 	ANCHO_B_OK = anchoTemp/8;
 	ALTO_B_OK = ALTO_TBOX;
-	X_B_OK = X_TBOX + ANCHO_TBOX + SEP;
+	X_B_OK = X_TBOX + ANCHO_TBOX + SEPX;
 	Y_B_OK = Y_TBOX;
 
 
 	ANCHO_B_SAVE = ANCHO_B_OK;
 	ALTO_B_SAVE = ALTO_TBOX;
-	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEP);
+	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEPX);
 	Y_B_SAVE = Y_TBOX;
 
 	ANCHO_B_QUIT = ANCHO_B_OK;
 	ALTO_B_QUIT = ALTO_TBOX;
-	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEP;
+	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEPX;
 	Y_B_QUIT = Y_TBOX;
 
 	
@@ -141,40 +142,41 @@ void Comandos::resizear(EscalasDeEjes* escalas){
 	int anchoTemp = ancho;
 	int altoTemp = alto;
 
-	SEP = 5;
+	SEPX = ancho/100;
+	SEPY = alto/10;
 
 	ANCHO_TBOX = anchoTemp/3;
-	ALTO_TBOX = altoTemp *3/4;
-	X_TBOX = SEP;
-	Y_TBOX = altoTemp/8 ;
+	ALTO_TBOX = altoTemp -2*SEPY;
+	X_TBOX = SEPX;
+	Y_TBOX = SEPY;
 	
 	ANCHO_B_OK = anchoTemp/8;
 	ALTO_B_OK = ALTO_TBOX;
-	X_B_OK = X_TBOX + ANCHO_TBOX + SEP;
+	X_B_OK = X_TBOX + ANCHO_TBOX + SEPX;
 	Y_B_OK = Y_TBOX;
 
 
 	ANCHO_B_SAVE = ANCHO_B_OK;
 	ALTO_B_SAVE = ALTO_TBOX;
-	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEP);
+	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEPX);
 	Y_B_SAVE = Y_TBOX;
 
 	ANCHO_B_QUIT = ANCHO_B_OK;
 	ALTO_B_QUIT = ALTO_TBOX;
-	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEP;
+	X_B_QUIT = X_B_SAVE + ANCHO_B_SAVE + SEPX;
 	Y_B_QUIT = Y_TBOX;
-
 	
 	delete BotonOK;
 	BotonOK = BotonOKOrig->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
+	//BotonOK = new Imagen("OK",ALTO_B_OK,255,255,255);
 
 	delete BotonSave;
 	BotonSave = BotonSaveOrig->scaleImagen(ANCHO_B_SAVE,ALTO_B_SAVE);
-	
+	//BotonSave = new Imagen("Save",ALTO_B_SAVE,255,255,255);
 
 	delete BotonQuit;
 	BotonQuit = BotonQuitOrig->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
-	
+	//BotonQuit = new Imagen("Quit",ALTO_B_QUIT,255,255,255);
 	
 	this->setCambio(true);
 }
