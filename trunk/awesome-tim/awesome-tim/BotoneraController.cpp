@@ -139,3 +139,7 @@ int BotoneraController::getAlto() {
 int BotoneraController::getAncho() {
 	return this->botonera->getAncho();
 }
+
+std::list<int*> BotoneraController::getListaFiguras() {
+	return this->botonera->getListaFiguras();
+}

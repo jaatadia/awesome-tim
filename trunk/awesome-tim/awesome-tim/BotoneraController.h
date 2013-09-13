@@ -35,5 +35,6 @@ public:
 	Figura * obtenerFiguraActual() {return this->figuraActual;}
 	int getAncho();
 	int getAlto();
+	std::list<int*> getListaFiguras();
 };
 #endif //__BOTONERACONTROLLER_H__
