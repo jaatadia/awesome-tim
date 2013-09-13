@@ -106,10 +106,10 @@ void Cuadrado::setAngulo(double anguloRecibido){
 
 	//por algun motivo a veces el vertice 4 termina a la izquierda del 1 en lugar de arriba, cosa que geometricamente no puede pasar
 	//aca lo corrijo y los pongo alineados verticales, ya que es el unico caso donde esto se da
-	//tambien puede pasar con los vertices 2 y 3 y/o pueden desfasarse verticalmente
-/*
+	//tambien puede pasar con los vertices 2 y 3 y/o pueden desfasarse verticalmente (recordar eje y al reves!)
+
 	if ( (vertice4.getX() < vertice1.getX()) || (vertice3.getX() < vertice2.getX()) ||
-		(vertice1.getY() < vertice2.getY()) || (vertice4.getY() < vertice3.getY())){
+		(vertice1.getY() > vertice2.getY()) || (vertice4.getY() > vertice3.getY())){
 
 		vertice1.setX(ancho/2);
 		vertice1.setY(-alto/2);
@@ -123,6 +123,6 @@ void Cuadrado::setAngulo(double anguloRecibido){
 		vertice4.setX(ancho/2);
 		vertice4.setY(alto/2);
 	}
-*/
+
 
 }
