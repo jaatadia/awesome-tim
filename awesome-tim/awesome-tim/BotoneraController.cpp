@@ -9,6 +9,7 @@ BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostra
 	this->supFiguraActual = 0;
 	this->sup = new Superficie(ancho,alto);
 	this->figuraActual = 0;
+	this->back = NULL;
 }
 
 BotoneraController::~BotoneraController() {
