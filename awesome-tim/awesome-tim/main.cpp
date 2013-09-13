@@ -5,7 +5,7 @@
 
 //Inclusion de Test
 #include "Test_Triangulo.h"
-#include "TestCargadorYaml.h"
+//#include "TestCargadorYaml.h"
 #include "Test_Cuadrado.h"
 
 void test(void){

@@ -15,6 +15,7 @@ class Terreno: public Imprimible,public Cambiable
 private:
 	int ancho,alto;
 	Imagen* img;
+	Imagen* fondo;
 	Superficie* sup;
 	std::list<Figura*> figuras;
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando

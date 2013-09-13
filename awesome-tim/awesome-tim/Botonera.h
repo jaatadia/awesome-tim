@@ -13,7 +13,7 @@ class Botonera
 {
 private:
 	int x, y, ancho, alto, indice, anchoBoton, altoBoton, alturaMax;
-	std::list<int[2]> lstFiguras;
+	std::list<int*> lstFiguras;
 
 public:
 	// Maty <
@@ -39,7 +39,7 @@ public:
 	int getAnchoBoton(){return this->anchoBoton;}
 	int getAltoBoton(){return this->altoBoton;}
 	int getAlturaMax(){return this->alturaMax;}
-	std::list<int[2]> getListaFiguras();
+	std::list<int*> getListaFiguras();
 
 	// Setters
 	void setIndice(int indice) {this->indice = indice;}
