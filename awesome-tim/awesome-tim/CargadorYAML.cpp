@@ -5,7 +5,7 @@
 #define RUTA_DEFAULT "../yaml/archivoDefault.yaml"
 
 Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,int tipo_dimension){
-
+/*
 	double posX, posY,angulo;
 	dimension["angulo"] >> angulo;
 	dimension["posX"] >> posX;
@@ -38,7 +38,7 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,int tipo_
 			return new 	Triangulo(posX, posY, angulo, base, altura);
 			break;
 	};
-
+*/
 	return NULL;
 
 }
@@ -63,12 +63,34 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 	int tipo_dimension;
 
 	for(unsigned i=0;i<listaFiguras.size();i++) {
-		listaFiguras[i]["ID"] >> ID;
-		listaFiguras[i]["tipo_dimension"] >> tipo_dimension;
-		Dimension* dimension = obtener_dimension(listaFiguras[i]["dimension"],tipo_dimension);
-//		terreno->agregarFigura(cargarFigura(tipo_figura.c_str(),imagen.c_str(),posX,posY,dimension));		
-	}
+		try{
+			listaFiguras[i]["ID"] >> ID;
+		}catch(YAML::TypedKeyNotFound<std::string> &e){
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen. \n"); 
+			//como se pone la crucesita de que no hay imagen???
+			//ID = ID_DEFECTO;
+		}catch(YAML::InvalidScalar &e){
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen. \n"); 
+			//idem :P	
+		}
 
+		try{
+			listaFiguras[i]["tipo_dimension"] >> tipo_dimension;
+		}catch(YAML::TypedKeyNotFound<std::string> &e){
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada. \n"); 
+			continue;
+		}catch(YAML::InvalidScalar &e){
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada. \n"); 
+			continue; //probar, es continue del try o del for?? necesito que sea del for	
+		}
+
+		Dimension* dimension = obtener_dimension(listaFiguras[i]["dimension"],tipo_dimension);
+		
+		//Si no hay dimension, continuo a la siguiente figura.
+		if(!dimension) continue;
+
+		//terreno->agregarFigura(cargarFigura(tipo_figura.c_str(),imagen.c_str(),posX,posY,dimension));		
+	}
 }
 
 void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno){
@@ -99,7 +121,7 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	}
 
 	const YAML::Node& listaFiguras = nodoTerreno["lista_figuras"];
-	//cargar_figuras(listaFiguras,terreno);
+	cargar_figuras(listaFiguras,terreno);
 
 }
 
