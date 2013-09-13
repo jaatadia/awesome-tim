@@ -277,6 +277,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\BotoneraController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Circulo.cpp"
 					>
 				</File>
@@ -412,6 +416,10 @@
 				>
 				<File
 					RelativePath=".\Botonera.h"
+					>
+				</File>
+				<File
+					RelativePath=".\BotoneraController.h"
 					>
 				</File>
 				<File

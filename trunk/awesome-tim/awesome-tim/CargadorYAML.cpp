@@ -82,7 +82,7 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, Botonera* boto
 */
 
 //Abre un archivo Yaml en el que se encuentre el estado del juego guardado
-bool CargadorYaml::cargarJuego(const char* file,Botonera* botonera,Terreno* terreno){
+bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
 
 	std::ifstream mi_archivo(RUTA_DEFAULT);
 	YAML::Parser parser(mi_archivo);
