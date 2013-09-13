@@ -3,7 +3,7 @@
 #include "Ventana.h"
 #include "Superficie.h"
 #include "Terreno.h"
-#include "Botonera.h"
+#include "BotoneraController.h"
 #include "Comandos.h"
 #include "Figura.h"
 #include "EscalasDeEjes.h"
@@ -23,7 +23,7 @@ private:
 	Ventana* ventana;
 	Superficie* superficie;
 	Terreno* terreno;
-	Botonera* botonera;
+	BotoneraController * botonera;
 	Comandos* comandos;
 	Figura* figuraEnAire;
 

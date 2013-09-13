@@ -3,47 +3,48 @@
 
 #include <iostream>
 #include <list>
-#include "Imprimible.h"
-#include "Cambiable.h"
 #include "Rectangulo.h"
 #include "Figura.h"
 
 using namespace std;
 class Figura;
 
-class Botonera: public Imprimible,public Cambiable
+class Botonera
 {
 private:
+	int x, y, ancho, alto, indice, anchoBoton, altoBoton, alturaMax;
+	std::list<int> lstFiguras;
+	std::list<int> instanciasFiguras;
 
+public:
 	// Maty <
 	//static const int TRIANGULO = 0;
 	//static const int CUADRADO  = TRIANGULO + 1;
 	//static const int CIRCULO   = CUADRADO + 1;
 	// Maty > -- Esto deberia ir en alguna otra parte
 
-	static const int FACTOR_SCROLL = 10;
-	static const int SCROLL_TOP = 0;
-	static const int SCROLL_BOT = SCROLL_TOP + 1;
-
-	int x, y, ancho, alto, scrollStep, indice, anchoBoton, altoBoton, alturaMax, altoAreaScroll, altoAreaFiguras;
-	bool scrollTop, scrollBot;
-	Superficie * sup;
-	Superficie * back;
-	Superficie * supFiguraActual;
-	Figura * figuraActual;
-	std::list<int> lstFiguras;
-
-public:
-	Botonera(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras = 0.8);
-	void agregarBoton(int tipo, Superficie * img);
+	Botonera(int ancho,int alto);
 	~Botonera(void);
-	Superficie* getImpresion();
-	Superficie* getImpresion(EscalasDeEjes* escalas);
 
-	void updateBotonera();
-	Figura * obtenerFigura(double x, double y);
-	void setScrollDirection(int direction);
+	Figura * obtenerFigura(int numFigura);
 
+	// Getters
+	int getX(){return this->x;}
+	int getY(){return this->y;}
+	int getAncho(){return this->ancho;}
+	int getAlto(){return this->alto;}
+	int getIndice(){return this->indice;}
+	int getAnchoBoton(){return this->anchoBoton;}
+	int getAltoBoton(){return this->altoBoton;}
+	int getAlturaMax(){return this->alturaMax;}
+
+	// Setters
+	void setIndice(int indice) {this->indice = indice;}
+	void setY(int y) {this->y = y;}
+	void setAlturaMax(int alturaMax) {this->alturaMax = alturaMax;}
+	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;}
+
+	void agregarBoton(int tipo, int cantidadInstancias);
 };
 
 #endif //__BOTONERA_H__

@@ -94,8 +94,7 @@ void Terreno::setFondo(const char* ruta_img){
 		}
 	//no libero temp o borro lo del contenedor!!!
 	}
-*/
-}
+}*/
 
 void Terreno::agregarFigura(Figura* fig){
 

@@ -122,7 +122,7 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 	return out;
 };
 
-bool GeneradorYaml::guardarJuego(const char* file,Botonera* botonera,Terreno* terreno){
+bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
 
 	//creacion del arhchivo
 	std::ofstream arch;
