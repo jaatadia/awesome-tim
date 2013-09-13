@@ -9,23 +9,23 @@ Botonera::Botonera(int ancho,int alto){
 }
 
 void Botonera::agregarBoton(int tipo, int cantidadInstancias) {
-	this->lstFiguras.push_back(tipo);
-	this->instanciasFiguras.push_back(cantidadInstancias);
+	int vecAux[2];
+	vecAux[this->TIPO] = tipo;
+	vecAux[this->INSTANCIAS] = cantidadInstancias;
+	this->lstFiguras.push_back(vecAux);
 }
 
 Figura * Botonera::obtenerFigura(int numeroFigura){
 	Figura * retorno = 0;
-	std::list<int>::iterator itIns = this->instanciasFiguras.begin();
-	std::list<int>::iterator itFig = this->lstFiguras.begin();
+	std::list<int[2]>::iterator itFig = this->lstFiguras.begin();
 	for (int i = 0; itFig != this->lstFiguras.end(); i++)
 	{
 		if (i == numeroFigura)
 			break;
 		++itFig;
-		++itIns;
 	}
-	if (*(itIns)) {
-		switch (*(itFig)) {
+	if ((*(itFig))[this->INSTANCIAS]) {
+		switch ((*(itFig))[this->TIPO]) {
 			case TRIANGULO:
 				//retorno = new Triangulo();
 				cout << "triangulo" << endl;
@@ -37,11 +37,15 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 				cout << "circulo" << endl;
 				break;
 		}
-		--(*(itIns));
+		--((*(itFig))[this->INSTANCIAS]);
 	}
 	return retorno;
 }
 
 Botonera::~Botonera() {
 	this->lstFiguras.clear();
+}
+
+std::list<int[2]> Botonera::getListaFiguras() {
+	return this->lstFiguras;
 }

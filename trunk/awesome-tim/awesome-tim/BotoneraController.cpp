@@ -131,3 +131,11 @@ Figura * BotoneraController::obtenerFigura(double x, double y){
 		return this->botonera->obtenerFigura(this->botonera->getIndice() + ((int)(this->botonera->getY() - this->altoAreaScroll))%this->botonera->getAltoBoton());
 	return NULL;
 }
+
+int BotoneraController::getAlto() {
+	return this->botonera->getAlto();
+}
+
+int BotoneraController::getAncho() {
+	return this->botonera->getAncho();
+}

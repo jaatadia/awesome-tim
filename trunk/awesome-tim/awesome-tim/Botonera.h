@@ -13,8 +13,7 @@ class Botonera
 {
 private:
 	int x, y, ancho, alto, indice, anchoBoton, altoBoton, alturaMax;
-	std::list<int> lstFiguras;
-	std::list<int> instanciasFiguras;
+	std::list<int[2]> lstFiguras;
 
 public:
 	// Maty <
@@ -22,6 +21,9 @@ public:
 	//static const int CUADRADO  = TRIANGULO + 1;
 	//static const int CIRCULO   = CUADRADO + 1;
 	// Maty > -- Esto deberia ir en alguna otra parte
+
+	static const int TIPO = 0;
+	static const int INSTANCIAS = TIPO + 1;
 
 	Botonera(int ancho,int alto);
 	~Botonera(void);
@@ -37,6 +39,7 @@ public:
 	int getAnchoBoton(){return this->anchoBoton;}
 	int getAltoBoton(){return this->altoBoton;}
 	int getAlturaMax(){return this->alturaMax;}
+	std::list<int[2]> getListaFiguras();
 
 	// Setters
 	void setIndice(int indice) {this->indice = indice;}
