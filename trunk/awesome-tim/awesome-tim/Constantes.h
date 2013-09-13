@@ -43,11 +43,14 @@
 
 #define PI 3.1415926535897932384626433832795028841971693993751058209749
 
-#define CIRCULO 3
 #define TRIANGULO 1
 #define CUADRADO 2
+#define CIRCULO 3
 
 #define CUADRANTE1 1
 #define CUADRANTE2 2
 #define CUADRANTE3 3
 #define CUADRANTE4 4
+
+//Datos Default
+#define FONDO_TERRENO "../images/test.jpg"
