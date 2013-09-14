@@ -203,25 +203,55 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 
 }
 
-/*
-void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, Botonera* botonera){
 
-	int ancho, alto;
-	nodoBotonera["ancho"] >> ancho;
-	nodoBotonera["alto"] >> alto;
+void CargadorYaml::cargar_figuras_botones(const YAML::Node& listaFiguras,BotoneraController* botonera){
 
-//	botonera->
-	
-	const YAML::Node& listaBotones = nodoBotonera["lista_botones"];
-	std::string img;
-	for(unsigned i=0;i<listaBotones.size();i++) {
-		listaBotones[i]["imagen"] >> img;
-		Boton* boton = crearBoton(img, pos) //:P
-		botonera.agregarBoton(boton);
+	int tipo_figura, instancias;
+
+	for(unsigned i=0;i<listaFiguras.size();i++) {
+		try{
+			listaFiguras[i]["tipo_figura"] >> tipo_figura;
+		}catch(YAML::TypedKeyNotFound<std::string> &e){
+			ErrorLogHandler::addError("CargadorYaml","Error al tipo de figura de Botonera. No se carga el boton. \n"); 
+			continue;
+		}catch(YAML::InvalidScalar &e){
+			ErrorLogHandler::addError("CargadorYaml","Tipo de figura de Botonera invalida. No se carga el boton. \n"); 
+			continue;
+		}
+		
+		try{
+			listaFiguras[i]["cantidad_de_instancias"] >> instancias;
+		}catch(YAML::TypedKeyNotFound<std::string> &e){
+			ErrorLogHandler::addError("CargadorYaml","No se encontro el nodo cantidad de instancias. Se cargan instancias default. \n"); 
+			instancias = INSTANCIAS_DEFAULT;
+		}catch(YAML::InvalidScalar &e){
+			ErrorLogHandler::addError("CargadorYaml","Cantidad de instancias invalida. Se carga cantidad de instancias default. \n"); 
+			instancias = INSTANCIAS_DEFAULT;		
+		}
+
+		//botonera->agregarBoton(tipo_figura,instancias,);
 	}
 
 }
-*/
+void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera){
+
+	try{
+		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera sin botones. \n");
+		//???????????? sin botones??????
+		return;
+	}catch(YAML::BadDereference &e){
+		//???????????? sin botones??????
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de ña Botonera. Se carga botonera sin botones. \n");
+		return;
+	}
+
+	const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
+	
+	cargar_figuras_botones(listaFiguras,botonera);
+}
+
 
 //Abre un archivo Yaml en el que se encuentre el estado del juego guardado
 bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
@@ -301,7 +331,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	const YAML::Node& nodoTerreno = nodoRaiz["terreno"];
 
 	//Cargo la botonera	
-	//cargar_botones(nodoBotonera, botonera);
+	cargar_botones(nodoBotonera, botonera);
 
 	//Cargo el terreno
 	cargar_terreno(nodoTerreno,terreno);

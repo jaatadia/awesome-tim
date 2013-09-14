@@ -37,5 +37,6 @@ private:
 	static Dimension* crearDimension(const YAML::Node& dimension,double angulo,double posX,double posY, const char* tipo_dimension);
 	static Dimension* crearCuadrado(const YAML::Node& dimension, double angulo,double posX,double posY);
 	static Dimension* crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY);
+	static void cargar_figuras_botones(const YAML::Node& listaFiguras,BotoneraController* botonera);
 
 };
