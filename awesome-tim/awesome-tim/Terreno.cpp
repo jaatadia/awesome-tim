@@ -74,8 +74,7 @@ void Terreno::setFondo(const char* ruta_img){
 		fondo = temp;
 		this->setCambio(true);
 		this->img = fondo->scaleImagen(this->ancho,this->alto);
-		std::string stemp = ruta_img;
-		fondoID = stemp.c_str();
+		fondoID = ruta_img;
 	}
 }
 /* ESTUPIDOS PUNTEROS!!!!!!!!!!!!!!!!!!!!
@@ -187,7 +186,7 @@ int Terreno::getAncho(){
 int Terreno::getAlto(){
 	return (this->alto);
 };
-const char* Terreno::getFondo(){ //si es "" es porq no pusieron ningun fondo (esta el default)
+std::string Terreno::getFondo(){ //si es "" es porq no pusieron ningun fondo (esta el default)
 	return this->fondoID;
 };
 std::list<Figura*> Terreno::getListaFigs(){

@@ -7,6 +7,7 @@
 
 #include "FiguraCuadrada.h"
 #include "FiguraTriangular.h"
+#include "FiguraCircular.h"
 #include "FiguraPoligonal.h"
 
 Juego::Juego(const char *file){
@@ -60,7 +61,7 @@ Juego::Juego(const char *file){
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));
-	fig = new Figura("../images/Circulo.jpg",new Circulo(20,50- X_TERRENO_LOGICO,50- Y_TERRENO_LOGICO,0));
+	fig = new FiguraCircular("../images/Circulo.jpg",20,50- X_TERRENO_LOGICO,50- Y_TERRENO_LOGICO,0);
 	terreno->agregarFigura(fig);
 
 }

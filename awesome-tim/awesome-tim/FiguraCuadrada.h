@@ -10,6 +10,6 @@ public:
 
 	int getTipoDimension(){return CUADRADO;};
 	
-	Cuadrado* getDimension();
+	//Cuadrado* getDimension();
 	
 };

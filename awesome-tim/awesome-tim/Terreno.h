@@ -4,6 +4,7 @@
 #include "Cambiable.h"
 #include "Figura.h"
 #include "Dimension.h"
+#include <string>
 #include <list>
 
 /* terreno es el que contiene todas las figuras
@@ -19,7 +20,7 @@ private:
 	Superficie* sup;
 	std::list<Figura*> figuras;
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
-	const char* fondoID;
+	std::string fondoID;
 
 public:
 	Terreno(int ancho,int alto);
@@ -43,7 +44,7 @@ public:
 
 	int getAncho();
 	int getAlto();
-	const char* getFondo();
+	std::string getFondo();
 	std::list<Figura*> getListaFigs();
 
 	void cambioVistaFiguras();

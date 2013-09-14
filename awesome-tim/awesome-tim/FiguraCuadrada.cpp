@@ -9,6 +9,6 @@ FiguraCuadrada::~FiguraCuadrada(void)
 {
 }
 
-Cuadrado* FiguraCuadrada::getDimension(){
-	return (Cuadrado*)  Figura::getDimension();
-}
+//Cuadrado* FiguraCuadrada::getDimension(){
+//	return (Cuadrado*)  Figura::getDimension();
+//}
