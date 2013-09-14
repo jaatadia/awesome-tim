@@ -1,15 +1,29 @@
 juego:
-  botonera:
-    ancho: 20
-    alto: 30
   terreno:
-    alto: 50    
-    ancho: 40
+    alto: 80
+    ancho: 80
     fondo: ../images/Circulo.png
     lista_figuras:
-      - ID: ../images/Cuadrado.png
-        tipo_dimension: 2
+      - ID: ../images/Cuadrado.jpg
+        tipo_dimension: CUADRADO
         dimension:
-          angulo: 10
-          posX: 20
-          posY: 15
+          ancho: 10
+          alto: 10
+          posX: 3
+          posY: 3
+          angulo: 60
+      - ID: ../images/Circulo.jpg
+        tipo_dimension: CIRCULO
+        dimension:
+          radio: 5
+          posX: 30
+          posY: 40
+          angulo: 9
+  botonera:
+    alto: 80
+    ancho: 8
+    lista_figuras:
+      - tipo_figura: 2
+        cantidad_de_instancias: 10
+      - tipo_figura: 3
+        cantidad_de_instancias: 10

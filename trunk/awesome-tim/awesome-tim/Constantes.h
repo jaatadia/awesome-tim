@@ -55,3 +55,9 @@
 
 //Datos Default
 #define FONDO_TERRENO "../images/test.jpg"
+#define ANGULO_DEFAULT 0
+#define POSX_DEFAULT 0
+#define POSY_DEFAULT 0
+#define RADIO_DEFAULT 5
+#define ANCHO_DEFAULT 5
+#define ALTO_DEFAULT 5

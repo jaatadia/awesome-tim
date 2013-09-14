@@ -19,7 +19,7 @@ void test(void){
 int main(int argc, char* argv[]){
 
 	//Activar solo en caso de que se deseen correr las pruebas
-	test();
+	//test();
 
 /*		
 	Programa prog = Programa(argv[0]);//creo el programa
