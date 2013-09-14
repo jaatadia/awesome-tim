@@ -4,42 +4,99 @@
 
 #define RUTA_DEFAULT "../yaml/archivoDefault.yaml"
 
-Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,int tipo_dimension){
-/*
-	double posX, posY,angulo;
-	dimension["angulo"] >> angulo;
-	dimension["posX"] >> posX;
-	dimension["posY"] >> posY;
+Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY){
+	double radio;	
+	try{
+		dimension["radio"] >> radio;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe radio de dimension circulo. Se carga radio por defecto. \n"); 
+		radio = RADIO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo del radio de dimension circulo. Se carga radio por defecto. \n"); 
+		radio = RADIO_DEFAULT;
+	}
+	
+	Dimension* dim = new Circulo(radio,posX,posY,angulo);
+	
+	if(!dim)
+		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Circulo. \n"); 
+	
+	return dim;
 
-	switch(tipo_dimension){
-		case CIRCULO:
-			double radio;
-			//xq me falta obtener el radio
-			radio = 10;
-			//dimension["radio"] >> radio;
-			return new Circulo(radio,posX,posY,angulo);
-			break;
-		case CUADRADO:
-			double alto, ancho;
-			//xq me falta obtenerlas:
-			alto = 10;
-			ancho = 10;
-			//dimension["alto"] >> alto;
-			//dimension["ancho"] >> ancho;
-			return new Cuadrado(ancho, alto, posX, posY, angulo);
-			break;
-		case TRIANGULO:
-			double base, altura;
-			//xq me faltan:
-			base = 10;
-			altura = 10;
-			//dimension["base"] >> base;
-			//dimension["altura"] >> altura;
-			return new 	Triangulo(posX, posY, angulo, base, altura);
-			break;
-	};
-*/
+}
+
+Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angulo,double posX,double posY){
+	double ancho, alto;	
+	try{
+		dimension["ancho"] >> ancho;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe ancho de dimension cuadrado. Se carga ancho por defecto. \n"); 
+		ancho = ANCHO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo del ancho de dimension cuadrado. Se carga ancho por defecto. \n"); 
+		ancho = ANCHO_DEFAULT;
+	}
+
+	try{
+		dimension["alto"] >> alto;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe alto de dimension cuadrado. Se carga alto por defecto. \n"); 
+		alto = ALTO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo del alto de dimension cuadrado. Se carga alto por defecto. \n"); 
+		alto = ALTO_DEFAULT;
+	}
+
+	Dimension* dim = new Cuadrado(ancho,alto,posX,posY,angulo);
+
+	if(!dim)
+		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Cuadrado. \n"); 
+	
+	return dim;
+
+}
+
+Dimension* CargadorYaml::crearDimension(const YAML::Node& dimension, double angulo,double posX,double posY, const char* tipo_dimension){
+	
+	if(tipo_dimension == "CIRCULO")
+		return crearCirculo(dimension,angulo,posX,posY);
+
+	if(tipo_dimension == "CUADRADO")
+		return crearCuadrado(dimension,angulo,posX,posY);
+
 	return NULL;
+}
+
+Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const char* tipo_dimension){
+
+	double posX, posY,angulo;
+
+	//Cargo el angulo
+	try{
+		dimension["angulo"] >> angulo;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe angulo de figura. Se carga angulo por defecto en 0 grados. \n"); 
+		angulo = ANGULO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo del angulo de figura. Se carga angulo por defecto en 0 grados. \n"); 
+		angulo = ANGULO_DEFAULT;
+	}
+
+	//Cargo posX y posY
+	try{
+		dimension["posX"] >> posX;
+		dimension["posY"] >> posY;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","Posicion de figura no esta definida. Se carga posicion por defecto. \n"); 
+		posX = POSX_DEFAULT;
+		posY = POSY_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo en Posicion de figura. Se carga posicion por defecto. \n"); 
+		posX = POSX_DEFAULT;
+		posY = POSY_DEFAULT;
+	}
+
+	return crearDimension(dimension, angulo, posX, posY, tipo_dimension);
 
 }
 /*
@@ -59,8 +116,7 @@ Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* imagen,in
 
 void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terreno){
 
-	std::string ID;
-	int tipo_dimension;
+	std::string ID,tipo_dimension;
 
 	for(unsigned i=0;i<listaFiguras.size();i++) {
 		try{
@@ -81,13 +137,16 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 			continue;
 		}catch(YAML::InvalidScalar &e){
 			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada. \n"); 
-			continue; //probar, es continue del try o del for?? necesito que sea del for	
+			continue;	
 		}
 
-		Dimension* dimension = obtener_dimension(listaFiguras[i]["dimension"],tipo_dimension);
+		Dimension* dimension = obtener_dimension(listaFiguras[i]["dimension"],tipo_dimension.c_str());
 		
 		//Si no hay dimension, continuo a la siguiente figura.
-		if(!dimension) continue;
+		if(!dimension){
+			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la dimensión. La figura no sera cargada. \n"); 
+			continue;
+		}
 
 		//terreno->agregarFigura(cargarFigura(tipo_figura.c_str(),imagen.c_str(),posX,posY,dimension));		
 	}
@@ -108,7 +167,7 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	}
 		
 	terreno->setFondo(img.c_str());
-	
+
 	//Cargo las figuras del terreno
 	try{
 		const YAML::Node& listaFiguras = nodoTerreno["lista_figuras"];
@@ -160,6 +219,8 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default. \n"); 
 			return false;
 		}
+		mi_archivo.close();
+		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}
 	
 	try{
@@ -180,6 +241,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}catch(YAML::BadDereference &e){
 		ErrorLogHandler::addError("cargadorYaml","No hay nodo raiz juego. Se carga archivo default. \n"); 
+		std::cout << e.what();
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}
