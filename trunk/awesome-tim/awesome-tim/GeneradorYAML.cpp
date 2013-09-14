@@ -1,6 +1,9 @@
 #include "GeneradorYaml.h"
+
 #include "FiguraCuadrada.h"
 #include "FiguraCircular.h"
+#include "FiguraTriangular.h"
+#include "FiguraPoligonal.h"
 
 
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
@@ -49,6 +52,22 @@ out << YAML::EndMap;
 return out;
 };
 
+YAML::Emitter& operator << (YAML::Emitter& out,PoligonoRegular* polig){
+out << YAML::BeginMap;
+out << YAML::Key << "posX";
+out << YAML::Value << polig->getX();
+out << YAML::Key << "posY";
+out << YAML::Value << polig->getY();
+out << YAML::Key << "angulo";
+out << YAML::Value << polig->getAngulo();
+out << YAML::Key << "cant_vertices";
+out << YAML::Value << polig->getCantVertices();
+out << YAML::Key << "radio";
+out << YAML::Value << polig->getRadio();
+out << YAML::EndMap;
+return out;
+};
+
 YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 	out << YAML::BeginMap;
 	out << YAML::Key << "ID";
@@ -75,6 +94,13 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 
 				out << YAML::Key << "dimension";
 				out << YAML::Value << (Triangulo*) fig->getDimension();
+				break;
+
+			case POLIGONOREGULAR:
+				out << YAML::Value << "POLIGONOREGULAR";
+
+				out << YAML::Key << "dimension";
+				out << YAML::Value << (PoligonoRegular*) fig->getDimension();
 				break;
 			
 			default:

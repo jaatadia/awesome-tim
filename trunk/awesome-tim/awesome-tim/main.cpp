@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 	prog.correr();//lo corro (duhh)
 */
 	
-	Juego juego = Juego("./juegoguardado.yaml");
+	Juego juego = Juego("../yaml/juegoguardado.yaml");
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		juego.onEvent();
 		juego.onLoop();
