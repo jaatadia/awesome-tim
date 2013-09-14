@@ -1,6 +1,5 @@
 #include "CargadorYaml.h"
 #include "ErrorLogHandler.h"
-#include "Constantes.h"
 
 #define RUTA_DEFAULT "../yaml/archivoDefault.yaml"
 
@@ -57,13 +56,14 @@ Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angul
 }
 
 Dimension* CargadorYaml::crearDimension(const YAML::Node& dimension, double angulo,double posX,double posY, const char* tipo_dimension){
-	
-	if(tipo_dimension == "CIRCULO")
+
+	if(strcmp(tipo_dimension,"CIRCULO") == 0)
 		return crearCirculo(dimension,angulo,posX,posY);
 
-	if(tipo_dimension == "CUADRADO")
+	if(strcmp(tipo_dimension,"CUADRADO") == 0)
 		return crearCuadrado(dimension,angulo,posX,posY);
 
+	ErrorLogHandler::addError("CargadorYaml","Error del tipo dimension. El tipo de dimension no es un tipo valido. \n"); 	
 	return NULL;
 }
 
@@ -99,20 +99,28 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 	return crearDimension(dimension, angulo, posX, posY, tipo_dimension);
 
 }
-/*
-Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* imagen,int posX,int posY,Dimension* dimension){
 
-	if (tipo_figura == "CUADRADO"){
-		int ancho, alto;
-		figura[0] >> ancho;
-		figura[1] >> alto;
-		return (new Cuadrado(ancho,alto));
+Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimension* dimension){
+
+	if (strcmp(tipo_figura,"CUADRADO") == 0){
+		//Figura* figura = new FiguraCuadrada(ID,dimension);
+		Figura* figura = new FiguraCuadrada(ID,0,0,0,0,0);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Cuadrada. \n"); 	
+		return figura;
 	}
 
+	if (strcmp(tipo_figura,"CIRCULO") == 0){
+		//Figura* figura = new FiguraCircular(ID,dimension);
+		Figura* figura = new FiguraCircular(ID,0,0,0,0);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Circular. \n"); 	
+		return figura;
+	}
 
-	return (new Figura());
+	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido. \n"); 	
+	return NULL;
 }
-*/
 
 void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terreno){
 
@@ -140,6 +148,7 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 			continue;	
 		}
 
+
 		Dimension* dimension = obtener_dimension(listaFiguras[i]["dimension"],tipo_dimension.c_str());
 		
 		//Si no hay dimension, continuo a la siguiente figura.
@@ -148,7 +157,17 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 			continue;
 		}
 
-		//terreno->agregarFigura(cargarFigura(tipo_figura.c_str(),imagen.c_str(),posX,posY,dimension));		
+		//FIXME:
+		//Esta linea es HARCODEO!! esta porque no existe el tipo figura todavia!!!
+		const char* tipo_figura = tipo_dimension.c_str();
+		Figura * figura = cargarFigura(tipo_figura,ID.c_str(),dimension);
+
+		if(!figura){
+			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada. \n"); 
+			continue;
+		}
+		
+		terreno->agregarFigura(figura);		
 	}
 }
 
