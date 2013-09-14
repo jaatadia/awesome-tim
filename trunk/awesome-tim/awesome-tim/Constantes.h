@@ -46,6 +46,7 @@
 #define TRIANGULO 1
 #define CUADRADO 2
 #define CIRCULO 3
+#define POLIGONOREGULAR 4
 
 #define CUADRANTE1 1
 #define CUADRANTE2 2
