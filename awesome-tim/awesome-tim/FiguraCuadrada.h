@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Figura.h"
+#include "Constantes.h"
 
 class FiguraCuadrada: public Figura
 {

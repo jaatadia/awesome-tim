@@ -6,6 +6,8 @@
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include "Triangulo.h"
+#include "PoligonoRegular.h"
+
 #include <iostream>
 #include <fstream>
 
@@ -18,11 +20,15 @@ class Terreno;
 class GeneradorYaml{
 
 private:
-	YAML::Emitter& operator << (Dimension* dim);
+
 
 	YAML::Emitter& operator << (Figura* fig);
 	YAML::Emitter& operator << (BotoneraController* botonera);
 	YAML::Emitter& operator << (Terreno* terreno);
+	YAML::Emitter& operator << (Cuadrado* cuad);
+	YAML::Emitter& operator << (Circulo* circ);
+	YAML::Emitter& operator << (Triangulo* triang);
+	YAML::Emitter& operator << (PoligonoRegular* polig);
 
 public:
 	static bool guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno);

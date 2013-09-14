@@ -18,5 +18,11 @@ public:
 	bool puntoPertenece(double X, double Y);
 	double getAncho(void);
 	double getAlto(void);
+
+	double getRadio();
+	double getCantVertices();
+
+private:
 	double enRecta(double x,double y,double x0,double y0,double x1,double y1);
+
 };

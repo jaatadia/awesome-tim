@@ -5,6 +5,7 @@
 #include "CargadorYaml.h"
 #include "GeneradorYaml.h"
 
+#include "Figura.h"
 #include "FiguraCuadrada.h"
 #include "FiguraTriangular.h"
 #include "FiguraCircular.h"

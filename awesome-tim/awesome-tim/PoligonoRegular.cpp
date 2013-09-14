@@ -80,4 +80,10 @@ double PoligonoRegular::getAlto(void){
 
 double PoligonoRegular::enRecta(double x,double y,double x0,double y0,double x1,double y1){
 	return (((x-x0)*(y1-y0))-((y-y0)*(x1-x0)));
-}
+};
+double PoligonoRegular::getRadio(){
+	return this->radio;
+};
+double PoligonoRegular::getCantVertices(){
+	return this->vertices;
+};
