@@ -7,6 +7,7 @@
 
 #include "FiguraCuadrada.h"
 #include "FiguraTriangular.h"
+#include "FiguraPoligonal.h"
 
 Juego::Juego(const char *file){
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
@@ -48,6 +49,14 @@ Juego::Juego(const char *file){
 
 	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
 	fig = new FiguraTriangular("../images/triangulo.png",0,0,0,20,20);
+	terreno->agregarFigura(fig);
+
+	Contenedor::putMultimedia("../images/Ptriangulo.png",new Imagen("../images/Ptriangulo.png"));
+	fig = new FiguraPoligonal("../images/Ptriangulo.png",20,20,10,3,0);
+	terreno->agregarFigura(fig);
+
+	Contenedor::putMultimedia("../images/Ppentagono.png",new Imagen("../images/Ppentagono.png"));
+	fig = new FiguraPoligonal("../images/Ppentagono.png",20,20,10,5,0);
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));

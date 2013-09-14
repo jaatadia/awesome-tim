@@ -194,11 +194,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FiguraPoligonal.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FiguraTriangular.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\GeneradorYaml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PoligonoRegular.cpp"
 				>
 			</File>
 			<File
@@ -344,11 +352,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FiguraPoligonal.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FiguraTriangular.h"
 				>
 			</File>
 			<File
 				RelativePath=".\GeneradorYaml.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PoligonoRegular.h"
 				>
 			</File>
 			<File
