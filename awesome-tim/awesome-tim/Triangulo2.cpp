@@ -23,15 +23,19 @@ Triangulo2::~Triangulo2(void)
 {
 }
 
-bool Triangulo2::puntoPertenece(double X, double Y){
+bool Triangulo2::puntoPertenece(double tX, double tY){
 	
 	double angle = -(PI*this->getAngulo())/180.0;
-	double tx1 = getX() + ((x1) * cos(angle)) - ((y1) * sin(angle));
-	double ty1 = getY() + ((x1) * sin(angle)) + ((y1) * cos(angle));
-	double tx2 = getX() + ((x2) * cos(angle)) - ((y2) * sin(angle));
-	double ty2 = getY() + ((x2) * sin(angle)) + ((y2) * cos(angle));
-	double tx3 = getX() + ((x3) * cos(angle)) - ((y3) * sin(angle));
-	double ty3 = getY() + ((x3) * sin(angle)) + ((y3) * cos(angle));
+	double tx1 = getX() + x1;//((x1) * cos(angle)) - ((y1) * sin(angle));
+	double ty1 = getY() + y1;//((x1) * sin(angle)) + ((y1) * cos(angle));
+	double tx2 = getX() + x2;//((x2) * cos(angle)) - ((y2) * sin(angle));
+	double ty2 = getY() + y2;//((x2) * sin(angle)) + ((y2) * cos(angle));
+	double tx3 = getX() + x3;//((x3) * cos(angle)) - ((y3) * sin(angle));
+	double ty3 = getY() + y3;//((x3) * sin(angle)) + ((y3) * cos(angle));
+
+
+	double X = getX() + ((tX-getX()) * cos(-angle)) - ((tY-getY()) * sin(-angle));
+	double Y = getY() + ((tX-getX()) * sin(-angle)) + ((tY-getY()) * cos(-angle));
 
 	bool signoOK = true;
 	double signo;
@@ -66,5 +70,6 @@ double Triangulo2::getAlto(void){
 }
 
 double Triangulo2::enRecta(double x,double y,double x0,double y0,double x1,double y1){
-	return (((x-x0)/(x1-x0))-((y-y0)/(y1-y0)));
+	//return (((x-x0)/(x1-x0))-((y-y0)/(y1-y0)));
+	return (((x-x0)*(y1-y0))-((y-y0)*(x1-x0)));
 }
