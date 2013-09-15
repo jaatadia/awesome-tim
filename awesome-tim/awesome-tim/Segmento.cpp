@@ -42,20 +42,20 @@ bool Segmento::intersecaCon(Segmento* otroSgmt){
 				//si estan en rango del segmento
 				if ((otroSgmt->getXInicial() < XFinal) && (XInicial < otroSgmt->getXFinal()) )
 					return true;
+			}
 		}
 		else
 			if (algunoVertical){
 				//me fijo cual de los dos es vertical
 				if (this->vertical()){
 					//si se puede cruzar
-					if ( getX() <= otroSgmt->getXFinal()) && ( getX() <= otroSgmt->getXInicial())
+					if ( (getX() <= otroSgmt->getXFinal()) && ( getX() <= otroSgmt->getXInicial()))
 						//si esta en rango del segmento
 						if ( (otroSgmt->getYInicial() < YFinal) && (YInicial < otroSgmt->getYFinal()))
 							return true;
-				}else
-				{
-					if (otroSgmt->getX() <= this->getXFinal()) && ( otroSgmt->getX() <= this->getXInicial())
-						if ( (otroSgmt->getYInicial() < YFinal) && (YInicial < otroSgmt->getYFinal()))
+				}else{
+					if ((otroSgmt->getX() <= this->getXFinal()) && ( otroSgmt->getX() <= this->getXInicial()))
+						if ( (otroSgmt->getYInicial() < YFinal) && (YInicial < otroSgmt->getYFinal()) )
 							return true;
 				}
 			}
