@@ -53,7 +53,7 @@ void BotoneraController::handleEventBotonera(double mouseX, double mouseY, Uint3
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
-			// Borro aca la figura???
+			// Borro aca la figura??? Juan>No la toques.
 			this->figuraActual = 0;
 			this->setScrollDirection(this->SCROLL_OFF);
 			this->setCambio(true);

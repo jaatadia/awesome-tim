@@ -31,21 +31,21 @@ public:
 	Figura * obtenerFigura(int numFigura);
 
 	// Getters
-	int getX(){return this->x;}
-	int getY(){return this->y;}
-	int getAncho(){return this->ancho;}
-	int getAlto(){return this->alto;}
-	int getIndice(){return this->indice;}
-	int getAnchoBoton(){return this->anchoBoton;}
-	int getAltoBoton(){return this->altoBoton;}
-	int getAlturaMax(){return this->alturaMax;}
+	int getX(){return this->x;};
+	int getY(){return this->y;};
+	int getAncho(){return this->ancho;};
+	int getAlto(){return this->alto;};
+	int getIndice(){return this->indice;};
+	int getAnchoBoton(){return this->anchoBoton;};
+	int getAltoBoton(){return this->altoBoton;};
+	int getAlturaMax(){return this->alturaMax;};
 	std::list<int*> getListaFiguras();
 
 	// Setters
-	void setIndice(int indice) {this->indice = indice;}
-	void setY(int y) {this->y = y;}
-	void setAlturaMax(int alturaMax) {this->alturaMax = alturaMax;}
-	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;}
+	void setIndice(int indice) {this->indice = indice;};
+	void setY(int y) {this->y = y;};
+	void setAlturaMax(int alturaMax) {this->alturaMax = alturaMax;};
+	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;};
 
 	void agregarBoton(int tipo, int cantidadInstancias);
 };

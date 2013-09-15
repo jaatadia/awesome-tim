@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Posicion.h"
+#include "Segmento.h"
 
 class Dimension: public Posicion
 {
@@ -23,4 +24,6 @@ public:
 	};
 
 	virtual bool puntoPertenece(double X, double Y)=0;
+	//la haria abstracta pero ahora mismo no se que dimensiones van a quedar, asi que implemento en poligono y circulo
+	virtual bool intersecaCon(double X1, double Y1, double X2, double Y2){ return true;};
 };

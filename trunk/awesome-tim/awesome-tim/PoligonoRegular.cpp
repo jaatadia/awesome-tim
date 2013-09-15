@@ -87,3 +87,56 @@ double PoligonoRegular::getRadio(){
 double PoligonoRegular::getCantVertices(){
 	return this->vertices;
 };
+
+
+bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
+
+	double angle = -(PI*this->getAngulo())/180.0;
+	Xs1 = getX() + ((Xs1-getX()) * cos(-angle)) - ((Ys1-getY()) * sin(-angle));
+	Ys1 = getY() + ((Xs1-getX()) * sin(-angle)) + ((Ys1-getY()) * cos(-angle));
+	Xs2 = getX() + ((Xs2-getX()) * cos(-angle)) - ((Ys2-getY()) * sin(-angle));
+	Ys2 = getY() + ((Xs2-getX()) * sin(-angle)) + ((Ys2-getY()) * cos(-angle));
+
+	Segmento* segExterno = new Segmento(Xs1, Ys1, Xs2, Ys2);
+
+	bool interseca = false;
+
+	int i = 0;
+
+	double x1,y1,x2,y2;
+	Segmento* segPropio;	
+
+	//entre el primero y el ultimo
+	x1 = getX() + vectorX[0];
+	y1 = getY() + vectorY[0];
+	x2 = getX() + vectorX[vertices-1];
+	y2 = getY() + vectorY[vertices-1];
+
+	segPropio = new Segmento(x1,y1,x2,y2);
+	interseca = segPropio->intersecaCon(segExterno);
+
+	delete segPropio;
+	segPropio = NULL;
+
+	//el resto
+	while ( (i < vertices-1) && (!interseca) ){
+
+		x1 = getX() + vectorX[i];
+		y1 = getY() + vectorY[i];
+		x2 = getX() + vectorX[i+1];
+		y2 = getY() + vectorY[i+1];
+
+		segPropio = new Segmento(x1,y1,x2,y2);
+
+		interseca = segPropio->intersecaCon(segExterno);
+
+		delete segPropio;
+		segPropio = NULL;
+
+		i++;
+	}
+
+	return interseca;
+
+
+}

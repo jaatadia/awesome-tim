@@ -28,5 +28,10 @@ public:
 	bool puntoADerecha(double X,double Y);
 	bool puntoAIzquierda(double X,double Y);
 
+	double getPendiente(){return pendiente;};
+	double getOrdenadaAlOrigen(){return ordenadaAlOrigen;};
+	double getX(){return x;};
+
 	bool vertical(){return esVertical;};
+	bool horizontal(){ return (pendiente == 0);};
 };

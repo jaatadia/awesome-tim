@@ -67,7 +67,8 @@ void Terreno::setFondo(const char* ruta_img){
 	
 	Imagen* temp = new Imagen(ruta_img);
 	
-	if(!temp->huboFallos()){
+	if((!temp->huboFallos())  && (ruta_img != fondoID)){
+
 		delete this->fondo;
 		delete this->img;
 		
@@ -75,15 +76,17 @@ void Terreno::setFondo(const char* ruta_img){
 		this->setCambio(true);
 		this->img = fondo->scaleImagen(this->ancho,this->alto);
 		fondoID = ruta_img;
+	}else{
+		delete temp;
 	}
-}
-/* ESTUPIDOS PUNTEROS!!!!!!!!!!!!!!!!!!!!
+
+/*
 	//para no abrir el archivo una y otra vez lo guardo en el contenedor
 	if (Contenedor::estaMultimedia(ruta_img) == false){
 		Imagen* temp = new Imagen(ruta_img);
 		if(!temp->huboFallos())
 			Contenedor::putMultimedia(ruta_img,temp);
-	//no libero temp o borro lo del contenedor!!!
+	//no libero temp o borro lo del contenedor!
 	}
 
 	if (ruta_img != fondoID){
@@ -92,13 +95,21 @@ void Terreno::setFondo(const char* ruta_img){
 
 		if(temp){
 			this->setCambio(true);
-			delete this->img;
-			this->img = temp->scaleImagen(this->ancho,this->alto);
-			fondoID = ruta_img;
+		//	delete this->fondo;  //si hago esto la borro del contenedor!
+			if (img){
+				delete this->img;
+				img = NULL;
+			}
+
+			fondo = temp; //guardo la original (se usa para que no se pixele con distintos resize)
+			this->img = fondo->scaleImagen(this->ancho,this->alto);
+			std::string ruta_temp = ruta_img;
+			fondoID = ruta_temp.c_str();
 		}
-	//no libero temp o borro lo del contenedor!!!
+	//no libero temp o borro lo del contenedor!
 	}
-}*/
+*/
+}
 
 void Terreno::agregarFigura(Figura* fig){
 
@@ -112,6 +123,9 @@ void Terreno::agregarFigura(Figura* fig){
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
 		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
 	};
+
+	//sacar************************************
+	this->setCambio(true);
 }
 
 void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
@@ -142,8 +156,8 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 	if (figuraActiva != NULL){
 
 		figuraActiva->cambiarPosicion(cantMovX, cantMovY);
-		//si se fue el centro del terreno lo vuelvo a meter
 
+		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
 
 		this->setCambio(true);
@@ -182,16 +196,19 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 
 int Terreno::getAncho(){
 	return (this->ancho);
-};
+}
+
 int Terreno::getAlto(){
 	return (this->alto);
-};
+}
+
 std::string Terreno::getFondo(){ //si es "" es porq no pusieron ningun fondo (esta el default)
 	return this->fondoID;
-};
+}
+
 std::list<Figura*> Terreno::getListaFigs(){
 	return this->figuras;
-};
+}
 
 
 void Terreno::cambioVistaFiguras(){
@@ -205,6 +222,8 @@ void Terreno::cambioVistaFiguras(){
 }
 
 void Terreno::resizear(EscalasDeEjes* escalas){
+
+	this->setCambio(true);
 
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
 	ancho = escalas->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
