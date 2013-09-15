@@ -63,12 +63,11 @@ Superficie* Terreno::getImpresion(){
 	return sup;
 }
 
-void Terreno::setFondo(const char* ruta_img){
+bool Terreno::setFondo(const char* ruta_img){
 	
 	Imagen* temp = new Imagen(ruta_img);
 	
-	if((!temp->huboFallos())  && (ruta_img != fondoID)){
-
+	if(!temp->huboFallos()){
 		delete this->fondo;
 		delete this->img;
 		
@@ -76,8 +75,9 @@ void Terreno::setFondo(const char* ruta_img){
 		this->setCambio(true);
 		this->img = fondo->scaleImagen(this->ancho,this->alto);
 		fondoID = ruta_img;
-	}else{
+	} else {
 		delete temp;
+		return false;
 	}
 
 /*
