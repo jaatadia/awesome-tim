@@ -15,6 +15,7 @@ public:
 
 	virtual double getAncho()=0;
 	virtual double getAlto()=0;
+	virtual int getTipoDimension()=0;
 
 	virtual double getAngulo(){
 		return angulo;

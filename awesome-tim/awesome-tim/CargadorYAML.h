@@ -17,10 +17,6 @@
 #include "Circulo.h"
 
 #include "Figura.h"
-#include "FiguraCuadrada.h"
-#include "FiguraCircular.h"
-#include "FiguraPoligonal.h"
-#include "FiguraTriangular.h"
 
 class CargadorYaml{
 public:

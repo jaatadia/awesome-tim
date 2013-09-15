@@ -38,4 +38,6 @@ public:
 	void setAngulo(double ang);
 	
 	bool puntoPertenece(double X, double Y);
+
+	virtual int getTipoDimension(){return CUADRADO;}
 };

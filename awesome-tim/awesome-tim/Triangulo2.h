@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dimension.h"
+#include "Constantes.h"
 
 class Triangulo2: public Dimension
 {
@@ -13,6 +14,7 @@ public:
 	bool puntoPertenece(double X, double Y);
 	double getAncho(void);
 	double getAlto(void);
+	virtual int getTipoDimension(){return TRIANGULO;}
 
 private:
 	double enRecta(double x,double y,double x0,double y0,double x1,double y1);

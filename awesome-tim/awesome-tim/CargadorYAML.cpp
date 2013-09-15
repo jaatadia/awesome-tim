@@ -114,7 +114,7 @@ Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimens
 
 	if (strcmp(tipo_figura,"CUADRADO") == 0){
 		//Figura* figura = new FiguraCuadrada(ID,dimension);
-		Figura* figura = new FiguraCuadrada(ID,0,0,0,0,0);
+		Figura* figura = new Figura(ID,new Cuadrado(0,0,0,0,0));
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Cuadrada. \n"); 	
 		return figura;
@@ -122,7 +122,7 @@ Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimens
 
 	if (strcmp(tipo_figura,"CIRCULO") == 0){
 		//Figura* figura = new FiguraCircular(ID,dimension);
-		Figura* figura = new FiguraCircular(ID,0,0,0,0);
+		Figura* figura = new Figura(ID,new Circulo(0,0,0,0));
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Circular. \n"); 	
 		return figura;
