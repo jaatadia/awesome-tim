@@ -2,7 +2,7 @@ juego:
   terreno:
     alto: 80
     ancho: 80
-    fondo: ../images/Circulo.png
+    fondo: ../images/fondo-verde.jpg
     lista_figuras:
       - ID: ../images/Cuadrado.jpg
         tipo_dimension: CUADRADO

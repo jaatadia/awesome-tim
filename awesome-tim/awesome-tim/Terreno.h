@@ -29,7 +29,7 @@ public:
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes* escalas);
 
-	void setFondo(const char* img);
+	bool setFondo(const char* img);
 
 	void agregarFigura(Figura* fig);
 	void eliminarFigura(Figura* fig);

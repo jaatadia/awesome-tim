@@ -110,10 +110,11 @@ YAML::Emitter& operator << (YAML::Emitter& out,BotoneraController* botonera){
 	//cosas de la botonera
 	out << YAML::BeginMap;
 
-		out << YAML::Key << "alto";
+		/*out << YAML::Key << "alto";
 		out << YAML::Value << botonera->getAlto();
 		out << YAML::Key << "ancho";
 		out << YAML::Value << botonera->getAncho();
+		*/
 
 		//lista de figuras
 		out << YAML::Key << "lista_figuras";
@@ -147,10 +148,10 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 	//cosas del terreno
 	out << YAML::BeginMap;
 
-		out << YAML::Key << "alto";
+		/*out << YAML::Key << "alto";
 		out << YAML::Value << terreno->getAlto();
 		out << YAML::Key << "ancho";
-		out << YAML::Value << terreno->getAncho();
+		out << YAML::Value << terreno->getAncho();*/
 		out << YAML::Key << "fondo";
 		out << YAML::Value << terreno->getFondo();
 

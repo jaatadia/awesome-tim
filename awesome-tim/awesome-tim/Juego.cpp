@@ -75,7 +75,7 @@ Juego::Juego(const char *file){
 }
 
 bool Juego::cargar(){
-	CargadorYaml::cargarJuego(file,botonera,terreno);
+	//CargadorYaml::cargarJuego(file,botonera,terreno);
 	return true;
 }
 
