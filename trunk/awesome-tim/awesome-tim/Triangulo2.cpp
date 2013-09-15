@@ -73,3 +73,7 @@ double Triangulo2::enRecta(double x,double y,double x0,double y0,double x1,doubl
 	//return (((x-x0)/(x1-x0))-((y-y0)/(y1-y0)));
 	return (((x-x0)*(y1-y0))-((y-y0)*(x1-x0)));
 }
+
+Dimension* Triangulo2::clonar(){
+	return new Triangulo2(getX(),getY(),getAngulo(),base,altura);
+}

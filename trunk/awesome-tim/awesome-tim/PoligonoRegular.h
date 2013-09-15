@@ -22,10 +22,11 @@ public:
 
 	double getRadio();
 	double getCantVertices();
-
+	
 	bool intersecaCon(double X1, double Y1, double X2, double Y2);
 
 	virtual int getTipoDimension(){return POLIGONOREGULAR;}
+	Dimension* clonar();
 
 private:
 	double enRecta(double x,double y,double x0,double y0,double x1,double y1);

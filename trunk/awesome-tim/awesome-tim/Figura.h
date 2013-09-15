@@ -43,6 +43,8 @@ public:
 	int getTipoDimension(){return dimension->getTipoDimension();};
 	Dimension* getDimension();
 
+	Figura* clonar();//copia la figura
+
 private:
 	//defino positivo en sentido horario
 	bool anguloEsPositivo(double X1, double Y1, double X2, double Y2); 

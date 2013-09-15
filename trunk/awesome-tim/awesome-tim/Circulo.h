@@ -18,4 +18,5 @@ public:
 	bool intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2);
 
 	virtual int getTipoDimension(){return CIRCULO;}
+	Dimension* clonar();
 };
