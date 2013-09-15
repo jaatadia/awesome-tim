@@ -13,4 +13,6 @@ public:
 	double getAlto();
 	double getRadio();
 	bool puntoPertenece(double pos_X, double pos_Y);
+
+	bool intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2);
 };

@@ -176,3 +176,8 @@ const char* Figura::getID(){
 Dimension* Figura::getDimension(){
 	return (this->dimension);
 };
+
+bool Figura::intersecaCon(double X1, double Y1, double X2, double Y2){
+
+return dimension->intersecaCon( X1, Y1, X2, Y2);
+}

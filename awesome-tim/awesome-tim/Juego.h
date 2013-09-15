@@ -6,6 +6,7 @@
 #include "BotoneraController.h"
 #include "Comandos.h"
 #include "Figura.h"
+#include "Cuadrado.h"
 #include "EscalasDeEjes.h"
 #include "Contenedor.h"
 
@@ -13,7 +14,7 @@
 
 class Comandos;
 
-class Juego: public Fallable
+class Juego: public Fallable, Cambiable
 {
 private:
 	
@@ -26,6 +27,7 @@ private:
 	BotoneraController * botonera;
 	Comandos* comandos;
 	Figura* figuraEnAire;
+	bool estaActiva; //indica si la figura en aire esta habilitada a moverse
 
 	EscalasDeEjes* escalas;
 
@@ -49,7 +51,13 @@ public:
 	void setFondo(const char* dir);
 
 private:
-	bool enTerreno(double posX,double posY);
-	bool enBotonera(double posX,double posY);
-	bool enComandos(double posX,double posY);
+	bool posEnTerreno(double posX,double posY);
+	bool posEnBotonera(double posX,double posY);
+	bool posEnComandos(double posX,double posY);
+	void soltarFiguraEnAire();
+	void confirmarPosicionFiguraEnAire();
+	bool figEnEspacioIntermedio();
+	bool figEnTerreno();
+	bool figEnBotonera();
+	bool figEnComandos();
 };

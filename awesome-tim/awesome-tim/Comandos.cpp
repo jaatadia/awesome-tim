@@ -8,8 +8,6 @@ Comandos::Comandos(int ancho,int alto){
 	this->posDirActual = 0;
 	dir[0] = '\0';
 	
-	//paso todo a unidades logicas originales
-	//lo puedo harcodear sin afterefects porque esta en el constructor
 	int anchoTemp,altoTemp;
 
 	anchoTemp = ancho;
@@ -131,6 +129,7 @@ bool Comandos::in(int x, int y, int ancho, int alto, double x2, double y2){
 
 void Comandos::resizear(EscalasDeEjes* escalas){
 
+	this->setCambio(true);
 	
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
 	ancho = escalas->getCantidadUnidadesFisicasX(anchoOrig/5);
