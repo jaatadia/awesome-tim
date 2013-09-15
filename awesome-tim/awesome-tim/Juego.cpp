@@ -470,13 +470,14 @@ bool Juego::figEnComandos(){
 
 void Juego::soltarFiguraEnAire(){
 
+	confirmarPosicionFiguraEnAire();
+
 	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 		//relativizar posiciones al terreno!
 		figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 		terreno->agregarFigura( figuraEnAire );
 		figuraEnAire = NULL;
 	}else{
-		confirmarPosicionFiguraEnAire();
 		delete figuraEnAire;
 		figuraEnAire = NULL;
 	}
