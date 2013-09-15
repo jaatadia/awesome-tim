@@ -126,3 +126,7 @@ void Cuadrado::setAngulo(double anguloRecibido){
 
 
 }
+
+Dimension* Cuadrado::clonar(){
+	return new Cuadrado(ancho,alto,getX(),getY(),angulo);
+}

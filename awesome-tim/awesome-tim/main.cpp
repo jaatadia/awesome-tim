@@ -4,7 +4,6 @@
 #include "GeneradorYaml.h"
 
 //Inclusion de Test
-#include "Test_Triangulo.h"
 //#include "TestCargadorYaml.h"
 #include "Test_Cuadrado.h"
 

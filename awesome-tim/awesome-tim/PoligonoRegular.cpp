@@ -140,3 +140,7 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 
 
 }
+
+Dimension* PoligonoRegular::clonar(){
+	return new PoligonoRegular(getX(),getY(),radio,vertices,getAngulo());
+}

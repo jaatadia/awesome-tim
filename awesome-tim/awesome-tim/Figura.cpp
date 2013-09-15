@@ -178,6 +178,9 @@ Dimension* Figura::getDimension(){
 };
 
 bool Figura::intersecaCon(double X1, double Y1, double X2, double Y2){
+	return dimension->intersecaCon( X1, Y1, X2, Y2);
+}
 
-return dimension->intersecaCon( X1, Y1, X2, Y2);
+Figura* Figura::clonar(){
+	return new Figura(ID,dimension->clonar());
 }
