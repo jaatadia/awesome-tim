@@ -335,6 +335,11 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			terreno->cambioVistaFiguras();
 			terreno->resizear(escalas);
 
+			//incluyendo a la del aire!!
+			//en realidad es innecesario, sacar cuando ande botonera!
+			if (figuraEnAire)
+				figuraEnAire->setCambio(true);
+
 			botonera->setCambio(true);
 			//no se si es necesario algo similar para botonera
 
@@ -470,6 +475,7 @@ void Juego::soltarFiguraEnAire(){
 		terreno->agregarFigura( figuraEnAire );
 		figuraEnAire = NULL;
 	}else{
+		confirmarPosicionFiguraEnAire();
 		delete figuraEnAire;
 		figuraEnAire = NULL;
 	}
