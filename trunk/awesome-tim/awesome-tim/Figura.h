@@ -40,7 +40,7 @@ public:
 	void dibujar(Superficie* super,EscalasDeEjes* escalas);
 
 	const char* getID();
-	virtual int getTipoDimension(){return -1;};
+	int getTipoDimension(){return dimension->getTipoDimension();};
 	Dimension* getDimension();
 
 private:

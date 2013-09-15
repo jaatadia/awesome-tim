@@ -186,22 +186,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FiguraCircular.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\FiguraCuadrada.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\FiguraPoligonal.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\FiguraTriangular.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\GeneradorYaml.cpp"
 				>
 			</File>
@@ -214,15 +198,11 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Segmento.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Test_Cuadrado.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Test_Triangulo.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Triangulo.cpp"
 				>
 			</File>
 			<File
@@ -344,22 +324,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FiguraCircular.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FiguraCuadrada.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FiguraPoligonal.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FiguraTriangular.h"
-				>
-			</File>
-			<File
 				RelativePath=".\GeneradorYaml.h"
 				>
 			</File>
@@ -372,15 +336,11 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Segmento.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Test_Cuadrado.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Test_Triangulo.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Triangulo.h"
 				>
 			</File>
 			<File

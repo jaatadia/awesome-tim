@@ -4,11 +4,12 @@
 #include "CargadorYaml.h"
 #include "GeneradorYaml.h"
 
+#include "Cuadrado.h"
+#include "Circulo.h"
+#include "PoligonoRegular.h"
+#include "Triangulo2.h"
+
 #include "Figura.h"
-#include "FiguraCuadrada.h"
-#include "FiguraTriangular.h"
-#include "FiguraCircular.h"
-#include "FiguraPoligonal.h"
 
 Juego::Juego(const char *file){
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
@@ -48,28 +49,28 @@ Juego::Juego(const char *file){
 /***************Test de arrastra y girar figura*************************/
 
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
-	Figura* fig = new FiguraCuadrada("../images/cuadrado.jpg",20,20,50,50,0);
+	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
-	fig = new FiguraTriangular("../images/triangulo.png",0,0,0,20,20);
+	fig = new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20));
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/Ptriangulo.png",new Imagen("../images/Ptriangulo.png"));
-	fig = new FiguraPoligonal("../images/Ptriangulo.png",20,20,10,3,0);
+	fig = new Figura("../images/Ptriangulo.png",new PoligonoRegular(20,20,10,3,0));
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/Ppentagono.png",new Imagen("../images/Ppentagono.png"));
-	fig = new FiguraPoligonal("../images/Ppentagono.png",20,20,10,5,0);
+	fig = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
 	terreno->agregarFigura(fig);
 
 	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));
-	fig = new FiguraCircular("../images/Circulo.jpg",20,50,50,0);
+	fig = new Figura("../images/Circulo.jpg",new Circulo(20,50,50,0));
 	terreno->agregarFigura(fig);
 
 /*****************Figura En aire******************************************/
 
-	figuraEnAire = new FiguraPoligonal("../images/Ppentagono.png",20,20,10,5,0);
+	figuraEnAire = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
 
 }
 

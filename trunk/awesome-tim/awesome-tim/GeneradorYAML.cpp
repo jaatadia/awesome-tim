@@ -1,11 +1,5 @@
 #include "GeneradorYaml.h"
 
-#include "FiguraCuadrada.h"
-#include "FiguraCircular.h"
-#include "FiguraTriangular.h"
-#include "FiguraPoligonal.h"
-
-
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
 out << YAML::BeginMap;
 out << YAML::Key << "ancho";
@@ -220,9 +214,9 @@ int GeneradorYaml::pruebayaml(){
 //Cuadrado* dim_cuad = new Cuadrado(10,10,3,3,60);
 //Circulo* dim_circ = new Circulo(5,30,40,9);
 //Figura* fig1 = new Figura("../images/Cuadrado.jpg",dim_cuad);
-Figura* fig1 = new FiguraCuadrada("../images/Cuadrado.jpg",10,10,3,3,60);
+Figura* fig1 = new Figura("../images/Cuadrado.jpg",new Cuadrado(10,10,3,3,60));
 //Figura* fig2 = new Figura("../images/Circulo.jpg",dim_circ);
-Figura* fig2 = new FiguraCircular("../images/Circulo.jpg",5,30,40,9);
+Figura* fig2 = new Figura("../images/Circulo.jpg",new Circulo(5,30,40,9));
 
 
 std::list<Figura*> lista_fig = std::list<Figura*>();
