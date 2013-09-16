@@ -3,6 +3,8 @@
 
 #define RUTA_DEFAULT "../yaml/archivoDefault.yaml"
 
+#define CANT_CAR 40
+
 Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY){
 	double radio;	
 	try{
@@ -16,12 +18,18 @@ Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		radio = RADIO_DEFAULT;
 	}
-	
+
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!radio_valido(radio)){
+		int linea = dimension["radio"].GetMark().line;
+		imprimir_error_linea("Radio de Circulo invalido.", linea);
+		radio = RADIO_DEFAULT;
+	}
+
 	Dimension* dim = new Circulo(radio,posX,posY,angulo);
 	
 	if(!dim)
-		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Circulo. \n");
-		//IMPRIMIR NRO LINEA
+		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Circulo. \n"); 
 	
 	return dim;
 
@@ -41,6 +49,13 @@ Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angul
 		ancho = ANCHO_DEFAULT;
 	}
 
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!ancho_cuadrado_valido(ancho)){
+		int linea = dimension["ancho"].GetMark().line;
+		imprimir_error_linea("Ancho de Cuadrado invalido.", linea);
+		ancho = ANCHO_DEFAULT;
+	}
+
 	try{
 		dimension["alto"] >> alto;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -53,11 +68,17 @@ Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angul
 		alto = ALTO_DEFAULT;
 	}
 
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!alto_cuadrado_valido(alto)){
+		int linea = dimension["alto"].GetMark().line;
+		imprimir_error_linea("Alto de Cuadrado invalido.", linea);
+		alto = ALTO_DEFAULT;
+	}
+
 	Dimension* dim = new Cuadrado(ancho,alto,posX,posY,angulo);
 
 	if(!dim)
-		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Cuadrado. \n");
-		//IMPRIMIR NRO LINEA
+		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Cuadrado. \n"); 
 	
 	return dim;
 
@@ -71,6 +92,7 @@ Dimension* CargadorYaml::crearDimension(const YAML::Node& dimension, double angu
 	if(strcmp(tipo_dimension,"CUADRADO") == 0)
 		return crearCuadrado(dimension,angulo,posX,posY);
 
+	//No deberia llegar a este error porque ya deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo dimension. El tipo de dimension no es un tipo valido. \n"); 	
 	return NULL;
 }
@@ -92,6 +114,13 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 		angulo = ANGULO_DEFAULT;
 	}
 
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!angulo_valido(angulo)){
+		int linea = dimension["angulo"].GetMark().line;
+		imprimir_error_linea("Angulo de Figura invalido.", linea);
+		angulo = ANGULO_DEFAULT;
+	}
+
 	//Cargo posX y posY
 	try{
 		dimension["posX"] >> posX;
@@ -105,6 +134,20 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 		ErrorLogHandler::addError("CargadorYaml","Dato erroneo en Posicion de figura. Se carga posicion por defecto. \n"); 
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		posX = POSX_DEFAULT;
+		posY = POSY_DEFAULT;
+	}
+
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!posicion_validaX(posX)){
+		int linea = dimension["posX"].GetMark().line;
+		imprimir_error_linea("Posicion X de Figura invalida.", linea);
+		posX = POSX_DEFAULT;
+	}
+
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!posicion_validaY(posY)){
+		int linea = dimension["posY"].GetMark().line;
+		imprimir_error_linea("Posicion Y de Figura invalida.", linea);
 		posY = POSY_DEFAULT;
 	}
 
@@ -130,6 +173,7 @@ Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimens
 		return figura;
 	}
 
+	//No deberia llegar a este caso porque el error deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido. \n"); 	
 	return NULL;
 }
@@ -152,6 +196,8 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 			//idem :P	
 		}
 
+		//Va if de ID?????????
+
 		try{
 			listaFiguras[i]["tipo_dimension"] >> tipo_dimension;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -164,13 +210,18 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 			continue;	
 		}
 
+		//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+		if(!tipo_dimension_valida(tipo_dimension.c_str())){
+			int linea = listaFiguras[i]["tipo_dimension"].GetMark().line;
+			imprimir_error_linea("Tipo de dimension invalida.", linea);
+			continue;
+		}
 
 		Dimension* dimension = obtener_dimension(listaFiguras[i]["dimension"],tipo_dimension.c_str());
 		
 		//Si no hay dimension, continuo a la siguiente figura.
 		if(!dimension){
-			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la dimensión. La figura no sera cargada. \n");
-			//IMPRIMIR NRO LINEA????
+			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la dimensión. La figura no sera cargada. \n"); 
 			continue;
 		}
 
@@ -181,7 +232,6 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 
 		if(!figura){
 			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada. \n"); 
-			//IMPRIMIR NRO LINEA????
 			continue;
 		}
 		
@@ -204,13 +254,15 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		img = FONDO_TERRENO;	
 	}
-		
-	bool ok = terreno->setFondo(img.c_str());
-	if (!ok) {
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar terreno. Imagen de fondo no valida. Se carga imagen de fondo default. \n");
-		//IMPRIMIR NRO LINEA????
+
+	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+	if(!fondo_terreno_valido(img.c_str())){
+		int linea = nodoTerreno["fondo"].GetMark().line;
+		imprimir_error_linea("Fondo de terreno invalido.", linea);
 		img = FONDO_TERRENO;
 	}
+
+	terreno->setFondo(img.c_str());
 
 	//Cargo las figuras del terreno
 	try{
@@ -247,7 +299,14 @@ void CargadorYaml::cargar_figuras_botones(const YAML::Node& listaFiguras,Botoner
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			continue;
 		}
-		
+
+		//Si entro aca es porque lei realmente un tipo de figura, entonces el nodo existe y no va a tirar excepcion
+		if(!tipo_figura_botonera_valida(tipo_figura)){
+			int linea = listaFiguras[i]["tipo_figura"].GetMark().line;
+			imprimir_error_linea("Tipo de figura de botonera invalida.", linea);
+			continue;
+		}
+
 		try{
 			listaFiguras[i]["cantidad_de_instancias"] >> instancias;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -258,6 +317,12 @@ void CargadorYaml::cargar_figuras_botones(const YAML::Node& listaFiguras,Botoner
 			ErrorLogHandler::addError("CargadorYaml","Cantidad de instancias invalida. Se carga cantidad de instancias default. \n"); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			instancias = INSTANCIAS_DEFAULT;		
+		}
+
+		//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
+		if(!cant_instancias_valida(instancias)){
+			int linea = listaFiguras[i]["cantidad_de_instancias"].GetMark().line;
+			imprimir_error_linea("Cantidad de instancias invalida.", linea);
 		}
 
 		//botonera->agregarBoton(tipo_figura,instancias,);
@@ -275,7 +340,7 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 		return;
 	}catch(YAML::BadDereference &e){
 		//???????????? sin botones??????
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera sin botones. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de ña Botonera. Se carga botonera sin botones. \n");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		return;
 	}
@@ -326,7 +391,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	}catch(YAML::BadDereference &e){
 		ErrorLogHandler::addError("CargadorYaml","No hay nodo raiz juego. Se carga archivo default. \n"); 
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
-		std::cout << e.what(); //COUT??
+		std::cout << e.what();
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}
@@ -380,4 +445,51 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 
 	return true;
 
+}
+
+
+
+//Funciones de validaciones:
+
+bool CargadorYaml::cant_instancias_valida(int instancias){
+	return false;
+}
+
+bool CargadorYaml::tipo_figura_botonera_valida(int tipo_figura){
+	return true;
+}
+bool CargadorYaml::fondo_terreno_valido(const char* fondo){
+	return true;
+}
+bool CargadorYaml::tipo_dimension_valida(const char* tipo_dimension){
+	return true;
+}
+bool CargadorYaml::radio_valido(double radio){
+	return true;
+}
+bool CargadorYaml::alto_cuadrado_valido(double alto){
+	return true;
+}
+bool CargadorYaml::ancho_cuadrado_valido(double ancho){
+	return true;
+}
+bool CargadorYaml::posicion_validaX(double posX){
+	return true;
+}
+
+bool CargadorYaml::posicion_validaY(double posY){
+	return true;
+}
+
+bool CargadorYaml::angulo_valido(double angulo){
+	return true;
+}
+
+void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
+		linea = linea + 1; //Porque empieza a contar en 0
+		char buffer[CANT_CAR];
+		itoa(linea,buffer,10);//el ultimo valor es la base
+		std::string line = string(buffer);
+		std::string msj = mensaje + " Linea Yaml: " + line + "\n"; 
+		ErrorLogHandler::addError("CargadorYaml",msj.c_str()); 
 }
