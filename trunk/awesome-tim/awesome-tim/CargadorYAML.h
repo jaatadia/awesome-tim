@@ -35,4 +35,18 @@ private:
 	static Dimension* crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY);
 	static void cargar_figuras_botones(const YAML::Node& listaFiguras,BotoneraController* botonera);
 
+	//Funciones de validacion de datos
+	static bool cant_instancias_valida(int instancias);
+	static bool tipo_figura_botonera_valida(int tipo_figura);
+	static bool fondo_terreno_valido(const char* fondo);
+	static bool tipo_dimension_valida(const char* tipo_dimension);
+	static bool radio_valido(double radio);
+	static bool alto_cuadrado_valido(double alto);
+	static bool ancho_cuadrado_valido(double alto);
+	static bool posicion_validaX(double posX);
+	static bool posicion_validaY(double posY);
+	static bool angulo_valido(double angulo);
+
+	static void imprimir_error_linea(std::string mensaje, int linea);
+
 };
