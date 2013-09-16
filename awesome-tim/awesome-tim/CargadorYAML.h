@@ -50,4 +50,8 @@ private:
 
 	static void imprimir_error_linea(std::string mensaje, int linea);
 
+public:
+
+	static void pruebaCargador();
+
 };
