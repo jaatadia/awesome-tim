@@ -46,6 +46,7 @@ private:
 	static bool posicion_validaX(double posX);
 	static bool posicion_validaY(double posY);
 	static bool angulo_valido(double angulo);
+	static bool tipo_figura_valida(const char* tipo_figura);
 
 	static void imprimir_error_linea(std::string mensaje, int linea);
 

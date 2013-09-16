@@ -158,16 +158,14 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimension* dimension){
 
 	if (strcmp(tipo_figura,"CUADRADO") == 0){
-		//Figura* figura = new FiguraCuadrada(ID,dimension);
-		Figura* figura = new Figura(ID,new Cuadrado(0,0,0,0,0));
+		Figura* figura = new Figura(ID,dimension);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Cuadrada. \n"); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"CIRCULO") == 0){
-		//Figura* figura = new FiguraCircular(ID,dimension);
-		Figura* figura = new Figura(ID,new Circulo(0,0,0,0));
+		Figura* figura = new Figura(ID,dimension);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Circular. \n"); 	
 		return figura;
@@ -188,12 +186,11 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
 			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen. \n"); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
-			//como se pone la crucesita de que no hay imagen???
-			//ID = ID_DEFECTO;
+			ID = ID_DEFAULT;
 		}catch(YAML::InvalidScalar &e){
 			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen. \n"); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
-			//idem :P	
+			ID = ID_DEFAULT;
 		}
 
 		//Va if de ID?????????
@@ -228,6 +225,11 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		//FIXME:
 		//Esta linea es HARCODEO!! esta porque no existe el tipo figura todavia!!!
 		const char* tipo_figura = tipo_dimension.c_str();
+		if(!tipo_figura_valida(tipo_figura)){
+			imprimir_error_linea("Tipo de figura invalida.", linea);
+			continue;
+		}
+		
 		Figura * figura = cargarFigura(tipo_figura,ID.c_str(),dimension);
 
 		if(!figura){
@@ -485,6 +487,9 @@ bool CargadorYaml::angulo_valido(double angulo){
 	return true;
 }
 
+bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
+	return true;
+}
 void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
 		linea = linea + 1; //Porque empieza a contar en 0
 		char buffer[CANT_CAR];

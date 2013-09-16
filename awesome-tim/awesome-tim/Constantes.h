@@ -62,3 +62,4 @@
 #define ANCHO_DEFAULT 5
 #define ALTO_DEFAULT 5
 #define INSTANCIAS_DEFAULT 100
+#define ID_DEFAULT ""
