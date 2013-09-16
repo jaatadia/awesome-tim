@@ -26,6 +26,8 @@ private:
 	Imagen* BotonSave;
 	Imagen* BotonQuit;
 
+	bool botonOkActivo, botonSaveActivo, botonQuitActivo;
+
 	int SEPX;
 	int SEPY;
 
@@ -60,6 +62,7 @@ public:
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes * esc);
 	void click(double x, double y,Juego* juego);
+	void release(double x, double y,Juego* juego);
 	void enterKeyPressed(Juego* juego);
 	void resizear(EscalasDeEjes* escalas);
 private:

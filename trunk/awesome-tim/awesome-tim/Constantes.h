@@ -54,7 +54,7 @@
 #define CUADRANTE4 4
 
 //Datos Default
-#define FONDO_TERRENO "../images/test.jpg"
+#define FONDO_TERRENO "../images/fondo-gris.jpg"
 #define ANGULO_DEFAULT 0
 #define POSX_DEFAULT 0
 #define POSY_DEFAULT 0

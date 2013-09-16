@@ -1,5 +1,6 @@
 #include "Contenedor.h"
 #include "Imagen.h"
+#include "ErrorLogHandler.h"
 #include <iostream>
 
 Contenedor* Contenedor::cont = NULL;
@@ -17,7 +18,10 @@ void* Contenedor::getMultimedia(const char* ID){
 		cont = new Contenedor();
 	}
 	if(cont->mapa.find(ID)!= cont->mapa.end()) return cont->mapa[ID];
-	else return cont->mapa["NONE"];
+	else {
+		ErrorLogHandler::addError("Contenedor","El archivo multimedia no ha podido cargarse.");
+		return cont->mapa["NONE"];
+	}
 }
 
 void Contenedor::deleteContenedor(){

@@ -47,10 +47,10 @@ Juego::Juego(const char *file){
 	estaActiva = false;
 
 /***************Test de arrastra y girar figura*************************/
-
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
+/*
 
 	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
 	fig = new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20));
@@ -67,15 +67,15 @@ Juego::Juego(const char *file){
 	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));
 	fig = new Figura("../images/Circulo.jpg",new Circulo(20,50,50,0));
 	terreno->agregarFigura(fig);
-
+*/
 /*****************Figura En aire******************************************/
 
-	figuraEnAire = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
+	//figuraEnAire = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
 
 }
 
 bool Juego::cargar(){
-	//CargadorYaml::cargarJuego(file,botonera,terreno);
+	CargadorYaml::cargarJuego(file,botonera,terreno);
 	return true;
 }
 
@@ -266,6 +266,8 @@ while(SDL_PollEvent(&evento)){
 				//o es de figura viva
 				soltarFiguraEnAire();
 			}
+
+			comandos->release(escalas->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), escalas->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 
 
 			break;
