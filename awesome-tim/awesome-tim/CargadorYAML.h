@@ -25,6 +25,8 @@ public:
 
 private:
 
+	static std::string ruta_archivo;
+
 	static void cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera);
 	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno);
 	static void cargar_figuras(const YAML::Node& listaFiguras, Terreno* terreno);
@@ -38,7 +40,6 @@ private:
 	//Funciones de validacion de datos
 	static bool cant_instancias_valida(int instancias);
 	static bool tipo_figura_botonera_valida(int tipo_figura);
-	static bool fondo_terreno_valido(const char* fondo);
 	static bool tipo_dimension_valida(const char* tipo_dimension);
 	static bool radio_valido(double radio);
 	static bool alto_cuadrado_valido(double alto);
@@ -49,6 +50,8 @@ private:
 	static bool tipo_figura_valida(const char* tipo_figura);
 
 	static void imprimir_error_linea(std::string mensaje, int linea);
+	static std::string concatenar_texto(std::string mensaje, int linea, std::string archivo);
+ 
 
 public:
 

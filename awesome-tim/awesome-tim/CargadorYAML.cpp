@@ -1,9 +1,12 @@
 #include "CargadorYaml.h"
 #include "ErrorLogHandler.h"
+#include "Contenedor.h"
 
 #define RUTA_DEFAULT "../yaml/archivoDefault.yml"
 
 #define CANT_CAR 40
+
+std::string CargadorYaml::ruta_archivo = "";
 
 Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY){
 	double radio;	
@@ -157,6 +160,7 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 
 Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimension* dimension){
 
+	Contenedor::putMultimedia(ID,new Imagen(ID));
 	if (strcmp(tipo_figura,"CUADRADO") == 0){
 		Figura* figura = new Figura(ID,dimension);
 		if(!figura)
@@ -211,6 +215,8 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		if(!tipo_dimension_valida(tipo_dimension.c_str())){
 			int linea = listaFiguras[i]["tipo_dimension"].GetMark().line;
 			imprimir_error_linea("Tipo de dimension invalida.", linea);
+			//Harcode de figura:
+			imprimir_error_linea("Tipo de figura invalida.", linea);
 			continue;
 		}
 
@@ -233,7 +239,9 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		Figura * figura = cargarFigura(tipo_figura,ID.c_str(),dimension);
 
 		if(!figura){
-			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada. \n"); 
+			if (dimension) delete(dimension);
+			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada. \n");
+			//habria q imprimir el tipo de figura y la ruta de la imagen q no anda
 			continue;
 		}
 		
@@ -258,13 +266,12 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	}
 
 	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
-	if(!fondo_terreno_valido(img.c_str())){
+	if(!terreno->setFondo(img.c_str())){
 		int linea = nodoTerreno["fondo"].GetMark().line;
 		imprimir_error_linea("Fondo de terreno invalido.", linea);
 		img = FONDO_TERRENO;
+		terreno->setFondo(img.c_str());
 	}
-
-	terreno->setFondo(img.c_str());
 
 	//Cargo las figuras del terreno
 	try{
@@ -336,14 +343,14 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 	try{
 		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera sin botones. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default. \n");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
-		//???????????? sin botones??????
+		//botonera->agregarBotonesDefault()
 		return;
 	}catch(YAML::BadDereference &e){
-		//???????????? sin botones??????
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de ña Botonera. Se carga botonera sin botones. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default. \n");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		//botonera->agregarBotonesDefault()
 		return;
 	}
 
@@ -360,6 +367,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	YAML::Node doc;
 	std::ifstream mi_archivo;
 	mi_archivo.open(file,std::ios::out);
+	ruta_archivo = string(file);
 	
 	if(!mi_archivo.is_open()){
 		mi_archivo.open(RUTA_DEFAULT,std::ios::out);
@@ -453,12 +461,6 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 
 //Funciones de validaciones:
 
-//Esta no se si tiene sentido porque ya al crear el terreno te tira la validacion
-bool CargadorYaml::fondo_terreno_valido(const char* fondo){
-	return true;
-}
-
-//TIPO FIGURA Y TIPO DIMENSION NO ES LO MISMO??
 bool CargadorYaml::tipo_figura_botonera_valida(int tipo_figura){
 	return ((tipo_figura == TRIANGULO) || (tipo_figura == CUADRADO) || (tipo_figura == CIRCULO) || (tipo_figura == POLIGONOREGULAR)); 
 }
@@ -492,19 +494,27 @@ bool CargadorYaml::posicion_validaY(double posY){
 }
 
 bool CargadorYaml::angulo_valido(double angulo){
-	return ((angulo >=0) && (angulo <= 360));
+	return ((angulo >=0) && (angulo < 360));
 }
 
 bool CargadorYaml::cant_instancias_valida(int instancias){
 	return (instancias >= 0);
 }
 
+
+
+//Impresiones
+std::string CargadorYaml::concatenar_texto(std::string mensaje, int linea, std::string archivo){
+	char buffer[CANT_CAR];
+	itoa(linea,buffer,10);//el ultimo valor es la base
+	std::string line = string(buffer);
+	std::string msj = mensaje + " Error en archivo Yaml: " + archivo + " - Linea nro: " + line + "\n"; 
+	return msj;
+}
+
 void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
 		linea = linea + 1; //Porque empieza a contar en 0
-		char buffer[CANT_CAR];
-		itoa(linea,buffer,10);//el ultimo valor es la base
-		std::string line = string(buffer);
-		std::string msj = mensaje + " Linea Yaml: " + line + "\n"; 
+		std::string msj = concatenar_texto(mensaje,linea,ruta_archivo);
 		ErrorLogHandler::addError("CargadorYaml",msj.c_str()); 
 }
 
