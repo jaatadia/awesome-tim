@@ -130,6 +130,10 @@ YAML::Emitter& operator << (YAML::Emitter& out,BotoneraController* botonera){
 				out << YAML::Key << "cantidad_de_instancias";
 				out << YAML::Value << (*iter)[1]; //obtengo la cant de instancias q se pueden crear de esa fig
 				out << YAML::EndMap;
+				/*
+				out << YAML::Key << "ID";
+				out << YAML::Value <<
+				*/
 			};
 			
 		out << YAML::EndSeq;
@@ -233,7 +237,7 @@ Terreno* terr = new Terreno(80,80);
 terr->agregarFigura(fig1);
 terr->agregarFigura(fig2);
 
-guardarJuego("../yaml/GameState.yaml",botonera,terr);
+guardarJuego("../yaml/GameState.yml",botonera,terr);
 
 delete fig1;
 delete fig2;

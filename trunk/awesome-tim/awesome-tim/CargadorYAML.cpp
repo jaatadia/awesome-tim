@@ -1,7 +1,7 @@
 #include "CargadorYaml.h"
 #include "ErrorLogHandler.h"
 
-#define RUTA_DEFAULT "../yaml/archivoDefault.yaml"
+#define RUTA_DEFAULT "../yaml/archivoDefault.yml"
 
 #define CANT_CAR 40
 
@@ -226,7 +226,7 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		//Esta linea es HARCODEO!! esta porque no existe el tipo figura todavia!!!
 		const char* tipo_figura = tipo_dimension.c_str();
 		if(!tipo_figura_valida(tipo_figura)){
-			imprimir_error_linea("Tipo de figura invalida.", linea);
+			//imprimir_error_linea("Tipo de figura invalida.", linea);
 			continue;
 		}
 		
@@ -453,43 +453,52 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 
 //Funciones de validaciones:
 
-bool CargadorYaml::cant_instancias_valida(int instancias){
-	return false;
-}
-
-bool CargadorYaml::tipo_figura_botonera_valida(int tipo_figura){
-	return true;
-}
+//Esta no se si tiene sentido porque ya al crear el terreno te tira la validacion
 bool CargadorYaml::fondo_terreno_valido(const char* fondo){
 	return true;
 }
+
+//TIPO FIGURA Y TIPO DIMENSION NO ES LO MISMO??
+bool CargadorYaml::tipo_figura_botonera_valida(int tipo_figura){
+	return ((tipo_figura == TRIANGULO) || (tipo_figura == CUADRADO) || (tipo_figura == CIRCULO) || (tipo_figura == POLIGONOREGULAR)); 
+}
+
 bool CargadorYaml::tipo_dimension_valida(const char* tipo_dimension){
-	return true;
-}
-bool CargadorYaml::radio_valido(double radio){
-	return true;
-}
-bool CargadorYaml::alto_cuadrado_valido(double alto){
-	return true;
-}
-bool CargadorYaml::ancho_cuadrado_valido(double ancho){
-	return true;
-}
-bool CargadorYaml::posicion_validaX(double posX){
-	return true;
-}
-
-bool CargadorYaml::posicion_validaY(double posY){
-	return true;
-}
-
-bool CargadorYaml::angulo_valido(double angulo){
 	return true;
 }
 
 bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	return true;
 }
+
+bool CargadorYaml::radio_valido(double radio){
+	return ((radio > 0) /*&& (radio < tamanio_terreno) DE DONDE LO SACO? */);
+}
+
+bool CargadorYaml::alto_cuadrado_valido(double alto){
+	return ((alto > 0) /*&& (alto < tamanio_terreno) DE DONDE LO SACO? */);
+}
+
+bool CargadorYaml::ancho_cuadrado_valido(double ancho){
+	return ((ancho > 0) /*&& (ancho < tamanio_terreno) DE DONDE LO SACO? */);
+}
+
+bool CargadorYaml::posicion_validaX(double posX){
+	return ((posX >= 0) && (posX <= ANCHO_TERRENO_LOGICO /*LOGICO O NO?*/)); //menor estricto o no???
+}
+
+bool CargadorYaml::posicion_validaY(double posY){
+	return ((posY >= 0) && (posY <= ALTO_TERRENO_LOGICO /*LOGICO O NO?*/)); //menor estricto o no???;
+}
+
+bool CargadorYaml::angulo_valido(double angulo){
+	return ((angulo >=0) && (angulo <= 360));
+}
+
+bool CargadorYaml::cant_instancias_valida(int instancias){
+	return (instancias >= 0);
+}
+
 void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
 		linea = linea + 1; //Porque empieza a contar en 0
 		char buffer[CANT_CAR];
@@ -497,4 +506,19 @@ void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
 		std::string line = string(buffer);
 		std::string msj = mensaje + " Linea Yaml: " + line + "\n"; 
 		ErrorLogHandler::addError("CargadorYaml",msj.c_str()); 
+}
+
+
+void CargadorYaml::pruebaCargador(){
+
+	BotoneraController* bot = new BotoneraController(20,20,3);
+	Terreno* terr = new Terreno(80,80);
+
+	//habria q imprimir en el error el nombre del archivo que no se pudo cargar, no?
+	CargadorYaml::cargarJuego("../yaml/pruebacargar.yml",bot,terr); //no existe archivo
+	CargadorYaml::cargarJuego("../yaml/pruebacargar1.yml",bot,terr); //arch vacio
+	CargadorYaml::cargarJuego("../yaml/pruebacargar2.yml",bot,terr); //juego vacio
+	CargadorYaml::cargarJuego("../yaml/pruebacargar3.yml",bot,terr); //terreno y botonera vacios
+	CargadorYaml::cargarJuego("../yaml/pruebacargar4.yml",bot,terr); //terreno: alto: 0
+
 }

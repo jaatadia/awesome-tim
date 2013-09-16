@@ -9,7 +9,7 @@
 
 void test(void){
 	GeneradorYaml::pruebayaml();
-	//TestCargadorYaml::pruebaCargadorYaml();
+	CargadorYaml::pruebaCargador();
 	//Test_Triangulo::prueba_triangulo();
 	//Test_Cuadrado::prueba_cuadrado();
 	//Contenedor::pruebaContenedor();
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 	prog.correr();//lo corro (duhh)
 */
 	
-	Juego juego = Juego("../yaml/juegoguardado.yaml");
+	Juego juego = Juego("../yaml/juegoguardado.yml");
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		juego.onEvent();
 		juego.onLoop();
