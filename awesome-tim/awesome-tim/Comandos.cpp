@@ -230,12 +230,12 @@ void Comandos::enterKeyPressed(Juego* juego){
 }
 
 void Comandos::release(double x, double y,Juego* juego){
-	if(in(X_B_OK,Y_B_OK,ANCHO_B_OK,ALTO_B_OK,x,y)){
+	if(in(X_B_OK,Y_B_OK,ANCHO_B_OK,ALTO_B_OK,x,y)&&botonOkActivo){
 		juego->setFondo(dir);
-	}else if(in(X_B_SAVE,Y_B_SAVE,ANCHO_B_SAVE,ALTO_B_SAVE,x,y)){
+	}else if(in(X_B_SAVE,Y_B_SAVE,ANCHO_B_SAVE,ALTO_B_SAVE,x,y)&&botonSaveActivo){
 		juego->guardar();
 	} else {
-		if(in(X_B_QUIT,Y_B_QUIT,ANCHO_B_QUIT,ALTO_B_QUIT,x,y)){
+		if(in(X_B_QUIT,Y_B_QUIT,ANCHO_B_QUIT,ALTO_B_QUIT,x,y)&&botonQuitActivo){
 			juego->quit();
 		}
 	}
