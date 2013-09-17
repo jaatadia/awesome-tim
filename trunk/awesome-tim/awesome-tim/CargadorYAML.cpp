@@ -168,7 +168,6 @@ Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimens
 	Contenedor::putMultimedia(ID,img);
 
 	/*
-
 	if (strcmp(tipo_figura,"CUADRADO") == 0){ //no tiene que decir tipo_dimension?
 		Figura* figura = new Figura(ID,dimension);
 		if(!figura)
@@ -186,7 +185,7 @@ Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimens
 	return new Figura(ID,dimension);
 
 	//No deberia llegar a este caso porque el error deberia haber saltado antes.
-	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido. \n"); 	
+	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
 	return NULL;
 }
 
@@ -198,11 +197,11 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		try{
 			listaFiguras[i]["ID"] >> ID;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
-			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			ID = ID_DEFAULT;
 		}catch(YAML::InvalidScalar &e){
-			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			ID = ID_DEFAULT;
 		}
@@ -212,11 +211,11 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		try{
 			listaFiguras[i]["tipo_dimension"] >> tipo_dimension;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
-			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			continue;
 		}catch(YAML::InvalidScalar &e){
-			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Error al cargar dimension para la figura. La figura no sera cargada."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			continue;	
 		}
@@ -234,7 +233,7 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 		
 		//Si no hay dimension, continuo a la siguiente figura.
 		if(!dimension){
-			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la dimensión. La figura no sera cargada. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la dimensión. La figura no sera cargada."); 
 			continue;
 		}
 
@@ -250,7 +249,7 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 
 		if(!figura){
 			if (dimension) delete(dimension);
-			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada. \n");
+			ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada.");
 			//habria q imprimir el tipo de figura y la ruta de la imagen q no anda
 			continue;
 		}
@@ -266,10 +265,10 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	try{
 		nodoTerreno["fondo"] >> img;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		CargadorYaml::imprimir_error_excepcion("Error al cargar terreno. Se carga imagen de fondo default. \n",e.what());
+		CargadorYaml::imprimir_error_excepcion("Error al cargar terreno. Se carga imagen de fondo default.",e.what());
 		img = FONDO_TERRENO;
 	}catch(YAML::InvalidScalar &e){
-		CargadorYaml::imprimir_error_excepcion("Error al cargar terreno. Se carga imagen de fondo default. \n",e.what());
+		CargadorYaml::imprimir_error_excepcion("Error al cargar terreno. Se carga imagen de fondo default.",e.what());
 		img = FONDO_TERRENO;	
 	}
 
@@ -285,11 +284,11 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	try{
 		const YAML::Node& listaFiguras = nodoTerreno["lista_figuras"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de figuras terreno. Se carga terreno sin figuras. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de figuras terreno. Se carga terreno sin figuras.");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		return;
 	}catch(YAML::BadDereference &e){
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de figuras terreno. Se carga terreno sin figuras. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de figuras terreno. Se carga terreno sin figuras.");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		return;
 	}
@@ -308,11 +307,11 @@ void CargadorYaml::cargar_figuras_botones(const YAML::Node& listaFiguras,Botoner
 		try{
 			listaFiguras[i]["tipo_figura"] >> tipo_figura;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
-			ErrorLogHandler::addError("CargadorYaml","Error al tipo de figura de Botonera. No se carga el boton. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Error al tipo de figura de Botonera. No se carga el boton."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			continue;
 		}catch(YAML::InvalidScalar &e){
-			ErrorLogHandler::addError("CargadorYaml","Tipo de figura de Botonera invalida. No se carga el boton. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Tipo de figura de Botonera invalida. No se carga el boton."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			continue;
 		}
@@ -327,11 +326,11 @@ void CargadorYaml::cargar_figuras_botones(const YAML::Node& listaFiguras,Botoner
 		try{
 			listaFiguras[i]["cantidad_de_instancias"] >> instancias;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
-			ErrorLogHandler::addError("CargadorYaml","No se encontro el nodo cantidad de instancias. Se cargan instancias default. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","No se encontro el nodo cantidad de instancias. Se cargan instancias default."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			instancias = INSTANCIAS_DEFAULT;
 		}catch(YAML::InvalidScalar &e){
-			ErrorLogHandler::addError("CargadorYaml","Cantidad de instancias invalida. Se carga cantidad de instancias default. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Cantidad de instancias invalida. Se carga cantidad de instancias default."); 
 			ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 			instancias = INSTANCIAS_DEFAULT;		
 		}
@@ -351,12 +350,12 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 	try{
 		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default.");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		//botonera->agregarBotonesDefault()
 		return;
 	}catch(YAML::BadDereference &e){
-		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default. \n");
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default.");
 		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		//botonera->agregarBotonesDefault()
 		return;
@@ -379,9 +378,9 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	
 	if(!mi_archivo.is_open()){
 		mi_archivo.open(RUTA_DEFAULT,std::ios::out);
-		CargadorYaml::imprimir_error_sin_linea("Error al abrir archivo de juego. Se carga archivo default. \n");
+		CargadorYaml::imprimir_error_sin_linea("Error al abrir archivo de juego. Se carga archivo default.");
 		if (!mi_archivo.is_open()){
-			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default. \n"); 
+			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default."); 
 			return false;
 		}
 		mi_archivo.close();
@@ -392,7 +391,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		YAML::Parser parser(mi_archivo);
 		parser.GetNextDocument(doc);
 	} catch(YAML::ParserException &e){
-		CargadorYaml::imprimir_error_excepcion("Error al parsear el archivo. Se continua con archivo default. \n",e.what());
+		CargadorYaml::imprimir_error_excepcion("Error al parsear el archivo. Se continua con archivo default.",e.what());
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}
@@ -401,11 +400,11 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	try{
 		const YAML::Node& nodoRaiz = doc["juego"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		CargadorYaml::imprimir_error_excepcion("No se encontro nodo raiz juego. Se carga archivo default. \n",e.what());
+		CargadorYaml::imprimir_error_excepcion("No se encontro nodo raiz juego. Se carga archivo default.",e.what());
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}catch(YAML::BadDereference &e){
-		CargadorYaml::imprimir_error_excepcion("No hay nodo raiz juego. Se carga archivo default. \n",e.what());
+		CargadorYaml::imprimir_error_excepcion("No hay nodo raiz juego. Se carga archivo default.",e.what());
 		std::cout << e.what();
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
@@ -419,11 +418,11 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	try{
 		const YAML::Node& nodoBotonera = nodoRaiz["botonera"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		CargadorYaml::imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.\n",e.what());
+		CargadorYaml::imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what());
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}catch(YAML::BadDereference &e){
-		CargadorYaml::imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.\n",e.what()); 
+		CargadorYaml::imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what()); 
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}
@@ -435,11 +434,11 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	try{
 		const YAML::Node& nodoBotonera = nodoRaiz["terreno"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		CargadorYaml::imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.\n",e.what()); 
+		CargadorYaml::imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}catch(YAML::BadDereference &e){
-		CargadorYaml::imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.\n",e.what()); 
+		CargadorYaml::imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
 		mi_archivo.close();
 		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 	}
@@ -509,12 +508,12 @@ std::string CargadorYaml::concatenar_archivo(std::string mensaje, int linea, std
 	char buffer[CANT_CAR];
 	itoa(linea,buffer,10);//el ultimo valor es la base
 	std::string line = string(buffer);
-	std::string msj = mensaje + " Error en archivo Yaml: " + archivo + " - Linea nro: " + line + "\n"; 
+	std::string msj = mensaje + " Error en archivo Yaml: " + archivo + " - Linea nro: " + line; 
 	return msj;
 }
 
 std::string CargadorYaml::concatenar_archivo(std::string mensaje, std::string archivo){
-	std::string msj = mensaje + " Error en archivo Yaml: " + archivo + "\n"; 
+	std::string msj = mensaje + " Error en archivo Yaml: " + archivo; 
 	return msj;
 }
 
@@ -530,7 +529,7 @@ void CargadorYaml::imprimir_error_sin_linea(std::string mensaje){
 }
 void CargadorYaml::imprimir_error_excepcion(std::string mensaje,std::string what){
 	std::string msj = CargadorYaml::concatenar_archivo(mensaje,ruta_archivo);
-	std::string full_msj = msj + what + "\n";
+	std::string full_msj = msj + what;
 	ErrorLogHandler::addError("CargadorYaml",full_msj.c_str());
 }
 
