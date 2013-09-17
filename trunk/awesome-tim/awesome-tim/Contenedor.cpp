@@ -10,7 +10,15 @@ void Contenedor::putMultimedia(const char* ID,void* medio){
 		cont = new Contenedor();
 		cont->mapa["NONE"] = new Imagen();
 	}
-	cont->mapa[ID]=medio;
+	
+
+	if(cont->mapa.find(ID)== cont->mapa.end()){
+		std::cout<< "A contenedor se le pide que se guarde algo con este ID: "<<ID<<"\n";
+		cont->mapa[ID]=medio;
+	}else{
+		std::cout<< "El medio: "<<ID<<" ya se encuentra en el contenedor\n";
+		delete medio;
+	}
 }
 
 void* Contenedor::getMultimedia(const char* ID){
@@ -34,7 +42,7 @@ Contenedor::Contenedor(void){
 }
 
 Contenedor::~Contenedor(void){
-	std::map<const char* ,void*>::iterator it;
+	std::map<std::string ,void*>::iterator it;
 	
 	for (it = mapa.begin(); it != mapa.end(); ++it){
 		Imagen* img = (Imagen*) it->second; //casteandolo a Imagen*
