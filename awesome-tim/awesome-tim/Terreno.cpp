@@ -79,7 +79,7 @@ bool Terreno::setFondo(const char* ruta_img){
 		delete temp;
 		return false;
 	}
-
+	return true;
 /*
 	//para no abrir el archivo una y otra vez lo guardo en el contenedor
 	if (Contenedor::estaMultimedia(ruta_img) == false){
