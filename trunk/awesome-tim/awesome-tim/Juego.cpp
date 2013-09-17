@@ -238,15 +238,14 @@ while(SDL_PollEvent(&evento)){
 
 			if (posEnBotonera(posClickX,posClickY)){
 				//es de la botonera
-				botonera->handleEventBotonera(posClickX - X_BOTONERA_LOGICO,  posClickY - Y_BOTONERA_LOGICO,  evento.button.type);
+				botonera->handleEventBotonera(escalas->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  escalas->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
 			}
 
 			//puede que me haya devuelto la figura en aire
-			//DESCOMENTAR CUANDO FUNCIONE
-/*			figuraEnAire = botonera->obtenerFiguraActual();
+			figuraEnAire = botonera->obtenerFiguraActual();
 			if (figuraEnAire)
 				estaActiva = true;
-*/
+
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos
 				if (evento.button.state == SDL_BUTTON_LMASK){

@@ -17,27 +17,33 @@ void Botonera::agregarBoton(int tipo, int cantidadInstancias) {
 
 Figura * Botonera::obtenerFigura(int numeroFigura){
 	Figura * retorno = 0;
+	bool encontrada = false;
+
 	std::list<int*>::iterator itFig = this->lstFiguras.begin();
 	for (int i = 0; itFig != this->lstFiguras.end(); i++)
 	{
-		if (i == numeroFigura)
+		if (i == numeroFigura){
+			encontrada = true;
 			break;
+		}
 		++itFig;
 	}
-	if ((*(itFig))[this->INSTANCIAS]) {
-		switch ((*(itFig))[this->TIPO]) {
-			case TRIANGULO:
-				//retorno = new Triangulo();
-				cout << "triangulo" << endl;
-				break;
-			case CUADRADO:
-				cout << "cuadrado" << endl;
-				break;
-			case CIRCULO:
-				cout << "circulo" << endl;
-				break;
+	if (encontrada){
+		if ((*(itFig))[this->INSTANCIAS]) {
+			switch ((*(itFig))[this->TIPO]) {
+				case TRIANGULO:
+					//retorno = new Triangulo();
+					cout << "triangulo" << endl;
+					break;
+				case CUADRADO:
+					cout << "cuadrado" << endl;
+					break;
+				case CIRCULO:
+					cout << "circulo" << endl;
+					break;
+			}
+			--((*(itFig))[this->INSTANCIAS]);
 		}
-		--((*(itFig))[this->INSTANCIAS]);
 	}
 	return retorno;
 }
