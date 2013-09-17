@@ -218,10 +218,10 @@ int GeneradorYaml::pruebayaml(){
 
 //Cuadrado* dim_cuad = new Cuadrado(10,10,3,3,60);
 //Circulo* dim_circ = new Circulo(5,30,40,9);
-//Figura* fig1 = new Figura("../images/Cuadrado.jpg",dim_cuad);
-Figura* fig1 = new Figura("../images/Cuadrado.jpg",new Cuadrado(10,10,3,3,60));
-//Figura* fig2 = new Figura("../images/Circulo.jpg",dim_circ);
-Figura* fig2 = new Figura("../images/Circulo.jpg",new Circulo(5,30,40,9));
+//Figura* fig1 = new Figura("../images/Cuadrado.png",dim_cuad);
+Figura* fig1 = new Figura("../images/Cuadrado.png",new Cuadrado(10,10,3,3,60));
+//Figura* fig2 = new Figura("../images/Circulo.png",dim_circ);
+Figura* fig2 = new Figura("../images/Circulo.png",new Circulo(5,30,40,9));
 
 
 std::list<Figura*> lista_fig = std::list<Figura*>();
@@ -237,7 +237,7 @@ Terreno* terr = new Terreno(80,80);
 terr->agregarFigura(fig1);
 terr->agregarFigura(fig2);
 
-guardarJuego("../yaml/GameState.yml",botonera,terr);
+guardarJuego("../yaml/GameStatePrueba.yml",botonera,terr);
 
 delete fig1;
 delete fig2;

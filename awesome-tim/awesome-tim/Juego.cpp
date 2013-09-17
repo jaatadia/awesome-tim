@@ -47,8 +47,8 @@ Juego::Juego(const char *file){
 	estaActiva = false;
 
 /***************Test de arrastra y girar figura*************************/
-	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
-	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
+	Contenedor::putMultimedia("../images/Cuadrado.png",new Imagen("../images/Cuadrado.png"));
+	Figura* fig = new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
 	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
 	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
@@ -73,8 +73,8 @@ Juego::Juego(const char *file){
 	fig = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
 	terreno->agregarFigura(fig);
 
-	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));
-	fig = new Figura("../images/Circulo.jpg",new Circulo(20,50,50,0));
+	Contenedor::putMultimedia("../images/Circulo.png",new Imagen("../images/Circulo.png"));
+	fig = new Figura("../images/Circulo.png",new Circulo(20,50,50,0));
 	terreno->agregarFigura(fig);
 
 /*****************Figura En aire******************************************/
