@@ -6,7 +6,6 @@
 #include "Cambiable.h"
 #include "VistaFigura.h"
 #include "EscalasDeEjes.h"
-#include "GeneradorYaml.h"
 
 
 class VistaFigura;

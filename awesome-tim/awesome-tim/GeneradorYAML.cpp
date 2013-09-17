@@ -230,8 +230,8 @@ lista_fig.push_back(fig2);
 
 
 BotoneraController* botonera = new BotoneraController(8,80,2);
-botonera->agregarBoton(CUADRADO,10,new Superficie(5,6));
-botonera->agregarBoton(CIRCULO,10,new Superficie(6,6));
+botonera->agregarBoton(CUADRADO,10,"deberia ir ID");
+botonera->agregarBoton(CIRCULO,10,"deberia ir ID");
 
 Terreno* terr = new Terreno(80,80);
 terr->agregarFigura(fig1);

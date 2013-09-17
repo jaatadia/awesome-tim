@@ -4,6 +4,7 @@
 #include "Cambiable.h"
 #include "Figura.h"
 #include "Dimension.h"
+#include "Constantes.h"
 #include <string>
 #include <list>
 
