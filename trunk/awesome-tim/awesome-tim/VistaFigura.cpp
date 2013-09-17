@@ -38,7 +38,7 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	delete img;
 
 	bool deleteTemp = false;
-	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID));
+	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID.c_str()));
 	
 	img = temp->rotarZoom(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())),fig->dimension->getAngulo());
 	

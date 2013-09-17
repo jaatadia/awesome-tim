@@ -171,7 +171,7 @@ bool Figura::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 
 
 const char* Figura::getID(){
-	return (this->ID);
+	return (this->ID.c_str());
 };
 Dimension* Figura::getDimension(){
 	return (this->dimension);
@@ -182,5 +182,5 @@ bool Figura::intersecaCon(double X1, double Y1, double X2, double Y2){
 }
 
 Figura* Figura::clonar(){
-	return new Figura(ID,dimension->clonar());
+	return new Figura(ID.c_str(),dimension->clonar());
 }
