@@ -238,8 +238,7 @@ while(SDL_PollEvent(&evento)){
 
 			if (posEnBotonera(posClickX,posClickY)){
 				//es de la botonera
-				//scroll o crear figura
-				botonera->handleEventBotonera(20,451,evento.type);
+				botonera->handleEventBotonera(posClickX - X_BOTONERA_LOGICO,  posClickY - Y_BOTONERA_LOGICO,  evento.button.type);
 			}
 
 			//puede que me haya devuelto la figura en aire

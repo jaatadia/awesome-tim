@@ -18,13 +18,19 @@ private:
 	int ancho,alto;
 	Superficie* sup;
 	
-	Imagen* BotonOKOrig;
-	Imagen* BotonSaveOrig;
-	Imagen* BotonQuitOrig;
+	Imagen* BotonOKOrigApretado;
+	Imagen* BotonSaveOrigApretado;
+	Imagen* BotonQuitOrigApretado;
+	Imagen* BotonOKOrigSinApretar;
+	Imagen* BotonSaveOrigSinApretar;
+	Imagen* BotonQuitOrigSinApretar;
 	
-	Imagen* BotonOK;
-	Imagen* BotonSave;
-	Imagen* BotonQuit;
+	Imagen* BotonOKApretado;
+	Imagen* BotonSaveApretado;
+	Imagen* BotonQuitApretado;
+	Imagen* BotonOKSinApretar;
+	Imagen* BotonSaveSinApretar;
+	Imagen* BotonQuitSinApretar;
 
 	bool botonOkActivo, botonSaveActivo, botonQuitActivo;
 
