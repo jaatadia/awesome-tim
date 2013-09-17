@@ -160,8 +160,14 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 
 Figura* CargadorYaml::cargarFigura(const char* tipo_figura,const char* ID,Dimension* dimension){
 
-	Contenedor::putMultimedia(ID,new Imagen(ID));
-	if (strcmp(tipo_figura,"CUADRADO") == 0){
+	Imagen* img = new Imagen(ID);
+	if (!img->huboFallos()) {
+		
+	} else {
+		Contenedor::putMultimedia(ID,img);
+	}
+
+	if (strcmp(tipo_figura,"CUADRADO") == 0){ //no tiene que decir tipo_dimension?
 		Figura* figura = new Figura(ID,dimension);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Cuadrada. \n"); 	
@@ -236,7 +242,7 @@ void CargadorYaml::cargar_figuras(const YAML::Node& listaFiguras, Terreno* terre
 			continue;
 		}
 		
-		Figura * figura = cargarFigura(tipo_figura,ID.c_str(),dimension);
+		Figura* figura = cargarFigura(tipo_figura,ID.c_str(),dimension);
 
 		if(!figura){
 			if (dimension) delete(dimension);
@@ -366,12 +372,15 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	//Abro el archivo Yaml para parsearlo.
 	YAML::Node doc;
 	std::ifstream mi_archivo;
-	mi_archivo.open(file,std::ios::out);
+	mi_archivo.open(file,std::ios::in);
 	ruta_archivo = string(file);
 	
 	if(!mi_archivo.is_open()){
 		mi_archivo.open(RUTA_DEFAULT,std::ios::out);
-		ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego. Se carga archivo default. \n"); 
+		ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego. Se carga archivo default. \n");
+		//std::string msj = "Error al abrir archivo de juego. Se carga archivo default. \n";
+		//std::string full_msj = CargadorYaml::concatenar_texto(msj,-1,ruta_archivo);
+		//ErrorLogHandler::addError("CargadorYaml",full_msj);
 		if (!mi_archivo.is_open()){
 			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default. \n"); 
 			return false;
@@ -474,23 +483,23 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 }
 
 bool CargadorYaml::radio_valido(double radio){
-	return ((radio > 0) /*&& (radio < tamanio_terreno) DE DONDE LO SACO? */);
+	return ((radio > 0) && (radio < ANCHO_TERRENO_LOGICO));
 }
 
 bool CargadorYaml::alto_cuadrado_valido(double alto){
-	return ((alto > 0) /*&& (alto < tamanio_terreno) DE DONDE LO SACO? */);
+	return ((alto > 0) && (alto < ALTO_TERRENO_LOGICO));
 }
 
 bool CargadorYaml::ancho_cuadrado_valido(double ancho){
-	return ((ancho > 0) /*&& (ancho < tamanio_terreno) DE DONDE LO SACO? */);
+	return ((ancho > 0) && (ancho < ANCHO_TERRENO_LOGICO));
 }
 
 bool CargadorYaml::posicion_validaX(double posX){
-	return ((posX >= 0) && (posX <= ANCHO_TERRENO_LOGICO /*LOGICO O NO?*/)); //menor estricto o no???
+	return ((posX >= 0) && (posX <= ANCHO_TERRENO_LOGICO)); //menor estricto o no???
 }
 
 bool CargadorYaml::posicion_validaY(double posY){
-	return ((posY >= 0) && (posY <= ALTO_TERRENO_LOGICO /*LOGICO O NO?*/)); //menor estricto o no???;
+	return ((posY >= 0) && (posY <= ALTO_TERRENO_LOGICO)); //menor estricto o no???;
 }
 
 bool CargadorYaml::angulo_valido(double angulo){
@@ -509,13 +518,14 @@ std::string CargadorYaml::concatenar_texto(std::string mensaje, int linea, std::
 	itoa(linea,buffer,10);//el ultimo valor es la base
 	std::string line = string(buffer);
 	std::string msj = mensaje + " Error en archivo Yaml: " + archivo + " - Linea nro: " + line + "\n"; 
+	if (linea == -1) msj = mensaje + " Error en archivo Yaml: " + archivo + "\n"; 
 	return msj;
 }
 
 void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
 		linea = linea + 1; //Porque empieza a contar en 0
 		std::string msj = concatenar_texto(mensaje,linea,ruta_archivo);
-		ErrorLogHandler::addError("CargadorYaml",msj.c_str()); 
+		ErrorLogHandler::addError("CargadorYaml",msj.c_str());
 }
 
 
@@ -526,9 +536,11 @@ void CargadorYaml::pruebaCargador(){
 
 	//habria q imprimir en el error el nombre del archivo que no se pudo cargar, no?
 	CargadorYaml::cargarJuego("../yaml/pruebacargar.yml",bot,terr); //no existe archivo
-	CargadorYaml::cargarJuego("../yaml/pruebacargar1.yml",bot,terr); //arch vacio
-	CargadorYaml::cargarJuego("../yaml/pruebacargar2.yml",bot,terr); //juego vacio
-	CargadorYaml::cargarJuego("../yaml/pruebacargar3.yml",bot,terr); //terreno y botonera vacios
-	CargadorYaml::cargarJuego("../yaml/pruebacargar4.yml",bot,terr); //terreno: alto: 0
+	CargadorYaml::cargarJuego("../yaml/sinNodoJuego.yml",bot,terr); 
+	CargadorYaml::cargarJuego("../yaml/vacio.yml",bot,terr); //arch vacio
+	CargadorYaml::cargarJuego("../yaml/sinTerreno.yml",bot,terr);
+	CargadorYaml::cargarJuego("../yaml/sinBotonera.yml",bot,terr);
+	CargadorYaml::cargarJuego("../yaml/terrenoVacio.yml",bot,terr);
+	CargadorYaml::cargarJuego("../yaml/pruebacargar4.yml",bot,terr);
 
 }
