@@ -41,6 +41,7 @@ public:
 	void setY(int y) {this->y = y;}
 	void setAlturaMax(int alturaMax) {this->alturaMax = alturaMax;}
 	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;}
+	void setAnchoBoton(int anchoBoton) {this->anchoBoton = anchoBoton;}
 
 	void agregarBoton(int tipo, int cantidadInstancias);
 };
