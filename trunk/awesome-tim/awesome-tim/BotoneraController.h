@@ -7,8 +7,6 @@
 #include "Cambiable.h"
 #include "Figura.h"
 
-class Botonera;
-
 class BotoneraController: public Imprimible, public Cambiable
 {
 private:
@@ -16,10 +14,16 @@ private:
 	Superficie * sup;
 	Superficie * back;
 	Superficie * supFiguraActual;
+	Imagen * ScrollButtonUp;
+	Imagen * ScrollButtonUpPressed;
+	Imagen * ScrollButtonDown;
+	Imagen * ScrollButtonDownPressed;
 	Figura * figuraActual;
 	bool scrollTop, scrollBot;
 	int scrollStep, altoAreaScroll, altoAreaFiguras;
 	Figura * obtenerFigura(double x, double y);
+	std::list<const char *> lstRutas;
+
 public:
 	static const int FACTOR_SCROLL = 10;
 	static const int SCROLL_OFF  = 0;
@@ -30,7 +34,7 @@ public:
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes* escalas);
 	void handleEventBotonera(double mouseX, double mouseY, Uint32 type);
-	void agregarBoton(int tipo, int cantidadInstancias, Superficie *img);
+	void agregarBoton(int tipo, int cantidadInstancias, const char * ID);
 	void setScrollDirection(int direction);
 	Figura * obtenerFiguraActual() {return this->figuraActual;}
 	int getAncho();

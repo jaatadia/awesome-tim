@@ -50,11 +50,20 @@ Juego::Juego(const char *file){
 	Contenedor::putMultimedia("../images/cuadrado.jpg",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/cuadrado.jpg",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
-/*
+	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
+	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
+	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
+	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
+	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
 
 	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
 	fig = new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20));
 	terreno->agregarFigura(fig);
+	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
+	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
+	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
+	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
+	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
 
 	Contenedor::putMultimedia("../images/Ptriangulo.png",new Imagen("../images/Ptriangulo.png"));
 	fig = new Figura("../images/Ptriangulo.png",new PoligonoRegular(20,20,10,3,0));
@@ -67,7 +76,7 @@ Juego::Juego(const char *file){
 	Contenedor::putMultimedia("../images/Circulo.jpg",new Imagen("../images/Circulo.png"));
 	fig = new Figura("../images/Circulo.jpg",new Circulo(20,50,50,0));
 	terreno->agregarFigura(fig);
-*/
+
 /*****************Figura En aire******************************************/
 
 	//figuraEnAire = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
@@ -228,8 +237,9 @@ while(SDL_PollEvent(&evento)){
 				
 
 			if (posEnBotonera(posClickX,posClickY)){
-				//botonera tiene su manejo propio
-				botonera->handleEventBotonera(posClickX - X_BOTONERA_LOGICO,  posClickY - Y_BOTONERA_LOGICO,  evento.button.type);
+				//es de la botonera
+				//scroll o crear figura
+				botonera->handleEventBotonera(20,451,evento.type);
 			}
 
 			//puede que me haya devuelto la figura en aire
