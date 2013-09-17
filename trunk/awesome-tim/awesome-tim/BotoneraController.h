@@ -19,8 +19,10 @@ private:
 	Imagen * scrollButtonUpPressed;
 	Imagen * scrollButtonDown;
 	Imagen * scrollButtonDownPressed;
+	Imagen * squareButton;
+	Imagen * squareButtonPressed;
 	Figura * figuraActual;
-	bool scrollTop, scrollBot;
+	bool scrollTop, scrollBot, buttonPressed;
 	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY;
 	double factorAreaFiguras, scrollScaleFactor, buttonScaleFactor;
 	Figura * obtenerFigura(double x, double y);
@@ -31,7 +33,7 @@ public:
 	static const int SCROLL_OFF  = 0;
 	static const int SCROLL_TOP = SCROLL_OFF + 1;
 	static const int SCROLL_BOT = SCROLL_TOP + 1;
-	BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras = 0.8, double scrollScaleFactor = 0.8, double buttonScaleFactor = 0.8);
+	BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras = 0.8, double scrollScaleFactor = 0.8, double buttonScaleFactor = 0.5);
 	~BotoneraController(void);
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes* escalas);
