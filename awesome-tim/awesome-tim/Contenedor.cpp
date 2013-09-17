@@ -11,7 +11,6 @@ void Contenedor::putMultimedia(const char* ID,void* medio){
 		cont->mapa["NONE"] = new Imagen();
 	}
 	
-
 	if(cont->mapa.find(ID)== cont->mapa.end()){
 		std::cout<< "--A contenedor se le pide que se guarde algo con este ID: "<<ID<<"\n";
 		cont->mapa[ID]=medio;
@@ -27,6 +26,7 @@ void* Contenedor::getMultimedia(const char* ID){
 	}
 	if(cont->mapa.find(ID)!= cont->mapa.end()) return cont->mapa[ID];
 	else {
+		std::cout<< "--El medio: "<<ID<< " no se encuentra en el contenedor\n";
 		ErrorLogHandler::addError("Contenedor","El archivo multimedia no ha podido cargarse.");
 		return cont->mapa["NONE"];
 	}

@@ -6,6 +6,7 @@
 #include "Cambiable.h"
 #include "VistaFigura.h"
 #include "EscalasDeEjes.h"
+#include <string>
 
 
 class VistaFigura;
@@ -20,7 +21,7 @@ private:
 	Dimension* dimension;
 //	Posicion pos;//las del cntro de la figura termino dentro de dimension
 //	double angulo;// tambien dentro de dimension
-	const char* ID;
+	std::string ID;
 	VistaFigura* myVista;
 
 public:
