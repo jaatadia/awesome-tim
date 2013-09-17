@@ -12,13 +12,13 @@ void test(void){
 	//CargadorYaml::pruebaCargador();
 	//Test_Triangulo::prueba_triangulo();
 	//Test_Cuadrado::prueba_cuadrado();
-	//Contenedor::pruebaContenedor();
+	Contenedor::pruebaContenedor();
 }
 
 int main(int argc, char* argv[]){
 
 	//Activar solo en caso de que se deseen correr las pruebas
-	//test();
+//	test();
 
 /*		
 	Programa prog = Programa(argv[0]);//creo el programa
