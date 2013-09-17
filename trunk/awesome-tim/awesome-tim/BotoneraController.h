@@ -11,13 +11,14 @@ class BotoneraController: public Imprimible, public Cambiable
 {
 private:
 	Botonera * botonera;
-	Superficie * sup;
-	Superficie * back;
+	Superficie * layerPrincipal;
+	Superficie * layerFiguras;
+	Superficie * layerScroll;
 	Superficie * supFiguraActual;
-	Imagen * ScrollButtonUp;
-	Imagen * ScrollButtonUpPressed;
-	Imagen * ScrollButtonDown;
-	Imagen * ScrollButtonDownPressed;
+	Imagen * scrollButtonUp;
+	Imagen * scrollButtonUpPressed;
+	Imagen * scrollButtonDown;
+	Imagen * scrollButtonDownPressed;
 	Figura * figuraActual;
 	bool scrollTop, scrollBot;
 	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY;
