@@ -1,22 +1,32 @@
 #include "BotoneraController.h"
 
-BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras) {
+BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
+	this->factorAreaFiguras = factorAreaFiguras;
+	this->scrollScaleFactor = scrollScaleFactor;
+	this->buttonScaleFactor = buttonScaleFactor;
 	this->altoAreaFiguras = int(factorAreaFiguras*alto);
 	this->altoAreaScroll = alto - this->altoAreaFiguras;
 	this->botonera = new Botonera(ancho, alto);
 	this->botonera->setAltoBoton(this->altoAreaFiguras / cantBotonesMostrados);
+	this->botonera->setAnchoBoton(ancho);
 	this->scrollStep = this->botonera->getAltoBoton() / this->FACTOR_SCROLL;
 	this->supFiguraActual = 0;
 	this->sup = new Superficie(ancho,alto);
 	this->figuraActual = 0;
 	this->back = NULL;
 	this->setScrollDirection(SCROLL_OFF);
-	this->ScrollButtonUp = new Imagen("../images/ScrollButton.jpg");
-	this->ScrollButtonUp = this->ScrollButtonUp->scaleImagen(50,50);
+	int scrollSide = (ancho > (this->altoAreaScroll >> 1)) ? (this->altoAreaScroll >> 1) * this->scrollScaleFactor : ancho * this->scrollScaleFactor;
+	this->ScrollButtonUp = new Imagen("../images/ScrollButton.png");
+	this->ScrollButtonUp = this->ScrollButtonUp->scaleImagen(scrollSide, scrollSide);
 	this->ScrollButtonUpPressed = new Imagen("../images/ScrollButtonPressed.jpg");
-	this->ScrollButtonUpPressed = this->ScrollButtonUpPressed->scaleImagen(50,50);
+	this->ScrollButtonUpPressed = this->ScrollButtonUpPressed->scaleImagen(scrollSide, scrollSide);
 	this->ScrollButtonDown = this->ScrollButtonUp->rotarImagen(180);
 	this->ScrollButtonDownPressed = this->ScrollButtonUpPressed->rotarImagen(180);
+}
+
+void BotoneraController::resize(int ancho, int alto){
+	this->sup->scaleSurface(ancho, alto);
+	this->setCambio(true);
 }
 
 BotoneraController::~BotoneraController() {
@@ -102,13 +112,21 @@ Superficie* BotoneraController::getImpresion(EscalasDeEjes* escalas){
 Superficie* BotoneraController::getImpresion(){
 	//Dibuja en el buffer principal (Double Buffer)
 	if (this->back && this->huboCambios()) {
+
+		int x = (this->ScrollButtonUp->getAncho() >= this->botonera->getAncho()) ? 0 : ((this->botonera->getAncho() - this->ScrollButtonUp->getAncho()) >> 1);
+		int y = ((this->ScrollButtonUp->getAlto() >= (this->altoAreaScroll >> 1)) ? 0 : (((this->altoAreaScroll >> 1) - this->ScrollButtonUp->getAlto()) >> 1));
+
 		this->sup->dibujarCuadradoNegro(0,0,this->getAncho(),this->getAlto());
-		if (this->scrollTop) this->sup->dibujarImagen(this->ScrollButtonUpPressed, NULL, 0,0); // Fixear posicion en x e y relativas
-		else this->sup->dibujarImagen(this->ScrollButtonUp, NULL, 0,0); // Fixear posicion en x e y relativas
+
+		if (this->scrollTop) this->sup->dibujarImagen(this->ScrollButtonUpPressed, NULL, x, y);
+		else this->sup->dibujarImagen(this->ScrollButtonUp, NULL, x, y);
+
 		Rectangulo rect(this->botonera->getX(), this->botonera->getY(), this->botonera->getAncho(), this->altoAreaFiguras);
+
 		this->sup->dibujarSupreficie(this->back, &rect, 0, (this->altoAreaScroll >> 1));
-		if (this->scrollBot)this->sup->dibujarImagen(this->ScrollButtonDownPressed, NULL, 0,this->altoAreaFiguras + (this->altoAreaScroll >> 1)); // Fixear posicion en x e y relativas
-		else this->sup->dibujarImagen(this->ScrollButtonDown, NULL, 0,this->altoAreaFiguras + (this->altoAreaScroll >> 1)); // Fixear posicion en x e y relativas
+
+		if (this->scrollBot)this->sup->dibujarImagen(this->ScrollButtonDownPressed, NULL, x, y + this->altoAreaFiguras + (this->altoAreaScroll >> 1));
+		else this->sup->dibujarImagen(this->ScrollButtonDown, NULL, x, y + this->altoAreaFiguras + (this->altoAreaScroll >> 1));
 	}
 	return sup;
 }
@@ -116,7 +134,8 @@ Superficie* BotoneraController::getImpresion(){
 void BotoneraController::agregarBoton(int tipo, int cantidadInstancias, const char * ID) {
 	this->lstRutas.push_back(ID);
 	Imagen * img = new Imagen(ID);
-	img = img->scaleImagen(50,50);
+	int buttonSide = (this->botonera->getAnchoBoton() > this->botonera->getAltoBoton()) ? this->botonera->getAltoBoton() * this->buttonScaleFactor : this->botonera->getAnchoBoton() * this->buttonScaleFactor;
+	img = img->scaleImagen(buttonSide, buttonSide);
 	Superficie * aux = new Superficie(this->botonera->getAncho(), this->botonera->getAlturaMax() + this->botonera->getAltoBoton());
 	Rectangulo rect(0, 0, this->botonera->getAncho(), this->botonera->getAlturaMax());
 	if (this->back)
