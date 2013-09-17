@@ -19,16 +19,16 @@ BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostra
 
 	int buttonSide = (this->botonera->getAltoBoton() > this->botonera->getAnchoBoton()) ? this->botonera->getAnchoBoton() : this->botonera->getAltoBoton();
 
-	this->squareButton = new Imagen("../images/SquareButton.jpg");
+	this->squareButton = new Imagen("../images/SquareButton.png");
 	this->squareButton = this->squareButton->scaleImagen(buttonSide, buttonSide);
-	this->squareButtonPressed = new Imagen("../images/SquareButtonPressed.jpg");
+	this->squareButtonPressed = new Imagen("../images/SquareButtonPressed.png");
 	this->squareButtonPressed = this->squareButtonPressed->scaleImagen(buttonSide, buttonSide);
 
 	int scrollSide = (ancho > (this->altoAreaScroll >> 1)) ? (this->altoAreaScroll >> 1) * this->scrollScaleFactor : ancho * this->scrollScaleFactor;
 
-	this->scrollButtonUp = new Imagen("../images/ScrollButton.jpg");
+	this->scrollButtonUp = new Imagen("../images/ScrollButton.png");
 	this->scrollButtonUp = this->scrollButtonUp->scaleImagen(scrollSide, scrollSide);
-	this->scrollButtonUpPressed = new Imagen("../images/ScrollButtonPressed.jpg");
+	this->scrollButtonUpPressed = new Imagen("../images/ScrollButtonPressed.png");
 	this->scrollButtonUpPressed = this->scrollButtonUpPressed->scaleImagen(scrollSide, scrollSide);
 	this->scrollButtonDown = this->scrollButtonUp->rotarImagen(180);
 	this->scrollButtonDownPressed = this->scrollButtonUpPressed->rotarImagen(180);
