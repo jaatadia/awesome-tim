@@ -11,13 +11,14 @@
 
 #include "Figura.h"
 
-Juego::Juego(const char *file){
+Juego::Juego(const char *fileIn,const char *fileOut){
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
 		ErrorLogHandler::addError(JUEGO_TAG,SDL_GetError());
 		fallar();
 	}
 	
-	this->file = file;
+	this->fileIn = fileIn;
+	this->fileOut = fileOut;
 	running = true;
 
 	ventana = new Ventana();
@@ -84,12 +85,12 @@ Juego::Juego(const char *file){
 }
 
 bool Juego::cargar(){
-	CargadorYaml::cargarJuego(file,botonera,terreno);
+	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
 	return true;
 }
 
 bool Juego::guardar(){
-	GeneradorYaml::guardarJuego(file,botonera,terreno);
+	GeneradorYaml::guardarJuego(fileOut,botonera,terreno);
 	return true;
 }
 
@@ -141,6 +142,9 @@ void Juego:: onRender(){
 void Juego:: onLoop(){
 }
 
+void Juego::esperar(double miliseconds){
+	SDL_Delay(miliseconds);
+}
 
 //manejo de eventos
 void Juego:: onEvent(){

@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctime>
+#include "Constantes.h"
 
 //Inclusion de Test
 #include "Test_Cuadrado.h"
@@ -134,11 +136,32 @@ void test(void){
 
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
-	Juego juego = Juego(rutaIn);//Falta agregarle al juego la rutaOut
+	Juego juego = Juego(rutaIn,rutaOut);//Falta agregarle al juego la rutaOut
+	
 	while (juego.isRunning()&&(!juego.huboFallos())){
+		
+
+		clock_t tInicial = clock();
+		
 		juego.onEvent();
 		juego.onLoop();
 		juego.onRender();
+		
+		clock_t tFinal = clock();
+		double tiempoTardado = ((double)(tFinal - tInicial))*1000/CLOCKS_PER_SEC;
+		double tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
+
+		if(tiempoExtra>=0) juego.esperar(tiempoExtra);
+		else{
+			while(tiempoExtra<0){
+				juego.onEvent();
+				juego.onLoop();
+				tiempoExtra += FRAME_FRECUENCY;
+			}
+
+		}
+		
+
 	}
 }
 

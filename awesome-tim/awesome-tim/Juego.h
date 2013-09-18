@@ -19,7 +19,8 @@ class Juego: public Fallable, Cambiable
 private:
 	
 	bool running;
-	const char* file;
+	const char* fileIn;
+	const char* fileOut;
 	
 	Ventana* ventana;
 	Superficie* superficie;
@@ -34,7 +35,7 @@ private:
 	bool shiftPressed;
 
 public:
-	Juego(const char* file);//se crea el juego
+	Juego(const char* fileIn,const char* fileOut);//se crea el juego
 	~Juego(void);
 	bool isRunning();
 
@@ -47,6 +48,8 @@ public:
 	void onEvent();//maneja los eventos
 	void onLoop();//actualiza el modelo
 	void onRender();//dibuja en la ventana
+
+	void esperar(double miliseconds);
 
 	void setFondo(const char* dir);
 
