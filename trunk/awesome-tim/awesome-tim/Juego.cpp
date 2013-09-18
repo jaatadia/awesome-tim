@@ -90,7 +90,15 @@ bool Juego::cargar(){
 }
 
 bool Juego::guardar(){
-	GeneradorYaml::guardarJuego(fileOut,botonera,terreno);
+	bool seGuardo = false;
+	
+	seGuardo = GeneradorYaml::guardarJuego(fileOut,botonera,terreno);
+	
+	if (!seGuardo){
+		ErrorLogHandler::addError("GeneradorYaml", "Error al abrir o cerrar los archivos al guardar la partida.");
+	
+	}
+
 	return true;
 }
 
@@ -213,7 +221,7 @@ while(SDL_PollEvent(&evento)){
 
 			//muevo la figura voladora, si es que la hay
 			if (figuraEnAire)
-				if ((figuraEnAire->esMiPosicion(posClickX,posClickY)) && (estaActiva)){
+				if ((estaActiva)){
 						figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
 						confirmarPosicionFiguraEnAire();
 				}
@@ -247,9 +255,12 @@ while(SDL_PollEvent(&evento)){
 
 			//puede que me haya devuelto la figura en aire
 			figuraEnAire = botonera->obtenerFiguraActual();
-			if (figuraEnAire)
+			if (figuraEnAire){
 				estaActiva = true;
-
+				//innecesario pero por si acaso
+				figuraEnAire->getDimension()->setX(posClickX);
+				figuraEnAire->getDimension()->setY(posClickY);
+			}
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos
 				if (evento.button.state == SDL_BUTTON_LMASK){
@@ -287,8 +298,9 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEWHEEL:
 		{
 			//scroll de botonera SIEMPRE sin importar la posicion
-			this->botonera->ScrollDown();
-			this->botonera->ScrollUp();
+			if (evento.wheel.y > 0)	this->botonera->ScrollDown();
+			else if (evento.wheel.y < 0) this->botonera->ScrollUp();
+
 			break;
 		}
 		case SDL_QUIT: 
@@ -356,7 +368,9 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			if (figuraEnAire)
 				figuraEnAire->setCambio(true);
 
-			botonera->setCambio(true);
+//			botonera->resize(1,1,escalas);
+	//NO ANDA, COMO LO HAGO!?
+		
 			//no se si es necesario algo similar para botonera
 
 			comandos->resizear(escalas);

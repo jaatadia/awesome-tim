@@ -6,6 +6,7 @@
 #include "Imprimible.h"
 #include "Cambiable.h"
 #include "Figura.h"
+#include "EscalasDeEjes.h"
 
 class BotoneraController: public Imprimible, public Cambiable
 {
@@ -23,9 +24,11 @@ private:
 	Imagen * squareButtonPressed;
 	Figura * figuraActual;
 	bool scrollTop, scrollBot, buttonPressed;
-	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY;
+	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY,cantBotonesMostradosOrig;
 	double factorAreaFiguras, scrollScaleFactor, buttonScaleFactor;
 	Figura * obtenerFigura(double x, double y);
+
+	double anchoOriginal,altoOriginal;
 
 public:
 	static const int FACTOR_SCROLL = 10;
@@ -47,12 +50,12 @@ public:
 	Figura * obtenerFiguraActual() {return this->figuraActual;}
 	int getAncho();
 	int getAlto();
-	void resize(int ancho, int alto);
+	void resize(int ancho, int alto,EscalasDeEjes* escalas);
 	std::list<map<Figura *, int>> getListaFiguras();
 
 	void ScrollUp();
 	void ScrollDown();
 
-
+	void resizear(EscalasDeEjes* escalas);
 };
 #endif //__BOTONERACONTROLLER_H__

@@ -180,7 +180,15 @@ bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,T
 
 	//creacion del arhchivo
 	std::ofstream arch;
-	arch.open(file,std::ios::out); //ERROREEEES???
+
+	try{
+	arch.open(file,std::ios::out);
+	} catch (...) {
+		return false;
+		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
+	};
+	
+	 //ERROREEEES???
 
 	//creacion del emitter
 	YAML::Emitter out;
@@ -207,7 +215,13 @@ bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,T
 	arch << out.c_str(); //<< "\n";
 
 	//cerrar el archivo
-	arch.close();  //ERROREEEES???
+	try{
+	arch.close();
+	} catch (...) {
+		return false;
+		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
+	};
+	
 
 	return true;
 };
