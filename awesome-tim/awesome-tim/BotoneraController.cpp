@@ -200,3 +200,35 @@ int BotoneraController::getAncho() {
 std::list<map<Figura *, int>> BotoneraController::getListaFiguras() {
 	return this->botonera->getListaFiguras();
 }
+
+
+
+void BotoneraController::ScrollUp(){
+	this->setScrollDirection(this->SCROLL_TOP);
+	if (this->scrollBot) {
+		int resto = this->botonera->getAlturaMax() - this->altoAreaFiguras - this->botonera->getY();
+		int paso = (resto > this->scrollStep*2) ? this->scrollStep*2 : resto;
+		this->botonera->setY(this->botonera->getY() + paso);
+	}
+	else {
+		int paso = (this->botonera->getY() > (this->scrollStep*2)) ? (this->scrollStep*2) : this->botonera->getY();
+		this->botonera->setY(this->botonera->getY() - paso);
+	}
+	this->setScrollDirection(this->SCROLL_OFF);
+	this->setCambio(true);
+}
+
+void BotoneraController::ScrollDown(){
+	this->setScrollDirection(this->SCROLL_BOT);
+	if (this->scrollBot) {
+		int resto = this->botonera->getAlturaMax() - this->altoAreaFiguras - this->botonera->getY();
+		int paso = (resto > this->scrollStep*2) ? this->scrollStep*2 : resto;
+		this->botonera->setY(this->botonera->getY() + paso);
+	}
+	else {
+		int paso = (this->botonera->getY() > (this->scrollStep*2)) ? (this->scrollStep*2) : this->botonera->getY();
+		this->botonera->setY(this->botonera->getY() - paso);
+	}
+	this->setScrollDirection(this->SCROLL_OFF);
+	this->setCambio(true);
+}
