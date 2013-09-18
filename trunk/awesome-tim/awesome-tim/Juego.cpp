@@ -50,20 +50,20 @@ Juego::Juego(const char *file){
 	Contenedor::putMultimedia("../images/Cuadrado.png",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
-	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
-	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
-	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
-	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
-	botonera->agregarBoton(CUADRADO, 5, "../images/Cuadrado.png");
+	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
+	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
+	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
+	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
+	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
 
 	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
 	fig = new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20));
 	terreno->agregarFigura(fig);
-	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
-	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
-	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
-	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
-	botonera->agregarBoton(TRIANGULO, 5, "../images/triangulo.png");
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
 
 	Contenedor::putMultimedia("../images/Ptriangulo.png",new Imagen("../images/Ptriangulo.png"));
 	fig = new Figura("../images/Ptriangulo.png",new PoligonoRegular(20,20,10,3,0));

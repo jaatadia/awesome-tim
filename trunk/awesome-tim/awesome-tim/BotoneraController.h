@@ -26,7 +26,6 @@ private:
 	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY;
 	double factorAreaFiguras, scrollScaleFactor, buttonScaleFactor;
 	Figura * obtenerFigura(double x, double y);
-	std::list<const char *> lstRutas;
 
 public:
 	static const int FACTOR_SCROLL = 10;
@@ -38,7 +37,7 @@ public:
 	Superficie* getImpresion();
 	Superficie* getImpresion(EscalasDeEjes* escalas);
 	void handleEventBotonera(double mouseX, double mouseY, Uint32 type);
-	void agregarBoton(int tipo, int cantidadInstancias, const char * ID);
+	void agregarBoton(Figura * figura, int cantidadInstancias);
 	void setScrollDirection(int direction);
 
 	void setFactorAreaFiguras(double factorAreaFiguras) {this->factorAreaFiguras = factorAreaFiguras;}
@@ -49,6 +48,6 @@ public:
 	int getAncho();
 	int getAlto();
 	void resize(int ancho, int alto);
-	std::list<int*> getListaFiguras();
+	std::list<map<Figura *, int>> getListaFiguras();
 };
 #endif //__BOTONERACONTROLLER_H__
