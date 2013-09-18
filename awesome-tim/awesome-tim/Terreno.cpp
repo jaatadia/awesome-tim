@@ -123,9 +123,6 @@ void Terreno::agregarFigura(Figura* fig){
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
 		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
 	};
-
-	//sacar************************************
-	this->setCambio(true);
 }
 
 void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
