@@ -5,7 +5,6 @@ Botonera::Botonera(int ancho,int alto){
 	this->alto = alto;
 	this->x = this->y = 0;
 	this->alturaMax = 0;
-	this->indice = 0;
 }
 
 void Botonera::agregarBoton(int tipo, int cantidadInstancias) {

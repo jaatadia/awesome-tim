@@ -117,18 +117,12 @@ Superficie* BotoneraController::getImpresion(){
 			this->setCambio(true);
 			if (this->scrollBot) {
 				int resto = this->botonera->getAlturaMax() - this->altoAreaFiguras - this->botonera->getY();
-				int paso = (resto > this->scrollStep) ? this->scrollStep : (this->scrollStep - resto);
-				if ((this->botonera->getY()%this->botonera->getAltoBoton()) + paso >= this->botonera->getAltoBoton())
-					this->botonera->setIndice(this->botonera->getIndice() + 1);
+				int paso = (resto > this->scrollStep) ? this->scrollStep : resto;
 				this->botonera->setY(this->botonera->getY() + paso);
 			}
 			else {
 				int paso = (this->botonera->getY() > this->scrollStep) ? this->scrollStep : this->botonera->getY();
-				if ((this->botonera->getY() - paso) >= 0) {
-					if (((this->botonera->getAlturaMax() - this->botonera->getY())%this->botonera->getAltoBoton()) + paso >= this->botonera->getAltoBoton())
-						this->botonera->setIndice(this->botonera->getIndice() - 1);
-					this->botonera->setY(this->botonera->getY() - paso);
-				}
+				this->botonera->setY(this->botonera->getY() - paso);
 			}
 		}
 
@@ -192,11 +186,8 @@ void BotoneraController::setScrollDirection(int direction) {
 }
 
 Figura * BotoneraController::obtenerFigura(double x, double y){
-	if (this->botonera->getY() >= this->altoAreaScroll && y <= (this->altoAreaScroll + this->altoAreaFiguras)) {
-		this->buttonPressed = true;
-		return this->botonera->obtenerFigura(this->botonera->getIndice() + ((int)(this->botonera->getY() - this->altoAreaScroll))%this->botonera->getAltoBoton());
-	}
-	return NULL;
+	this->buttonPressed = true;
+	return this->botonera->obtenerFigura(((int)(this->botonera->getY() + y - (this->altoAreaScroll >> 1)))/this->botonera->getAltoBoton());
 }
 
 int BotoneraController::getAlto() {
