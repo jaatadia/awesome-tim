@@ -287,7 +287,8 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEWHEEL:
 		{
 			//scroll de botonera SIEMPRE sin importar la posicion
-
+			this->botonera->ScrollDown();
+			this->botonera->ScrollUp();
 			break;
 		}
 		case SDL_QUIT: 

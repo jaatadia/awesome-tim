@@ -49,5 +49,10 @@ public:
 	int getAlto();
 	void resize(int ancho, int alto);
 	std::list<map<Figura *, int>> getListaFiguras();
+
+	void ScrollUp();
+	void ScrollDown();
+
+
 };
 #endif //__BOTONERACONTROLLER_H__
