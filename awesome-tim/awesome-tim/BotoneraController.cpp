@@ -145,9 +145,8 @@ Superficie* BotoneraController::getImpresion(){
 	return layerPrincipal;
 }
 
-void BotoneraController::agregarBoton(int tipo, int cantidadInstancias, const char * ID) {
-	this->lstRutas.push_back(ID);
-	Imagen * img = new Imagen(ID);
+void BotoneraController::agregarBoton(Figura * figura, int cantidadInstancias) {
+	Imagen * img = new Imagen(figura->getID());
 	int buttonSide = (this->botonera->getAnchoBoton() > this->botonera->getAltoBoton()) ? this->botonera->getAltoBoton() * this->buttonScaleFactor : this->botonera->getAnchoBoton() * this->buttonScaleFactor;
 	img = img->scaleImagen(buttonSide, buttonSide);
 	Superficie * aux = new Superficie(this->botonera->getAncho(), this->botonera->getAlturaMax() + this->botonera->getAltoBoton());
@@ -165,7 +164,7 @@ void BotoneraController::agregarBoton(int tipo, int cantidadInstancias, const ch
 	if(this->layerFiguras)
 		delete (this->layerFiguras);
 	this->layerFiguras = aux;
-	this->botonera->agregarBoton(tipo, cantidadInstancias);
+	this->botonera->agregarBoton(figura, cantidadInstancias);
 	this->botonera->setAlturaMax(this->botonera->getAlturaMax() + this->botonera->getAltoBoton());
 }
 
@@ -198,6 +197,6 @@ int BotoneraController::getAncho() {
 	return this->botonera->getAncho();
 }
 
-std::list<int*> BotoneraController::getListaFiguras() {
+std::list<map<Figura *, int>> BotoneraController::getListaFiguras() {
 	return this->botonera->getListaFiguras();
 }

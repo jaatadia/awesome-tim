@@ -7,18 +7,17 @@ Botonera::Botonera(int ancho,int alto){
 	this->alturaMax = 0;
 }
 
-void Botonera::agregarBoton(int tipo, int cantidadInstancias) {
-	int* vecAux = new (int[2]);
-	vecAux[this->TIPO] = tipo;
-	vecAux[this->INSTANCIAS] = cantidadInstancias;
-	this->lstFiguras.push_back(vecAux);
+void Botonera::agregarBoton(Figura * figura, int cantidadInstancias) {
+	std::map<Figura *, int> mapa;
+	mapa[figura] = cantidadInstancias;
+	this->lstFiguras.push_back(mapa);
 }
 
 Figura * Botonera::obtenerFigura(int numeroFigura){
 	Figura * retorno = 0;
 	bool encontrada = false;
 
-	std::list<int*>::iterator itFig = this->lstFiguras.begin();
+	std::list<map<Figura *, int>>::iterator itFig = this->lstFiguras.begin();
 	for (int i = 0; itFig != this->lstFiguras.end(); i++)
 	{
 		if (i == numeroFigura){
@@ -28,20 +27,9 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 		++itFig;
 	}
 	if (encontrada){
-		if ((*(itFig))[this->INSTANCIAS]) {
-			switch ((*(itFig))[this->TIPO]) {
-				case TRIANGULO:
-					//retorno = new Triangulo();
-					cout << "triangulo" << endl;
-					break;
-				case CUADRADO:
-					cout << "cuadrado" << endl;
-					break;
-				case CIRCULO:
-					cout << "circulo" << endl;
-					break;
-			}
-			--((*(itFig))[this->INSTANCIAS]);
+		if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {
+			retorno = (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first)->clonar();
+			--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
 		}
 	}
 	return retorno;
@@ -51,6 +39,6 @@ Botonera::~Botonera() {
 	this->lstFiguras.clear();
 }
 
-std::list<int*> Botonera::getListaFiguras() {
+std::list<map<Figura *, int>> Botonera::getListaFiguras() {
 	return this->lstFiguras;
 }

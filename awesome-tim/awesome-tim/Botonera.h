@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <list>
+#include <map>
 #include "Rectangulo.h"
 #include "Figura.h"
 #include "Constantes.h"
@@ -13,12 +14,9 @@ class Botonera
 {
 private:
 	int x, y, ancho, alto, anchoBoton, altoBoton, alturaMax;
-	std::list<int*> lstFiguras;
+	std::list<map<Figura *, int>> lstFiguras;
 
 public:
-
-	static const int TIPO = 0;
-	static const int INSTANCIAS = TIPO + 1;
 
 	Botonera(int ancho,int alto);
 	~Botonera(void);
@@ -33,7 +31,7 @@ public:
 	int getAnchoBoton(){return this->anchoBoton;}
 	int getAltoBoton(){return this->altoBoton;}
 	int getAlturaMax(){return this->alturaMax;}
-	std::list<int*> getListaFiguras();
+	std::list<map<Figura *, int>> getListaFiguras();
 
 	// Setters
 	void setY(int y) {this->y = y;}
@@ -41,7 +39,7 @@ public:
 	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;}
 	void setAnchoBoton(int anchoBoton) {this->anchoBoton = anchoBoton;}
 
-	void agregarBoton(int tipo, int cantidadInstancias);
+	void agregarBoton(Figura * figura, int cantidadInstancias);
 };
 
 #endif //__BOTONERA_H__

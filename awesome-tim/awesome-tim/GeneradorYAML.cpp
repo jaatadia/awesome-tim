@@ -121,14 +121,15 @@ YAML::Emitter& operator << (YAML::Emitter& out,BotoneraController* botonera){
 		out << YAML::Value << YAML::BeginSeq;
 			//itero y imprimo de a una las figuras en sequence
 			
-			std::list<int*> lista_figs = botonera->getListaFiguras();
-			std::list<int*>::iterator iter;
+			std::list<map<Figura *, int>> lista_figs = botonera->getListaFiguras();
+			std::list<map<Figura *, int>>::iterator iter;
+			
 			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
 				out << YAML::BeginMap;
 				out << YAML::Key << "tipo_figura";
-				out << YAML::Value << (*iter)[0]; //obtengo el tipo de figura
+				out << YAML::Value << (((std::map<Figura*,int>::iterator)((*iter).begin()))->first)->getTipoDimension(); //obtengo el tipo de figura
 				out << YAML::Key << "cantidad_de_instancias";
-				out << YAML::Value << (*iter)[1]; //obtengo la cant de instancias q se pueden crear de esa fig
+				out << YAML::Value << ((std::map<Figura*,int>::iterator)((*iter).begin()))->second; //obtengo la cant de instancias q se pueden crear de esa fig
 				out << YAML::EndMap;
 				/*
 				out << YAML::Key << "ID";
@@ -230,8 +231,8 @@ lista_fig.push_back(fig2);
 
 
 BotoneraController* botonera = new BotoneraController(8,80,2);
-botonera->agregarBoton(CUADRADO,10,"deberia ir ID");
-botonera->agregarBoton(CIRCULO,10,"deberia ir ID");
+//botonera->agregarBoton(CUADRADO,10,"deberia ir ID");
+//botonera->agregarBoton(CIRCULO,10,"deberia ir ID");
 
 Terreno* terr = new Terreno(80,80);
 terr->agregarFigura(fig1);
