@@ -13,14 +13,14 @@ void Contenedor::putMultimedia(const char* ID,void* medio){
 	
 	Imagen* img = (Imagen*) medio;
 	if (img->huboFallos()){
-		std::cout<< "--una imagen fallo\n";
+		//std::cout<< "--una imagen fallo\n";
 		delete img;
 		return;
 	}else if(cont->mapa.find(ID)== cont->mapa.end()){
-		std::cout<< "--A contenedor se le pide que se guarde algo con este ID: "<<ID<<"\n";
+		//std::cout<< "--A contenedor se le pide que se guarde algo con este ID: "<<ID<<"\n";
 		cont->mapa[ID]=medio;
 	}else{
-		std::cout<< "--El medio: "<<ID<<" ya se encuentra en el contenedor\n";
+		//std::cout<< "--El medio: "<<ID<<" ya se encuentra en el contenedor\n";
 		delete img;
 	}
 }
