@@ -298,8 +298,8 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEWHEEL:
 		{
 			//scroll de botonera SIEMPRE sin importar la posicion
-			if (evento.wheel.y > 0)	this->botonera->ScrollDown();
-			else if (evento.wheel.y < 0) this->botonera->ScrollUp();
+			if (evento.wheel.y > 0)	this->botonera->ScrollUp();
+			else if (evento.wheel.y < 0) this->botonera->ScrollDown();
 
 			break;
 		}
