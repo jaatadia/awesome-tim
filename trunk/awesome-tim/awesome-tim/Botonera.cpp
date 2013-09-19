@@ -35,6 +35,21 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 	return retorno;
 }
 
+void Botonera::restaurarInstanciaActual( int numeroFigActual ){
+
+	std::list<map<Figura *, int>>::iterator itFig = this->lstFiguras.begin();
+	
+	for (int i = 0; itFig != this->lstFiguras.end(); i++)
+	{
+		if (i == numeroFigActual){
+			++(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
+			break;
+		}
+		++itFig;
+	}
+
+}
+
 Botonera::~Botonera() {
 	this->lstFiguras.clear();
 }
@@ -42,3 +57,4 @@ Botonera::~Botonera() {
 std::list<map<Figura *, int>> Botonera::getListaFiguras() {
 	return this->lstFiguras;
 }
+

@@ -368,10 +368,7 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			if (figuraEnAire)
 				figuraEnAire->setCambio(true);
 
-//			botonera->resize(1,1,escalas);
-	//NO ANDA, COMO LO HAGO!?
-		
-			//no se si es necesario algo similar para botonera
+			botonera->resizear(escalas);
 
 			comandos->resizear(escalas);
 
@@ -507,6 +504,9 @@ void Juego::soltarFiguraEnAire(){
 		terreno->agregarFigura( figuraEnAire );
 		figuraEnAire = NULL;
 	}else{
+
+		botonera->restaurarInstanciaActual();
+
 		delete figuraEnAire;
 		figuraEnAire = NULL;
 	}
