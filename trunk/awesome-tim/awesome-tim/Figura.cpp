@@ -69,9 +69,33 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 	}
 }
 
-bool Figura::esMiPosicion(double x,double y)
+bool Figura::esMiPosicion(double x,double y,EscalasDeEjes* escalas)
 {
-	return dimension->puntoPertenece( x, y);
+
+	double miX = x;
+	double miY = y;
+
+	//comentar esto para que ande como antes (acordarse de cambiar tambien VistaFigura.cpp redraw)
+	double miAngulo = (dimension->getAngulo())*PI/180;
+	double centroXReal = escalas->getCantidadUnidadesFisicasX(this->dimension->getX()+0.5)+0.0;
+	double centroYReal = escalas->getCantidadUnidadesFisicasY(this->dimension->getY()+0.5)+0.0;
+	double xReal = escalas->getCantidadUnidadesFisicasX(x+0.5)+0.0;
+	double yReal = escalas->getCantidadUnidadesFisicasY(y+0.5)+0.0;
+	
+	double tempX = centroXReal + (xReal - centroXReal)*cos(miAngulo) - (yReal - centroYReal)*sin(miAngulo);
+	double tempY = centroYReal + (xReal - centroXReal)*sin(miAngulo) + (yReal - centroYReal)*cos(miAngulo);
+	tempX = escalas->getCantidadUnidadesLogicasX(tempX);
+	tempY = escalas->getCantidadUnidadesLogicasY(tempY);
+
+	miAngulo*=-1;
+	double cX = dimension->getX();
+	double cY = dimension->getY();
+
+	miX = cX + (tempX - cX)*cos(miAngulo) - (tempY - cY)*sin(miAngulo);
+	miY = cY + (tempX - cX)*sin(miAngulo) + (tempY - cY)*cos(miAngulo);
+	//terminar de comentar aca
+
+	return dimension->puntoPertenece( miX, miY);
 }
 
 void Figura::dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas){
