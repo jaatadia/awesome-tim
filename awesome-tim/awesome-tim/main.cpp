@@ -122,8 +122,8 @@ void imprimir_version(){
 	fprintf(stdout," ATADIA, Javier Alejandro (93223) \n");
 	fprintf(stdout," FULD, Juan Federico (93395) \n");
 	fprintf(stdout," WOITES, Jennifer Andrea (93274) \n");
-	fprintf(stdout," ALVAREZ ETCHEVERRY, Florencia (Poner Padron) \n");
-	fprintf(stdout," MANZANO, Matias (Poner Padron) \n \n");
+	fprintf(stdout," ALVAREZ ETCHEVERRY, Florencia (93408) \n");
+	fprintf(stdout," MANZANO, Matias Sebastian (83425) \n \n");
 }
 
 
