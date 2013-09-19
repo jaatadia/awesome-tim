@@ -37,19 +37,17 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	
 	delete img;
 
-	bool deleteTemp = false;
+	
 	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID.c_str()));
 	
-	img = temp->rotarZoom(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())),fig->dimension->getAngulo());
+	//descomentar esto para que funcione como antes (acordarse de cambiar tambien figura.cpp esMiPosicion)
+	//img = temp->rotarZoom(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())),fig->dimension->getAngulo());
 	
-	/*Imagen* temp2 = temp;
-
-	if((unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())!= temp->getAncho())||
-		(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())!= temp->getAlto())){
-		temp2 = temp->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
-		deleteTemp = true;
-	}
-
+	//cometnar esto para que ande como antes
+	bool deleteTemp = false;
+	Imagen* temp2 = temp->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
 	img = temp2->rotarImagen(fig->dimension->getAngulo());
-	if(deleteTemp) delete temp2;*/
+	delete temp2;
+	//terminar de comentar aca
+
 }

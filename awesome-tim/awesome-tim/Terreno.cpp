@@ -177,10 +177,10 @@ bool Terreno::hayFiguras(){
 	return false;
 }
 
-void Terreno::borrarFigura(double posClickX, double posClickY){
+void Terreno::borrarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
 
-	Figura* figuraABorrar = buscarFigura(posClickX, posClickY);
+	Figura* figuraABorrar = buscarFigura(posClickX, posClickY,escalas);
 
 	if (figuraABorrar){
 		//saco de la lista y libero memoria
@@ -234,11 +234,11 @@ void Terreno::resizear(EscalasDeEjes* escalas){
 	img = fondo->scaleImagen(ancho,alto);
 }
 
-void Terreno::buscarActiva(double posClickX ,double posClickY){
+void Terreno::buscarActiva(double posClickX ,double posClickY,EscalasDeEjes* escalas){
 	//si todavia no hay una
 	if (!figuraActiva){ 
 
-		figuraActiva = buscarFigura(posClickX ,posClickY);
+		figuraActiva = buscarFigura(posClickX ,posClickY,escalas);
 		//si no la encontre confirmo que es null (o podria no hacer nada...)
 		if (!figuraActiva)
 			figuraActiva=NULL;
@@ -259,7 +259,7 @@ void Terreno::corregirPosicion(Figura* fig){
 
 }
 
-Figura* Terreno::buscarFigura(double posClickX, double posClickY){
+Figura* Terreno::buscarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas){
 
 	if(hayFiguras()){	
 		Figura* figuraBuscada = NULL;
@@ -271,7 +271,7 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 
 		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
 			
-			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
+			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY,escalas);
 			figuraBuscada = (*iteradorLista);
 			
 			iteradorLista++;

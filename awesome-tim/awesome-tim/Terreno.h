@@ -39,7 +39,7 @@ public:
 	//respuesta metodo privada Figura* buscarFigura(double posX, double posY);
 	void rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
 	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
-	void borrarFigura(double posClickX, double posClickY);
+	void borrarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas);
 
 	void soltarFigura();
 
@@ -52,11 +52,11 @@ public:
 
 	void resizear(EscalasDeEjes* escalas);
 
-	void buscarActiva(double posClickX ,double posClickY);
+	void buscarActiva(double posClickX ,double posClickY,EscalasDeEjes* escalas);
 
 private:
 	bool hayFiguras();
-	Figura* buscarFigura(double posClickX, double posClickY);
+	Figura* buscarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas);
 	void corregirPosicion(Figura* fig);
 	void redraw(EscalasDeEjes* escalas);
 	void redraw();

@@ -243,9 +243,9 @@ while(SDL_PollEvent(&evento)){
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed))
 					//click izq y shift
-					terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+					terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,escalas);
 				else
-					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,escalas);
 				
 
 			if (posEnBotonera(posClickX,posClickY)){
@@ -269,7 +269,7 @@ while(SDL_PollEvent(&evento)){
 // y borrar esto cuando la botonera funcione
 // y en realidad ni me va a imprtar que este activa o no
 			if (figuraEnAire)
-				if (figuraEnAire->esMiPosicion(posClickX,posClickY))
+				if (figuraEnAire->esMiPosicion(posClickX,posClickY,escalas))
 					estaActiva = true;
 
 			break;
