@@ -87,7 +87,109 @@ Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angul
 
 }
 
-Dimension* CargadorYaml::crearPoligonoRegular(const YAML::Node& dimension, double angulo,double posX,double posY){return NULL;}
+
+Dimension* CargadorYaml::crearTriangulo(const YAML::Node& dimension, double angulo,double posX,double posY){
+
+	double base;	
+	try{
+		dimension["base"] >> base;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe base de dimension triangulo. Se carga base por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		base = BASE_TRIANGULO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo de la base de dimension triangulo. Se carga base por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		base = BASE_TRIANGULO_DEFAULT;
+	}
+
+	//Si entro aca es porque lei realmente una base, entonces el nodo existe y no va a tirar excepcion
+	if(!base_triangulo_valida(base)){
+		int linea = dimension["base"].GetMark().line;
+		imprimir_error_linea("Base de Triangulo invalida.", linea);
+		base = BASE_TRIANGULO_DEFAULT;
+	}
+
+	double altura;	
+	try{
+		dimension["altura"] >> altura;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe altura de dimension triangulo. Se carga altura por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		altura = ALTO_TRIANGULO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo de la altura de dimension triangulo. Se carga altura por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		altura = ALTO_TRIANGULO_DEFAULT;
+	}
+
+	//Si entro aca es porque lei realmente una altura, entonces el nodo existe y no va a tirar excepcion
+	if(!altura_triangulo_valida(altura)){
+		int linea = dimension["altura"].GetMark().line;
+		imprimir_error_linea("Altura de Triangulo invalida.", linea);
+		altura = ALTO_TRIANGULO_DEFAULT;
+	}
+
+	Dimension* dim = new Triangulo2(posX, posY, angulo,base,altura);
+	
+	if(!dim)
+		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Triangulo. \n"); 
+	
+	return dim;
+
+}
+
+Dimension* CargadorYaml::crearPoligonoRegular(const YAML::Node& dimension, double angulo,double posX,double posY){
+
+	double radio;	
+	try{
+		dimension["radio"] >> radio;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe radio de dimension poligono regular. Se carga radio por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		radio = RADIO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo del radio de dimension poligono regular. Se carga radio por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		radio = RADIO_DEFAULT;
+	}
+
+	//Si entro aca es porque lei realmente un radio, entonces el nodo existe y no va a tirar excepcion
+	if(!radio_valido(radio)){
+		int linea = dimension["radio"].GetMark().line;
+		imprimir_error_linea("Radio de Poligono Regular invalido.", linea);
+		radio = RADIO_DEFAULT;
+	}
+
+	int vert;	
+	try{
+		dimension["vertices"] >> vert;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		ErrorLogHandler::addError("CargadorYaml","No existe nodo vertices de dimension poligono regular. Se carga cantidad de vertices por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		vert = VERTICES_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		ErrorLogHandler::addError("CargadorYaml","Dato erroneo de cantidad de vertices de dimension poligono regular. Se carga cantidad de vertices por defecto. \n"); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
+		vert = VERTICES_DEFAULT;
+	}
+
+	//Si entro aca es porque lei realmente un radio, entonces el nodo existe y no va a tirar excepcion
+	if(!cant_vertices_valida(vert)){
+		int linea = dimension["vertices"].GetMark().line;
+		imprimir_error_linea("Cantidad de Vertices de Poligono Regular invalida.", linea);
+		vert = VERTICES_DEFAULT;
+	}
+
+	Dimension* dim = new PoligonoRegular( posX, posY, radio, vert, angulo);
+	
+	if(!dim)
+		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Poligono Regular. \n"); 
+	
+	return dim;
+
+}
+
 Dimension* CargadorYaml::crearDimension(const YAML::Node& dimension, double angulo,double posX,double posY, const char* tipo_dimension){
 
 	if(strcmp(tipo_dimension,"CIRCULO") == 0)
@@ -95,6 +197,12 @@ Dimension* CargadorYaml::crearDimension(const YAML::Node& dimension, double angu
 
 	if(strcmp(tipo_dimension,"CUADRADO") == 0)
 		return crearCuadrado(dimension,angulo,posX,posY);
+
+	if(strcmp(tipo_dimension,"TRIANGULO") == 0)
+		return crearTriangulo(dimension,angulo,posX,posY);
+
+	if(strcmp(tipo_dimension,"POLIGONO_REGULAR") == 0)
+		return crearPoligonoRegular(dimension,angulo,posX,posY);
 
 	//No deberia llegar a este error porque ya deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo dimension. El tipo de dimension no es un tipo valido. \n"); 	
@@ -501,7 +609,17 @@ bool CargadorYaml::cant_instancias_valida(int instancias){
 	return (instancias >= 0);
 }
 
+bool CargadorYaml::altura_triangulo_valida(double altura){
+	return ((altura > 0) && (altura < ALTO_TERRENO_LOGICO));
+}
 
+bool CargadorYaml::base_triangulo_valida(double base){
+	return ((base > 0) && (base < ANCHO_TERRENO_LOGICO));
+}
+
+bool CargadorYaml::cant_vertices_valida(int vertices){
+	return ((vertices >= 3) && (vertices < 100));
+}
 
 //Impresiones
 std::string CargadorYaml::concatenar_archivo(std::string mensaje, int linea, std::string archivo){
