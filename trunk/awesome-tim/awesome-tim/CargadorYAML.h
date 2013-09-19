@@ -31,16 +31,20 @@ private:
 
 	static void cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera);
 	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno);
-	static void cargar_figuras(const YAML::Node& listaFiguras, Terreno* terreno);
+	//static void cargar_figuras(const YAML::Node& listaFiguras, Terreno* terreno);
 	static Dimension* obtener_dimension(const YAML::Node& dimension,const char* tipo_dimension);
-	static Figura* cargarFigura(const char* tipo_figura,const char* ID,Dimension* dimension,int linea);
+	//static Figura* cargarFigura(const char* tipo_figura,const char* ID,Dimension* dimension,int linea);
 	static Dimension* crearDimension(const YAML::Node& dimension,double angulo,double posX,double posY, const char* tipo_dimension);
 	static Dimension* crearCuadrado(const YAML::Node& dimension, double angulo,double posX,double posY);
 	static Dimension* crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY);
 	static Dimension* crearPoligonoRegular(const YAML::Node& dimension, double angulo,double posX,double posY);
+	//static void cargar_figuras_botones(const YAML::Node& listaFiguras,BotoneraController* botonera);
 	static Dimension* crearTriangulo(const YAML::Node& dimension, double angulo,double posX,double posY);
 
 	static void cargar_figuras_botones(const YAML::Node& listaFiguras,BotoneraController* botonera);
+
+	static Figura* cargar_figura(const YAML::Node& nodoFig/*listaFiguras[i]*/);
+	static Figura* crearFigura(/*const char* tipo_figura,*/const char* ID,Dimension* dimension,int linea);
 
 	//Funciones de validacion de datos
 	static bool cant_instancias_valida(int instancias);

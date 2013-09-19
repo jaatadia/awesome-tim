@@ -126,15 +126,11 @@ YAML::Emitter& operator << (YAML::Emitter& out,BotoneraController* botonera){
 			
 			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
 				out << YAML::BeginMap;
-				out << YAML::Key << "tipo_figura";
-				out << YAML::Value << (((std::map<Figura*,int>::iterator)((*iter).begin()))->first)->getTipoDimension(); //obtengo el tipo de figura
+				out << YAML::Key << "figura";
+				out << YAML::Value << ((std::map<Figura*,int>::iterator)((*iter).begin()))->first; //obtengo la figura y la emito
 				out << YAML::Key << "cantidad_de_instancias";
 				out << YAML::Value << ((std::map<Figura*,int>::iterator)((*iter).begin()))->second; //obtengo la cant de instancias q se pueden crear de esa fig
 				out << YAML::EndMap;
-				/*
-				out << YAML::Key << "ID";
-				out << YAML::Value <<
-				*/
 			};
 			
 		out << YAML::EndSeq;
@@ -245,8 +241,8 @@ lista_fig.push_back(fig2);
 
 
 BotoneraController* botonera = new BotoneraController(8,80,2);
-//botonera->agregarBoton(CUADRADO,10,"deberia ir ID");
-//botonera->agregarBoton(CIRCULO,10,"deberia ir ID");
+botonera->agregarBoton(fig1,10);
+botonera->agregarBoton(fig2,10);
 
 Terreno* terr = new Terreno(80,80);
 terr->agregarFigura(fig1);
