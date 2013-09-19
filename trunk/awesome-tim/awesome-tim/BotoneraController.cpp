@@ -16,6 +16,7 @@ BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostra
 	this->botonera->setAnchoBoton(ancho);
 	this->scrollStep = this->botonera->getAltoBoton() / this->FACTOR_SCROLL;
 	this->supFiguraActual = 0;
+	this->numeroFigActual = 0;
 	this->layerPrincipal = new Superficie(ancho, alto);
 	this->figuraActual = 0;
 	this->layerFiguras = NULL;
@@ -144,19 +145,21 @@ void BotoneraController::handleEventBotonera(double mouseX, double mouseY, Uint3
 	this->setCambio(false);
 	switch (type) {
 		case SDL_MOUSEBUTTONDOWN:
-			if (mouseX >= 0 && mouseX <= this->botonera->getAncho()) {
-				if (mouseY >= 0 && mouseY <= (this->altoAreaScroll >> 1)) {
-					//Scroll arriba
-					this->setScrollDirection(this->SCROLL_TOP);
-					this->setCambio(true);
-				} else if (mouseY >= this->altoAreaFiguras + (this->altoAreaScroll >> 1)&& mouseY <= this->botonera->getAlto()) {
-					//Scroll abajo
-					this->setScrollDirection(this->SCROLL_BOT);
-					this->setCambio(true);
-				} else if (mouseY >= (this->altoAreaScroll >> 1) && mouseY <= this->altoAreaFiguras + (this->altoAreaScroll >> 1)) {
-					//Seleccion de figuras
-					if (this->figuraActual = obtenerFigura(mouseX, mouseY))
+			if (this->layerPrincipal->getPixel(mouseX, mouseY) != this->COLOR_FONDO) {
+				if (mouseX >= 0 && mouseX <= this->botonera->getAncho()) {
+					if (mouseY >= 0 && mouseY <= (this->altoAreaScroll >> 1)) {
+						//Scroll arriba
+						this->setScrollDirection(this->SCROLL_TOP);
 						this->setCambio(true);
+					} else if (mouseY >= this->altoAreaFiguras + (this->altoAreaScroll >> 1)&& mouseY <= this->botonera->getAlto()) {
+						//Scroll abajo
+						this->setScrollDirection(this->SCROLL_BOT);
+						this->setCambio(true);
+					} else if (mouseY >= (this->altoAreaScroll >> 1) && mouseY <= this->altoAreaFiguras + (this->altoAreaScroll >> 1)) {
+						//Seleccion de figuras
+						if (this->figuraActual = obtenerFigura(mouseX, mouseY))
+							this->setCambio(true);
+					}
 				}
 			}
 			break;
@@ -204,6 +207,16 @@ Superficie* BotoneraController::getImpresion(){
 		this->layerPrincipal->dibujarSupreficie(this->layerScroll, NULL, 0, 0);
 		this->layerPrincipal->dibujarSupreficie(this->layerFiguras, &rect, 0, (this->altoAreaScroll >> 1));
 
+		if (this->buttonPressed) {
+			int squareX = (this->squareButton->getAncho() == this->botonera->getAnchoBoton()) ? 0 : (this->botonera->getAnchoBoton() - this->squareButton->getAncho()) >> 1;
+			int squareY = (this->squareButton->getAncho() == this->botonera->getAnchoBoton()) ? (this->botonera->getAltoBoton() - this->squareButton->getAlto()) >> 1 : 0;
+			squareY += this->botonera->getAltoBoton() * this->numeroFigActual - this->botonera->getY() + (this->altoAreaScroll >> 1);
+			rect.x = 0;
+			rect.y = 0;
+			rect.ancho = this->squareButtonPressed->getAncho();
+			rect.alto = (squareY + this->squareButton->getAlto() > this->altoAreaFiguras + (this->altoAreaScroll >> 1)) ? this->altoAreaFiguras + (this->altoAreaScroll >> 1) - squareY : this->squareButton->getAlto();
+			this->layerPrincipal->dibujarImagen(this->squareButtonPressed, &rect, squareX, squareY);
+		}
 
 		if (this->scrollTop | this->scrollBot != 0) {
 			int x = (this->scrollButtonUp->getAncho() >= this->botonera->getAncho()) ? 0 : ((this->botonera->getAncho() - this->scrollButtonUp->getAncho()) >> 1);
@@ -260,7 +273,7 @@ void BotoneraController::setScrollDirection(int direction) {
 Figura * BotoneraController::obtenerFigura(double x, double y){
 	this->buttonPressed = true;
 	this->numeroFigActual= ((int)(this->botonera->getY() + y - (this->altoAreaScroll >> 1)))/this->botonera->getAltoBoton();
-	return this->botonera->obtenerFigura( this->numeroFigActual );
+	return this->botonera->obtenerFigura(this->numeroFigActual);
 }
 
 void BotoneraController::restaurarInstanciaActual(){
@@ -312,4 +325,3 @@ void BotoneraController::ScrollDown(){
 	this->setScrollDirection(this->SCROLL_OFF);
 	this->setCambio(true);
 }
-
