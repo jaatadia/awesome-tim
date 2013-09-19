@@ -11,6 +11,9 @@
 class BotoneraController: public Imprimible, public Cambiable
 {
 private:
+
+	static const int COLOR_FONDO = 255;
+
 	Botonera * botonera;
 	Superficie * layerPrincipal;
 	Superficie * layerFiguras;
@@ -24,8 +27,7 @@ private:
 	Imagen * squareButtonPressed;
 	Figura * figuraActual;
 	bool scrollTop, scrollBot, buttonPressed;
-	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY,cantBotonesMostradosOrig;
-	int numeroFigActual;
+	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY,cantBotonesMostradosOrig, numeroFigActual;
 	double factorAreaFiguras, scrollScaleFactor, buttonScaleFactor;
 	Figura * obtenerFigura(double x, double y);
 

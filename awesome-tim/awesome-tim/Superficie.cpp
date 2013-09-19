@@ -99,3 +99,7 @@ void Superficie::restoreGris(){
 	Uint32 gris = SDL_MapRGBA(this->superficie->format,200,200,200,255);
 	SdlSurfaceManager::pintarSup(superficie,gris);
 }
+
+Uint32 Superficie::getPixel(int x, int y) {
+	return SdlSurfaceManager::getPixel(this->superficie, x, y);
+}

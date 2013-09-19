@@ -42,6 +42,8 @@ public:
 
 	void dibujarCuadradoNegro(int x, int y, int ancho,int alto);
 
+	Uint32 getPixel(int x,int y );
+
 	//las siguientes devuelve NULL en caso de error
 	Superficie* rotarSuperficie(double angulo);//devuelve una copia rotada de la imagen
 	Superficie* rotarCuadradoSuperficie(double ang);//devuelve una copia rotada de la imagen manteniendo el tam original
