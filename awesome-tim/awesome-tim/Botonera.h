@@ -22,6 +22,7 @@ public:
 	~Botonera(void);
 
 	Figura * obtenerFigura(int numFigura);
+	void restaurarInstanciaActual( int numeroFigActual );
 
 	// Getters
 	int getX(){return this->x;}
@@ -38,6 +39,8 @@ public:
 	void setAlturaMax(int alturaMax) {this->alturaMax = alturaMax;}
 	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;}
 	void setAnchoBoton(int anchoBoton) {this->anchoBoton = anchoBoton;}
+	void setAlto(int alto){this->alto=alto;};
+	void setAncho(int ancho){this->ancho=ancho;};
 
 	void agregarBoton(Figura * figura, int cantidadInstancias);
 };

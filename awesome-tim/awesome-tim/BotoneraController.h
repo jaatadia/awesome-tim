@@ -25,6 +25,7 @@ private:
 	Figura * figuraActual;
 	bool scrollTop, scrollBot, buttonPressed;
 	int scrollStep, altoAreaScroll, altoAreaFiguras, scrollX, scrollY,cantBotonesMostradosOrig;
+	int numeroFigActual;
 	double factorAreaFiguras, scrollScaleFactor, buttonScaleFactor;
 	Figura * obtenerFigura(double x, double y);
 
@@ -48,6 +49,8 @@ public:
 	void setButtonScaleFactor(double buttonScaleFactor) {this->buttonScaleFactor = buttonScaleFactor;}
 
 	Figura * obtenerFiguraActual() {return this->figuraActual;}
+	void restaurarInstanciaActual();
+
 	int getAncho();
 	int getAlto();
 	void resize(int ancho, int alto,EscalasDeEjes* escalas);
@@ -55,6 +58,8 @@ public:
 
 	void ScrollUp();
 	void ScrollDown();
+
+
 
 	void resizear(EscalasDeEjes* escalas);
 };
