@@ -15,6 +15,8 @@
 
 #include "Cuadrado.h"
 #include "Circulo.h"
+#include "Triangulo2.h"
+#include "PoligonoRegular.h"
 
 #include "Figura.h"
 
@@ -36,6 +38,8 @@ private:
 	static Dimension* crearCuadrado(const YAML::Node& dimension, double angulo,double posX,double posY);
 	static Dimension* crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY);
 	static Dimension* crearPoligonoRegular(const YAML::Node& dimension, double angulo,double posX,double posY);
+	static Dimension* crearTriangulo(const YAML::Node& dimension, double angulo,double posX,double posY);
+
 	static void cargar_figuras_botones(const YAML::Node& listaFiguras,BotoneraController* botonera);
 
 	//Funciones de validacion de datos
@@ -49,6 +53,9 @@ private:
 	static bool posicion_validaY(double posY);
 	static bool angulo_valido(double angulo);
 	static bool tipo_figura_valida(const char* tipo_figura);
+	static bool altura_triangulo_valida(double altura);
+	static bool base_triangulo_valida(double base);
+	static bool cant_vertices_valida(int vertices);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
