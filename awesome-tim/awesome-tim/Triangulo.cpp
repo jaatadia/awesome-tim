@@ -1,136 +1,79 @@
 #include "Triangulo.h"
+#include <cmath>
 #include "Constantes.h"
-#include <math.h>
 
-Triangulo::Triangulo(double X, double Y, double angulo, double base, double altura): Dimension(X,Y,angulo){
-	this->centroX = X;
-	this->centroY = Y;
-	this->angulo = angulo;
+Triangulo::Triangulo(double X, double Y, double angulo, double base,double altura): Dimension(X,Y,angulo){
 	this->base = base;
 	this->altura = altura;
-	crear_puntos_iniciales();
-	recalcular_puntos_rotados();
+
+	double extra = 0;
+
+	x1 = 0;
+	y1 = -(altura/2);
+
+	x2 = -(base/2);
+	y2 = (altura/2);
+
+	x3 = +base/2;
+	y3 = (altura/2);
 
 }
 
-void Triangulo::rotar_punto(Posicion* punto, double angulo){
-	double x = punto->getX();
-	double y = punto->getY();
-
-	double angle = (PI*angulo) / 180.0;
-
-	x = this->centroX + ((x - this->centroX) * cos(angle)) - ((this->centroY - y) * sin(angle));
-	y = this->centroY + ((this->centroY - y) * cos(angle)) - ((x - this->centroX) * sin(angle));
-
-	punto->setX(x);
-	punto->setY(y);
+Triangulo::~Triangulo(void)
+{
 }
 
-void Triangulo::recalcular_puntos_rotados(void){
-	rotar_punto(this->A1,this->angulo);
-	rotar_punto(this->A2,this->angulo);
-	rotar_punto(this->A3,this->angulo);
-}
-
-void Triangulo::crear_puntos_iniciales(void){
-
-	double A1x, A1y, A2x, A2y, A3x, A3y;
-
-	A1x = this->centroX + (this->base / 2.0);
-	A1y = this->centroY - (this->altura / 2.0);
-
-	A2x = this->centroX - (this->base / 2.0);
-	A2y = this->centroY - (this->altura / 2.0);
-
-	A3x = this->centroX;
-	A3y = this->centroY + (this->altura / 2.0);
-
-	this->A1 = new Posicion(A1x,A1y);
-	this->A2 = new Posicion(A2x,A2y);
-	this->A3 = new Posicion(A3x,A3y);
-}
-
-//No utilizar este constructr salvo para pruebas (no necesariamente el centro es real ya que no lo verifica)
-Triangulo::Triangulo(double X, double Y, double angulo, Posicion* punto1,Posicion* punto2,Posicion* punto3): Dimension(X,Y,angulo){
-	this->A1 = punto1;
-	this->A2 = punto2;
-	this->A3 = punto3;
-	this->centroX = X; //No lo verifica
-	this->centroY = Y; //No lo verifica
-	this->angulo = angulo; //No lo verifica
-	this->base = 0; //Para que no de error al pedir un get
-	this->altura = 0; //Para que no de error al pedir un get
-}
-
-
-Triangulo::~Triangulo(void){
-
-	delete(this->A1);
-	delete(this->A2);
-	delete(this->A3);
-
-}
-
-bool Triangulo::todos_positivos(double num1, double num2, double num3, double num4){
-	return ((num1>0) && (num2>0) && (num3>0) && (num4>0));
-}
-
-bool Triangulo::todos_negativos(double num1, double num2, double num3, double num4){
-	return ((num1<=0) && (num2<=0) && (num3<=0) && (num4<=0));
-}
-
-bool Triangulo::orientaciones_iguales(double Origen,double circ1,double circ2,double circ3){
-	return (todos_positivos(Origen,circ1,circ2,circ3) || todos_negativos(Origen,circ1,circ2,circ3));
-}
-
-// Un punto pertenece al triangulo solo si esta en el interior de el. Si pertenece a su perimetro,
-// entonces no pertenece al triangulo :P
-bool Triangulo::puntoPertenece(double x, double y){
-//A partir de esta direccion, encontre como saber si un punto pertenece o no a un triangulo: "http://www.dma.fi.upm.es/mabellanas/tfcs/kirkpatrick/Aplicacion/algoritmos.htm"
-
-	Posicion* puntoP = new Posicion(x,y);
-	if(!puntoP) return false;
-
-	double A1A2A3 = sentido_circulacion(this->A1,this->A2,this->A3);
-	double A1A2P = sentido_circulacion(this->A1, this->A2, puntoP);
-	double A2A3P = sentido_circulacion(this->A2, this->A3, puntoP);
-	double A3A1P = sentido_circulacion(this->A3, this->A1, puntoP);
-
-	delete(puntoP);
-
-	return orientaciones_iguales(A1A2A3,A1A2P,A2A3P,A3A1P);
-}
-
-double Triangulo::sentido_circulacion(Posicion* A1,Posicion* A2,Posicion* A3){
-
-	double A1x, A1y, A2x, A2y, A3x, A3y;
+bool Triangulo::puntoPertenece(double tX, double tY){
 	
-	A1x = A1->getX();
-	A2x = A2->getX();
-	A3x = A3->getX();
+	double angle = -(PI*this->getAngulo())/180.0;
+	double tx1 = getX() + x1;//((x1) * cos(angle)) - ((y1) * sin(angle));
+	double ty1 = getY() + y1;//((x1) * sin(angle)) + ((y1) * cos(angle));
+	double tx2 = getX() + x2;//((x2) * cos(angle)) - ((y2) * sin(angle));
+	double ty2 = getY() + y2;//((x2) * sin(angle)) + ((y2) * cos(angle));
+	double tx3 = getX() + x3;//((x3) * cos(angle)) - ((y3) * sin(angle));
+	double ty3 = getY() + y3;//((x3) * sin(angle)) + ((y3) * cos(angle));
 
-	A1y = A1->getY();
-	A2y = A2->getY();
-	A3y = A3->getY();
 
-	return ((A1x - A3x) * (A2y - A3y) - (A1y - A3y) * (A2x - A3x)); 
+	double X = getX() + ((tX-getX()) * cos(-angle)) - ((tY-getY()) * sin(-angle));
+	double Y = getY() + ((tX-getX()) * sin(-angle)) + ((tY-getY()) * cos(-angle));
 
+	bool signoOK = true;
+	double signo;
+	double signoClick;
+
+	signo = enRecta(getX(),getY(),tx1,ty1,tx2,ty2);
+	signoClick = enRecta(X,Y,tx1,ty1,+tx2,+ty2);
+	if(signoClick<0) signoOK = (signo<0);
+	else if(signoClick>0) signoOK = (signo>0);
+	if(!signoOK) return false;
+
+	signo = enRecta(getX(),getY(),tx1,ty1,tx3,ty3);
+	signoClick = enRecta(X,Y,tx1,ty1,+tx3,+ty3);
+	if(signoClick<0) signoOK = (signo<0);
+	else if(signoClick>0) signoOK = (signo>0);
+	if(!signoOK) return false;
+
+	signo = enRecta(getX(),getY(),tx2,ty2,tx3,ty3);
+	signoClick = enRecta(X,Y,tx2,ty2,+tx3,+ty3);
+	if(signoClick<0) signoOK = (signo<0);
+	else if(signoClick>0) signoOK = (signo>0);
+	
+	return signoOK;
 }
 
 double Triangulo::getAncho(void){
-	return this->base;
+	return base;
 }
 
 double Triangulo::getAlto(void){
-	return this->altura;
+	return altura;
 }
 
-
-double Triangulo::getAngulo(void){
-	return this->angulo;
+double Triangulo::enRecta(double x,double y,double x0,double y0,double x1,double y1){
+	//return (((x-x0)/(x1-x0))-((y-y0)/(y1-y0)));
+	return (((x-x0)*(y1-y0))-((y-y0)*(x1-x0)));
 }
 
-void Triangulo::setAngulo(double ang){
-	this->angulo = ang;
-	recalcular_puntos_rotados();
+Dimension* Triangulo::clonar(){
+	return new Triangulo(getX(),getY(),getAngulo(),base,altura);
 }

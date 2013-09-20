@@ -15,7 +15,7 @@
 
 #include "Cuadrado.h"
 #include "Circulo.h"
-#include "Triangulo2.h"
+#include "Triangulo.h"
 #include "PoligonoRegular.h"
 
 #include "Figura.h"

@@ -119,7 +119,7 @@ Dimension* CargadorYaml::crearTriangulo(const YAML::Node& dimension, double angu
 		altura = ALTO_TRIANGULO_DEFAULT;
 	}
 
-	Dimension* dim = new Triangulo2(posX, posY, angulo,base,altura);
+	Dimension* dim = new Triangulo(posX, posY, angulo,base,altura);
 	
 	if(!dim)
 		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Triangulo. La figura no sera cargada."); 
