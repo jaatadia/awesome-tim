@@ -20,7 +20,6 @@ Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo
 		radio = RADIO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 	if(!radio_valido(radio)){
 		int linea = dimension["radio"].GetMark().line;
 		imprimir_error_linea("Radio de Circulo invalido. Se carga radio por defecto.", linea);
@@ -47,7 +46,6 @@ Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angul
 		ancho = ANCHO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 	if(!ancho_cuadrado_valido(ancho)){
 		int linea = dimension["ancho"].GetMark().line;
 		imprimir_error_linea("Ancho de Cuadrado invalido. Se carga ancho por defecto.",linea);
@@ -64,7 +62,6 @@ Dimension* CargadorYaml::crearCuadrado(const YAML::Node& dimension, double angul
 		alto = ALTO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 	if(!alto_cuadrado_valido(alto)){
 		int linea = dimension["alto"].GetMark().line;
 		imprimir_error_linea("Alto de Cuadrado invalido. Se carga alto por defecto.",linea);
@@ -94,7 +91,6 @@ Dimension* CargadorYaml::crearTriangulo(const YAML::Node& dimension, double angu
 		base = BASE_TRIANGULO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una base, entonces el nodo existe y no va a tirar excepcion
 	if(!base_triangulo_valida(base)){
 		int linea = dimension["base"].GetMark().line;
 		imprimir_error_linea("Base de Triangulo invalida. Se carga base por defecto.",linea);
@@ -112,7 +108,6 @@ Dimension* CargadorYaml::crearTriangulo(const YAML::Node& dimension, double angu
 		altura = ALTO_TRIANGULO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una altura, entonces el nodo existe y no va a tirar excepcion
 	if(!altura_triangulo_valida(altura)){
 		int linea = dimension["altura"].GetMark().line;
 		imprimir_error_linea("Altura de Triangulo invalida. Se carga altura por defecto.",linea);
@@ -141,7 +136,6 @@ Dimension* CargadorYaml::crearPoligonoRegular(const YAML::Node& dimension, doubl
 		radio = RADIO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente un radio, entonces el nodo existe y no va a tirar excepcion
 	if(!radio_valido(radio)){
 		int linea = dimension["radio"].GetMark().line;
 		imprimir_error_linea("Radio de Poligono Regular invalido. Se carga radio por defecto.",linea);
@@ -159,7 +153,6 @@ Dimension* CargadorYaml::crearPoligonoRegular(const YAML::Node& dimension, doubl
 		vert = VERTICES_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente un radio, entonces el nodo existe y no va a tirar excepcion
 	if(!cant_vertices_valida(vert)){
 		int linea = dimension["vertices"].GetMark().line;
 		imprimir_error_linea("Cantidad de Vertices de Poligono Regular invalida. Se carga cantidad de vertices por defecto.",linea);
@@ -170,7 +163,6 @@ Dimension* CargadorYaml::crearPoligonoRegular(const YAML::Node& dimension, doubl
 	
 	if(!dim)
 		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Poligono Regular. La figura no sera cargada."); 
-	
 	return dim;
 
 }
@@ -209,7 +201,6 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 		angulo = ANGULO_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 	if(!angulo_valido(angulo)){
 		int linea = dimension["angulo"].GetMark().line;
 		imprimir_error_linea("Angulo de Figura invalido. Se carga angulo por defecto en 0 grados.", linea);
@@ -230,14 +221,12 @@ Dimension* CargadorYaml::obtener_dimension(const YAML::Node& dimension,const cha
 		posY = POSY_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 	if(!posicion_validaX(posX)){
 		int linea = dimension["posX"].GetMark().line;
 		imprimir_error_linea("Posicion X de Figura invalida. Se carga posicion X por defecto.",linea);
 		posX = POSX_DEFAULT;
 	}
 
-	//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 	if(!posicion_validaY(posY)){
 		int linea = dimension["posY"].GetMark().line;
 		imprimir_error_linea("Posicion Y de Figura invalida. Se carga posicion Y por defecto.",linea);
@@ -596,7 +585,6 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig/*listaFiguras[i]*/
 			return NULL;
 		}
 
-		//Si entro aca es porque lei realmente una cantidad de instancias, entonces el nodo existe y no va a tirar excepcion
 		if(!tipo_dimension_valida(tipo_dimension.c_str())){
 			int linea = nodoFig["tipo_dimension"].GetMark().line;
 			imprimir_error_linea("Tipo de dimension invalida. La figura no sera cargada.",linea);
