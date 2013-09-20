@@ -6,6 +6,33 @@ juego:
   botonera:
     lista_figuras:
       - figura:
+          ID: ../images/Pelota-Tenis.png
+          tipo_dimension: CIRCULO
+          dimension:
+            radio: 3
+            posX: 0
+            posY: 0
+            angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
+          ID: ../images/Pelota-Basket.png
+          tipo_dimension: CIRCULO
+          dimension:
+            radio: 8
+            posX: 0
+            posY: 0
+            angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
+          ID: ../images/Bowling.png
+          tipo_dimension: CIRCULO
+          dimension:
+            radio: 7
+            posX: 0
+            posY: 0
+            angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
           ID: ../images/triangulo.png
           tipo_dimension: TRIANGULO
           dimension:
