@@ -61,6 +61,8 @@ public:
 	void ScrollUp();
 	void ScrollDown();
 
+	//bool agregarBotonesDefault();
+
 
 
 	void resizear(EscalasDeEjes* escalas);
