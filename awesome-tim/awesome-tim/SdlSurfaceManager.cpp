@@ -388,18 +388,6 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 	double coseno = cos(-angulo);
 	double seno = sin(-angulo);
 	
-	
-	Uint32 tempPix = getPixel(sur,centroX,centroY);
-	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)-1,tempPix);
-	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX),tempPix);
-	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)+1,tempPix);
-	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)-1,tempPix);
-	putPixel(img,int(nuevoCentroX),int(nuevoCentroX),tempPix);
-	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)+1,tempPix);
-	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)-1,tempPix);
-	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX),tempPix);
-	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)+1,tempPix);
-	
 	for(int i=0;i<sur->w;i++){
 		double temp1 = (i-centroX)*coseno;
 		double temp2 = (i-centroX)*seno;
@@ -421,6 +409,10 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 				Uint32 pix2 = getPixel(img,i,j+1);
 				if((pix1!=alpha)&&(pix2!=alpha)){
 					putPixel(img,i,j,blendPixels(img->format,pix1,pix2));
+				}else if((pix1!=alpha)||(pix2!=alpha)){
+					Uint32 pix3 = getPixel(img,i+1,j+1);
+					Uint32 pix4 = getPixel(img,i-1,j-1);
+					if((pix3!=alpha)&&(pix4!=alpha)) putPixel(img,i,j,blendPixels(img->format,pix3,pix4));
 				}
 			}
 		}	
@@ -535,18 +527,6 @@ SDL_Surface* SdlSurfaceManager::rotarZoom(SDL_Surface* sur, int pixAncho, int pi
 	SDL_LockSurface(sur); 
 	SDL_LockSurface(img); 
 
-	Uint32 tempPix = getPixel(sur,centroX,centroY);
-	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)-1,tempPix);
-	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX),tempPix);
-	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)+1,tempPix);
-	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)-1,tempPix);
-	putPixel(img,int(nuevoCentroX),int(nuevoCentroX),tempPix);
-	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)+1,tempPix);
-	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)-1,tempPix);
-	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX),tempPix);
-	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)+1,tempPix);
-
-
 	double coseno = cos(-angulo);
 	double seno = sin(-angulo);
 	
@@ -574,6 +554,10 @@ SDL_Surface* SdlSurfaceManager::rotarZoom(SDL_Surface* sur, int pixAncho, int pi
 				Uint32 pix2 = getPixel(img,i,j+1);
 				if((pix1!=alpha)&&(pix2!=alpha)){
 					putPixel(img,i,j,blendPixels(img->format,pix1,pix2));
+				}else if((pix1!=alpha)||(pix2!=alpha)){
+					Uint32 pix3 = getPixel(img,i+1,j+1);
+					Uint32 pix4 = getPixel(img,i-1,j-1);
+					if((pix3!=alpha)&&(pix4!=alpha))putPixel(img,i,j,blendPixels(img->format,pix3,pix4));
 				}
 			}
 		}	
