@@ -325,3 +325,5 @@ void BotoneraController::ScrollDown(){
 	this->setScrollDirection(this->SCROLL_OFF);
 	this->setCambio(true);
 }
+
+//bool BotoneraController:agregarBotonesDefault(){return false};

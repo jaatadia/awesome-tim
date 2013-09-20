@@ -1,0 +1,10 @@
+juego:
+  terreno:
+  botonera:
+    alto: 80
+    ancho: 8
+    lista_figuras:
+      - tipo_figura: 2
+        cantidad_de_instancias: 10
+      - tipo_figura: 3
+        cantidad_de_instancias: 10

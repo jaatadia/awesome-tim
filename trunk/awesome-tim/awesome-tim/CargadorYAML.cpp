@@ -509,17 +509,22 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 	try{
 		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default.",e.what());
+		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
 		//botonera->agregarBotonesDefault();
 		return;
 	}catch(YAML::BadDereference &e){
-		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por default.",e.what());
+		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
 		//botonera->agregarBotonesDefault();
 		return;
 	}
 
 	const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
 	
+	if (listaFiguras.size() == 0) {
+		imprimir_error_linea("La lista de figuras de la botonera se encuentra vacia. Se carga botonera con botones por defecto.",listaFiguras.GetMark().line);
+		//botonera->agregarBotonesDefault();
+	};
+
 	for(unsigned i=0;i<listaFiguras.size();i++) {
 		
 		int instancias;
@@ -807,12 +812,11 @@ void CargadorYaml::pruebaCargador(){
 	Terreno* terr = new Terreno(80,80);
 
 	//habria q imprimir en el error el nombre del archivo que no se pudo cargar, no?
-	CargadorYaml::cargarJuego("../yaml/pruebacargar.yml",bot,terr); //no existe archivo
-	CargadorYaml::cargarJuego("../yaml/sinNodoJuego.yml",bot,terr); 
-	CargadorYaml::cargarJuego("../yaml/vacio.yml",bot,terr); //arch vacio
-	CargadorYaml::cargarJuego("../yaml/sinTerreno.yml",bot,terr);
-	CargadorYaml::cargarJuego("../yaml/sinBotonera.yml",bot,terr);
-	CargadorYaml::cargarJuego("../yaml/terrenoVacio.yml",bot,terr);
-	CargadorYaml::cargarJuego("../yaml/pruebacargar4.yml",bot,terr);
+	CargadorYaml::cargarJuego("../yaml/testcargar.yml",bot,terr); //no existe archivo
+	CargadorYaml::cargarJuego("../yaml/testsinNodoJuego.yml",bot,terr); 
+	CargadorYaml::cargarJuego("../yaml/testvacio.yml",bot,terr); //arch vacio
+	CargadorYaml::cargarJuego("../yaml/testsinTerreno.yml",bot,terr);
+	CargadorYaml::cargarJuego("../yaml/testsinBotonera.yml",bot,terr);
+	CargadorYaml::cargarJuego("../yaml/testterrenoVacio.yml",bot,terr);
 
 }
