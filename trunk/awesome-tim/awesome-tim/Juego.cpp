@@ -7,7 +7,7 @@
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include "PoligonoRegular.h"
-#include "Triangulo2.h"
+#include "Triangulo.h"
 
 #include "Figura.h"
 
@@ -62,11 +62,11 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
 	fig = new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20));
 	terreno->agregarFigura(fig);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
+	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
 
 	Contenedor::putMultimedia("../images/Ptriangulo.png",new Imagen("../images/Ptriangulo.png"));
 	fig = new Figura("../images/Ptriangulo.png",new PoligonoRegular(20,20,10,3,0));

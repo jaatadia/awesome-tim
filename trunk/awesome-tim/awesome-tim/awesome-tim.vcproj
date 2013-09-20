@@ -178,39 +178,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\CargadorYaml.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\EscalasDeEjes.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\GeneradorYaml.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\PoligonoRegular.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Recta.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Segmento.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Test_Cuadrado.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Triangulo2.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\VistaFigura.cpp"
+				RelativePath=".\main.cpp"
 				>
 			</File>
 			<Filter
@@ -240,29 +208,49 @@
 					RelativePath=".\Ventana.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\VistaFigura.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Modelo"
 				>
+				<File
+					RelativePath=".\Circulo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Cuadrado.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Figura.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\PoligonoRegular.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Recta.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Segmento.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Terreno.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Triangulo.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Controlador"
-				>
-				<File
-					RelativePath=".\ErrorLogHandler.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\main.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Programa.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="nuevo"
 				>
 				<File
 					RelativePath=".\Botonera.cpp"
@@ -273,7 +261,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Circulo.cpp"
+					RelativePath=".\CargadorYaml.cpp"
 					>
 				</File>
 				<File
@@ -285,15 +273,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Cuadrado.cpp"
+					RelativePath=".\ErrorLogHandler.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Evento.cpp"
+					RelativePath=".\EscalasDeEjes.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Figura.cpp"
+					RelativePath=".\GeneradorYaml.cpp"
 					>
 				</File>
 				<File
@@ -304,10 +292,6 @@
 					RelativePath=".\ManejadorEventos.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\Terreno.cpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -316,44 +300,16 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\CargadorYaml.h"
-				>
-			</File>
-			<File
-				RelativePath=".\EscalasDeEjes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\GeneradorYaml.h"
-				>
-			</File>
-			<File
-				RelativePath=".\PoligonoRegular.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Recta.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Segmento.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Test_Cuadrado.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Triangulo2.h"
-				>
-			</File>
-			<File
-				RelativePath=".\VistaFigura.h"
+				RelativePath=".\Constantes.h"
 				>
 			</File>
 			<Filter
 				Name="Vista"
 				>
+				<File
+					RelativePath=".\Dibujable.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Fallable.h"
 					>
@@ -363,7 +319,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Programa.h"
+					RelativePath=".\Imprimible.h"
 					>
 				</File>
 				<File
@@ -382,21 +338,61 @@
 					RelativePath=".\Ventana.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="Modelo"
-				>
-			</Filter>
-			<Filter
-				Name="Controlador"
-				>
 				<File
-					RelativePath=".\ErrorLogHandler.h"
+					RelativePath=".\VistaFigura.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="nuevo"
+				Name="Modelo"
+				>
+				<File
+					RelativePath=".\Cambiable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Circulo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Cuadrado.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Dimension.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Figura.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PoligonoRegular.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Posicion.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Recta.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Segmento.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Terreno.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Triangulo.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Controlador"
 				>
 				<File
 					RelativePath=".\Botonera.h"
@@ -407,11 +403,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Cambiable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Circulo.h"
+					RelativePath=".\CargadorYaml.h"
 					>
 				</File>
 				<File
@@ -419,35 +411,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Constantes.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Contenedor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Cuadrado.h"
+					RelativePath=".\ErrorLogHandler.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dibujable.h"
+					RelativePath=".\EscalasDeEjes.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dimension.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Evento.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Figura.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Imprimible.h"
+					RelativePath=".\GeneradorYaml.h"
 					>
 				</File>
 				<File
@@ -456,14 +432,6 @@
 				</File>
 				<File
 					RelativePath=".\ManejadorEventos.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Posicion.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Terreno.h"
 					>
 				</File>
 			</Filter>

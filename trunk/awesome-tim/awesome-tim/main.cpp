@@ -6,8 +6,6 @@
 #include <ctime>
 #include "Constantes.h"
 
-//Inclusion de Test
-#include "Test_Cuadrado.h"
 #include "Contenedor.h"
 #include "CargadorYaml.h"
 #include "GeneradorYaml.h"
@@ -130,7 +128,6 @@ void imprimir_version(){
 void test(void){
 	GeneradorYaml::pruebayaml();
 	CargadorYaml::pruebaCargador();
-	Test_Cuadrado::prueba_cuadrado();
 	Contenedor::pruebaContenedor();
 }
 

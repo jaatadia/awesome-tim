@@ -329,7 +329,7 @@ void BotoneraController::ScrollDown(){
 
 
 #include "Contenedor.h"
-#include "Triangulo2.h"
+#include "Triangulo.h"
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include "PoligonoRegular.h"
@@ -338,7 +338,7 @@ bool BotoneraController::agregarBotonesDefault(){
 	
 	const char* ID = "../images/triangulo.png";
 	Imagen* img = new Imagen(ID);
-	Figura* fig = new Figura(ID,new Triangulo2(0,0,0,10,10));
+	Figura* fig = new Figura(ID,new Triangulo(0,0,0,10,10));
 	Contenedor::putMultimedia(ID,img);
 	this->agregarBoton(fig,100);
 	
