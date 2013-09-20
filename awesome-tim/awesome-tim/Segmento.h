@@ -19,4 +19,6 @@ public:
 	double getYInicial(){ return YInicial;};
 
 	double getYFinal(){ return YFinal;};
+
+	double evaluar(double x);
 };
