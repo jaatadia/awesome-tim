@@ -25,14 +25,16 @@ BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostra
 	this->setScrollDirection(SCROLL_OFF);
 	this->buttonPressed = false;
 
-	int buttonSide = (this->botonera->getAltoBoton() > this->botonera->getAnchoBoton()) ? this->botonera->getAnchoBoton() : this->botonera->getAltoBoton();
+//	int buttonSide = (this->botonera->getAltoBoton() > this->botonera->getAnchoBoton()) ? this->botonera->getAnchoBoton() : this->botonera->getAltoBoton();
+	int botonAncho = this->botonera->getAnchoBoton();
+	int botonAlto = this->botonera->getAltoBoton();
 
 	temp = new Imagen("../images/SquareButton.png");
-	this->squareButton = temp->scaleImagen(buttonSide, buttonSide);
+	this->squareButton = temp->scaleImagen(botonAncho, botonAlto);
 	delete temp;
 
 	temp = new Imagen("../images/SquareButtonPressed.png");
-	this->squareButtonPressed = temp->scaleImagen(buttonSide, buttonSide);
+	this->squareButtonPressed = temp->scaleImagen(botonAncho, botonAlto);
 	delete temp;
 
 	int scrollSide = (ancho > (this->altoAreaScroll >> 1)) ? (this->altoAreaScroll >> 1) * this->scrollScaleFactor : ancho * this->scrollScaleFactor;
