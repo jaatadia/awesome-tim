@@ -23,6 +23,7 @@ private:
 //	double angulo;// tambien dentro de dimension
 	std::string ID;
 	VistaFigura* myVista;
+	bool traslucido;
 
 public:
 	Figura(const char* ID,Dimension* dim);
@@ -42,6 +43,8 @@ public:
 	const char* getID();
 	int getTipoDimension(){return dimension->getTipoDimension();};
 	Dimension* getDimension();
+
+	void setTraslucido(bool flag);
 
 	Figura* clonar();//copia la figura
 
