@@ -47,7 +47,9 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 	shiftPressed = false;
 	estaActiva = false;
 
+	
 /***************Test de arrastra y girar figura*************************/
+	/*
 	Contenedor::putMultimedia("../images/Cuadrado.png",new Imagen("../images/Cuadrado.png"));
 	Figura* fig = new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0));
 	terreno->agregarFigura(fig);
@@ -77,7 +79,7 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 	Contenedor::putMultimedia("../images/Circulo.png",new Imagen("../images/Circulo.png"));
 	fig = new Figura("../images/Circulo.png",new Circulo(20,50,50,0));
 	terreno->agregarFigura(fig);
-
+	*/
 /*****************Figura En aire******************************************/
 
 	//figuraEnAire = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));

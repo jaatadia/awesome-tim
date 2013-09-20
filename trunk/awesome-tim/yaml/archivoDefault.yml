@@ -2,60 +2,7 @@ juego:
   terreno:
     fondo: ../images/fondo-gris.jpg
     lista_figuras:
-      - ID: ../images/Cuadrado.png
-        tipo_dimension: CUADRADO
-        dimension:
-          ancho: 10
-          alto: 10
-          posX: 0
-          posY: 0
-          angulo: 0
-      - ID: ../images/Pelota-tenis.png
-        tipo_dimension: CIRCULO
-        dimension:
-          radio: 40
-          posX: 0
-          posY: 0
-          angulo: 0
-      - ID: ../images/Cuadrado.png
-        tipo_dimension: CUADRADO
-        dimension:
-          ancho: 20
-          alto: 20
-          posX: 50
-          posY: 50
-          angulo: 0
-      - ID: ../images/triangulo.png
-        tipo_dimension: TRIANGULO
-        dimension:
-          posX: 0
-          posY: 0
-          angulo: 0
-          base: 20
-          altura: 20
-      - ID: ../images/Ptriangulo.png
-        tipo_dimension: POLIGONOREGULAR
-        dimension:
-          posX: 20
-          posY: 20
-          angulo: 0
-          cant_vertices: 3
-          radio: 10
-      - ID: ../images/Ppentagono.png
-        tipo_dimension: POLIGONOREGULAR
-        dimension:
-          posX: 20
-          posY: 20
-          angulo: 0
-          cant_vertices: 5
-          radio: 10
-      - ID: ../images/Circulo.png
-        tipo_dimension: CIRCULO
-        dimension:
-          radio: 20
-          posX: 50
-          posY: 50
-          angulo: 0
+	
   botonera:
     lista_figuras:
       - figura:
@@ -69,46 +16,6 @@ juego:
             angulo: 0
         cantidad_de_instancias: 5
       - figura:
-          ID: ../images/Cuadrado.png
-          tipo_dimension: CUADRADO
-          dimension:
-            ancho: 20
-            alto: 20
-            posX: 50
-            posY: 50
-            angulo: 0
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Cuadrado.png
-          tipo_dimension: CUADRADO
-          dimension:
-            ancho: 20
-            alto: 20
-            posX: 50
-            posY: 50
-            angulo: 0
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Cuadrado.png
-          tipo_dimension: CUADRADO
-          dimension:
-            ancho: 20
-            alto: 20
-            posX: 50
-            posY: 50
-            angulo: 0
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Cuadrado.png
-          tipo_dimension: CUADRADO
-          dimension:
-            ancho: 20
-            alto: 20
-            posX: 50
-            posY: 50
-            angulo: 0
-        cantidad_de_instancias: 5
-      - figura:
           ID: ../images/triangulo.png
           tipo_dimension: TRIANGULO
           dimension:
@@ -119,42 +26,62 @@ juego:
             altura: 20
         cantidad_de_instancias: 5
       - figura:
-          ID: ../images/triangulo.png
-          tipo_dimension: TRIANGULO
+          ID: ../images/Ptriangulo.png
+          tipo_dimension: POLIGONOREGULAR
           dimension:
             posX: 0
             posY: 0
             angulo: 0
-            base: 20
-            altura: 20
-        cantidad_de_instancias: 5
+            cant_vertices: 3
+            radio: 10
+          cantidad_de_instancias: 5
       - figura:
-          ID: ../images/triangulo.png
-          tipo_dimension: TRIANGULO
+          ID: ../images/Pcuadrado.png
+          tipo_dimension: POLIGONOREGULAR
           dimension:
             posX: 0
             posY: 0
             angulo: 0
-            base: 20
-            altura: 20
-        cantidad_de_instancias: 5
+            cant_vertices: 4
+            radio: 10
+          cantidad_de_instancias: 5
       - figura:
-          ID: ../images/triangulo.png
-          tipo_dimension: TRIANGULO
+          ID: ../images/Ppentagono.png
+          tipo_dimension: POLIGONOREGULAR
           dimension:
             posX: 0
             posY: 0
             angulo: 0
-            base: 20
-            altura: 20
-        cantidad_de_instancias: 5
+            cant_vertices: 5
+            radio: 10
+          cantidad_de_instancias: 5
       - figura:
-          ID: ../images/triangulo.png
-          tipo_dimension: TRIANGULO
+          ID: ../images/Phexagono.png
+          tipo_dimension: POLIGONOREGULAR
           dimension:
             posX: 0
             posY: 0
             angulo: 0
-            base: 20
-            altura: 20
-        cantidad_de_instancias: 5
+            cant_vertices: 6
+            radio: 10
+          cantidad_de_instancias: 5
+      - figura:
+          ID: ../images/Pheptagono.png
+          tipo_dimension: POLIGONOREGULAR
+          dimension:
+            posX: 0
+            posY: 0
+            angulo: 0
+            cant_vertices: 7
+            radio: 10
+          cantidad_de_instancias: 5
+      - figura:
+          ID: ../images/Poctogono.png
+          tipo_dimension: POLIGONOREGULAR
+          dimension:
+            posX: 0
+            posY: 0
+            angulo: 0
+            cant_vertices: 8
+            radio: 10
+          cantidad_de_instancias: 5
