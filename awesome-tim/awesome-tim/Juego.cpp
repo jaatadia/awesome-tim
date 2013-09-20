@@ -535,8 +535,14 @@ bool Juego::figEnComandos(){
 }
 
 void Juego::soltarFiguraEnAire(){
-
-	confirmarPosicionFiguraEnAire();
+//cambiar cuando ande la interseccion con un circulo
+//	confirmarPosicionFiguraEnAire(); //descomentar
+	//borrar
+	setCambio(true);
+	terreno->setCambio(true);
+	botonera->setCambio(true);
+	comandos->setCambio(true);
+	//borrar
 
 	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 		//relativizar posiciones al terreno!
