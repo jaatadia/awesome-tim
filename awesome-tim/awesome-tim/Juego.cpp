@@ -126,31 +126,30 @@ bool Juego::isRunning(){
 
 //dibuja en pantalla
 void Juego:: onRender(){
-	
+
 	if (figuraEnAire){
+		confirmarPosicionFiguraEnAire();
+	}
+	
+	if(this->huboCambios()){
 		superficie->restore();
+		setCambio(false);
+	}
+	
+	if(terreno->huboCambios()){
 		superficie->dibujarSupreficie(terreno->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+	}
+
+	if(botonera->huboCambios()){
 		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,escalas->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
+	}
+	
+	if(comandos->huboCambios()){
 		superficie->dibujarSupreficie(comandos->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+	}
+
+	if(figuraEnAire){
 		figuraEnAire->dibujar(superficie,escalas);
-	}else{
-		if(this->huboCambios()){
-			superficie->restore();
-			setCambio(false);
-		}
-		
-		if(terreno->huboCambios()){
-			superficie->dibujarSupreficie(terreno->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
-		}
-
-		if(botonera->huboCambios()){
-			superficie->dibujarSupreficie(botonera->getImpresion(),NULL,escalas->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
-		}
-		
-		if(comandos->huboCambios()){
-			superficie->dibujarSupreficie(comandos->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
-		}
-
 	}
 
 	ventana->dibujar(superficie);
@@ -233,7 +232,6 @@ while(SDL_PollEvent(&evento)){
 			if (figuraEnAire)
 				if ((estaActiva)){
 						figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
-						confirmarPosicionFiguraEnAire();
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
@@ -372,13 +370,15 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			//Y tambien cambian todas las vistas!!
 			terreno->cambioVistaFiguras();
 			terreno->resizear(escalas);
-
+/*
 			//incluyendo a la del aire!!
 			//en realidad es innecesario, sacar cuando ande botonera!
 			if (figuraEnAire)
 				figuraEnAire->setCambio(true);
-
+*/
 			botonera->resizear(escalas);
+			//necesario moverla para que se ajuste la vista...
+			botonera->ScrollDown();
 
 			comandos->resizear(escalas);
 
