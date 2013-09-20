@@ -326,4 +326,69 @@ void BotoneraController::ScrollDown(){
 	this->setCambio(true);
 }
 
-//bool BotoneraController:agregarBotonesDefault(){return false};
+
+
+#include "Contenedor.h"
+#include "Triangulo2.h"
+#include "Cuadrado.h"
+#include "Circulo.h"
+#include "PoligonoRegular.h"
+
+bool BotoneraController::agregarBotonesDefault(){
+	
+	const char* ID = "../images/triangulo.png";
+	Imagen* img = new Imagen(ID);
+	Figura* fig = new Figura(ID,new Triangulo2(0,0,0,10,10));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+	
+	ID = "../images/Cuadrado.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new Cuadrado(20,20,0,0,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+	
+	ID = "../images/Circulo.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new Circulo(10,0,0,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+
+	ID = "../images/Ptriangulo.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new PoligonoRegular(0,0,10,3,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+	
+	ID = "../images/Pcuadrado.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new PoligonoRegular(0,0,10,4,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+
+	ID = "../images/Ppentagono.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new PoligonoRegular(0,0,10,5,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+
+	ID = "../images/Phexagono.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new PoligonoRegular(0,0,10,6,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+
+	ID = "../images/Pheptagono.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new PoligonoRegular(0,0,10,7,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+
+	ID = "../images/Poctogono.png";
+	img = new Imagen(ID);
+	fig = new Figura(ID,new PoligonoRegular(0,0,10,6,0));
+	Contenedor::putMultimedia(ID,img);
+	this->agregarBoton(fig,100);
+
+	return true;
+}

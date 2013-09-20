@@ -21,8 +21,8 @@ juego:
           dimension:
             ancho: 20
             alto: 20
-            posX: 50
-            posY: 50
+            posX: 0
+            posY: 0
             angulo: 0
         cantidad_de_instancias: 5
       - figura:

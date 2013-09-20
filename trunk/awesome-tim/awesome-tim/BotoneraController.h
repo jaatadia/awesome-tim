@@ -61,7 +61,7 @@ public:
 	void ScrollUp();
 	void ScrollDown();
 
-	//bool agregarBotonesDefault();
+	bool agregarBotonesDefault();
 
 
 
