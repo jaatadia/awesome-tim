@@ -17,6 +17,7 @@ private:
 	Botonera * botonera;
 	Superficie * layerPrincipal;
 	Superficie * layerFiguras;
+	Superficie * layerFigurasOrig;
 	Superficie * layerScroll;
 	Superficie * supFiguraActual;
 	Imagen * scrollButtonUp;

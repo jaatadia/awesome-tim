@@ -29,6 +29,10 @@ private:
 public:
 	Superficie(int ancho,int alto);//nueva superficie de las dimensiones pasadas
 	~Superficie(void); //destructor de la superficie
+
+	void setSurface (SDL_Surface* sup){ (*superficie) = (*sup);};
+	SDL_Surface* getSurface(){return superficie;}
+
 	void restore();//repinta el fondo de la imagen
 	void restoreGris();//repinta el fondo de la imagen
 	int getAlto(); //devuelve el alto de la superficie

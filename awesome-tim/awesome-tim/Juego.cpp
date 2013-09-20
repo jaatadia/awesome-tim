@@ -88,6 +88,8 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 
 bool Juego::cargar(){
 	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
+	//necesario para que se ordenen cosas dentro de botonera
+	botonera->resizear(escalas);
 	return true;
 }
 
