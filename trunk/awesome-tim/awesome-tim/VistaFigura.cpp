@@ -25,7 +25,6 @@ void VistaFigura::dibujar(Superficie *canvas,EscalasDeEjes* unidadesLogicas){
 	if (this->fig->huboCambios()){
 		redraw(unidadesLogicas);			
 	}
-	this->fig->setCambio(false);
 	
 	int calcX = int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getX()) - img->getAncho()/2.0);
 	int calcY = int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getY()) - img->getAlto()/2.0);
@@ -49,5 +48,7 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	img = temp2->rotarImagen(fig->dimension->getAngulo());
 	delete temp2;
 	//terminar de comentar aca
+
+	if(fig->traslucido) img->setTransparency(180);
 
 }

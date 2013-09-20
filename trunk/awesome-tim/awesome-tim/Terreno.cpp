@@ -113,6 +113,9 @@ bool Terreno::setFondo(const char* ruta_img){
 
 void Terreno::agregarFigura(Figura* fig){
 
+	fig->setTraslucido(false);
+	this->setCambio(true);
+
 //si se fue de rango del terreno lo empujo para dentro
 	Dimension* dim = fig->getDimension();
 	corregirPosicion(fig);
@@ -243,6 +246,9 @@ void Terreno::buscarActiva(double posClickX ,double posClickY,EscalasDeEjes* esc
 		if (!figuraActiva)
 			figuraActiva=NULL;
 		else
+			figuraActiva->setTraslucido(true);
+			this->setCambio(true);
+			
 			eliminarFigura(figuraActiva);
 	}
 }

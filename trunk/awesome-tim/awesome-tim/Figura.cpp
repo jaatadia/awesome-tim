@@ -8,6 +8,7 @@ Figura::Figura(const char* ID,Dimension* dim){
 	this->dimension = dim;
 	this->setCambio(true);
 	this->myVista = new VistaFigura(this);
+	this->traslucido = false;
 }
 
 Figura::~Figura(void){
@@ -109,6 +110,7 @@ void Figura::dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas){
 
 void Figura::dibujar(Superficie* super,EscalasDeEjes* escalas){
 	myVista->dibujar(super,escalas);
+	setCambio(false);
 }
 
 int Figura::obtenerCuadranteDeClick(double X, double Y){
@@ -212,4 +214,9 @@ bool Figura::intersecaCon(double X1, double Y1, double X2, double Y2){
 
 Figura* Figura::clonar(){
 	return new Figura(ID.c_str(),dimension->clonar());
+}
+
+void Figura::setTraslucido(bool flag){
+	this->traslucido=flag;
+	setCambio(true);
 }

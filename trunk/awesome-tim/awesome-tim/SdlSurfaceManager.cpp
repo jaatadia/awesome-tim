@@ -389,6 +389,17 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 	double seno = sin(-angulo);
 	
 	
+	Uint32 tempPix = getPixel(sur,centroX,centroY);
+	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)-1,tempPix);
+	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX),tempPix);
+	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)+1,tempPix);
+	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)-1,tempPix);
+	putPixel(img,int(nuevoCentroX),int(nuevoCentroX),tempPix);
+	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)+1,tempPix);
+	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)-1,tempPix);
+	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX),tempPix);
+	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)+1,tempPix);
+	
 	for(int i=0;i<sur->w;i++){
 		double temp1 = (i-centroX)*coseno;
 		double temp2 = (i-centroX)*seno;
@@ -398,8 +409,6 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 				int nuevoX = int((nuevoCentroX + temp1 - (j-centroY)*seno)+0.99);
 				int nuevoY = int((nuevoCentroY + temp2 + (j-centroY)*coseno)+0.99);
 				putPixel(img,nuevoX,nuevoY,pixel);
-			}else if((pixel!=alpha)){
-				putPixel(img,int(nuevoCentroX),int(nuevoCentroX),pixel);
 			}
 		}	
 	}
@@ -525,6 +534,18 @@ SDL_Surface* SdlSurfaceManager::rotarZoom(SDL_Surface* sur, int pixAncho, int pi
 
 	SDL_LockSurface(sur); 
 	SDL_LockSurface(img); 
+
+	Uint32 tempPix = getPixel(sur,centroX,centroY);
+	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)-1,tempPix);
+	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX),tempPix);
+	putPixel(img,int(nuevoCentroX)+1,int(nuevoCentroX)+1,tempPix);
+	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)-1,tempPix);
+	putPixel(img,int(nuevoCentroX),int(nuevoCentroX),tempPix);
+	putPixel(img,int(nuevoCentroX),int(nuevoCentroX)+1,tempPix);
+	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)-1,tempPix);
+	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX),tempPix);
+	putPixel(img,int(nuevoCentroX)-1,int(nuevoCentroX)+1,tempPix);
+
 
 	double coseno = cos(-angulo);
 	double seno = sin(-angulo);
