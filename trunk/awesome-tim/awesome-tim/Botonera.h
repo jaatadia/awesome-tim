@@ -14,6 +14,7 @@ class Botonera
 {
 private:
 	int x, y, ancho, alto, anchoBoton, altoBoton, alturaMax;
+	int alturaMaxOrig;
 	std::list<map<Figura *, int>> lstFiguras;
 
 public:
@@ -32,11 +33,13 @@ public:
 	int getAnchoBoton(){return this->anchoBoton;}
 	int getAltoBoton(){return this->altoBoton;}
 	int getAlturaMax(){return this->alturaMax;}
+	int getAlturaMaxOrig(){return this->alturaMaxOrig;}
 	std::list<map<Figura *, int>> getListaFiguras();
 
 	// Setters
 	void setY(int y) {this->y = y;}
 	void setAlturaMax(int alturaMax) {this->alturaMax = alturaMax;}
+	void setAlturaMaxOrig(int alturaMax) {this->alturaMaxOrig = alturaMax;}
 	void setAltoBoton(int altoBoton) {this->altoBoton = altoBoton;}
 	void setAnchoBoton(int anchoBoton) {this->anchoBoton = anchoBoton;}
 	void setAlto(int alto){this->alto=alto;};
