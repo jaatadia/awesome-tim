@@ -73,17 +73,17 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 bool Figura::esMiPosicion(double x,double y,EscalasDeEjes* escalas)
 {
 
-	double miX;
-	double miY;
+	double miX = x;
+	double miY = y;
 
 	//comentar esto para que ande como antes (acordarse de cambiar tambien VistaFigura.cpp redraw)
 
 	//dado que las escalas pueden ser incorrectas si se rotó la figura, se rota el punto segun los pixels
 	double miAngulo = (dimension->getAngulo())*PI/180;
-	double centroXReal = escalas->getCantidadUnidadesFisicasX(this->dimension->getX()/*+0.5*/)+0.0;
-	double centroYReal = escalas->getCantidadUnidadesFisicasY(this->dimension->getY()/*+0.5*/)+0.0;
-	double xReal = escalas->getCantidadUnidadesFisicasX(x/*+0.5*/)+0.0;
-	double yReal = escalas->getCantidadUnidadesFisicasY(y/*+0.5*/)+0.0;
+	double centroXReal = escalas->getCantidadUnidadesFisicasX(this->dimension->getX())+0.0;
+	double centroYReal = escalas->getCantidadUnidadesFisicasY(this->dimension->getY())+0.0;
+	double xReal = escalas->getCantidadUnidadesFisicasX(x)+0.0;
+	double yReal = escalas->getCantidadUnidadesFisicasY(y)+0.0;
 	
 	double tempX = centroXReal + (xReal - centroXReal)*cos(miAngulo) - (yReal - centroYReal)*sin(miAngulo);
 	double tempY = centroYReal + (xReal - centroXReal)*sin(miAngulo) + (yReal - centroYReal)*cos(miAngulo);

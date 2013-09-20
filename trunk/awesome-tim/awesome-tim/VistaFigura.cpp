@@ -43,12 +43,14 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	//img = temp->rotarZoom(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())),fig->dimension->getAngulo());
 	
 	//cometnar esto para que ande como antes
+	
 	bool deleteTemp = false;
 	Imagen* temp2 = temp->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
 	img = temp2->rotarImagen(fig->dimension->getAngulo());
 	delete temp2;
 	//terminar de comentar aca
+	
 
-	if(fig->traslucido) img->setTransparency(180);
+	if(fig->traslucido) img->setTransparency(150);
 
 }
