@@ -30,7 +30,7 @@ bool Circulo::puntoPertenece(double X, double Y){
 	return modulo<=radio;
 }
 
-//encerre al circulo en un cuadrado porque no se me ocurrio una opcion mejor
+//probe en muchos puntos, ya que encerrarlo en un cuadrado fallaba y no se me ocurre otra manera
 bool Circulo::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 
 	double angle = -(PI*this->getAngulo())/180.0;
@@ -43,26 +43,14 @@ bool Circulo::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 
 	bool interseca = false;	
 
-	Segmento* segPropio1 = new Segmento(getX()+radio,getY()+radio,getX()+radio,getY()-radio);
-	Segmento* segPropio2 = new Segmento(getX()-radio,getY()+radio,getX()+radio,getY()+radio);
-	Segmento* segPropio3 = new Segmento(getX()-radio,getY()+radio,getX()-radio,getY()-radio);
-	Segmento* segPropio4 = new Segmento(getX()-radio,getY()-radio,getX()+radio,getY()-radio);
+	//intersecar con muchos puntos...
+	for (double i = 0; i<radio ; i+= (radio * 0.01) ){
+		interseca = puntoPertenece(i,segExterno->evaluar(i));
 
-	interseca = segPropio1->intersecaCon(segExterno);
-
-	if ( interseca == false )
-		interseca = segPropio2->intersecaCon(segExterno);
-
-	if ( interseca == false )
-		interseca = segPropio3->intersecaCon(segExterno);
-
-	if ( interseca == false )
-		interseca = segPropio4->intersecaCon(segExterno);
-
-	delete segPropio1;
-	delete segPropio2;
-	delete segPropio3;
-	delete segPropio4;
+		if (interseca){
+			break;
+		}
+	}
 
 	return interseca;
 }
