@@ -6,16 +6,6 @@ juego:
   botonera:
     lista_figuras:
       - figura:
-          ID: ../images/Cuadrado.png
-          tipo_dimension: CUADRADO
-          dimension:
-            ancho: 20
-            alto: 20
-            posX: 50
-            posY: 50
-            angulo: 0
-        cantidad_de_instancias: 5
-      - figura:
           ID: ../images/triangulo.png
           tipo_dimension: TRIANGULO
           dimension:
@@ -26,6 +16,25 @@ juego:
             altura: 20
         cantidad_de_instancias: 5
       - figura:
+          ID: ../images/Cuadrado.png
+          tipo_dimension: CUADRADO
+          dimension:
+            ancho: 20
+            alto: 20
+            posX: 50
+            posY: 50
+            angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
+          ID: ../images/Circulo.png
+          tipo_dimension: CIRCULO
+          dimension:
+            radio: 10
+            posX: 0
+            posY: 0
+            angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
           ID: ../images/Ptriangulo.png
           tipo_dimension: POLIGONOREGULAR
           dimension:
@@ -34,7 +43,7 @@ juego:
             angulo: 0
             cant_vertices: 3
             radio: 10
-          cantidad_de_instancias: 5
+        cantidad_de_instancias: 5
       - figura:
           ID: ../images/Pcuadrado.png
           tipo_dimension: POLIGONOREGULAR
@@ -44,7 +53,7 @@ juego:
             angulo: 0
             cant_vertices: 4
             radio: 10
-          cantidad_de_instancias: 5
+        cantidad_de_instancias: 5
       - figura:
           ID: ../images/Ppentagono.png
           tipo_dimension: POLIGONOREGULAR
@@ -54,7 +63,7 @@ juego:
             angulo: 0
             cant_vertices: 5
             radio: 10
-          cantidad_de_instancias: 5
+        cantidad_de_instancias: 5
       - figura:
           ID: ../images/Phexagono.png
           tipo_dimension: POLIGONOREGULAR
@@ -64,7 +73,7 @@ juego:
             angulo: 0
             cant_vertices: 6
             radio: 10
-          cantidad_de_instancias: 5
+        cantidad_de_instancias: 5
       - figura:
           ID: ../images/Pheptagono.png
           tipo_dimension: POLIGONOREGULAR
@@ -74,7 +83,7 @@ juego:
             angulo: 0
             cant_vertices: 7
             radio: 10
-          cantidad_de_instancias: 5
+        cantidad_de_instancias: 5
       - figura:
           ID: ../images/Poctogono.png
           tipo_dimension: POLIGONOREGULAR
@@ -84,4 +93,4 @@ juego:
             angulo: 0
             cant_vertices: 8
             radio: 10
-          cantidad_de_instancias: 5
+        cantidad_de_instancias: 5
