@@ -499,11 +499,11 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
-		//botonera->agregarBotonesDefault();
+		botonera->agregarBotonesDefault();
 		return;
 	}catch(YAML::BadDereference &e){
 		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
-		//botonera->agregarBotonesDefault();
+		botonera->agregarBotonesDefault();
 		return;
 	}
 
@@ -511,9 +511,9 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 	
 	if (listaFiguras.size() == 0) {
 		imprimir_error_linea("La lista de figuras de la botonera se encuentra vacia. Se carga botonera con botones por defecto.",listaFiguras.GetMark().line);
-		//botonera->agregarBotonesDefault();
+		botonera->agregarBotonesDefault();
 	};
-
+	int cant_botones = 0;
 	for(unsigned i=0;i<listaFiguras.size();i++) {
 		
 		int instancias;
@@ -538,8 +538,21 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 		}
 		*/
 		
-		Figura* fig = cargar_figura(listaFiguras[i]["figura"]);
+		try {
+			const YAML::Node& nodoFig = listaFiguras[i]["figura"];
+		}catch(YAML::TypedKeyNotFound<std::string> &e){
+			imprimir_error_excepcion("No se encontro el nodo figura. El boton no sera cargado",e.what());
+			continue;
+		}catch(YAML::InvalidScalar &e){
+			imprimir_error_excepcion("No se encontro el nodo figura. El boton no sera cargado",e.what());
+			continue;
+		}
+
+		const YAML::Node& nodoFig = listaFiguras[i]["figura"];
+		Figura* fig = cargar_figura(nodoFig);
 		
+		if (!fig) continue;
+
 		try{
 			listaFiguras[i]["cantidad_de_instancias"] >> instancias;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -554,10 +567,15 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 			int linea = listaFiguras[i]["cantidad_de_instancias"].GetMark().line;
 			imprimir_error_linea("Cantidad de instancias invalida. Se carga cantidad de instancias por defecto.",linea);
 			instancias = INSTANCIAS_DEFAULT;
-		}
+		};
 		
 		botonera->agregarBoton(fig,instancias);
-	}
+		cant_botones++;
+	};
+	if (cant_botones == 0){
+		imprimir_error_linea("Las figuras de los botones no fueron cargadas. Se cargan botones por defecto",listaFiguras.GetMark().line);
+		botonera->agregarBotonesDefault();
+	};
 }
 
 Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig/*listaFiguras[i]*/){
@@ -601,13 +619,13 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig/*listaFiguras[i]*/
 			return NULL;
 		}
 
-		//FIXME:
-		//Esta linea es HARCODEO!! esta porque no existe el tipo figura todavia!!!
-		const char* tipo_figura = tipo_dimension.c_str();
-		if(!tipo_figura_valida(tipo_figura)){
-			//imprimir_error_linea("Tipo de figura invalida.", linea);
-			return NULL;
-		}
+		////FIXME:
+		////Esta linea es HARCODEO!! esta porque no existe el tipo figura todavia!!!
+		//const char* tipo_figura = tipo_dimension.c_str();
+		//if(!tipo_figura_valida(tipo_figura)){
+		//	//imprimir_error_linea("Tipo de figura invalida.", linea);
+		//	return NULL;
+		//}
 		
 		Figura* figura = crearFigura(/*tipo_figura,*/ID.c_str(),dimension,nodoFig["ID"].GetMark().line);
 
@@ -722,8 +740,8 @@ bool CargadorYaml::tipo_dimension_valida(const char* tipo_dimension){
 }
 
 
-bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){return true;}
-bool CargadorYaml::tipo_figura_botonera_valida(int tipo_figura){return true;}
+bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){return false;}
+bool CargadorYaml::tipo_figura_botonera_valida(int tipo_figura){return false;}
 bool CargadorYaml::radio_valido(double radio){
 	return ((radio > 0) && (radio < ANCHO_TERRENO_LOGICO));
 }
