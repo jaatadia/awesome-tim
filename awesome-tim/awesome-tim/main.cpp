@@ -114,7 +114,7 @@ void imprimir_ayuda_avanzada(){
 //imprime la version del programa al stdout
 void imprimir_version(){
 	fprintf(stdout,"Trabajo Practico - Taller de Programacion I \n");
-	fprintf(stdout,"The Incredible Machine \n");
+	fprintf(stdout,"The Incredible Machine \n Version 1.0 \n");
 	fprintf(stdout,"Segundo Cuatrimestre - 2013 \n \n");
 	fprintf(stdout,"Grupo: \n");
 	fprintf(stdout," ATADIA, Javier Alejandro (93223) \n");
