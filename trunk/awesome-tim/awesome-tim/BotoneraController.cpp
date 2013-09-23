@@ -424,3 +424,8 @@ bool BotoneraController::agregarBotonesDefault(){
 
 	return true;
 }
+
+bool BotoneraController::estaVacia(){
+	std::list<map<Figura *, int>> lista = this->botonera->getListaFiguras();
+	return (lista.size()==0);
+}

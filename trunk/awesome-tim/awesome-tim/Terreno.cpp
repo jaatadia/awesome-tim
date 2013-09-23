@@ -33,7 +33,7 @@ void Terreno::redraw(EscalasDeEjes* escalas){
 	//recorro todas las figuras y las voy dibujando
 
 	if(this->img == NULL)
-		sup->restore();//antes repinto todo de negro asi no quedan rastros de movimiento
+		sup->restoreGris();//antes repinto todo de negro asi no quedan rastros de movimiento
 	else{
 		sup->restore();//por si la imagen tiene partes transparentes
 		sup->dibujarImagen(this->img,NULL,0,0);
