@@ -232,9 +232,10 @@ void Terreno::resizear(EscalasDeEjes* escalas){
 	delete sup;
 	sup = new Superficie(ancho,alto);
 
-	
-	delete img;
-	img = fondo->scaleImagen(ancho,alto);
+	if (img != NULL){
+		delete img;
+		img = fondo->scaleImagen(ancho,alto);
+	}
 }
 
 void Terreno::buscarActiva(double posClickX ,double posClickY,EscalasDeEjes* escalas){
