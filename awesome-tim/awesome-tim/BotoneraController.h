@@ -59,6 +59,8 @@ public:
 	void resize(int ancho, int alto,EscalasDeEjes* escalas);
 	std::list<map<Figura *, int>> getListaFiguras();
 
+	bool estaVacia();
+
 	void ScrollUp();
 	void ScrollDown();
 

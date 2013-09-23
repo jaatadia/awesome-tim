@@ -25,15 +25,14 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
 	
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO);
-	terreno->setFondo("../images/test.jpg");
-	
+		
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	escalas = new EscalasDeEjes();
 	figuraEnAire=NULL;
 	
 	cargar();
-
+	
 	if(superficie->huboFallos()||ventana->huboFallos()){
 		if(superficie->huboFallos()) ErrorLogHandler::addError("Programa","No se pudieron crear la superficie");
 		else ErrorLogHandler::addError(JUEGO_TAG,"No se pudo crear la ventana");
@@ -88,6 +87,7 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 
 bool Juego::cargar(){
 	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
+	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
 	//necesario para que se ordenen cosas dentro de botonera
 	botonera->resizear(escalas);
 	return true;

@@ -652,7 +652,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	
 	if(!mi_archivo.is_open()){
 		mi_archivo.open(RUTA_DEFAULT,std::ios::out);
-		CargadorYaml::imprimir_error_sin_linea("Error al abrir archivo de juego. Se carga archivo default.");
+		CargadorYaml::imprimir_error_sin_linea("No se encontro el abrir archivo de juego indicado. Se carga archivo default.");
 		if (!mi_archivo.is_open()){
 			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default."); 
 			return false;
