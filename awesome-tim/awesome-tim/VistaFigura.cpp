@@ -9,9 +9,9 @@ VistaFigura::VistaFigura(Figura* fig){
 VistaFigura::~VistaFigura(void){
 }
 
-void VistaFigura::dibujarEnPixel(Superficie *canvas,EscalasDeEjes* unidadesLogicas){
+void VistaFigura::dibujarEnPixel(Superficie *canvas){
 	if (this->fig->huboCambios()){
-		redraw(unidadesLogicas);			
+		redraw();			
 	}
 	this->fig->setCambio(false);
 
@@ -21,18 +21,18 @@ void VistaFigura::dibujarEnPixel(Superficie *canvas,EscalasDeEjes* unidadesLogic
 	canvas->dibujarImagen(img,NULL,calcX,calcY);
 }
 
-void VistaFigura::dibujar(Superficie *canvas,EscalasDeEjes* unidadesLogicas){
+void VistaFigura::dibujar(Superficie *canvas){
 	if (this->fig->huboCambios()){
-		redraw(unidadesLogicas);			
+		redraw();			
 	}
 	
-	int calcX = int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getX()) - img->getAncho()/2.0);
-	int calcY = int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getY()) - img->getAlto()/2.0);
+	int calcX = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->dimension->getX()) - img->getAncho()/2.0);
+	int calcY = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->dimension->getY()) - img->getAlto()/2.0);
 
 	canvas->dibujarImagen(img,NULL,calcX,calcY);
 }
 
-void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
+void VistaFigura::redraw(){
 	
 	delete img;
 
@@ -45,7 +45,7 @@ void VistaFigura::redraw(EscalasDeEjes* unidadesLogicas){
 	//cometnar esto para que ande como antes
 	
 	bool deleteTemp = false;
-	Imagen* temp2 = temp->scaleImagen(int(unidadesLogicas->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(unidadesLogicas->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
+	Imagen* temp2 = temp->scaleImagen(int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->dimension->getAncho())),int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
 	img = temp2->rotarImagen(fig->dimension->getAngulo());
 	delete temp2;
 	//terminar de comentar aca

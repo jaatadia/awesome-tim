@@ -66,12 +66,11 @@ public:
 	void agregarLetra(char caracter);
 	void borrarLetra();
 	Superficie* getImpresion();
-	Superficie* getImpresion(EscalasDeEjes * esc);
 	void click(double x, double y,Juego* juego);
 	void release(double x, double y,Juego* juego);
 	void enterKeyPressed(Juego* juego);
-	void resizear(EscalasDeEjes* escalas);
+	void resizear();
 private:
-	void redraw(EscalasDeEjes* escalas);
+	void redraw();
 	bool in(int x, int y, int ancho,int alto,double x2,double y2);
 };

@@ -28,7 +28,6 @@ Juego::Juego(const char *fileIn,const char *fileOut){
 		
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
-	escalas = new EscalasDeEjes();
 	figuraEnAire=NULL;
 	
 	cargar();
@@ -89,7 +88,7 @@ bool Juego::cargar(){
 	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
 	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
 	//necesario para que se ordenen cosas dentro de botonera
-	botonera->resizear(escalas);
+	botonera->resizear();
 	return true;
 }
 
@@ -112,7 +111,7 @@ Juego::~Juego(){
 	delete terreno;
 	delete botonera;
 	delete comandos;
-	delete escalas;
+	delete EscalasDeEjes::getInstance();
 	Contenedor::deleteContenedor();
 	if(figuraEnAire!=NULL)delete figuraEnAire;
 	SDL_Quit();
@@ -128,10 +127,10 @@ bool Juego::isRunning(){
 void Juego:: onRender(){
 	if (figuraEnAire){
 		superficie->restore();
-		superficie->dibujarSupreficie(terreno->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
-		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,escalas->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
-		superficie->dibujarSupreficie(comandos->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
-		figuraEnAire->dibujar(superficie,escalas);
+		superficie->dibujarSupreficie(terreno->getImpresion(),NULL, EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
+		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+		figuraEnAire->dibujar(superficie);
 	}else{
 		if(this->huboCambios()){
 			superficie->restore();
@@ -139,15 +138,15 @@ void Juego:: onRender(){
 		}
 		
 		if(terreno->huboCambios()){
-			superficie->dibujarSupreficie(terreno->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+			superficie->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
 		}
 
 		if(botonera->huboCambios()){
-			superficie->dibujarSupreficie(botonera->getImpresion(),NULL,escalas->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
+			superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
 		}
 		
 		if(comandos->huboCambios()){
-			superficie->dibujarSupreficie(comandos->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+			superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
 		}
 
 	}
@@ -203,7 +202,7 @@ while(SDL_PollEvent(&evento)){
 	switch(evento.type){
 		case SDL_WINDOWEVENT:
 		{
-			actuarVentana(evento.window.windowID,evento.window,this->escalas);
+			actuarVentana(evento.window.windowID,evento.window);
 			//actualiza las escalas si fue un resize
 			break;
 		}
@@ -241,11 +240,11 @@ while(SDL_PollEvent(&evento)){
 		{
 			//convertir a unidades logicas
 
-			double cantMovX = escalas->getCantidadUnidadesLogicasX(evento.motion.xrel);
-			double cantMovY = escalas->getCantidadUnidadesLogicasY(evento.motion.yrel);
+			double cantMovX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.motion.xrel);
+			double cantMovY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.motion.yrel);
 
-			posClickX = escalas->getCantidadUnidadesLogicasX(evento.motion.x);
-			posClickY = escalas->getCantidadUnidadesLogicasY(evento.motion.y);
+			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.motion.x);
+			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.motion.y);
 
 			//averiguar si esta en terreno o figuraViva u otro lado
 				
@@ -274,21 +273,21 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEBUTTONDOWN:
 		{
 
-			posClickX = escalas->getCantidadUnidadesLogicasX(evento.button.x);
-			posClickY = escalas->getCantidadUnidadesLogicasY(evento.button.y);
+			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
+			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
 			if (posEnTerreno(posClickX,posClickY))
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed))
 					//click izq y shift
-					terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,escalas);
+					terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				else
-					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,escalas);
+					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				
 
 			if (posEnBotonera(posClickX,posClickY)){
 				//es de la botonera
-				botonera->handleEventBotonera(escalas->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  escalas->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
+				botonera->handleEventBotonera(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
 			}
 
 			//puede que me haya devuelto la figura en aire
@@ -302,20 +301,20 @@ while(SDL_PollEvent(&evento)){
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos
 				if (evento.button.state == SDL_BUTTON_LMASK){
-					comandos->click(escalas->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), escalas->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 // y borrar esto cuando la botonera funcione
 // y en realidad ni me va a imprtar que este activa o no
 			if (figuraEnAire)
-				if (figuraEnAire->esMiPosicion(posClickX,posClickY,escalas))
+				if (figuraEnAire->esMiPosicion(posClickX,posClickY))
 					estaActiva = true;
 
 			break;
 		}
 		case SDL_MOUSEBUTTONUP:
 		{
-			posClickX = escalas->getCantidadUnidadesLogicasX(evento.button.x);
-			posClickY = escalas->getCantidadUnidadesLogicasY(evento.button.y);
+			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
+			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
 			//O se suelta la figura agarrada por terreno
 			terreno->soltarFigura();
@@ -328,7 +327,7 @@ while(SDL_PollEvent(&evento)){
 				soltarFiguraEnAire();
 			}
 
-			comandos->release(escalas->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), escalas->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+			comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 
 
 			break;
@@ -357,7 +356,7 @@ void Juego::quit(){
 	running = false;
 }
 
-void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas){
+void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento){
 
 	switch (evento.event){
 		case SDL_WINDOWEVENT_CLOSE:
@@ -391,26 +390,26 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes*
 			double anchoActual= evento.data1;
 			double altoActual= evento.data2;
 
-			escalas->setEscalaX(UNIDADES_LOGICAS_TOTAL/anchoActual);
-			escalas->setEscalaY(UNIDADES_LOGICAS_TOTAL/altoActual);
+			EscalasDeEjes::getInstance()->setEscalaX(UNIDADES_LOGICAS_TOTAL/anchoActual);
+			EscalasDeEjes::getInstance()->setEscalaY(UNIDADES_LOGICAS_TOTAL/altoActual);
 			//obtengo superficie resizeada para el juego, esta es la grande donde se pegan las otras.
 			delete superficie;
-			superficie = new Superficie(escalas->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),escalas->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
+			superficie = new Superficie(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
 
 			//Y tambien cambian todas las vistas!!
 			terreno->cambioVistaFiguras();
-			terreno->resizear(escalas);
+			terreno->resizear();
 /*
 			//incluyendo a la del aire!!
 			//en realidad es innecesario, sacar cuando ande botonera!
 			if (figuraEnAire)
 				figuraEnAire->setCambio(true);
 */
-			botonera->resizear(escalas);
+			botonera->resizear();
 			//necesario moverla para que se ajuste la vista...
 			botonera->ScrollDown();
 
-			comandos->resizear(escalas);
+			comandos->resizear();
 
 			break;
 		}

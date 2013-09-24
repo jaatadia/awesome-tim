@@ -9,10 +9,12 @@ class EscalasDeEjes
 {
 private:
 	double escalaX,escalaY;
+	EscalasDeEjes(void);
+	static EscalasDeEjes * instance;
 
 public:
-	EscalasDeEjes(void);
 	~EscalasDeEjes(void);
+	static EscalasDeEjes * getInstance();
 
 	void setEscalaX(double relX);
 	void setEscalaY(double relY);

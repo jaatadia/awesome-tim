@@ -1,5 +1,13 @@
 #include "EscalasDeEjes.h"
 
+EscalasDeEjes * EscalasDeEjes::instance = 0;
+
+EscalasDeEjes * EscalasDeEjes::getInstance() {
+	if (!instance)
+		instance = new EscalasDeEjes();
+	return instance;
+}
+
 EscalasDeEjes::EscalasDeEjes(void)
 {
 	escalaX=0.2;

@@ -34,11 +34,11 @@ public:
 	//cambia el angulo sumandole el que hay entre los vectores desde el centro de la figura hasta donde le pasas
 	void cambiarAngulo(double XVector1,double YVector1,double XVector2,double YVector2);
 
-	bool esMiPosicion(double x,double y,EscalasDeEjes* escalas);
+	bool esMiPosicion(double x,double y);
 	bool intersecaCon(double X1, double Y1, double X2, double Y2);
 
-	void dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas);
-	void dibujar(Superficie* super,EscalasDeEjes* escalas);
+	void dibujarEnPixel(Superficie* super);
+	void dibujar(Superficie* super);
 
 	const char* getID();
 	int getTipoDimension(){return dimension->getTipoDimension();};

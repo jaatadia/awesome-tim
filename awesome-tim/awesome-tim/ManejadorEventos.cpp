@@ -1,7 +1,5 @@
 #include "ManejadorEventos.h"
 
-EscalasDeEjes* ManejadorEventos::escalasDeEjes=NULL;
-
 ManejadorEventos::ManejadorEventos(void)
 {
 }
@@ -15,7 +13,7 @@ bool ManejadorEventos::categorizarEvento(SDL_Event evento){
 switch(evento.type){
 	case SDL_WINDOWEVENT:
 	{
-		actuarVentana(evento.window.windowID,evento.window,this->escalasDeEjes);//tipo escala
+		actuarVentana(evento.window.windowID,evento.window);//tipo escala
 
 		//actualiza las escalas si fue un resize
 		break;
@@ -57,7 +55,7 @@ switch(evento.type){
 return true;
 }
 
-void ManejadorEventos::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas){
+void ManejadorEventos::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento){
 //esto va a ir en la redefinicion
 	
 //if (evento->window.windowID == ventana->getID()){

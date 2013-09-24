@@ -8,5 +8,4 @@ class Imprimible
 
 public:
 	virtual Superficie* getImpresion()=0;
-	virtual Superficie* getImpresion(EscalasDeEjes* escalas)=0;
 };

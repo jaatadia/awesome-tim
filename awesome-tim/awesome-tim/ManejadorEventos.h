@@ -8,14 +8,13 @@
 class ManejadorEventos
 {
 private:
-	static EscalasDeEjes* escalasDeEjes;
 
 public:
 
 ManejadorEventos(void);
 ~ManejadorEventos(void);
 
-virtual void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas);
+virtual void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento);
 
 virtual void quit();
 

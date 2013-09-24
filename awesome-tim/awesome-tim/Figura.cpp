@@ -70,7 +70,7 @@ void Figura::cambiarAngulo(double XVector1,double YVector1,double XVector2,doubl
 	}
 }
 
-bool Figura::esMiPosicion(double x,double y,EscalasDeEjes* escalas)
+bool Figura::esMiPosicion(double x,double y)
 {
 
 	double miX = x;
@@ -80,17 +80,17 @@ bool Figura::esMiPosicion(double x,double y,EscalasDeEjes* escalas)
 
 	//dado que las escalas pueden ser incorrectas si se rotó la figura, se rota el punto segun los pixels
 	double miAngulo = (dimension->getAngulo())*PI/180;
-	double centroXReal = escalas->getCantidadUnidadesFisicasX(this->dimension->getX())+0.0;
-	double centroYReal = escalas->getCantidadUnidadesFisicasY(this->dimension->getY())+0.0;
-	double xReal = escalas->getCantidadUnidadesFisicasX(x)+0.0;
-	double yReal = escalas->getCantidadUnidadesFisicasY(y)+0.0;
+	double centroXReal = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(this->dimension->getX())+0.0;
+	double centroYReal = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(this->dimension->getY())+0.0;
+	double xReal = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x)+0.0;
+	double yReal = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y)+0.0;
 	
 	double tempX = centroXReal + (xReal - centroXReal)*cos(miAngulo) - (yReal - centroYReal)*sin(miAngulo);
 	double tempY = centroYReal + (xReal - centroXReal)*sin(miAngulo) + (yReal - centroYReal)*cos(miAngulo);
 
 	//una vez rotado las escalas ya son correctas
-	tempX = escalas->getCantidadUnidadesLogicasX(tempX);
-	tempY = escalas->getCantidadUnidadesLogicasY(tempY);
+	tempX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(tempX);
+	tempY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(tempY);
 	
 	//pero como el punto fue rotado, lo rotamos al reves para que sea la misma posicion de antes
 	miAngulo*=-1;
@@ -104,12 +104,12 @@ bool Figura::esMiPosicion(double x,double y,EscalasDeEjes* escalas)
 	return dimension->puntoPertenece( miX, miY);
 }
 
-void Figura::dibujarEnPixel(Superficie* super,EscalasDeEjes* escalas){
-	myVista->dibujarEnPixel(super,escalas);
+void Figura::dibujarEnPixel(Superficie* super){
+	myVista->dibujarEnPixel(super);
 }
 
-void Figura::dibujar(Superficie* super,EscalasDeEjes* escalas){
-	myVista->dibujar(super,escalas);
+void Figura::dibujar(Superficie* super){
+	myVista->dibujar(super);
 	setCambio(false);
 }
 
