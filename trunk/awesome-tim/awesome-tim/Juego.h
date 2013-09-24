@@ -30,8 +30,6 @@ private:
 	Figura* figuraEnAire;
 	bool estaActiva; //indica si la figura en aire esta habilitada a moverse
 
-	EscalasDeEjes* escalas;
-
 	bool shiftPressed;
 
 public:
@@ -43,7 +41,7 @@ public:
 	bool guardar();
 
 	void quit();
-	void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento,EscalasDeEjes* escalas);
+	void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento);
 
 	void onEvent();//maneja los eventos
 	void onLoop();//actualiza el modelo

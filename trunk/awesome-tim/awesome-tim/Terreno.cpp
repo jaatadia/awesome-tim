@@ -28,7 +28,7 @@ Terreno::~Terreno(void){
 	delete sup;
 }
 
-void Terreno::redraw(EscalasDeEjes* escalas){
+void Terreno::redraw(){
 
 	//recorro todas las figuras y las voy dibujando
 
@@ -42,20 +42,12 @@ void Terreno::redraw(EscalasDeEjes* escalas){
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		(*iteradorLista)->dibujar(this->sup, escalas);
+		(*iteradorLista)->dibujar(this->sup);
 	}
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
-		figuraActiva->dibujar(this->sup,escalas);
+		figuraActiva->dibujar(this->sup);
 }
-
-Superficie* Terreno::getImpresion(EscalasDeEjes* escalas){
-	if(this->huboCambios()) redraw(escalas);
-	this->setCambio(false);
-	return sup;
-}
-
-void Terreno::redraw(){}
 
 Superficie* Terreno::getImpresion(){
 	if(this->huboCambios()) redraw();
@@ -180,10 +172,10 @@ bool Terreno::hayFiguras(){
 	return false;
 }
 
-void Terreno::borrarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas){
+void Terreno::borrarFigura(double posClickX, double posClickY){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
 
-	Figura* figuraABorrar = buscarFigura(posClickX, posClickY,escalas);
+	Figura* figuraABorrar = buscarFigura(posClickX, posClickY);
 
 	if (figuraABorrar){
 		//saco de la lista y libero memoria
@@ -221,13 +213,13 @@ void Terreno::cambioVistaFiguras(){
 
 }
 
-void Terreno::resizear(EscalasDeEjes* escalas){
+void Terreno::resizear(){
 
 	this->setCambio(true);
 
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
-	ancho = escalas->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
-	alto =  escalas->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
+	ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
+	alto =  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
 
 	delete sup;
 	sup = new Superficie(ancho,alto);
@@ -238,11 +230,11 @@ void Terreno::resizear(EscalasDeEjes* escalas){
 	}
 }
 
-void Terreno::buscarActiva(double posClickX ,double posClickY,EscalasDeEjes* escalas){
+void Terreno::buscarActiva(double posClickX ,double posClickY){
 	//si todavia no hay una
 	if (!figuraActiva){ 
 
-		figuraActiva = buscarFigura(posClickX ,posClickY,escalas);
+		figuraActiva = buscarFigura(posClickX ,posClickY);
 		//si no la encontre confirmo que es null (o podria no hacer nada...)
 		if (!figuraActiva)
 			figuraActiva=NULL;
@@ -266,7 +258,7 @@ void Terreno::corregirPosicion(Figura* fig){
 
 }
 
-Figura* Terreno::buscarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas){
+Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 
 	if(hayFiguras()){	
 		Figura* figuraBuscada = NULL;
@@ -278,7 +270,7 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY,EscalasDeEjes* 
 
 		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
 			
-			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY,escalas);
+			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
 			figuraBuscada = (*iteradorLista);
 			
 			iteradorLista++;

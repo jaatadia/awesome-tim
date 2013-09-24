@@ -28,7 +28,6 @@ public:
 	~Terreno(void);
 
 	Superficie* getImpresion();
-	Superficie* getImpresion(EscalasDeEjes* escalas);
 
 	bool setFondo(const char* img);
 
@@ -39,7 +38,7 @@ public:
 	//respuesta metodo privada Figura* buscarFigura(double posX, double posY);
 	void rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
 	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
-	void borrarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas);
+	void borrarFigura(double posClickX, double posClickY);
 
 	void soltarFigura();
 
@@ -50,15 +49,14 @@ public:
 
 	void cambioVistaFiguras();
 
-	void resizear(EscalasDeEjes* escalas);
+	void resizear();
 
-	void buscarActiva(double posClickX ,double posClickY,EscalasDeEjes* escalas);
+	void buscarActiva(double posClickX ,double posClickY);
 
 private:
 	bool hayFiguras();
-	Figura* buscarFigura(double posClickX, double posClickY,EscalasDeEjes* escalas);
+	Figura* buscarFigura(double posClickX, double posClickY);
 	void corregirPosicion(Figura* fig);
-	void redraw(EscalasDeEjes* escalas);
 	void redraw();
 
 };

@@ -77,18 +77,14 @@ Comandos::~Comandos(void){
 	delete BotonSaveOrigSinApretar;
 }
 
-Superficie* Comandos::getImpresion(EscalasDeEjes* escalas){
+Superficie* Comandos::getImpresion(){
 	if(this->huboCambios()) 
-		redraw(escalas);
+		redraw();
 	this->setCambio(false);
 	return sup;
 }
 
-Superficie* Comandos::getImpresion(){
-	return sup;
-}
-
-void Comandos::redraw(EscalasDeEjes* escalas){
+void Comandos::redraw(){
 
 	sup->restoreGris();
 	sup->dibujarCuadradoNegro(X_TBOX,Y_TBOX,ANCHO_TBOX,ALTO_TBOX);
@@ -165,13 +161,13 @@ bool Comandos::in(int x, int y, int ancho, int alto, double x2, double y2){
 	else return false;
 }
 
-void Comandos::resizear(EscalasDeEjes* escalas){
+void Comandos::resizear(){
 
 	this->setCambio(true);
 	
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
-	ancho = escalas->getCantidadUnidadesFisicasX(anchoOrig/5);
-	alto =  escalas->getCantidadUnidadesFisicasY(altoOrig/5);
+	ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(anchoOrig/5);
+	alto =  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(altoOrig/5);
 
 	delete sup;
 	sup = new Superficie(ancho,alto);

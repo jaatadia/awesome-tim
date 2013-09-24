@@ -16,12 +16,12 @@ public:
 	VistaFigura(Figura* fig);
 	~VistaFigura(void);
 	//dibuja la figura tomando su posicion como pixels
-	void dibujarEnPixel(Superficie* canvas,EscalasDeEjes* unidadesLogicas);
+	void dibujarEnPixel(Superficie* canvas);
 	//dibuja la figura tomando su posicion como unidades logicas , probablemente siempre hay que usar este
-	void dibujar(Superficie* canvas,EscalasDeEjes* unidadesLogicas);
+	void dibujar(Superficie* canvas);
 
 private:
-	void redraw(EscalasDeEjes* unidadesLogicas);
+	void redraw();
 
 };
 

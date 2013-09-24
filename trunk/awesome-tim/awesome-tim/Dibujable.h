@@ -6,5 +6,5 @@
 class Dibujable
 {
 public:
-	virtual void dibujar(Superficie* super,EscalasDeEjes* escalas)=0;
+	virtual void dibujar(Superficie* super)=0;
 };

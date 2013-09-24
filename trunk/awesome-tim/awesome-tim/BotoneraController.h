@@ -7,6 +7,11 @@
 #include "Cambiable.h"
 #include "Figura.h"
 #include "EscalasDeEjes.h"
+#include "Contenedor.h"
+#include "Triangulo.h"
+#include "Cuadrado.h"
+#include "Circulo.h"
+#include "PoligonoRegular.h"
 
 class BotoneraController: public Imprimible, public Cambiable
 {
@@ -42,7 +47,6 @@ public:
 	BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras = 0.8, double scrollScaleFactor = 0.8, double buttonScaleFactor = 0.5);
 	~BotoneraController(void);
 	Superficie* getImpresion();
-	Superficie* getImpresion(EscalasDeEjes* escalas);
 	void handleEventBotonera(double mouseX, double mouseY, Uint32 type);
 	void agregarBoton(Figura * figura, int cantidadInstancias);
 	void setScrollDirection(int direction);
@@ -56,7 +60,6 @@ public:
 
 	int getAncho();
 	int getAlto();
-	void resize(int ancho, int alto,EscalasDeEjes* escalas);
 	std::list<map<Figura *, int>> getListaFiguras();
 
 	bool estaVacia();
@@ -68,6 +71,6 @@ public:
 
 
 
-	void resizear(EscalasDeEjes* escalas);
+	void resizear();
 };
 #endif //__BOTONERACONTROLLER_H__
