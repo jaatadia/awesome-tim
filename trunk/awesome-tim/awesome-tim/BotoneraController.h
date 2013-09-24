@@ -12,6 +12,9 @@
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include "PoligonoRegular.h"
+#include <iostream>
+
+using namespace std;
 
 class BotoneraController: public Imprimible, public Cambiable
 {
