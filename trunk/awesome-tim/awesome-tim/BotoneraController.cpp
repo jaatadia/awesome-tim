@@ -175,9 +175,6 @@ void BotoneraController::handleEventBotonera(double mouseX, double mouseY, Uint3
 
 Superficie* BotoneraController::getImpresion(){
 	//Dibuja en el buffer principal (Double Buffer)
-	cout << "getY(): " << this->botonera->getY() << endl;
-	cout << "numeroFigActual: " << this->numeroFigActual << endl;
-	cout << "AltoBoton * numeroFigActual: " << this->botonera->getAltoBoton() * this->numeroFigActual << endl;
 	if (this->layerFiguras && this->huboCambios()) {
 
 		//Actualiza scroll
