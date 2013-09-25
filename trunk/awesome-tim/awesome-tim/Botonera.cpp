@@ -28,11 +28,11 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 		++itFig;
 	}
 	if (encontrada){
-		if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {
+		//if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {
 			retorno = (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first)->clonar();
-			--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
+			//--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
 			retorno->setTraslucido(true);
-		}
+		//}
 	}
 	
 	return retorno;
