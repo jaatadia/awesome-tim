@@ -665,23 +665,41 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		YAML::Parser parser(mi_archivo);
 		parser.GetNextDocument(doc);
 	} catch(YAML::ParserException &e){
-		imprimir_error_excepcion("Error al parsear el archivo. Se continua con archivo default.",e.what());
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("Error al parsear el archivo. Se continua con archivo default.",e.what());
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("Error al parsear el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}
 
 	//Busco el nodo raiz, al que estan asociados los demas nodos
 	try{
 		const YAML::Node& nodoRaiz = doc["juego"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("No se encontro nodo raiz juego. Se carga archivo default.",e.what());
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("No se encontro nodo raiz juego. Se carga archivo default.",e.what());
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("No se encontro nodo raiz juego en el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}catch(YAML::BadDereference &e){
-		imprimir_error_excepcion("No hay nodo raiz juego. Se carga archivo default.",e.what());
-		std::cout << e.what();
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("No hay nodo raiz juego. Se carga archivo default.",e.what());
+			std::cout << e.what();
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("No hay nodo raiz juego en el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}
 
 	const YAML::Node& nodoRaiz = doc["juego"];
@@ -692,13 +710,25 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	try{
 		const YAML::Node& nodoBotonera = nodoRaiz["botonera"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what());
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what());
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("No se encontro nodo botonera en el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}catch(YAML::BadDereference &e){
-		imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what()); 
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what()); 
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("No se encontro nodo botonera en el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}
 
 	const YAML::Node& nodoBotonera = nodoRaiz["botonera"];
@@ -708,13 +738,25 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	try{
 		const YAML::Node& nodoBotonera = nodoRaiz["terreno"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("No se encontro nodo terreno en el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}catch(YAML::BadDereference &e){
-		imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
-		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		if(file != RUTA_DEFAULT) {
+			imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
+			mi_archivo.close();
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		} else {
+			imprimir_error_excepcion("No se encontro nodo terreno en el archivo default.",e.what());
+			mi_archivo.close();
+			return false;
+		}
 	}
 
 	const YAML::Node& nodoTerreno = nodoRaiz["terreno"];
