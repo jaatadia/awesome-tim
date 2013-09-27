@@ -33,7 +33,15 @@ void Box2DWorld::agregarFigura(Figura * figura)
 		case TRIANGULO:
 			break;
 		case CUADRADO:
-			
+			{
+				b2PolygonShape forma;
+				forma.SetAsBox(((Cuadrado *) dim)->getAncho()/2, ((Cuadrado *) dim)->getAlto()/2);
+				b2FixtureDef fD;
+				fD.shape = &forma;
+				fD.density = 1.0;
+				fD.friction = 0.3;
+				cuerpo->CreateFixture(&fD);
+			}
 			break;
 		case CIRCULO:
 			{
@@ -49,6 +57,20 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			}
 			break;
 		case POLIGONOREGULAR:
+			{
+				b2PolygonShape forma;
+				b2Vec2 vertices[4];
+				vertices[0].Set(((Cuadrado *) dim)->getX(), ((Cuadrado *) dim)->getY());
+				vertices[1].Set(((Cuadrado *) dim)->getX(), ((Cuadrado *) dim)->getY() - 20);
+				vertices[2].Set(((Cuadrado *) dim)->getX() + 20, ((Cuadrado *) dim)->getY() - 20);
+				vertices[3].Set(((Cuadrado *) dim)->getX() + 20, ((Cuadrado *) dim)->getY());
+				forma.Set(vertices,4);
+				b2FixtureDef fD;
+				fD.shape = &forma;
+				fD.density = 1.0;
+				fD.friction = 0.3;
+				cuerpo->CreateFixture(&fD);
+			}
 			break;
 	}
 	cuerpo->SetUserData(figura);
