@@ -5,6 +5,7 @@
 #include "Figura.h"
 #include "Dimension.h"
 #include "Constantes.h"
+#include "Box2DWorld.h"
 #include <string>
 #include <list>
 
@@ -22,6 +23,7 @@ private:
 	std::list<Figura*> figuras;
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
 	std::string fondoID;
+	Box2DWorld * mundoBox2D;
 
 public:
 	Terreno(int ancho,int alto);
@@ -52,6 +54,8 @@ public:
 	void resizear();
 
 	void buscarActiva(double posClickX ,double posClickY);
+
+	bool huboCambios();
 
 private:
 	bool hayFiguras();

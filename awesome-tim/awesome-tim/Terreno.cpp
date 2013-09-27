@@ -12,6 +12,9 @@ Terreno::Terreno(int ancho,int alto){
 	img=NULL;
 	fondo = NULL;
 	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
+	//Box2D
+	this->mundoBox2D = new Box2DWorld(0.0f,9.81f);
+	this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 8, 3);
 }
 
 Terreno::~Terreno(void){
@@ -21,6 +24,9 @@ Terreno::~Terreno(void){
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		delete (*iteradorLista);
 	}
+
+	delete this->mundoBox2D;
+
 	//borro imagen del fondo
 	if (img) delete img;
 	if (fondo) delete fondo;
@@ -42,11 +48,14 @@ void Terreno::redraw(){
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		this->mundoBox2D->actualizar((*iteradorLista));
 		(*iteradorLista)->dibujar(this->sup);
 	}
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
 		figuraActiva->dibujar(this->sup);
+
+	this->mundoBox2D->actualizar();
 }
 
 Superficie* Terreno::getImpresion(){
@@ -113,7 +122,8 @@ void Terreno::agregarFigura(Figura* fig){
 	corregirPosicion(fig);
 
 	try{
-	(this->figuras).push_back(fig);
+		(this->figuras).push_back(fig);
+		this->mundoBox2D->agregarFigura(fig);
 	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
 		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
@@ -129,6 +139,7 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 		Y2 = posClickY + cantMovY;
 
 		figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+		this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
 	}
 }
@@ -137,7 +148,8 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 void Terreno::eliminarFigura(Figura* fig){
 
 	try{
-	(this->figuras).remove(fig);
+		(this->figuras).remove(fig);
+		this->mundoBox2D->eliminarFigura(fig);
 	} catch (...) {
 		ErrorLogHandler::addError("eliminarFigura","excepcion al eliminar una figura de la lista (figuras.remove)");
 	};
@@ -151,6 +163,7 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 
 		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
+		this->mundoBox2D->cambiarParametros(figuraActiva);
 
 		this->setCambio(true);
 	}
@@ -280,4 +293,8 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 			return figuraBuscada;
 	}
 		return NULL;
+}
+
+bool Terreno::huboCambios(){
+	return true;
 }

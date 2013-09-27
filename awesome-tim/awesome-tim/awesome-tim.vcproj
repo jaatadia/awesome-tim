@@ -61,7 +61,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="false"
-				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib"
+				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib Box2D.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -177,6 +177,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\Box2DWorld.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\main.cpp"
 				>
@@ -299,6 +303,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\Box2DWorld.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Constantes.h"
 				>
