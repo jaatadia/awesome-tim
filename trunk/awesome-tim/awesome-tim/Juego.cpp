@@ -194,6 +194,9 @@ void Juego:: onRender()/*{
 
 
 void Juego:: onLoop(){
+
+	terreno->actualizarModelo();
+
 }
 
 void Juego::esperar(double miliseconds){

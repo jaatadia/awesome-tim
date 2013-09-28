@@ -48,14 +48,11 @@ void Terreno::redraw(){
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		this->mundoBox2D->actualizar((*iteradorLista));
 		(*iteradorLista)->dibujar(this->sup);
 	}
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
 		figuraActiva->dibujar(this->sup);
-
-	this->mundoBox2D->actualizar();
 }
 
 Superficie* Terreno::getImpresion(){
@@ -429,4 +426,14 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 		}
 	//por defecto asumo que es positivo
 	return true;
+}
+
+void Terreno::actualizarModelo(){
+
+	this->mundoBox2D->actualizar();
+
+	std::list<Figura*>::iterator iteradorLista;
+	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		this->mundoBox2D->actualizar((*iteradorLista));
+	}
 }

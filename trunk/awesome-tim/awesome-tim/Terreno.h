@@ -57,6 +57,8 @@ public:
 
 	bool huboCambios();
 
+	void actualizarModelo(); 
+
 private:
 	bool hayFiguras();
 	Figura* buscarFigura(double posClickX, double posClickY);
