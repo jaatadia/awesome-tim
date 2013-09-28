@@ -63,20 +63,3 @@ bool Segmento::intersecaCon(Segmento* otroSgmt){
 
 	return false;
 }
-
-double Segmento::evaluar(double x){
-
-	x += XInicial;
-
-	if ((x<XFinal) && (x>XInicial)){
-		if (! this->vertical()){
-			return (this->getPendiente() * x + this->getOrdenadaAlOrigen());
-		}else{
-			if(YFinal > YInicial){
-				return (YFinal-YInicial+x);
-			}else{
-				return (YInicial-YFinal+x);
-			}
-		}
-	}
-}

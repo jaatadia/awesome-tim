@@ -220,3 +220,8 @@ void Figura::setTraslucido(bool flag){
 	this->traslucido=flag;
 	setCambio(true);
 }
+
+void Figura::setAngulo(double angulo){ 
+	dimension->setAngulo(angulo); 
+	setCambio(true);
+}

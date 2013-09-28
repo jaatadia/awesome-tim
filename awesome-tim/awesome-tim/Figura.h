@@ -45,6 +45,7 @@ public:
 	Dimension* getDimension();
 
 	void setTraslucido(bool flag);
+	void setAngulo(double angulo);
 
 	Figura* clonar();//copia la figura
 
