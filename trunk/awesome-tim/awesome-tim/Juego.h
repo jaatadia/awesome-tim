@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Estado.h"
+
 #include "Ventana.h"
 #include "Superficie.h"
 #include "Terreno.h"
@@ -14,16 +16,13 @@
 
 class Comandos;
 
-class Juego: public Fallable, Cambiable
+class Juego: public Estado, public Fallable, Cambiable
 {
 private:
 	
 	bool running;
 	const char* fileIn;
 	const char* fileOut;
-	
-	Ventana* ventana;
-	Superficie* superficie;
 	Terreno* terreno;
 	BotoneraController * botonera;
 	Comandos* comandos;
@@ -41,13 +40,11 @@ public:
 	bool guardar();
 
 	void quit();
-	void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento);
+	void actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);
 
-	void onEvent();//maneja los eventos
+	void onEvent(Superficie** sup);//maneja los eventos
 	void onLoop();//actualiza el modelo
-	void onRender();//dibuja en la ventana
-
-	void esperar(double miliseconds);
+	bool onRender(Superficie* superficie);//dibuja en la ventana
 
 	void setFondo(const char* dir);
 

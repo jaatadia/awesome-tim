@@ -24,9 +24,10 @@ private:
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
 	std::string fondoID;
 	Box2DWorld * mundoBox2D;
+	bool fisicaActiva;
 
 public:
-	Terreno(int ancho,int alto);
+	Terreno(int ancho,int alto,bool fisicaActiva=true);
 	~Terreno(void);
 
 	Superficie* getImpresion();

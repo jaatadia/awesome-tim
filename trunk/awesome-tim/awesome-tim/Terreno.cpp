@@ -3,7 +3,8 @@
 #include "Contenedor.h"
 #include <new>
 
-Terreno::Terreno(int ancho,int alto){
+Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
+	this->fisicaActiva = fisicaActiva;
 	this->ancho = ancho;
 	this->alto = alto;
 	sup = new Superficie(ancho,alto);
@@ -13,8 +14,12 @@ Terreno::Terreno(int ancho,int alto){
 	fondo = NULL;
 	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
 	//Box2D
-	this->mundoBox2D = new Box2DWorld(0.0f,9.81f);
-	this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 8, 3);
+	if(fisicaActiva){
+		this->mundoBox2D = new Box2DWorld(0.0f,9.81f);
+		this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 8, 3);
+	}else{
+		this->mundoBox2D = NULL;
+	}
 }
 
 Terreno::~Terreno(void){
@@ -25,7 +30,7 @@ Terreno::~Terreno(void){
 		delete (*iteradorLista);
 	}
 
-	delete this->mundoBox2D;
+	if(fisicaActiva) delete this->mundoBox2D;
 
 	//borro imagen del fondo
 	if (img) delete img;
@@ -78,35 +83,6 @@ bool Terreno::setFondo(const char* ruta_img){
 		return false;
 	}
 	return true;
-/*
-	//para no abrir el archivo una y otra vez lo guardo en el contenedor
-	if (Contenedor::estaMultimedia(ruta_img) == false){
-		Imagen* temp = new Imagen(ruta_img);
-		if(!temp->huboFallos())
-			Contenedor::putMultimedia(ruta_img,temp);
-	//no libero temp o borro lo del contenedor!
-	}
-
-	if (ruta_img != fondoID){
-		//es distinto al fondo puesto
-		Imagen* temp = (Imagen*)(Contenedor::getMultimedia(ruta_img));
-
-		if(temp){
-			this->setCambio(true);
-		//	delete this->fondo;  //si hago esto la borro del contenedor!
-			if (img){
-				delete this->img;
-				img = NULL;
-			}
-
-			fondo = temp; //guardo la original (se usa para que no se pixele con distintos resize)
-			this->img = fondo->scaleImagen(this->ancho,this->alto);
-			std::string ruta_temp = ruta_img;
-			fondoID = ruta_temp.c_str();
-		}
-	//no libero temp o borro lo del contenedor!
-	}
-*/
 }
 
 void Terreno::agregarFigura(Figura* fig){
@@ -120,7 +96,7 @@ void Terreno::agregarFigura(Figura* fig){
 
 	try{
 		(this->figuras).push_back(fig);
-		this->mundoBox2D->agregarFigura(fig);
+		 if(fisicaActiva) this->mundoBox2D->agregarFigura(fig);
 	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
 		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
@@ -138,7 +114,7 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 		double ang = calcularAngulo(figuraActiva , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
 		figuraActiva->setAngulo(ang);
 
-		this->mundoBox2D->cambiarParametros(figuraActiva);
+		if(fisicaActiva) this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
 	}
 }
@@ -148,7 +124,7 @@ void Terreno::eliminarFigura(Figura* fig){
 
 	try{
 		(this->figuras).remove(fig);
-		this->mundoBox2D->eliminarFigura(fig);
+		if(fisicaActiva) this->mundoBox2D->eliminarFigura(fig);
 	} catch (...) {
 		ErrorLogHandler::addError("eliminarFigura","excepcion al eliminar una figura de la lista (figuras.remove)");
 	};
@@ -162,7 +138,7 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 
 		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
-		this->mundoBox2D->cambiarParametros(figuraActiva);
+		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
 
 		this->setCambio(true);
 	}
@@ -430,10 +406,11 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 
 void Terreno::actualizarModelo(){
 
-	this->mundoBox2D->actualizar();
-
-	std::list<Figura*>::iterator iteradorLista;
-	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		this->mundoBox2D->actualizar((*iteradorLista));
+	if(fisicaActiva){
+		this->mundoBox2D->actualizar();
+		std::list<Figura*>::iterator iteradorLista;
+		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+			this->mundoBox2D->actualizar((*iteradorLista));
+		}
 	}
 }
