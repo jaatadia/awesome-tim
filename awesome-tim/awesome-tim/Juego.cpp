@@ -12,75 +12,21 @@
 #include "Figura.h"
 
 Juego::Juego(const char *fileIn,const char *fileOut){
-	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
-		ErrorLogHandler::addError(JUEGO_TAG,SDL_GetError());
-		fallar();
-	}
 	
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
 	running = true;
-
-	ventana = new Ventana();
-	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
-	
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO);
-		
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	figuraEnAire=NULL;
 	
 	cargar();
-	
-	if(superficie->huboFallos()||ventana->huboFallos()){
-		if(superficie->huboFallos()) ErrorLogHandler::addError("Programa","No se pudieron crear la superficie");
-		else ErrorLogHandler::addError(JUEGO_TAG,"No se pudo crear la ventana");
-		delete superficie;
-		delete ventana;
-		fallar();
-	}
 
 	this->setCambio(true);
 
 	shiftPressed = false;
 	estaActiva = false;
-
-	
-/***************Test de arrastra y girar figura*************************/
-	/*
-	Contenedor::putMultimedia("../images/Cuadrado.png",new Imagen("../images/Cuadrado.png"));
-	Figura* fig = new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0));
-	terreno->agregarFigura(fig);
-	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
-	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
-	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
-	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
-	botonera->agregarBoton(new Figura("../images/Cuadrado.png",new Cuadrado(20,20,50,50,0)), 5);
-
-	Contenedor::putMultimedia("../images/triangulo.png",new Imagen("../images/triangulo.png"));
-	fig = new Figura("../images/triangulo.png",new Triangulo2(0,0,0,20,20));
-	terreno->agregarFigura(fig);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
-	botonera->agregarBoton(new Figura("../images/triangulo.png",new Triangulo(0,0,0,20,20)), 5);
-
-	Contenedor::putMultimedia("../images/Ptriangulo.png",new Imagen("../images/Ptriangulo.png"));
-	fig = new Figura("../images/Ptriangulo.png",new PoligonoRegular(20,20,10,3,0));
-	terreno->agregarFigura(fig);
-
-	Contenedor::putMultimedia("../images/Ppentagono.png",new Imagen("../images/Ppentagono.png"));
-	fig = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
-	terreno->agregarFigura(fig);
-
-	Contenedor::putMultimedia("../images/Circulo.png",new Imagen("../images/Circulo.png"));
-	fig = new Figura("../images/Circulo.png",new Circulo(20,50,50,0));
-	terreno->agregarFigura(fig);
-	*/
-/*****************Figura En aire******************************************/
-
-	//figuraEnAire = new Figura("../images/Ppentagono.png",new PoligonoRegular(20,20,10,5,0));
 
 }
 
@@ -106,16 +52,13 @@ bool Juego::guardar(){
 }
 
 Juego::~Juego(){
-	delete ventana;
-	delete superficie;
+
 	delete terreno;
 	delete botonera;
 	delete comandos;
 	delete EscalasDeEjes::getInstance();
 	Contenedor::deleteContenedor();
 	if(figuraEnAire!=NULL)delete figuraEnAire;
-	SDL_Quit();
-	ErrorLogHandler::closeLog();
 }
 
 
@@ -124,45 +67,11 @@ bool Juego::isRunning(){
 }
 
 //dibuja en pantalla
-void Juego:: onRender()/*{
-	
+
+bool Juego:: onRender(Superficie* superficie){
+
 	bool dibujar = false;
 	
-	if (figuraEnAire){
-		superficie->restore();
-		superficie->dibujarSupreficie(terreno->getImpresion(),NULL, EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
-		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
-		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
-		figuraEnAire->dibujar(superficie);
-		ventana->dibujar(superficie);
-	}else{
-		if(this->huboCambios()){
-			superficie->restore();
-			setCambio(false);
-			dibujar = true;
-		}
-		
-		if(terreno->huboCambios()){
-			superficie->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
-			dibujar = true;
-		}
-
-		if(botonera->huboCambios()){
-			superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
-			dibujar = true;
-		}
-		
-		if(comandos->huboCambios()){
-			superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
-			dibujar = true;
-		}
-
-	}
-
-	if (dibujar)ventana->dibujar(superficie);
-	
-}*/
-{
 	if (figuraEnAire){
 		confirmarPosicionFiguraEnAire();
 	}
@@ -170,25 +79,30 @@ void Juego:: onRender()/*{
 	if(this->huboCambios()){
 		superficie->restore();
 		setCambio(false);
+		dibujar = true;
 	}
 	
 	if(terreno->huboCambios()){
 		superficie->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+		dibujar = true;
 	}
 
 	if(botonera->huboCambios()){
 		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
+		dibujar = true;
 	}
 	
 	if(comandos->huboCambios()){
 		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+		dibujar = true;
 	}
 
 	if(figuraEnAire){
 		figuraEnAire->dibujar(superficie);
+		dibujar = true;
 	}
 
-	ventana->dibujar(superficie);
+	return dibujar;
 }
 	
 
@@ -199,12 +113,8 @@ void Juego:: onLoop(){
 
 }
 
-void Juego::esperar(double miliseconds){
-	SDL_Delay(miliseconds);
-}
-
 //manejo de eventos
-void Juego:: onEvent(){
+void Juego:: onEvent(Superficie** sup){
 
 SDL_Event evento;
 double posClickX, posClickY;
@@ -213,7 +123,7 @@ while(SDL_PollEvent(&evento)){
 	switch(evento.type){
 		case SDL_WINDOWEVENT:
 		{
-			actuarVentana(evento.window.windowID,evento.window);
+			actuarVentana(sup,evento.window.windowID,evento.window);
 			//actualiza las escalas si fue un resize
 			break;
 		}
@@ -367,12 +277,12 @@ void Juego::quit(){
 	running = false;
 }
 
-void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento){
+void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
 
 	switch (evento.event){
 		case SDL_WINDOWEVENT_CLOSE:
 		{
-			if (evento.windowID == ventana->getID())
+			//if (evento.windowID == ventana->getID())
 				quit();
 
 			break;
@@ -404,8 +314,8 @@ void Juego::actuarVentana(Uint32 IDventana,SDL_WindowEvent evento){
 			EscalasDeEjes::getInstance()->setEscalaX(UNIDADES_LOGICAS_TOTAL/anchoActual);
 			EscalasDeEjes::getInstance()->setEscalaY(UNIDADES_LOGICAS_TOTAL/altoActual);
 			//obtengo superficie resizeada para el juego, esta es la grande donde se pegan las otras.
-			delete superficie;
-			superficie = new Superficie(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
+			delete (*sup);
+			(*sup) = new Superficie(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
 
 			//Y tambien cambian todas las vistas!!
 			terreno->cambioVistaFiguras();

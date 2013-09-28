@@ -1,4 +1,4 @@
-#include "Juego.h"
+#include "MEstados.h"
 #include "ErrorLogHandler.h"
 
 #include <stdio.h>
@@ -133,7 +133,7 @@ void test(void){
 
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
-	Juego juego = Juego(rutaIn,rutaOut);//Falta agregarle al juego la rutaOut
+	MEstados juego = MEstados(rutaIn,rutaOut);//Falta agregarle al juego la rutaOut
 	
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		
@@ -148,8 +148,9 @@ void jugar(char* rutaIn, char* rutaOut){
 		double tiempoTardado = ((double)(tFinal - tInicial))*1000/CLOCKS_PER_SEC;
 		double tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
 
-		if(tiempoExtra>=0) juego.esperar(tiempoExtra);
-		else{
+		if(tiempoExtra>=0){
+			juego.esperar(tiempoExtra);
+		}else{
 			while(tiempoExtra<0){
 				juego.onEvent();
 				juego.onLoop();
