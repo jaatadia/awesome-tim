@@ -5,6 +5,7 @@
 #include "Constantes.h"
 #include "Circulo.h"
 #include "Cuadrado.h"
+#include "Triangulo.h"
 
 class Box2DWorld
 {
