@@ -11,6 +11,8 @@
 #include "Cuadrado.h"
 #include "EscalasDeEjes.h"
 #include "Contenedor.h"
+#include "MaquinaEstados.h"
+
 
 #define JUEGO_TAG "Juego"
 
@@ -20,7 +22,7 @@ class Juego: public Estado, public Fallable, Cambiable
 {
 private:
 	
-	bool running;
+	MaquinaEstados* maq;
 	const char* fileIn;
 	const char* fileOut;
 	Terreno* terreno;
@@ -32,9 +34,8 @@ private:
 	bool shiftPressed;
 
 public:
-	Juego(const char* fileIn,const char* fileOut);//se crea el juego
+	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
 	~Juego(void);
-	bool isRunning();
 
 	bool cargar();
 	bool guardar();

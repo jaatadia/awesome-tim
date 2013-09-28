@@ -24,14 +24,14 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 	this->fileOut = fileOut;
 	running = true;
 
-	activo = editor = new Juego(fileIn,fileOut);
-	play = NULL;
+	Eactivo = Eeditor = new Juego(fileIn,fileOut,this);
+	Eplay = NULL;
 }
 
 MEstados::~MEstados(void){
 	
-	delete editor;
-	delete play;
+	delete Eeditor;
+	delete Eplay;
 
 	delete ventana;
 	delete superficie;
@@ -40,7 +40,7 @@ MEstados::~MEstados(void){
 }
 
 bool MEstados::isRunning(){
-	return getEstadoActivo()->isRunning();
+	return running;
 }
 
 void MEstados::onEvent(){
@@ -59,3 +59,11 @@ void MEstados::onRender(){
 void MEstados::esperar(double miliseconds){
 	SDL_Delay(miliseconds);
 }
+
+void MEstados::salir(){
+	running = false;
+}
+
+void MEstados::editor(){}
+
+void MEstados::play(){}

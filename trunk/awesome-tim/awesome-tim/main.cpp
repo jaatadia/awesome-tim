@@ -133,7 +133,7 @@ void test(void){
 
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
-	MEstados juego = MEstados(rutaIn,rutaOut);//Falta agregarle al juego la rutaOut
+	MEstados juego = MEstados(rutaIn,rutaOut);
 	
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		
@@ -152,7 +152,7 @@ void jugar(char* rutaIn, char* rutaOut){
 			juego.esperar(tiempoExtra);
 		}else{
 			while(tiempoExtra<0){
-				juego.onEvent();
+				//juego.onEvent();
 				juego.onLoop();
 				tiempoExtra += FRAME_FRECUENCY;
 			}

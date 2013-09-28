@@ -2,17 +2,18 @@
 #include "Fallable.h"
 #include "Estado.h"
 #include "Ventana.h"
+#include "MaquinaEstados.h"
 
 #define M_ESTADOS "Maquina de Estados"
 
-class MEstados: public Fallable
+class MEstados: public MaquinaEstados,public Fallable
 {
 private:
 
-	Estado* activo;
+	Estado* Eactivo;
 
-	Estado* editor;
-	Estado* play;
+	Estado* Eeditor;
+	Estado* Eplay;
 
 	bool running;
 	const char* fileIn;
@@ -32,7 +33,12 @@ public:
 	
 	void esperar(double miliseconds);
 
+
+	virtual void salir();
+	virtual void editor();
+	virtual void play();
+
 private:
-	Estado* getEstadoActivo(){return activo;}
+	Estado* getEstadoActivo(){return Eactivo;}
 
 };

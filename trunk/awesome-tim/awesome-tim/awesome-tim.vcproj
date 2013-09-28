@@ -336,6 +336,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MaquinaEstados.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MEstados.h"
 				>
 			</File>
