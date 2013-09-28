@@ -77,7 +77,7 @@ bool Figura::esMiPosicion(double x,double y)
 	double miY = y;
 
 	//comentar esto para que ande como antes (acordarse de cambiar tambien VistaFigura.cpp redraw)
-
+/*
 	//dado que las escalas pueden ser incorrectas si se rotó la figura, se rota el punto segun los pixels
 	double miAngulo = (dimension->getAngulo())*PI/180;
 	double centroXReal = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(this->dimension->getX())+0.0;
@@ -100,7 +100,7 @@ bool Figura::esMiPosicion(double x,double y)
 	miX = cX + (tempX - cX)*cos(miAngulo) - (tempY - cY)*sin(miAngulo);
 	miY = cY + (tempX - cX)*sin(miAngulo) + (tempY - cY)*cos(miAngulo);
 	//terminar de comentar aca
-
+*/
 	return dimension->puntoPertenece( miX, miY);
 }
 
