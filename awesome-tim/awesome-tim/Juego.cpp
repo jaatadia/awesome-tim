@@ -11,11 +11,11 @@
 
 #include "Figura.h"
 
-Juego::Juego(const char *fileIn,const char *fileOut){
+Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	
+	this->maq = maq;
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
-	running = true;
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
@@ -61,10 +61,6 @@ Juego::~Juego(){
 	if(figuraEnAire!=NULL)delete figuraEnAire;
 }
 
-
-bool Juego::isRunning(){
-	return running;
-}
 
 //dibuja en pantalla
 
@@ -274,7 +270,7 @@ while(SDL_PollEvent(&evento)){
 
 
 void Juego::quit(){
-	running = false;
+	maq->salir();
 }
 
 void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
