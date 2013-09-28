@@ -406,11 +406,43 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 
 void Terreno::actualizarModelo(){
 
-	if(fisicaActiva){
-		this->mundoBox2D->actualizar();
-		std::list<Figura*>::iterator iteradorLista;
-		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-			this->mundoBox2D->actualizar((*iteradorLista));
+if (fisicaActiva){
+	this->mundoBox2D->actualizar();
+
+	std::list<Figura*>::iterator iteradorLista;
+
+	iteradorLista = figuras.begin();
+
+	Figura* figuraABorrar = NULL;
+
+	while ( (iteradorLista != figuras.end()) && (!figuras.empty()) ){
+
+		this->mundoBox2D->actualizar((*iteradorLista));
+
+		//reviso cuales se fueron para borrarlas
+		if (!posEnTerrenoExtendido((*iteradorLista)->getDimension()->getX(), (*iteradorLista)->getDimension()->getY())){
+			figuraABorrar = (*iteradorLista);
+		}
+
+		iteradorLista++;
+
+		if (figuraABorrar){
+			this->eliminarFigura(figuraABorrar);
+			figuraABorrar = NULL;
 		}
 	}
+}
+
+}
+
+bool Terreno::posEnTerrenoExtendido(double posX,double posY){
+
+	double ppioLogicoX, finalLogicoX, ppioLogicoY, finalLogicoY;
+
+	ppioLogicoX =  X_TERRENO_LOGICO - ANCHO_TERRENO_LOGICO ;
+	finalLogicoX = ANCHO_TERRENO_LOGICO + X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO;
+	ppioLogicoY = Y_TERRENO_LOGICO - ALTO_TERRENO_LOGICO;
+	finalLogicoY = ALTO_TERRENO_LOGICO + Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO;
+
+	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
 }

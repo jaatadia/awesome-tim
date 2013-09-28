@@ -148,9 +148,10 @@ void jugar(char* rutaIn, char* rutaOut){
 		double tiempoTardado = ((double)(tFinal - tInicial))*1000/CLOCKS_PER_SEC;
 		double tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
 
-		if(tiempoExtra>=0){
+		if(tiempoExtra>=0)
 			juego.esperar(tiempoExtra);
-		}else{
+		else{
+
 			while(tiempoExtra<0){
 				//juego.onEvent();
 				juego.onLoop();

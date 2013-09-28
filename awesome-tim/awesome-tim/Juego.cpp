@@ -101,12 +101,8 @@ bool Juego:: onRender(Superficie* superficie){
 	return dibujar;
 }
 	
-
-
 void Juego:: onLoop(){
-
 	terreno->actualizarModelo();
-
 }
 
 //manejo de eventos
