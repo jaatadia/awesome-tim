@@ -232,7 +232,7 @@ int GeneradorYaml::pruebayaml(){
 //Figura* fig1 = new Figura("../images/Cuadrado.png",dim_cuad);
 Figura* fig1 = new Figura("../images/Cuadrado.png",new Cuadrado(10,10,3,3,60));
 //Figura* fig2 = new Figura("../images/Circulo.png",dim_circ);
-Figura* fig2 = new Figura("../images/Circulo.png",new Circulo(5,30,40,9));
+Figura* fig2 = new Figura("../images/Circulo.png",new PelotaBasquet(5,30,40,9));
 
 
 std::list<Figura*> lista_fig = std::list<Figura*>();

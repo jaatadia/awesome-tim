@@ -12,6 +12,7 @@
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include "PoligonoRegular.h"
+#include "PelotaBasquet.h"
 
 class BotoneraController: public Imprimible, public Cambiable
 {
