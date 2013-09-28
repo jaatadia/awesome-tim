@@ -7,7 +7,7 @@ juego:
     lista_figuras:
       - figura:
           ID: ../images/Pelota-Tenis.png
-          tipo_dimension: CIRCULO
+          tipo_dimension: GLOBOHELIO
           dimension:
             radio: 3
             posX: 0
@@ -16,7 +16,7 @@ juego:
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/Pelota-Basket.png
-          tipo_dimension: CIRCULO
+          tipo_dimension: PELOTABASQUET
           dimension:
             radio: 8
             posX: 0
@@ -25,7 +25,7 @@ juego:
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/Bowling.png
-          tipo_dimension: CIRCULO
+          tipo_dimension: PELOTABOWLING
           dimension:
             radio: 7
             posX: 0
@@ -54,7 +54,7 @@ juego:
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/Circulo.png
-          tipo_dimension: CIRCULO
+          tipo_dimension: GLOBOHELIO
           dimension:
             radio: 10
             posX: 0
