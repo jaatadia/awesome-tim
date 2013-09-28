@@ -84,6 +84,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 void Box2DWorld::actualizar(Figura * figura)
 {
 	b2Body * cuerpo = this->mundo->GetBodyList();
+
 	while(cuerpo)
 	{
 		if (((Figura *)cuerpo->GetUserData()) == figura)
