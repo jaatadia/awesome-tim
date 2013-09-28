@@ -3,7 +3,9 @@
 #include "Box2D/Box2D.h"
 #include "Figura.h"
 #include "Constantes.h"
-#include "Circulo.h"
+#include "PelotaBasquet.h"
+#include "PelotaBowling.h"
+#include "GloboHelio.h"
 #include "Cuadrado.h"
 #include "Triangulo.h"
 

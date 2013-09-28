@@ -332,9 +332,9 @@ bool BotoneraController::agregarBotonesDefault(){
 	Contenedor::putMultimedia(ID,img);
 	this->agregarBoton(fig,100);
 	
-	ID = "../images/Circulo.png";
+	ID = "../images/Pelota-Basket.png";
 	img = new Imagen(ID);
-	fig = new Figura(ID,new Circulo(10,0,0,0));
+	fig = new Figura(ID,new PelotaBasquet(10,0,0,0));
 	Contenedor::putMultimedia(ID,img);
 	this->agregarBoton(fig,100);
 

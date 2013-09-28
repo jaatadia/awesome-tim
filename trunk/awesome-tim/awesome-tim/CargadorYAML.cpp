@@ -8,7 +8,7 @@
 
 std::string CargadorYaml::ruta_archivo = "";
 
-Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY){
+Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo,double posX,double posY, int tipo){
 	double radio;	
 	try{
 		dimension["radio"] >> radio;
@@ -26,7 +26,20 @@ Dimension* CargadorYaml::crearCirculo(const YAML::Node& dimension, double angulo
 		radio = RADIO_DEFAULT;
 	}
 
-	Dimension* dim = new Circulo(radio,posX,posY,angulo);
+	Dimension * dim;
+
+	switch(tipo)
+	{
+		case PELOTABASQUET:
+			dim = new PelotaBasquet(radio,posX,posY,angulo);
+			break;
+		case PELOTABOWLING:
+			dim = new PelotaBowling(radio,posX,posY,angulo);
+			break;
+		case GLOBOHELIO:
+			dim = new GloboHelio(radio,posX,posY,angulo);
+			break;
+	}
 	
 	if(!dim)
 		ErrorLogHandler::addError("CargadorYaml","Error al crear la dimension Circulo. La figura no sera cargada."); 
@@ -169,8 +182,14 @@ Dimension* CargadorYaml::crearPoligonoRegular(const YAML::Node& dimension, doubl
 
 Dimension* CargadorYaml::crearDimension(const YAML::Node& dimension, double angulo,double posX,double posY, const char* tipo_dimension){
 
-	if(strcmp(tipo_dimension,"CIRCULO") == 0)
-		return crearCirculo(dimension,angulo,posX,posY);
+	if(strcmp(tipo_dimension,"PELOTABASQUET") == 0)
+		return crearCirculo(dimension,angulo,posX,posY, PELOTABASQUET);
+
+	if(strcmp(tipo_dimension,"PELOTABOWLING") == 0)
+		return crearCirculo(dimension,angulo,posX,posY, PELOTABOWLING);
+
+	if(strcmp(tipo_dimension,"GLOBOHELIO") == 0)
+		return crearCirculo(dimension,angulo,posX,posY, GLOBOHELIO);
 
 	if(strcmp(tipo_dimension,"CUADRADO") == 0)
 		return crearCuadrado(dimension,angulo,posX,posY);
@@ -778,7 +797,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 
 
 bool CargadorYaml::tipo_dimension_valida(const char* tipo_dimension){
-	return ((strcmp(tipo_dimension,"TRIANGULO") == 0) || (strcmp(tipo_dimension,"CUADRADO") == 0) || (strcmp(tipo_dimension,"CIRCULO") == 0) || (strcmp(tipo_dimension,"POLIGONOREGULAR") == 0)); 
+	return ((strcmp(tipo_dimension,"TRIANGULO") == 0) || (strcmp(tipo_dimension,"CUADRADO") == 0) || (strcmp(tipo_dimension,"PELOTABASQUET") == 0) || (strcmp(tipo_dimension,"GLOBOHELIO") == 0) || (strcmp(tipo_dimension,"PELOTABOWLING") == 0) || (strcmp(tipo_dimension,"POLIGONOREGULAR") == 0)); 
 }
 
 

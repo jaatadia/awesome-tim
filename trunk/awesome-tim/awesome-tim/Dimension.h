@@ -7,6 +7,7 @@ class Dimension: public Posicion
 {
 protected:
 	double angulo; // de 0 a 360 !!
+	double densidad, restitucion;
 
 public:
 	Dimension(double X, double Y,double angulo):Posicion(X,Y){
@@ -21,9 +22,30 @@ public:
 	virtual double getAngulo(){
 		return angulo;
 	};
+
 	virtual void setAngulo(double ang){
 		this->angulo=ang;
 	};
+
+	void setDensidad(double densidad)
+	{
+		this->densidad = densidad;
+	}
+
+	double getDensidad()
+	{
+		return this->restitucion;
+	}
+
+	void setRestitucion(double restitucion)
+	{
+		this->restitucion = restitucion;
+	}
+
+	double getRestitucion()
+	{
+		return this->restitucion;
+	}
 
 	virtual bool puntoPertenece(double X, double Y)=0;
 	//la haria abstracta pero ahora mismo no se que dimensiones van a quedar, asi que implemento en poligono y circulo

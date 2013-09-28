@@ -43,16 +43,42 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 			}
 			break;
-		case CIRCULO:
+		case PELOTABASQUET:
 			{
 				b2CircleShape forma;
 				forma.m_radius = ((Circulo *)dim)->getRadio();
 				
 				b2FixtureDef fD;
 				fD.shape = &forma;
-				fD.density = 1.0;
+				fD.density = dim->getDensidad();
 				fD.friction = 0.3;
-				fD.restitution = 0.6;
+				fD.restitution = dim->getRestitucion();
+				cuerpo->CreateFixture(&fD);
+			}
+			break;
+		case PELOTABOWLING:
+			{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				b2FixtureDef fD;
+				fD.shape = &forma;
+				fD.density = dim->getDensidad();
+				fD.friction = 0.3;
+				fD.restitution = dim->getRestitucion();
+				cuerpo->CreateFixture(&fD);
+			}
+			break;
+		case GLOBOHELIO:
+			{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				b2FixtureDef fD;
+				fD.shape = &forma;
+				fD.density = dim->getDensidad();
+				fD.friction = 0.3;
+				fD.restitution = dim->getRestitucion();
 				cuerpo->CreateFixture(&fD);
 			}
 			break;
