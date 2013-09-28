@@ -28,6 +28,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 	bD.position.Set(dim->getX(), dim->getY());
 	bD.type = b2_dynamicBody;
 	b2Body * cuerpo = this->mundo->CreateBody(&bD);
+	cuerpo->
 	switch(dim->getTipoDimension())
 	{
 		case TRIANGULO:
@@ -44,31 +45,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			}
 			break;
 		case PELOTABASQUET:
-			{
-				b2CircleShape forma;
-				forma.m_radius = ((Circulo *)dim)->getRadio();
-				
-				b2FixtureDef fD;
-				fD.shape = &forma;
-				fD.density = dim->getDensidad();
-				fD.friction = 0.3;
-				fD.restitution = dim->getRestitucion();
-				cuerpo->CreateFixture(&fD);
-			}
-			break;
 		case PELOTABOWLING:
-			{
-				b2CircleShape forma;
-				forma.m_radius = ((Circulo *)dim)->getRadio();
-				
-				b2FixtureDef fD;
-				fD.shape = &forma;
-				fD.density = dim->getDensidad();
-				fD.friction = 0.3;
-				fD.restitution = dim->getRestitucion();
-				cuerpo->CreateFixture(&fD);
-			}
-			break;
 		case GLOBOHELIO:
 			{
 				b2CircleShape forma;
