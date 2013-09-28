@@ -138,7 +138,9 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 		X2 = posClickX + cantMovX;
 		Y2 = posClickY + cantMovY;
 
-		figuraActiva->cambiarAngulo(posClickX,posClickY,X2,Y2);
+		double ang = calcularAngulo(figuraActiva , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
+		figuraActiva->setAngulo(ang);
+
 		this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
 	}
@@ -296,5 +298,135 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 }
 
 bool Terreno::huboCambios(){
+	return true;
+}
+
+
+double Terreno::calcularAngulo(Figura* fig, double XVector1,double YVector1,double XVector2,double YVector2){
+
+	double X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig;
+	double moduloCuadrado1, moduloCuadrado2;
+	double productoModulo;
+	double productoEscalar;
+	double variacionAngulo;
+	double divisionEscalarModulo;
+
+	X1RelCentroFig = XVector1 - fig->getDimension()->getX();
+	Y1RelCentroFig = YVector1 - fig->getDimension()->getY();
+	X2RelCentroFig = XVector2 - fig->getDimension()->getX();
+	Y2RelCentroFig = YVector2 - fig->getDimension()->getY();
+
+	moduloCuadrado1 = X1RelCentroFig*X1RelCentroFig + Y1RelCentroFig*Y1RelCentroFig;
+	moduloCuadrado2 = X2RelCentroFig*X2RelCentroFig + Y2RelCentroFig*Y2RelCentroFig;
+	//if necesario o puede romperse la raiz, en resumen, si pasa por el centro no cambio el angulo
+	if ((moduloCuadrado1 != 0) && (moduloCuadrado2 != 0)){
+		productoModulo = sqrt(moduloCuadrado1*moduloCuadrado2);
+
+		productoEscalar = X1RelCentroFig*X2RelCentroFig + Y1RelCentroFig*Y2RelCentroFig;
+		
+		//por que si por redondeo extraño es mayor que 1 devuelve NaN el acos. 
+		divisionEscalarModulo = productoEscalar/productoModulo;
+
+		if (divisionEscalarModulo > 1)
+			divisionEscalarModulo = 0.99999999999999999999999999999999999;
+	
+		variacionAngulo = acos(divisionEscalarModulo);
+
+		//dado que el movimiento puede haber sido horario o antihorario y ambos dan el mismo valor averiguo hacia que lado fue
+		bool esPositivo = anguloEsPositivo(X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig);
+
+		if (!esPositivo)
+			variacionAngulo = -variacionAngulo;
+
+		//Paso el angulo a grados desde radianes
+		variacionAngulo = (variacionAngulo*180/PI);
+	}
+		return (fig->getDimension()->getAngulo() + variacionAngulo);
+}
+
+int Terreno::obtenerCuadranteDeClick(double X, double Y){
+
+	if (X>=0 && Y>=0)
+		return CUADRANTE4;
+
+	if (X<=0 && Y>=0)
+		return CUADRANTE3;
+
+	if (X<=0 && Y<=0)
+		return CUADRANTE2;
+
+	if (X>=0 && Y<=0)
+		return CUADRANTE1;
+
+	return -1;
+}
+
+bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
+	
+	int cuadrante1 = obtenerCuadranteDeClick(X1,Y1);
+	int cuadrante2 = obtenerCuadranteDeClick(X2,Y2);
+	
+	Recta recta1(X1,Y1,0,0);
+
+	if (cuadrante1 == cuadrante2){
+		//verificar con las rectas
+		switch (cuadrante1){
+			case CUADRANTE1: case CUADRANTE4:
+			{
+				if(recta1.puntoPorDebajo(X2,Y2))
+					return false;
+				else
+					return true;
+				break;
+			}
+			case CUADRANTE2: case CUADRANTE3:
+			{
+				if(recta1.puntoPorDebajo(X2,Y2))
+					return true;
+				else
+					return false;
+				break;
+			}
+		}
+	}else
+		switch (cuadrante1){
+			case CUADRANTE1:
+			{
+				if (cuadrante2 == CUADRANTE2)
+					return true;
+				else
+					if (cuadrante2 == CUADRANTE4)
+						return false;
+				break;
+			}
+			case CUADRANTE2:
+			{
+				if (cuadrante2 == CUADRANTE3)
+					return true;
+				else
+					if (cuadrante2 == CUADRANTE1)
+						return false;
+				break;
+			}
+			case CUADRANTE3:
+			{
+				if (cuadrante2 == CUADRANTE4)
+					return true;
+				else
+					if (cuadrante2 == CUADRANTE2)
+						return false;
+				break;
+			}
+			case CUADRANTE4:
+			{
+				if (cuadrante2 == CUADRANTE1)
+					return true;
+				else
+					if (cuadrante2 == CUADRANTE3)
+						return false;
+				break;
+			}
+		}
+	//por defecto asumo que es positivo
 	return true;
 }
