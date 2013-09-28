@@ -66,4 +66,6 @@ void MEstados::salir(){
 
 void MEstados::editor(){}
 
-void MEstados::play(){}
+void MEstados::play(){
+	Eactivo = Eplay;
+}
