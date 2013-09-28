@@ -124,7 +124,7 @@ bool Juego::isRunning(){
 }
 
 //dibuja en pantalla
-void Juego:: onRender(){
+void Juego:: onRender()/*{
 	
 	bool dibujar = false;
 	
@@ -161,8 +161,8 @@ void Juego:: onRender(){
 
 	if (dibujar)ventana->dibujar(superficie);
 	
-}
-/*{
+}*/
+{
 	if (figuraEnAire){
 		confirmarPosicionFiguraEnAire();
 	}
@@ -173,24 +173,24 @@ void Juego:: onRender(){
 	}
 	
 	if(terreno->huboCambios()){
-		superficie->dibujarSupreficie(terreno->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+		superficie->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
 	}
 
 	if(botonera->huboCambios()){
-		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,escalas->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
+		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
 	}
 	
 	if(comandos->huboCambios()){
-		superficie->dibujarSupreficie(comandos->getImpresion(escalas),NULL,escalas->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),escalas->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
 	}
 
 	if(figuraEnAire){
-		figuraEnAire->dibujar(superficie,escalas);
+		figuraEnAire->dibujar(superficie);
 	}
 
 	ventana->dibujar(superficie);
 }
-*/	
+	
 
 
 void Juego:: onLoop(){
