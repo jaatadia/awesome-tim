@@ -60,6 +60,8 @@ public:
 
 	void actualizarModelo(); 
 
+	void dibujate(Superficie* sup,int xIni,int yIni);
+
 private:
 	bool hayFiguras();
 	Figura* buscarFigura(double posClickX, double posClickY);

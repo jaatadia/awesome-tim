@@ -36,6 +36,7 @@ public:
 
 	void dibujarEnPixel(Superficie* super);
 	void dibujar(Superficie* super);
+	void dibujar(Superficie* super,int xIni,int yIni);
 
 	const char* getID();
 	int getTipoDimension(){return dimension->getTipoDimension();};
