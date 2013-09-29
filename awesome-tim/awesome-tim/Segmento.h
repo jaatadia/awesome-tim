@@ -10,7 +10,7 @@ public:
 	Segmento(double X1, double Y1, double X2, double Y2);
 	~Segmento(void);
 
-	bool intersecaCon(Segmento* otroSegmento);
+	bool intersecaCon(Recta* otroSegmento);
 
 	double getXInicial(){ return XInicial;};
 

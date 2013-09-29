@@ -97,7 +97,7 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 	Xs2 = getX() + ((Xs2-getX()) * cos(-angle)) - ((Ys2-getY()) * sin(-angle));
 	Ys2 = getY() + ((Xs2-getX()) * sin(-angle)) + ((Ys2-getY()) * cos(-angle));
 
-	Segmento* segExterno = new Segmento(Xs1, Ys1, Xs2, Ys2);
+	Recta* rectaExterna = new Recta(Xs1, Ys1, Xs2, Ys2);
 
 	bool interseca = false;
 
@@ -113,7 +113,7 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 	y2 = getY() + vectorY[vertices-1];
 
 	segPropio = new Segmento(x1,y1,x2,y2);
-	interseca = segPropio->intersecaCon(segExterno);
+	interseca = segPropio->intersecaCon(rectaExterna);
 
 	delete segPropio;
 	segPropio = NULL;
@@ -128,7 +128,7 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 
 		segPropio = new Segmento(x1,y1,x2,y2);
 
-		interseca = segPropio->intersecaCon(segExterno);
+		interseca = segPropio->intersecaCon(rectaExterna);
 
 		delete segPropio;
 		segPropio = NULL;
@@ -136,9 +136,9 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 		i++;
 	}
 
+	delete rectaExterna;
+
 	return interseca;
-
-
 }
 
 Dimension* PoligonoRegular::clonar(){

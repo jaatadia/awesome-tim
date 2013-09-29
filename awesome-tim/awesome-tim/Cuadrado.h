@@ -6,16 +6,16 @@
 #include <math.h>
 
 /*
-      vert1
-        *
-       / \
- vert2*   *vert4
-       \ /
-        *
-       vert3
 
-Girado 45 grados en sentido antihorario.
+ vert2*-----*vert1
+      |     |
+	  |     |
+	  |     |
+ vert3*-----*vert4
+
 */
+
+//En realidad tambien es un rectangulo.
 
 class Cuadrado: public Dimension
 {
@@ -23,9 +23,6 @@ private:
 	double ancho;
 	double alto;
 
-	double diagonal;
-	double anguloDiagonal;
-	//guardados respecto al centro
 	Posicion vertice1,vertice2,vertice3,vertice4;
 
 public:
@@ -34,10 +31,9 @@ public:
 
 	double getAncho();
 	double getAlto();
-
-	void setAngulo(double ang);
 	
 	bool puntoPertenece(double X, double Y);
+	bool intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2);
 
 	virtual int getTipoDimension(){return CUADRADO;}
 	Dimension* clonar();

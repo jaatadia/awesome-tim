@@ -173,11 +173,11 @@ while(SDL_PollEvent(&evento)){
 			//muevo la figura voladora, si es que la hay
 			if (figuraEnAire)
 				if ((estaActiva)){
-						figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
+					confirmarPosicionFiguraEnAire();
+					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
-
 			if (!posEnTerreno(posClickX,posClickY))
 				terreno->soltarFigura();
 
@@ -312,12 +312,7 @@ void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent even
 			//Y tambien cambian todas las vistas!!
 			terreno->cambioVistaFiguras();
 			terreno->resizear();
-/*
-			//incluyendo a la del aire!!
-			//en realidad es innecesario, sacar cuando ande botonera!
-			if (figuraEnAire)
-				figuraEnAire->setCambio(true);
-*/
+
 			botonera->resizear();
 			//necesario moverla para que se ajuste la vista...
 			botonera->ScrollDown();
