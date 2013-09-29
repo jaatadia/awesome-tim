@@ -32,6 +32,17 @@ void VistaFigura::dibujar(Superficie *canvas){
 	canvas->dibujarImagen(img,NULL,calcX,calcY);
 }
 
+void VistaFigura::dibujar(Superficie *canvas,int xIni,int yIni){
+	if (this->fig->huboCambios()){
+		redraw();			
+	}
+	
+	int calcX = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->dimension->getX()) - img->getAncho()/2.0);
+	int calcY = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->dimension->getY()) - img->getAlto()/2.0);
+
+	canvas->dibujarImagen(img,NULL,calcX,calcY);
+}
+
 void VistaFigura::redraw(){
 	
 	delete img;

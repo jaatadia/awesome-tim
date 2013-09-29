@@ -454,3 +454,25 @@ bool Terreno::posEnTerrenoExtendido(double posX,double posY){
 	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
 	//return true;
 }
+
+void Terreno::dibujate(Superficie* sup,int xIni,int yIni){
+	
+	sup->dibujarImagen(this->img,NULL,xIni,yIni);
+	
+	std::list<Figura*>::iterator iteradorLista;
+
+	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		double x = (*iteradorLista)->getDimension()->getX();
+		double y = (*iteradorLista)->getDimension()->getY();
+		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
+		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
+		
+		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&
+			((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
+				(*iteradorLista)->dibujar(sup,xIni,yIni);
+	}
+	//por ultimo dibujo la que estoy manipulando;
+	if (figuraActiva)
+		figuraActiva->dibujar(sup,xIni,yIni);
+
+}

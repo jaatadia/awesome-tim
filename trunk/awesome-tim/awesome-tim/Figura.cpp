@@ -65,6 +65,10 @@ void Figura::dibujar(Superficie* super){
 	setCambio(false);
 }
 
+void Figura::dibujar(Superficie* super,int xIni, int yIni){
+	myVista->dibujar(super,xIni,yIni);
+	setCambio(false);
+}
 
 const char* Figura::getID(){
 	return (this->ID.c_str());

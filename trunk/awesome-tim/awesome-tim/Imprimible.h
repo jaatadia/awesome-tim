@@ -8,4 +8,5 @@ class Imprimible
 
 public:
 	virtual Superficie* getImpresion()=0;
+	virtual void dibujate(Superficie* sup,int xIni,int yIni){};
 };
