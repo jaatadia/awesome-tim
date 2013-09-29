@@ -6,7 +6,6 @@ En el constructor le pasas 2 puntos de la recta en cuestion.
 Los otros metodos sirven para saber si un punto esta por encima o por debajo de la recta.
 
 Por encima o por debajo en el sentido convencional (eje y para arriba). Preguntar solo si la recta NO es vertical.
-Y el caso de que pertenezca a la recta esta incluido en el porDebajo porque se me canto hacerlo asi.
 
 Preguntar si esta a izq o a der solo si la recta es vertical.
 */

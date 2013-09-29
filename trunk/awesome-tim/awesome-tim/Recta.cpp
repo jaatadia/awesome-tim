@@ -24,7 +24,7 @@ bool Recta::puntoPorDebajo(double X,double Y){
 
 bool Recta::puntoPorArriba(double X, double Y){
 
-return !puntoPorDebajo(X,Y);
+	return (Y <= pendiente*X + ordenadaAlOrigen);
 }
 
 bool Recta::puntoADerecha(double X,double Y){
@@ -32,5 +32,5 @@ bool Recta::puntoADerecha(double X,double Y){
 }
 
 bool Recta::puntoAIzquierda(double X,double Y){
-	return !puntoADerecha(X,Y);
+	return this->x >= X;
 }

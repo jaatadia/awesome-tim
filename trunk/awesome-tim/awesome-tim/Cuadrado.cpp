@@ -1,14 +1,20 @@
 #include "Cuadrado.h"
 
-
 Cuadrado::Cuadrado(double ancho,double alto,double X, double Y, double angulo): Dimension(X,Y,angulo) {
 	this->ancho = ancho;
 	this->alto = alto;
 
-	diagonal = sqrt(alto*alto + ancho*ancho)/2;
-	anguloDiagonal = 45;
+	vertice1.setX(ancho/2);
+	vertice1.setY(-alto/2);
 
-	setAngulo(angulo);
+	vertice2.setX(-ancho/2);
+	vertice2.setY(-alto/2);
+
+	vertice3.setX(-ancho/2);
+	vertice3.setY(alto/2);
+
+	vertice4.setX(ancho/2);
+	vertice4.setY(alto/2);
 }
 
 Cuadrado::~Cuadrado(void){
@@ -22,7 +28,7 @@ double Cuadrado::getAlto(){
 	return alto;
 }
 
-bool Cuadrado::puntoPertenece(double X, double Y){
+bool Cuadrado::puntoPertenece(double XPunto, double YPunto){
 
 	bool pertenece = true;
 
@@ -31,27 +37,22 @@ bool Cuadrado::puntoPertenece(double X, double Y){
 	Recta r3(vertice3.getX(), vertice3.getY(), vertice4.getX(), vertice4.getY());
 	Recta r4(vertice4.getX(), vertice4.getY(), vertice1.getX(), vertice1.getY());
 
-	double XrelCentro,YrelCentro;
+	//roto el punto al reves de como esta el cuadrado
 
-	XrelCentro = X - getX();
-	YrelCentro = Y - getY();
+	double angle = -(PI*this->getAngulo())/180.0;
+	double Xrotado = getX() + ((XPunto-getX()) * cos(-angle)) - ((YPunto-getY()) * sin(-angle));
+	double Yrotado = getY() + ((XPunto-getX()) * sin(-angle)) + ((YPunto-getY()) * cos(-angle));
 
-	if (r4.vertical()){
-		if (r4.puntoADerecha(XrelCentro,YrelCentro))
-			pertenece = false;
-	}
-	else{
-		if (r4.puntoPorArriba(XrelCentro,YrelCentro))
-			pertenece = false;
+	double XrelCentro =  Xrotado - this->getX();
+	double YrelCentro =  Yrotado - this->getY();
+	//verifico lado por lado
+
+	if (r4.puntoADerecha(XrelCentro,YrelCentro)){
+		pertenece = false;
 	}
 
-	if (r2.vertical()){
-		if (r2.puntoAIzquierda(XrelCentro,YrelCentro))
-			pertenece = false;
-	}
-	else{
-		if (r2.puntoPorDebajo(XrelCentro,YrelCentro))
-			pertenece = false;
+	if (r2.puntoAIzquierda(XrelCentro,YrelCentro)){
+		pertenece = false;
 	}
 
 	if (r1.puntoPorArriba(XrelCentro,YrelCentro)){
@@ -61,72 +62,37 @@ bool Cuadrado::puntoPertenece(double X, double Y){
 	if (r3.puntoPorDebajo(XrelCentro,YrelCentro)){
 		pertenece = false;
 	}
-
+	
 	return pertenece;
 }
 
-void Cuadrado::setAngulo(double anguloRecibido){
-
-	this->angulo = anguloRecibido;
-
-	while (angulo >= 360) angulo -= 360; // o podria aumentar y aumentar
-	while (angulo < 0) angulo += 360;
-
-	//reduzco a 90 grados ya que despues se repite el area ocupada y convierto a radianes 
-	while (anguloRecibido >= 90) anguloRecibido-=90;
-
-	double ang = (anguloRecibido*PI/180);
-	//si el angulo es cero falla el calculo en las rectas mas adelante por redondeos
-	if (ang != 0 && angulo != 0){
-		vertice1.setX(diagonal*cos(ang+PI/4+0*PI/2));
-		vertice1.setY(-diagonal*sin(ang+PI/4+0*PI/2));
-
-		vertice2.setX(diagonal*cos(ang+PI/4+1*PI/2));
-		vertice2.setY(-diagonal*sin(ang+PI/4+1*PI/2));
-
-		vertice3.setX(diagonal*cos(ang+PI/4+2*PI/2));
-		vertice3.setY(-diagonal*sin(ang+PI/4+2*PI/2));
-
-		vertice4.setX(diagonal*cos(ang+PI/4+3*PI/2));
-		vertice4.setY(-diagonal*sin(ang+PI/4+3*PI/2));
-
-	}else{
-		vertice1.setX(ancho/2);
-		vertice1.setY(-alto/2);
-
-		vertice2.setX(-ancho/2);
-		vertice2.setY(-alto/2);
-
-		vertice3.setX(-ancho/2);
-		vertice3.setY(alto/2);
-
-		vertice4.setX(ancho/2);
-		vertice4.setY(alto/2);
-	}
-
-	//por algun motivo a veces el vertice 4 termina a la izquierda del 1 en lugar de arriba, cosa que geometricamente no puede pasar
-	//aca lo corrijo y los pongo alineados verticales, ya que es el unico caso donde esto se da
-	//tambien puede pasar con los vertices 2 y 3 y/o pueden desfasarse verticalmente (recordar eje y al reves!)
-
-	if ( (vertice4.getX() < vertice1.getX()) || (vertice3.getX() < vertice2.getX()) ||
-		(vertice1.getY() > vertice2.getY()) || (vertice4.getY() > vertice3.getY())){
-
-		vertice1.setX(ancho/2);
-		vertice1.setY(-alto/2);
-
-		vertice2.setX(-ancho/2);
-		vertice2.setY(-alto/2);
-
-		vertice3.setX(-ancho/2);
-		vertice3.setY(alto/2);
-
-		vertice4.setX(ancho/2);
-		vertice4.setY(alto/2);
-	}
-
-
-}
 
 Dimension* Cuadrado::clonar(){
 	return new Cuadrado(ancho,alto,getX(),getY(),angulo);
+}
+
+bool Cuadrado::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
+
+	double angle = -(PI*this->getAngulo())/180.0;
+	Xs1 = getX() + ((Xs1-getX()) * cos(-angle)) - ((Ys1-getY()) * sin(-angle));
+	Ys1 = getY() + ((Xs1-getX()) * sin(-angle)) + ((Ys1-getY()) * cos(-angle));
+	Xs2 = getX() + ((Xs2-getX()) * cos(-angle)) - ((Ys2-getY()) * sin(-angle));
+	Ys2 = getY() + ((Xs2-getX()) * sin(-angle)) + ((Ys2-getY()) * cos(-angle));
+
+	Recta* RectaExterna = new Recta(Xs1, Ys1, Xs2, Ys2);
+
+
+	Segmento segPropio1(ancho/2 + getX(), -alto/2 + getY(), -ancho/2 + getX(), -alto/2 + getY());
+	Segmento segPropio2(-ancho/2 + getX(), -alto/2 + getY(), -ancho/2 + getX(), alto/2 + getY());
+	Segmento segPropio3(-ancho/2 + getX(), alto/2 + getY(), ancho/2 + getX(), alto/2 + getY());
+	Segmento segPropio4(ancho/2 + getX(), alto/2 + getY(), ancho/2 + getX(), -alto/2 + getY());	
+
+	if	 (segPropio1.intersecaCon(RectaExterna) || segPropio2.intersecaCon(RectaExterna) ||
+		segPropio3.intersecaCon(RectaExterna) || segPropio4.intersecaCon(RectaExterna)){
+		return true;
+	}
+
+	delete RectaExterna;
+
+	return false;
 }
