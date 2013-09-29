@@ -53,7 +53,14 @@ void Terreno::redraw(){
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		(*iteradorLista)->dibujar(this->sup);
+		double x = (*iteradorLista)->getDimension()->getX();
+		double y = (*iteradorLista)->getDimension()->getY();
+		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
+		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
+		
+		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&
+			((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
+				(*iteradorLista)->dibujar(this->sup);
 	}
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
@@ -445,4 +452,5 @@ bool Terreno::posEnTerrenoExtendido(double posX,double posY){
 	finalLogicoY = ALTO_TERRENO_LOGICO + Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO;
 
 	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
+	//return true;
 }

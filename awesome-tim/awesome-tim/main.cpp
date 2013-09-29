@@ -152,10 +152,12 @@ void jugar(char* rutaIn, char* rutaOut){
 			juego.esperar(tiempoExtra);
 		else{
 
+			std::cout<<"\n ciclios salteados\n";
 			while(tiempoExtra<0){
 				//juego.onEvent();
 				juego.onLoop();
 				tiempoExtra += FRAME_FRECUENCY;
+				std::cout<<"|";
 			}
 
 		}

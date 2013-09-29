@@ -52,8 +52,8 @@ void MEstados::onLoop(){
 }
 
 void MEstados::onRender(){
-	getEstadoActivo()->onRender(superficie);
-	ventana->dibujar(superficie);
+	bool dibujar = getEstadoActivo()->onRender(superficie);
+	if (dibujar) ventana->dibujar(superficie);
 }
 	
 void MEstados::esperar(double miliseconds){
