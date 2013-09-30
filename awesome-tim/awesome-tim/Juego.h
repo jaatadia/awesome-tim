@@ -41,6 +41,7 @@ public:
 	bool guardar();
 
 	void quit();
+	void play(){};
 	void actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);
 
 	void onEvent(Superficie** sup);//maneja los eventos

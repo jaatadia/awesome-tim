@@ -99,9 +99,9 @@ void Box2DWorld::actualizar(Figura * figura)
 		{
 			Dimension * dim = figura->getDimension();
 			if(cuerpo->GetAngle() < 0)
-				figura->setAngulo(-(cuerpo->GetAngle())*180/PI + figura->getDimension()->getAngulo());
+				figura->setAngulo(-(cuerpo->GetAngle())*180/PI);
 			else
-				figura->setAngulo((cuerpo->GetAngle())*180/PI + figura->getDimension()->getAngulo());
+				figura->setAngulo((cuerpo->GetAngle())*180/PI);
 			dim->setX(cuerpo->GetPosition().x);
 			dim->setY(cuerpo->GetPosition().y);
 			break;

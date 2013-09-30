@@ -25,6 +25,11 @@ private:
 	Imagen* BotonSaveOrigSinApretar;
 	Imagen* BotonQuitOrigSinApretar;
 	
+	Imagen* BotonPlayOrigApretado;
+	Imagen* BotonPlayOrigSinApretar;
+	Imagen* BotonPlayApretado;
+	Imagen* BotonPlaySinApretar;
+
 	Imagen* BotonOKApretado;
 	Imagen* BotonSaveApretado;
 	Imagen* BotonQuitApretado;
@@ -32,7 +37,7 @@ private:
 	Imagen* BotonSaveSinApretar;
 	Imagen* BotonQuitSinApretar;
 
-	bool botonOkActivo, botonSaveActivo, botonQuitActivo;
+	bool botonOkActivo, botonSaveActivo, botonQuitActivo,botonPlayActivo;
 
 	int SEPX;
 	int SEPY;
@@ -57,6 +62,11 @@ private:
 	int X_B_SAVE;
 	int Y_B_SAVE;
 	
+	int ANCHO_B_PLAY;
+	int ALTO_B_PLAY;
+	int X_B_PLAY;
+	int Y_B_PLAY;
+
 	char dir[256];
 	int posDirActual;
 

@@ -27,10 +27,16 @@ Comandos::Comandos(int ancho,int alto){
 	Y_B_OK = Y_TBOX;
 
 
+
 	ANCHO_B_SAVE = ANCHO_B_OK;
 	ALTO_B_SAVE = ALTO_TBOX;
 	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEPX);
 	Y_B_SAVE = Y_TBOX;
+
+	ANCHO_B_PLAY = ANCHO_B_OK;
+	ALTO_B_PLAY = ALTO_TBOX;
+	X_B_PLAY = anchoTemp - (ANCHO_B_SAVE*3+3*SEPX);
+	Y_B_PLAY = Y_TBOX;
 
 	ANCHO_B_QUIT = ANCHO_B_OK;
 	ALTO_B_QUIT = ALTO_TBOX;
@@ -52,7 +58,12 @@ Comandos::Comandos(int ancho,int alto){
 	BotonQuitApretado = BotonQuitOrigApretado->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
 	BotonQuitSinApretar = BotonQuitOrigSinApretar->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
 	
-	botonOkActivo = botonQuitActivo = botonSaveActivo = false;
+	BotonPlayOrigApretado = new Imagen("../images/botonPlayApretado.png");
+	BotonPlayOrigSinApretar = new Imagen("../images/botonPlaySinApretar.png");
+	BotonPlayApretado = BotonPlayOrigApretado->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
+	BotonPlaySinApretar = BotonPlayOrigSinApretar->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
+
+	botonPlayActivo = botonOkActivo = botonQuitActivo = botonSaveActivo = false;
 	
 	this->setCambio(true);
 }
@@ -63,18 +74,22 @@ Comandos::~Comandos(void){
 	delete BotonOKApretado;
 	delete BotonQuitApretado;
 	delete BotonSaveApretado;
+	delete BotonPlayApretado;
 
 	delete BotonOKOrigApretado;
 	delete BotonQuitOrigApretado;
 	delete BotonSaveOrigApretado;
+	delete BotonPlayOrigApretado;
 
 	delete BotonOKSinApretar;
 	delete BotonQuitSinApretar;
 	delete BotonSaveSinApretar;
+	delete BotonPlaySinApretar;
 
 	delete BotonOKOrigSinApretar;
 	delete BotonQuitOrigSinApretar;
 	delete BotonSaveOrigSinApretar;
+	delete BotonPlayOrigSinApretar;
 }
 
 Superficie* Comandos::getImpresion(){
@@ -110,6 +125,12 @@ void Comandos::redraw(){
 		sup->dibujarImagen(BotonQuitSinApretar,NULL,X_B_QUIT,Y_B_QUIT);
 	}
 
+	if(botonPlayActivo){
+		sup->dibujarImagen(BotonPlayApretado,NULL,X_B_PLAY,Y_B_PLAY);
+	}
+	else{
+		sup->dibujarImagen(BotonPlaySinApretar,NULL,X_B_PLAY,Y_B_PLAY);
+	}
 
 	if(posDirActual != 0){
 		Imagen* img = new Imagen(dir,ALTO_TBOX*2/3,255,255,255);
@@ -148,7 +169,10 @@ void Comandos::click(double x, double y,Juego* juego){
 	}else if(in(X_B_SAVE,Y_B_SAVE,ANCHO_B_SAVE,ALTO_B_SAVE,x,y)){
 		botonSaveActivo = true;
 		setCambio(true);
-	} else {
+	}else if(in(X_B_PLAY,Y_B_PLAY,ANCHO_B_PLAY,ALTO_B_PLAY,x,y)){
+		botonPlayActivo = true;
+		setCambio(true);
+	}else {
 		if(in(X_B_QUIT,Y_B_QUIT,ANCHO_B_QUIT,ALTO_B_QUIT,x,y)){
 			botonQuitActivo = true;
 			setCambio(true);
@@ -188,11 +212,15 @@ void Comandos::resizear(){
 	X_B_OK = X_TBOX + ANCHO_TBOX + SEPX;
 	Y_B_OK = Y_TBOX;
 
-
 	ANCHO_B_SAVE = ANCHO_B_OK;
 	ALTO_B_SAVE = ALTO_TBOX;
 	X_B_SAVE = anchoTemp - (ANCHO_B_SAVE*2+2*SEPX);
 	Y_B_SAVE = Y_TBOX;
+
+	ANCHO_B_PLAY = ANCHO_B_OK;
+	ALTO_B_PLAY = ALTO_TBOX;
+	X_B_PLAY = anchoTemp - (ANCHO_B_SAVE*3+3*SEPX);
+	Y_B_PLAY = Y_TBOX;
 
 	ANCHO_B_QUIT = ANCHO_B_OK;
 	ALTO_B_QUIT = ALTO_TBOX;
@@ -204,20 +232,21 @@ void Comandos::resizear(){
 	BotonOKApretado = BotonOKOrigApretado->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
 	BotonOKSinApretar = BotonOKOrigSinApretar->scaleImagen(ANCHO_B_OK,ALTO_B_OK);
 
-	//BotonOK = new Imagen("OK",ALTO_B_OK,255,255,255);
-
 	delete BotonSaveApretado;
 	delete BotonSaveSinApretar;
 	BotonSaveApretado = BotonSaveOrigApretado->scaleImagen(ANCHO_B_SAVE,ALTO_B_SAVE);
 	BotonSaveSinApretar = BotonSaveOrigSinApretar->scaleImagen(ANCHO_B_SAVE,ALTO_B_SAVE);
-	//BotonSave = new Imagen("Save",ALTO_B_SAVE,255,255,255);
 
 	delete BotonQuitApretado;
 	delete BotonQuitSinApretar;
 	BotonQuitApretado = BotonQuitOrigApretado->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
 	BotonQuitSinApretar = BotonQuitOrigSinApretar->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
-	//BotonQuit = new Imagen("Quit",ALTO_B_QUIT,255,255,255);
 	
+	delete BotonPlayApretado;
+	delete BotonPlaySinApretar;
+	BotonPlayApretado = BotonPlayOrigApretado->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
+	BotonPlaySinApretar = BotonPlayOrigSinApretar->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
+
 	this->setCambio(true);
 }
 
@@ -230,14 +259,14 @@ void Comandos::release(double x, double y,Juego* juego){
 		juego->setFondo(dir);
 	}else if(in(X_B_SAVE,Y_B_SAVE,ANCHO_B_SAVE,ALTO_B_SAVE,x,y)&&botonSaveActivo){
 		juego->guardar();
+	}else if(in(X_B_PLAY,Y_B_PLAY,ANCHO_B_PLAY,ALTO_B_PLAY,x,y)&&botonPlayActivo){
+		juego->play();
 	} else {
 		if(in(X_B_QUIT,Y_B_QUIT,ANCHO_B_QUIT,ALTO_B_QUIT,x,y)&&botonQuitActivo){
 			juego->quit();
 		}
 	}
-	botonOkActivo = false;
-	botonSaveActivo = false;
-	botonQuitActivo = false;
+	botonPlayActivo = botonOkActivo = botonSaveActivo = botonQuitActivo = false;
 	setCambio(true);
 
 }
