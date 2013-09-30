@@ -12,9 +12,9 @@ VistaFigura::~VistaFigura(void){
 void VistaFigura::dibujarEnPixel(Superficie *canvas){
 	if (this->fig->huboCambios()){
 		redraw();			
+		this->fig->setCambio(false);
 	}
-	this->fig->setCambio(false);
-
+	
 	int calcX = int(fig->dimension->getX()- img->getAncho()/2.0);
 	int calcY = int(fig->dimension->getY()- img->getAlto()/2.0);
 
@@ -22,8 +22,11 @@ void VistaFigura::dibujarEnPixel(Superficie *canvas){
 }
 
 void VistaFigura::dibujar(Superficie *canvas){
+	
+
 	if (this->fig->huboCambios()){
-		redraw();			
+		redraw();
+		this->fig->setCambio(false);
 	}
 	
 	int calcX = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->dimension->getX()) - img->getAncho()/2.0);
@@ -35,6 +38,7 @@ void VistaFigura::dibujar(Superficie *canvas){
 void VistaFigura::dibujar(Superficie *canvas,int xIni,int yIni){
 	if (this->fig->huboCambios()){
 		redraw();			
+		this->fig->setCambio(false);
 	}
 	
 	int calcX = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->dimension->getX()) - img->getAncho()/2.0);
@@ -46,7 +50,6 @@ void VistaFigura::dibujar(Superficie *canvas,int xIni,int yIni){
 void VistaFigura::redraw(){
 	
 	delete img;
-
 	
 	Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID.c_str()));
 	

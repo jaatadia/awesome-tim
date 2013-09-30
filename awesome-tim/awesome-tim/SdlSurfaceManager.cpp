@@ -603,3 +603,66 @@ SDL_Surface* SdlSurfaceManager::scale(SDL_Surface* superficie,int pixelesAncho,i
 	}
 	return res;
 }
+
+
+SDL_Surface* SdlSurfaceManager::rotarZoom2(SDL_Surface* sur, int pixAncho, int pixAlto, double ang){
+	
+	while(ang>=360) ang -= 360;
+	while(ang<0) ang += 360;
+
+	double extra = sqrt(pow((double)sur->w,2)+pow((double)sur->h,2));
+	
+	double alto = 2*extra;
+	double ancho = 2*extra;
+	double centroX = ((double)sur->w)/2;
+	double centroY = ((double)sur->h)/2;
+	double nuevoCentroX = ancho/2;
+	double nuevoCentroY = alto/2;
+	double angulo = (ang*PI/180.0);
+	
+
+	double coseno = cos(-angulo);
+	double seno = sin(-angulo);
+	
+	double relacionPixelX = pixAncho/(double(sur->w));
+	double relacionPixelY = pixAlto/(double(sur->h));
+	
+	SDL_Surface* res = crearSup(int(pixAncho+(relacionPixelX*(2*extra-sur->w))),int(pixAlto+(relacionPixelY*(2*extra-sur->h))));
+	if(res == NULL) return NULL;
+
+	SDL_LockSurface(sur); 
+	SDL_LockSurface(res); 
+	
+	Uint32 alpha = SDL_MapRGBA(sur->format,0,0,0,0);
+
+
+	for(int i=0;i<sur->w;i++){
+		double temp1 = (i-centroX)*coseno;
+		double temp2 = (i-centroX)*seno;
+		for(int j=0;j<sur->h;j++){
+			
+			Uint32 pixelOrigen = getPixel(sur,i,j);
+
+			if(pixelOrigen!=alpha){
+				int nuevoX = int((nuevoCentroX + temp1 - (j-centroY)*seno)+0.99);
+				int nuevoY = int((nuevoCentroY + temp2 + (j-centroY)*coseno)+0.99);
+
+				for(int k = 0;k<(relacionPixelX+0.99);k++){
+					int destinoX = int (nuevoX*relacionPixelX + k);
+					for(int l = 0;l<(relacionPixelY+0.99);l++){
+						int destinoY = int (nuevoY*relacionPixelY + l);
+						Uint32 pixelDestino = getPixel(res,destinoX,destinoY);
+						if(pixelDestino!=alpha) putPixel(res,destinoX,destinoY,pixelOrigen);
+						else putPixel(res,destinoX,destinoY,blendPixels(res->format,pixelOrigen,pixelDestino));
+					}
+				}
+			}
+		}	
+	}
+	
+	
+	SDL_UnlockSurface(sur); 
+	SDL_UnlockSurface(res); 
+
+	return res;
+}

@@ -58,6 +58,7 @@ bool Figura::esMiPosicion(double x,double y)
 
 void Figura::dibujarEnPixel(Superficie* super){
 	myVista->dibujarEnPixel(super);
+	setCambio(false);
 }
 
 void Figura::dibujar(Superficie* super){
@@ -91,6 +92,13 @@ void Figura::setTraslucido(bool flag){
 }
 
 void Figura::setAngulo(double angulo){ 
-	dimension->setAngulo(angulo); 
-	setCambio(true);
+	
+	double margen = 2;
+	if(
+		(dimension->getAngulo()<(angulo-margen))||
+		(dimension->getAngulo()>(angulo+margen))
+	){
+		dimension->setAngulo(angulo); 
+		setCambio(true);
+	}
 }
