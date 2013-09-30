@@ -7,6 +7,14 @@ Box2DWorld::Box2DWorld(void)
 Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY)
 {
 	this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
+	//GROUNDBOX
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(50.0f, 100.0f);
+	b2Body* groundBody = (this->mundo)->CreateBody(&groundBodyDef);
+	b2PolygonShape groundBox;
+	groundBox.SetAsBox(50.0f, 1.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);
+
 }
 
 void Box2DWorld::setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion)
@@ -91,9 +99,9 @@ void Box2DWorld::actualizar(Figura * figura)
 		{
 			Dimension * dim = figura->getDimension();
 			if(cuerpo->GetAngle() < 0)
-				figura->setAngulo(-(cuerpo->GetAngle())*180/PI);
+				figura->setAngulo(-(cuerpo->GetAngle())*180/PI + figura->getDimension()->getAngulo());
 			else
-				figura->setAngulo((cuerpo->GetAngle())*180/PI);
+				figura->setAngulo((cuerpo->GetAngle())*180/PI + figura->getDimension()->getAngulo());
 			dim->setX(cuerpo->GetPosition().x);
 			dim->setY(cuerpo->GetPosition().y);
 			break;
