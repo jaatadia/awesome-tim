@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\JuegoPlay.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -333,6 +337,10 @@
 			</File>
 			<File
 				RelativePath=".\GloboHelio.h"
+				>
+			</File>
+			<File
+				RelativePath=".\JuegoPlay.h"
 				>
 			</File>
 			<File

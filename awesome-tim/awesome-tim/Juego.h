@@ -41,7 +41,7 @@ public:
 	bool guardar();
 
 	void quit();
-	void play(){};
+	void play();
 	void actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);
 
 	void onEvent(Superficie** sup);//maneja los eventos
@@ -49,6 +49,8 @@ public:
 	bool onRender(Superficie* superficie);//dibuja en la ventana
 
 	void setFondo(const char* dir);
+
+	void resume();
 
 private:
 	bool posEnTerreno(double posX,double posY);
@@ -60,4 +62,5 @@ private:
 	bool figEnTerreno();
 	bool figEnBotonera();
 	bool figEnComandos();
+	void resizear();
 };

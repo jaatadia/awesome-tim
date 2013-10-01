@@ -24,6 +24,8 @@ public:
 	};
 
 	virtual void setAngulo(double ang){
+		while(ang<0) ang+=360;
+		while(ang>=360) ang-=360;
 		this->angulo=ang;
 	};
 
