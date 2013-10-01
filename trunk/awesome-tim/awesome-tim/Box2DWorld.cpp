@@ -86,6 +86,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			break;
 	}
 	//Vos que queres eficiencia, esto no va en body definition?
+	cuerpo->SetTransform(cuerpo->GetPosition(),figura->getDimension()->getAngulo()/180*PI);
 	cuerpo->SetUserData(figura);
 }
 

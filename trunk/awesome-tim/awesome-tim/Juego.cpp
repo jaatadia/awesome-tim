@@ -16,7 +16,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	this->maq = maq;
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,false);
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	figuraEnAire=NULL;
@@ -270,6 +270,10 @@ void Juego::quit(){
 	maq->salir();
 }
 
+void Juego::play(){
+	maq->play(this->terreno);
+}
+
 void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
 
 	switch (evento.event){
@@ -311,18 +315,26 @@ void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent even
 			(*sup) = new Superficie(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
 
 			//Y tambien cambian todas las vistas!!
-			terreno->cambioVistaFiguras();
-			terreno->resizear();
-
-			botonera->resizear();
-			//necesario moverla para que se ajuste la vista...
-			botonera->ScrollDown();
-
-			comandos->resizear();
+			resizear();
 
 			break;
 		}
 	}
+}
+
+void Juego::resume(){
+	resizear();
+}
+
+void Juego::resizear(){
+	terreno->cambioVistaFiguras();
+	terreno->resizear();
+
+	botonera->resizear();
+	//necesario moverla para que se ajuste la vista...
+	botonera->ScrollDown();
+
+	comandos->resizear();
 }
 
 void Juego::setFondo(const char* dir){

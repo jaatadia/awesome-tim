@@ -36,7 +36,7 @@ public:
 
 	virtual void salir();
 	virtual void editor();
-	virtual void play();
+	virtual void play(Terreno* ter);
 
 private:
 	Estado* getEstadoActivo(){return Eactivo;}

@@ -2,6 +2,7 @@
 #include "ErrorLogHandler.h"
 #include "Constantes.h"
 #include "Juego.h"
+#include "JuegoPlay.h"
 
 MEstados::MEstados(const char *fileIn,const char *fileOut){
 	
@@ -64,8 +65,14 @@ void MEstados::salir(){
 	running = false;
 }
 
-void MEstados::editor(){}
+void MEstados::editor(){
+	delete Eplay;
+	Eplay = NULL;
+	Eactivo = Eeditor;
+	Eeditor->resume();
+}
 
-void MEstados::play(){
+void MEstados::play(Terreno* ter){
+	Eplay = new JuegoPlay(ter,this);
 	Eactivo = Eplay;
 }
