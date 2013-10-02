@@ -1,10 +1,12 @@
 #pragma once
-#include "figura.h"
+#include "FiguraCompuesta.h"
+#include "Cuadrado.h"
 
 class Motor :
-	public Figura
+	public FiguraCompuesta
 {
 public:
+	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
 	Motor(void);
 	~Motor(void);
 };

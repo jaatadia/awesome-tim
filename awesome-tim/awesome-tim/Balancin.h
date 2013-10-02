@@ -1,10 +1,10 @@
 #pragma once
-#include "figura.h"
+#include "FiguraCompuesta.h"
 
 #define CANT_ELEM_BALANCIN 4
 
 class Balancin :
-	public Figura
+	public FiguraCompuesta
 {
 
 private:
@@ -18,6 +18,7 @@ private:
 
 public:
 
+	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
 	Balancin(Figura** figuras);
 	void cambiarPosicion(double x,double y);
 	bool esMiPosicion(double x,double y);
@@ -28,5 +29,7 @@ public:
 	void setTraslucido(bool flag);
 	void setAngulo(double angulo);
 	~Balancin(void);
+
+	int getTipoDimension(){return BALANCIN;};
 
 };

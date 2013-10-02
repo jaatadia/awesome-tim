@@ -19,15 +19,13 @@ public:
 protected:
 	Figura(){};	
 	Dimension* dimension;
-//	Posicion pos;//las del cntro de la figura termino dentro de dimension
-//	double angulo;// tambien dentro de dimension
 	std::string ID;
 	VistaFigura* myVista;
 	bool traslucido;
 
 public:
 	Figura(const char* ID,Dimension* dim);
-	~Figura(void);
+	virtual ~Figura(void);
 
 	virtual void cambiarPosicion(double Movx,double Movy);
 

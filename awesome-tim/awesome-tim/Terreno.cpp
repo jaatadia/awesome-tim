@@ -451,7 +451,9 @@ bool Terreno::posEnTerrenoExtendido(double posX,double posY){
 	ppioLogicoY = Y_TERRENO_LOGICO - ALTO_TERRENO_LOGICO;
 	finalLogicoY = ALTO_TERRENO_LOGICO + Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO;
 
-	return ((posX > ppioLogicoX) && (posX < finalLogicoX) && (posY > ppioLogicoY) && (posY < finalLogicoY)) ;
+	std::cout<<posY<<std::endl;
+
+	return ((posX > ppioLogicoX) || (posX < finalLogicoX) || (posY > ppioLogicoY) || (posY < finalLogicoY)) ;
 	//return true;
 }
 

@@ -7,7 +7,7 @@
 #define PUNTA2 2
 #define BASE 3
 
-Balancin::Balancin(Figura** figuras):Figura("",new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,POSX_DEFAULT,POSY_DEFAULT, ANGULO_DEFAULT)){
+Balancin::Balancin(Figura** figuras):FiguraCompuesta("",new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,POSX_DEFAULT,POSY_DEFAULT, ANGULO_DEFAULT)){
 	this->tabla = figuras[TABLA];
 	this->punta1 = figuras[PUNTA1];
 	this->punta2 = figuras[PUNTA2];

@@ -10,6 +10,7 @@ protected:
 	double densidad, restitucion;
 
 public:
+
 	Dimension(double X, double Y,double angulo):Posicion(X,Y){
 		this->angulo=angulo;
 	};
