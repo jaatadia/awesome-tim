@@ -1,5 +1,6 @@
 #include "Cuadrado.h"
 
+
 Cuadrado::Cuadrado(double ancho,double alto,double X, double Y, double angulo): Dimension(X,Y,angulo) {
 	this->ancho = ancho;
 	this->alto = alto;

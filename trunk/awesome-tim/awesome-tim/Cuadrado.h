@@ -27,6 +27,7 @@ private:
 
 public:
 	Cuadrado(double ancho,double alto,double X,double Y, double angulo);
+
 	~Cuadrado(void);
 
 	double getAncho();
