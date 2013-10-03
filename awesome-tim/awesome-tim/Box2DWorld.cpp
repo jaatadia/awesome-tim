@@ -210,12 +210,5 @@ void Box2DWorld::eliminarFigura(Figura * figura)
 
 Box2DWorld::~Box2DWorld(void)
 {
-	b2Body * cuerpo = this->mundo->GetBodyList();
-	while(cuerpo)
-	{
-		this->mundo->DestroyBody(cuerpo);
-		cuerpo = cuerpo->GetNext();
-	}
 	delete this->mundo;
-	std::cout<<"deleteo\n";
 }
