@@ -65,3 +65,7 @@ int Ventana::getAlto(){
 	SDL_GetWindowSize(win,&ancho,&alto);
 	return alto;
 }
+
+void Ventana::resize(int ancho,int alto){
+	SDL_SetWindowSize(win,ancho,alto);
+}

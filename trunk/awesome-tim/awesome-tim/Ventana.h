@@ -34,4 +34,5 @@ public:
 	void dibujar(Superficie* sup);//dibuja en la ventana la superficie pasada
 	int getAncho();
 	int getAlto();
+	void resize(int ancho,int alto);
 };

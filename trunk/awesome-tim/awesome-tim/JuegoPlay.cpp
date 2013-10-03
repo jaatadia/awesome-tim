@@ -20,7 +20,7 @@ JuegoPlay::~JuegoPlay(void)
 	delete terreno;
 }
 
-void JuegoPlay::onEvent(Superficie **sup){
+void JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 
 	SDL_Event evento;
 	double posClickX, posClickY;
@@ -29,7 +29,7 @@ void JuegoPlay::onEvent(Superficie **sup){
 		switch(evento.type){
 			case SDL_WINDOWEVENT:
 			{
-				actuarVentana(sup,evento.window.windowID,evento.window);
+				actuarVentana(ventana,sup,evento.window.windowID,evento.window);
 				//actualiza las escalas si fue un resize
 				break;
 			}case SDL_MOUSEBUTTONDOWN:
@@ -51,7 +51,7 @@ bool JuegoPlay::onRender(Superficie* sup){
 	return true;
 }
 
-void JuegoPlay::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
+void JuegoPlay::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
 
 	switch (evento.event){
 		case SDL_WINDOWEVENT_CLOSE:
@@ -64,6 +64,15 @@ void JuegoPlay::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent 
 		{
 			double anchoActual= evento.data1;
 			double altoActual= evento.data2;
+
+			if(anchoActual != altoActual){
+				if(anchoActual<altoActual){
+					altoActual = anchoActual;
+				}else{
+					anchoActual = altoActual;
+				}
+				ventana->resize(anchoActual,altoActual);
+			}
 
 			EscalasDeEjes::getInstance()->setEscalaX(UNIDADES_LOGICAS_TOTAL/anchoActual);
 			EscalasDeEjes::getInstance()->setEscalaY(UNIDADES_LOGICAS_TOTAL/altoActual);
