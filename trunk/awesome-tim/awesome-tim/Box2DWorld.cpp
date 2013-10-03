@@ -84,6 +84,60 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 			}
 			break;
+		case SOGA:
+			{
+				b2Body* segmentoAnterior;
+				b2Body* segmentoSiguiente;
+
+				FiguraCompuesta* fig = (FiguraCompuesta*) figura;
+				std::list<Figura*> segmentosSoga = fig->getFigurasComp();
+
+				std::list<Figura*>::iterator iterSegmentos;
+				
+				//meto el primero
+				iterSegmentos = segmentosSoga.begin();
+
+				bD.position.Set((*iterSegmentos)->getDimension()->getX(), (*iterSegmentos)->getDimension()->getY());
+				segmentoAnterior = this->mundo->CreateBody(&bD);
+
+				b2PolygonShape forma;
+				
+				b2FixtureDef fD;
+
+				forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
+				fD.shape = &forma;
+				//pendientes de ajuste luego de experimentar un poco
+				fD.density = 1.0;
+				fD.friction = 0.3;
+
+				segmentoAnterior->CreateFixture(&fD);
+
+				iterSegmentos++;
+
+				for (iterSegmentos ; iterSegmentos != segmentosSoga.end(); iterSegmentos++){
+					bD.position.Set((*iterSegmentos)->getDimension()->getX(), (*iterSegmentos)->getDimension()->getY());
+					segmentoSiguiente = this->mundo->CreateBody(&bD);
+					//necesario porque el ultimo puede no tener longitud 1
+					//O podria hacerlo al reves y tener al ultimo de caso aparte lo cual tendria mas sentido
+					//CAMBIARLO si tengo tiempo
+					b2PolygonShape forma;
+					forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
+					fD.shape = &forma;
+
+					segmentoSiguiente->CreateFixture(&fD);
+
+					//los uno
+					b2RevoluteJointDef jointDef;
+
+					b2Vec2 puntoAnclaje ((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto()/2);
+					jointDef.Initialize(segmentoAnterior, segmentoSiguiente, segmentoAnterior->GetWorldPoint(puntoAnclaje));
+
+					//guardo el que se unira en el paso siguiente
+					segmentoAnterior = segmentoSiguiente;
+				}
+
+			}
+			break;
 	}
 	//Vos que queres eficiencia, esto no va en body definition?
 	cuerpo->SetTransform(cuerpo->GetPosition(),figura->getDimension()->getAngulo()/180*PI);

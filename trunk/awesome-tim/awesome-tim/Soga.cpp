@@ -14,7 +14,7 @@ Soga::Soga(const char* ID,Dimension* dim):FiguraCompuesta("",dim)
 	int i = 0;
 	for ( i = 0; i*LARGO_SEGMENTO_SOGA < dim->getAncho() ; i++){
 		
-		dimSegm = new Cuadrado(ALTO_SEGMENTO_SOGA, LARGO_SEGMENTO_SOGA, i*LARGO_SEGMENTO_SOGA + dim->getX(), dim->getY(), dim->getAngulo());
+		dimSegm = new Cuadrado(LARGO_SEGMENTO_SOGA, ALTO_SEGMENTO_SOGA, i*LARGO_SEGMENTO_SOGA + dim->getX(), dim->getY(), dim->getAngulo());
 		segm = new Figura(ID,dimSegm);
 		
 		segm->setCambio(true);
@@ -23,15 +23,17 @@ Soga::Soga(const char* ID,Dimension* dim):FiguraCompuesta("",dim)
 		partesFigura.push_back(segm);
 	}
 
-	//agrego el ultimo segmento variable.
+	//agrego el ultimo segmento variable. (Si es necesario.)
 
-	dimSegm = new Cuadrado(ALTO_SEGMENTO_SOGA, largoEstirada - (i*LARGO_SEGMENTO_SOGA), i*LARGO_SEGMENTO_SOGA + dim->getX(), dim->getY(), dim->getAngulo());
-	segm = new Figura(ID,dimSegm);
+	if ((largoEstirada - (i*LARGO_SEGMENTO_SOGA)) != 0){
+		dimSegm = new Cuadrado(ALTO_SEGMENTO_SOGA, largoEstirada - (i*LARGO_SEGMENTO_SOGA), i*LARGO_SEGMENTO_SOGA + dim->getX(), dim->getY(), dim->getAngulo());
+		segm = new Figura(ID,dimSegm);
 
-	segm->setCambio(true);
-	segm->setTraslucido(false);
-		
-	partesFigura.push_back(segm);
+		segm->setCambio(true);
+		segm->setTraslucido(false);
+			
+		partesFigura.push_back(segm);
+	}
 }
 
 Soga::~Soga(void)

@@ -2,6 +2,8 @@
 #include "ErrorLogHandler.h"
 #include "Contenedor.h"
 #include <new>
+//***********sacar, solo para probar soga******************
+#include "Soga.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	this->fisicaActiva = fisicaActiva;
@@ -20,6 +22,11 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	}else{
 		this->mundoBox2D = NULL;
 	}
+/*
+	//*********************prueba de soga***********************
+ 
+	agregarFigura(new Soga("../images/Cuadrado.png",new Cuadrado(5,5,10,10,0)));
+*/
 }
 
 Terreno::~Terreno(void){
@@ -451,7 +458,7 @@ bool Terreno::posEnTerrenoExtendido(double posX,double posY){
 	ppioLogicoY = Y_TERRENO_LOGICO - ALTO_TERRENO_LOGICO;
 	finalLogicoY = ALTO_TERRENO_LOGICO + Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO;
 
-	std::cout<<posY<<std::endl;
+//	std::cout<<posY<<std::endl; //a ver porque no se va por arriba...
 
 	return ((posX > ppioLogicoX) || (posX < finalLogicoX) || (posY > ppioLogicoY) || (posY < finalLogicoY)) ;
 	//return true;

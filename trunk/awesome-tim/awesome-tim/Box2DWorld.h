@@ -2,6 +2,7 @@
 
 #include "Box2D/Box2D.h"
 #include "Figura.h"
+#include "FiguraCompuesta.h"
 #include "Constantes.h"
 #include "PelotaBasquet.h"
 #include "PelotaBowling.h"
