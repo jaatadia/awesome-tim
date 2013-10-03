@@ -14,7 +14,7 @@ private:
 
 public:
 	VistaFigura(Figura* fig);
-	virtual ~VistaFigura(void);
+	~VistaFigura(void);
 	//dibuja la figura tomando su posicion como pixels
 	void dibujarEnPixel(Superficie* canvas);
 	//dibuja la figura tomando su posicion como unidades logicas , probablemente siempre hay que usar este

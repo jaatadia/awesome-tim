@@ -18,7 +18,7 @@
 
 class Comandos;
 
-class Juego: public Estado, public Fallable, Cambiable
+class Juego: public Estado, Cambiable
 {
 private:
 	

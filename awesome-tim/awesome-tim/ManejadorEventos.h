@@ -12,7 +12,7 @@ private:
 public:
 
 ManejadorEventos(void);
-virtual ~ManejadorEventos(void);
+~ManejadorEventos(void);
 
 virtual void actuarVentana(Uint32 IDventana,SDL_WindowEvent evento);
 
