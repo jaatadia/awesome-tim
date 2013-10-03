@@ -41,4 +41,6 @@ public:
 
 	//para este devuelve un cuadrado que contiene a la figura
 	virtual Dimension* getDimension();
+
+	virtual std::list<Figura*> getFigurasComp(){return partesFigura;};
 };

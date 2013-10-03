@@ -22,6 +22,7 @@ void FiguraCompuesta::cambiarPosicion(double Movx,double Movy){
 		(*iterFig)->cambiarPosicion(Movx,Movy);
 		iterFig++;
 	}
+	setCambio(true);
 }
 
 
@@ -56,7 +57,7 @@ bool FiguraCompuesta::intersecaCon(double X1, double Y1, double X2, double Y2){
 void FiguraCompuesta::dibujarEnPixel(Superficie* superficie){
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-		myVista->dibujarEnPixel(superficie);
+		(*iterFig)->dibujarEnPixel(superficie);
 		setCambio(false);
 	}
 
@@ -65,7 +66,7 @@ void FiguraCompuesta::dibujarEnPixel(Superficie* superficie){
 void FiguraCompuesta::dibujar(Superficie* superficie){
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-		myVista->dibujar(superficie);
+		(*iterFig)->dibujar(superficie);
 		setCambio(false);
 	}
 }
@@ -73,7 +74,7 @@ void FiguraCompuesta::dibujar(Superficie* superficie){
 void FiguraCompuesta::dibujar(Superficie* super,int xIni,int yIni){
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-		myVista->dibujar(super,xIni,yIni);
+		(*iterFig)->dibujar(super,xIni,yIni);
 		setCambio(false);
 	}
 }
@@ -83,6 +84,7 @@ void FiguraCompuesta::setTraslucido(bool flag){
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		(*iterFig)->setTraslucido(flag);
 	}
+	setCambio(true);
 }
 
 void FiguraCompuesta::setAngulo(double angulo){
@@ -90,6 +92,7 @@ void FiguraCompuesta::setAngulo(double angulo){
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		(*iterFig)->setAngulo(angulo);
 	}	
+	setCambio(true);
 
 }
 
