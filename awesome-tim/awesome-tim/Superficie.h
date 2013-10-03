@@ -34,6 +34,7 @@ public:
 	SDL_Surface* getSurface(){return superficie;}
 
 	void restore();//repinta el fondo de la imagen
+	void restoreAlpha();//repinta el fondo de la imagen
 	void restoreGris();//repinta el fondo de la imagen
 	int getAlto(); //devuelve el alto de la superficie
 	int getAncho(); //devuelve el ancho de la superficie

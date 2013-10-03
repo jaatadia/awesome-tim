@@ -31,13 +31,13 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 
 Terreno::~Terreno(void){
 
+	if(fisicaActiva) delete this->mundoBox2D;
+
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		delete (*iteradorLista);
 	}
-
-	if(fisicaActiva) delete this->mundoBox2D;
 
 	//borro imagen del fondo
 	if (img) delete img;

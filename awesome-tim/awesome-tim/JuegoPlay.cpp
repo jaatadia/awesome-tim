@@ -1,8 +1,11 @@
 #include "JuegoPlay.h"
 
-JuegoPlay::JuegoPlay(Terreno* ter,MaquinaEstados* maq)
+JuegoPlay::JuegoPlay(Superficie* fondo, Terreno* ter,MaquinaEstados* maq)
 {
+	this->fondo = fondo;
 	this->maq = maq;
+	
+	comandos = new ComandosPlay(ANCHO_COMANDOS,ALTO_COMANDOS);
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
 
 	terreno->setFondo(ter->getFondo().c_str());
@@ -13,11 +16,15 @@ JuegoPlay::JuegoPlay(Terreno* ter,MaquinaEstados* maq)
 		terreno->agregarFigura((*iteradorLista)->clonar());
 	}
 	terreno->resizear();
+
+	this->setCambio(true);
 }
 
 JuegoPlay::~JuegoPlay(void)
 {
 	delete terreno;
+	delete comandos;
+	delete fondo;
 }
 
 void JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
@@ -34,11 +41,24 @@ void JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 				break;
 			}case SDL_MOUSEBUTTONDOWN:
 			{
-				maq->editor();
+				posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
+				posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
+
+				if (evento.button.state == SDL_BUTTON_LMASK){
+					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+				}
+				break;
+			}
+			case SDL_MOUSEBUTTONUP:
+			{
+				posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
+				posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
+
+				comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+				break;
 			}
 		}
 	}
-
 }
 
 void JuegoPlay::onLoop(){
@@ -46,8 +66,19 @@ void JuegoPlay::onLoop(){
 }
 
 bool JuegoPlay::onRender(Superficie* sup){
-	sup->restore();
+	if(this->huboCambios()){
+		Superficie* temp = fondo->scaleSurface(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
+		temp->setTransparency(100);
+		sup->dibujarSupreficie(temp,NULL,0,0);
+		delete temp;
+		this->setCambio(false);
+	}
+	
 	sup->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+	if(comandos->huboCambios()){
+		//sup->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+		comandos->dibujate(sup,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+	}
 	return true;
 }
 
@@ -80,12 +111,20 @@ void JuegoPlay::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana
 			delete (*sup);
 			(*sup) = new Superficie(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
 
+
 			//Y tambien cambian todas las vistas!!
 			terreno->cambioVistaFiguras();
 			terreno->resizear();
+			comandos->resizear();
+			
+			this->setCambio(true);
 
 			break;
 		}
 
 	}
+}
+
+void JuegoPlay::quit(){
+	maq->editor();
 }

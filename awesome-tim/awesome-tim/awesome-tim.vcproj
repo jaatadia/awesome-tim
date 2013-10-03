@@ -182,6 +182,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ComandosPlay.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GloboHelio.cpp"
 				>
 			</File>
@@ -325,6 +329,10 @@
 			>
 			<File
 				RelativePath=".\Box2DWorld.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ComandosPlay.h"
 				>
 			</File>
 			<File

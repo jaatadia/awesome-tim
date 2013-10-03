@@ -73,6 +73,10 @@ void MEstados::editor(){
 }
 
 void MEstados::play(Terreno* ter){
-	Eplay = new JuegoPlay(ter,this);
+	
+	Superficie* aux = superficie->scaleSurface(superficie->getAncho(),superficie->getAlto());
+	superficie->restore();
+	
+	Eplay = new JuegoPlay(aux,ter,this);
 	Eactivo = Eplay;
 }
