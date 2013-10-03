@@ -5,6 +5,6 @@ class Plataforma :
 	public Figura
 {
 public:
-	Plataforma(void);
+	Plataforma(const char* ID,Dimension* dim);
 	~Plataforma(void);
 };
