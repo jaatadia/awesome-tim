@@ -23,9 +23,15 @@ Superficie::~Superficie(void){
 
 //repinta el fondo de la imagen
 void Superficie::restore(){
-	Uint32 alpha = SDL_MapRGBA(superficie->format,0,0,0,255);
+	Uint32 negro = SDL_MapRGBA(superficie->format,0,0,0,255);
+	SdlSurfaceManager::pintarSup(superficie,negro);
+}
+
+void Superficie::restoreAlpha(){
+	Uint32 alpha = SDL_MapRGBA(superficie->format,0,0,0,0);
 	SdlSurfaceManager::pintarSup(superficie,alpha);
 }
+
 
 //devuelve el alto de la superficie
 int Superficie::getAlto(){

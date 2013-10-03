@@ -19,7 +19,7 @@ private:
 
 public:
 	Recta(double X1,double Y1,double X2,double Y2);
-	~Recta(void);
+	virtual ~Recta(void);
 
 	bool puntoPorDebajo(double X,double Y);
 	bool puntoPorArriba(double X, double Y);

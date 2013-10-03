@@ -330,6 +330,7 @@ void Juego::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL
 }
 
 void Juego::resume(){
+	this->setCambio(true);
 	resizear();
 }
 

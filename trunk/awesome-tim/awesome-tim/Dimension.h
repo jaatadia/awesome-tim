@@ -14,7 +14,8 @@ public:
 	Dimension(double X, double Y,double angulo):Posicion(X,Y){
 		this->angulo=angulo;
 	};
-
+	
+	virtual ~Dimension(){};
 	virtual double getAncho()=0;
 	virtual double getAlto()=0;
 	virtual int getTipoDimension()=0;
