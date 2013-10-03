@@ -107,7 +107,7 @@ void Juego:: onLoop(){
 }
 
 //manejo de eventos
-void Juego:: onEvent(Superficie** sup){
+void Juego:: onEvent(Ventana* ventana,Superficie** sup){
 
 SDL_Event evento;
 double posClickX, posClickY;
@@ -116,7 +116,7 @@ while(SDL_PollEvent(&evento)){
 	switch(evento.type){
 		case SDL_WINDOWEVENT:
 		{
-			actuarVentana(sup,evento.window.windowID,evento.window);
+			actuarVentana(ventana,sup,evento.window.windowID,evento.window);
 			//actualiza las escalas si fue un resize
 			break;
 		}
@@ -274,7 +274,7 @@ void Juego::play(){
 	maq->play(this->terreno);
 }
 
-void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
+void Juego::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
 
 	switch (evento.event){
 		case SDL_WINDOWEVENT_CLOSE:
@@ -308,6 +308,14 @@ void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent even
 			double anchoActual= evento.data1;
 			double altoActual= evento.data2;
 
+			if(anchoActual != altoActual){
+				if(anchoActual<altoActual){
+					altoActual = anchoActual;
+				}else{
+					anchoActual = altoActual;
+				}
+				ventana->resize(anchoActual,altoActual);
+			}
 			EscalasDeEjes::getInstance()->setEscalaX(UNIDADES_LOGICAS_TOTAL/anchoActual);
 			EscalasDeEjes::getInstance()->setEscalaY(UNIDADES_LOGICAS_TOTAL/altoActual);
 			//obtengo superficie resizeada para el juego, esta es la grande donde se pegan las otras.
@@ -316,7 +324,6 @@ void Juego::actuarVentana(Superficie** sup,Uint32 IDventana,SDL_WindowEvent even
 
 			//Y tambien cambian todas las vistas!!
 			resizear();
-
 			break;
 		}
 	}
