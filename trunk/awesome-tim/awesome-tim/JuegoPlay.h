@@ -8,7 +8,7 @@
 
 class ComandosPlay;
 
-class JuegoPlay: public Estado, public Fallable, Cambiable
+class JuegoPlay: public Estado, public Cambiable
 {
 private:
 	MaquinaEstados* maq;

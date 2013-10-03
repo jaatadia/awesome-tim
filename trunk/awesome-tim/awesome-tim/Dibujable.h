@@ -6,6 +6,6 @@
 class Dibujable
 {
 public:
-	virtual ~Dibujable(){};
+	//virtual ~Dibujable(){};
 	virtual void dibujar(Superficie* super)=0;
 };
