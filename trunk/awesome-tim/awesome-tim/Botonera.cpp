@@ -54,10 +54,14 @@ void Botonera::restaurarInstanciaActual( int numeroFigActual ){
 }
 
 Botonera::~Botonera() {
-	this->lstFiguras.clear();
+	std::list<map<Figura *, int>>::iterator itFig;
+	for (itFig = this->lstFiguras.begin(); itFig != this->lstFiguras.end(); itFig++)
+	{
+		delete (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first);
+	}
+
 }
 
 std::list<map<Figura *, int>> Botonera::getListaFiguras() {
 	return this->lstFiguras;
 }
-

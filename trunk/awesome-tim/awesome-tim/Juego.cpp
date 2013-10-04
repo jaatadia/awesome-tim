@@ -66,7 +66,7 @@ Juego::~Juego(){
 
 bool Juego:: onRender(Superficie* superficie){
 
-	bool dibujar = false;
+	bool dibujar = true;
 	
 	if (figuraEnAire){
 		confirmarPosicionFiguraEnAire();

@@ -571,7 +571,7 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 		Figura* fig = cargar_figura(nodoFig);
 		
 		if (!fig) continue;
-
+		
 		try{
 			listaFiguras[i]["cantidad_de_instancias"] >> instancias;
 		}catch(YAML::TypedKeyNotFound<std::string> &e){

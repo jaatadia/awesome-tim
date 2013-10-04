@@ -98,7 +98,7 @@ void Figura::setAngulo(double angulo){
 		(dimension->getAngulo()<(angulo-margen))||
 		(dimension->getAngulo()>(angulo+margen))
 	){
-		dimension->setAngulo(angulo); 
 		setCambio(true);
 	}
+	dimension->setAngulo(angulo); 
 }
