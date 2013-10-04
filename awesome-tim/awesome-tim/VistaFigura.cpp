@@ -7,6 +7,7 @@ VistaFigura::VistaFigura(Figura* fig){
 }
 
 VistaFigura::~VistaFigura(void){
+	delete img;
 }
 
 void VistaFigura::dibujarEnPixel(Superficie *canvas){

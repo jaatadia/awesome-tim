@@ -16,8 +16,7 @@ Superficie::Superficie(int ancho,int alto){
 
 //destructor de la superficie
 Superficie::~Superficie(void){
-	if(!huboFallos())
-		SDL_FreeSurface(superficie);
+	SDL_FreeSurface(superficie);
 }
 
 
