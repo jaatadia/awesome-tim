@@ -8,13 +8,14 @@ Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY)
 {
 	this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
 	//GROUNDBOX
+/*
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(50.0f, 100.0f);
 	b2Body* groundBody = (this->mundo)->CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(50.0f, 0.0f);
 	groundBody->CreateFixture(&groundBox, 0.0f);
-
+*/
 }
 
 void Box2DWorld::setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion)
@@ -36,7 +37,11 @@ void Box2DWorld::agregarFigura(Figura * figura)
 	bD.position.Set(dim->getX(), dim->getY());
 	bD.type = b2_dynamicBody;
 	b2Body * cuerpo = this->mundo->CreateBody(&bD);
-	switch(dim->getTipoDimension())
+
+	cuerpo->SetTransform(cuerpo->GetPosition(),figura->getDimension()->getAngulo()/180*PI);
+	cuerpo->SetUserData(figura);
+
+	switch(figura->getTipoDimension())
 	{
 		case TRIANGULO:
 			break;
@@ -88,7 +93,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			{
 				b2Body* segmentoAnterior;
 				b2Body* segmentoSiguiente;
-
+				//obtengo iterador para recorrer los segmentos de soga
 				FiguraCompuesta* fig = (FiguraCompuesta*) figura;
 				std::list<Figura*> segmentosSoga = fig->getFigurasComp();
 
@@ -106,30 +111,36 @@ void Box2DWorld::agregarFigura(Figura * figura)
 
 				forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
 				fD.shape = &forma;
-				//pendientes de ajuste luego de experimentar un poco
+//pendientes de AJUSTE luego de experimentar un poco
 				fD.density = 1.0;
 				fD.friction = 0.3;
 
 				segmentoAnterior->CreateFixture(&fD);
+				//completo el cuerpo de box2d del 1er segmento de soga
+				segmentoAnterior->SetTransform(segmentoAnterior->GetPosition(),(*iterSegmentos)->getDimension()->getAngulo()/180*PI);
+				segmentoAnterior->SetUserData((*iterSegmentos));
 
 				iterSegmentos++;
 
 				for (iterSegmentos ; iterSegmentos != segmentosSoga.end(); iterSegmentos++){
 					bD.position.Set((*iterSegmentos)->getDimension()->getX(), (*iterSegmentos)->getDimension()->getY());
 					segmentoSiguiente = this->mundo->CreateBody(&bD);
-					//necesario porque el ultimo puede no tener longitud 1
-					//O podria hacerlo al reves y tener al ultimo de caso aparte lo cual tendria mas sentido
-					//CAMBIARLO si tengo tiempo
+//necesario porque el ultimo puede no tener longitud 1
+//O podria hacerlo al reves y tener al ultimo de caso aparte lo cual tendria mas sentido
+//CAMBIARLO si tengo tiempo
 					b2PolygonShape forma;
 					forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
 					fD.shape = &forma;
 
 					segmentoSiguiente->CreateFixture(&fD);
+					//completo el cuerpo de box2d del segmento en cuestion
+					segmentoSiguiente->SetTransform(segmentoSiguiente->GetPosition(),(*iterSegmentos)->getDimension()->getAngulo()/180*PI);
+					segmentoSiguiente->SetUserData((*iterSegmentos));
 
 					//los uno
 					b2RevoluteJointDef jointDef;
 
-					b2Vec2 puntoAnclaje ((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto()/2);
+					b2Vec2 puntoAnclaje ((*iterSegmentos)->getDimension()->getX(),(*iterSegmentos)->getDimension()->getY()/2);
 					jointDef.Initialize(segmentoAnterior, segmentoSiguiente, segmentoAnterior->GetWorldPoint(puntoAnclaje));
 
 					//guardo el que se unira en el paso siguiente
@@ -139,13 +150,11 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			}
 			break;
 	}
-	//Vos que queres eficiencia, esto no va en body definition?
-	cuerpo->SetTransform(cuerpo->GetPosition(),figura->getDimension()->getAngulo()/180*PI);
-	cuerpo->SetUserData(figura);
 }
 
 void Box2DWorld::actualizar(Figura * figura)
 {
+/*
 	b2Body * cuerpo = this->mundo->GetBodyList();
 
 	while(cuerpo)
@@ -163,6 +172,33 @@ void Box2DWorld::actualizar(Figura * figura)
 		}
 		cuerpo = cuerpo->GetNext();
 	}
+*/
+
+	//Hago que actualize tooodas las que tenga  << Juan
+//PARA DEBUG
+	int i=0;
+	
+	b2Body* cuerpo = this->mundo->GetBodyList();
+
+	while(cuerpo)
+	{
+		Figura* fig  = (Figura*)cuerpo->GetUserData();
+		
+		if(cuerpo->GetAngle() < 0)
+			fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
+		else
+			fig->setAngulo((cuerpo->GetAngle())*180/PI);
+
+		fig->getDimension()->setX(cuerpo->GetPosition().x);
+		fig->getDimension()->setY(cuerpo->GetPosition().y);
+	
+		cuerpo = cuerpo->GetNext();
+//PARA DEBUG
+		i++;
+	}
+
+	std::cout<<i<<std::endl;
+
 }
 
 void Box2DWorld::cambiarParametros(Figura * figura)

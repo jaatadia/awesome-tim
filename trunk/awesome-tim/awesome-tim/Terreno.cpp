@@ -78,10 +78,10 @@ void Terreno::redraw(){
 }
 
 Superficie* Terreno::getImpresion(){
-	if(this->huboCambios()){
+//	if(this->huboCambios()){
 		redraw();
 		this->setCambio(false);
-	}
+//	}
 	return sup;
 }
 
@@ -130,7 +130,7 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 		X2 = posClickX + cantMovX;
 		Y2 = posClickY + cantMovY;
 
-		double ang = calcularAngulo(figuraActiva , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
+		double ang = calcularAngulo(figuraActiva->getDimension() , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
 		figuraActiva->setAngulo(ang);
 
 		if(fisicaActiva) this->mundoBox2D->cambiarParametros(figuraActiva);
@@ -289,49 +289,6 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 		return NULL;
 }
 
-
-double Terreno::calcularAngulo(Figura* fig, double XVector1,double YVector1,double XVector2,double YVector2){
-
-	double X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig;
-	double moduloCuadrado1, moduloCuadrado2;
-	double productoModulo;
-	double productoEscalar;
-	double variacionAngulo;
-	double divisionEscalarModulo;
-
-	X1RelCentroFig = XVector1 - fig->getDimension()->getX();
-	Y1RelCentroFig = YVector1 - fig->getDimension()->getY();
-	X2RelCentroFig = XVector2 - fig->getDimension()->getX();
-	Y2RelCentroFig = YVector2 - fig->getDimension()->getY();
-
-	moduloCuadrado1 = X1RelCentroFig*X1RelCentroFig + Y1RelCentroFig*Y1RelCentroFig;
-	moduloCuadrado2 = X2RelCentroFig*X2RelCentroFig + Y2RelCentroFig*Y2RelCentroFig;
-	//if necesario o puede romperse la raiz, en resumen, si pasa por el centro no cambio el angulo
-	if ((moduloCuadrado1 != 0) && (moduloCuadrado2 != 0)){
-		productoModulo = sqrt(moduloCuadrado1*moduloCuadrado2);
-
-		productoEscalar = X1RelCentroFig*X2RelCentroFig + Y1RelCentroFig*Y2RelCentroFig;
-		
-		//por que si por redondeo extraño es mayor que 1 devuelve NaN el acos. 
-		divisionEscalarModulo = productoEscalar/productoModulo;
-
-		if (divisionEscalarModulo > 1)
-			divisionEscalarModulo = 0.99999999999999999999999999999999999;
-	
-		variacionAngulo = acos(divisionEscalarModulo);
-
-		//dado que el movimiento puede haber sido horario o antihorario y ambos dan el mismo valor averiguo hacia que lado fue
-		bool esPositivo = anguloEsPositivo(X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig);
-
-		if (!esPositivo)
-			variacionAngulo = -variacionAngulo;
-
-		//Paso el angulo a grados desde radianes
-		variacionAngulo = (variacionAngulo*180/PI);
-	}
-		return (fig->getDimension()->getAngulo() + variacionAngulo);
-}
-
 int Terreno::obtenerCuadranteDeClick(double X, double Y){
 
 	if (X>=0 && Y>=0)
@@ -421,6 +378,13 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 
 void Terreno::actualizarModelo(){
 
+	if (fisicaActiva){
+		this->mundoBox2D->actualizar();
+/*
+	std::list<Figura*>::iterator iteradorLista;
+
+	iteradorLista = figuras.begin();
+
 	Figura* figuraABorrar = NULL;
 	if (fisicaActiva){
 		this->setCambio(true);
@@ -439,6 +403,11 @@ void Terreno::actualizarModelo(){
 				figuraABorrar = NULL;
 			}
 		}
+	}
+}
+*/
+//hice que actualize todas las figuras de una sin iterar afuera...
+	this->mundoBox2D->actualizar(NULL);
 	}
 }
 
@@ -477,4 +446,49 @@ void Terreno::dibujate(Superficie* sup,int xIni,int yIni){
 	if (figuraActiva)
 		figuraActiva->dibujar(sup,xIni,yIni);
 
+}
+
+
+double Terreno::calcularAngulo(Dimension* dim, double XVector1,double YVector1,double XVector2,double YVector2){
+
+	double X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig;
+	double moduloCuadrado1, moduloCuadrado2;
+	double productoModulo;
+	double productoEscalar;
+	double variacionAngulo;
+	double divisionEscalarModulo;
+
+	X1RelCentroFig = XVector1 - dim->getX();
+	Y1RelCentroFig = YVector1 - dim->getY();
+	X2RelCentroFig = XVector2 - dim->getX();
+	Y2RelCentroFig = YVector2 - dim->getY();
+
+	moduloCuadrado1 = X1RelCentroFig*X1RelCentroFig + Y1RelCentroFig*Y1RelCentroFig;
+	moduloCuadrado2 = X2RelCentroFig*X2RelCentroFig + Y2RelCentroFig*Y2RelCentroFig;
+	//if necesario o puede romperse la raiz, en resumen, si pasa por el centro no cambio el angulo
+	if ((moduloCuadrado1 != 0) && (moduloCuadrado2 != 0)){
+		productoModulo = sqrt(moduloCuadrado1*moduloCuadrado2);
+
+		productoEscalar = X1RelCentroFig*X2RelCentroFig + Y1RelCentroFig*Y2RelCentroFig;
+		
+		//por que si por redondeo extraño es mayor que 1 devuelve NaN el acos. 
+		divisionEscalarModulo = productoEscalar/productoModulo;
+
+		if (divisionEscalarModulo > 1)
+			divisionEscalarModulo = 0.99999999999999999999999999999999999;
+	
+		variacionAngulo = acos(divisionEscalarModulo);
+
+		//dado que el movimiento puede haber sido horario o antihorario y ambos dan el mismo valor averiguo hacia que lado fue
+		bool esPositivo = anguloEsPositivo(X1RelCentroFig,Y1RelCentroFig,X2RelCentroFig,Y2RelCentroFig);
+
+		if (!esPositivo)
+			variacionAngulo = -variacionAngulo;
+
+		//Paso el angulo a grados desde radianes
+		variacionAngulo = (variacionAngulo*180/PI);
+	}else{
+		variacionAngulo = 0;
+	}
+		return (dim->getAngulo() + variacionAngulo);
 }

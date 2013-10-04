@@ -12,8 +12,10 @@ Figura::Figura(const char* ID,Dimension* dim){
 }
 
 Figura::~Figura(void){
-	delete myVista;
-	delete dimension;
+	if (myVista != NULL)
+		delete myVista;
+	if (dimension != NULL)
+		delete dimension;
 }
 
 void Figura::cambiarPosicion(double x,double y)

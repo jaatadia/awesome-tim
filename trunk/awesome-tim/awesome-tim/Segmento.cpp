@@ -3,20 +3,25 @@
 Segmento::Segmento(double X1, double Y1, double X2, double Y2) : Recta(X1, Y1, X2, Y2)
 {
 	if (X1<=X2){
-		XInicial = X1;
-		XFinal = X2;
+		XMin = X1;
+		XMax = X2;
 	}else{
-		XInicial = X2;
-		XFinal = X1;
+		XMin = X2;
+		XMax = X1;
 	}
 
 	if (Y1<=Y2){
-		YInicial = Y1;
-		YFinal = Y2;
+		YMin = Y1;
+		YMax = Y2;
 	}else{
-		YInicial = Y1;
-		YFinal = Y2;
+		YMin = Y1;
+		YMax = Y2;
 	}
+
+	XInicial = X1;
+	XFinal = X2;
+	YInicial = Y1;
+	YFinal = Y2;
 }
 
 Segmento::~Segmento(void)
@@ -61,6 +66,23 @@ bool Segmento::intersecaCon(Recta* otraRecta){
 				return false;
 			}
 		}
+
+	return false;
+}
+
+bool Segmento::intersecaCon(Segmento* otroSegmento){
+
+	Recta recta1(this->getXInicial(),this->getYInicial(),this->getXFinal(),this->getYFinal());
+	Recta recta2(otroSegmento->getXInicial(),otroSegmento->getYInicial(),otroSegmento->getXFinal(),otroSegmento->getYFinal());
+
+	if ( recta1.getPendiente() == recta2.getPendiente() ){
+		//chequeo rango de X
+		if (this->getXMax() >= otroSegmento->getXMin()){
+			return this->intersecaCon(&recta2);
+		}
+	}else{
+		return ( this->intersecaCon(&recta2) || otroSegmento->intersecaCon(&recta1) );
+	}
 
 	return false;
 }

@@ -80,7 +80,7 @@ bool Cuadrado::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 	Xs2 = getX() + ((Xs2-getX()) * cos(-angle)) - ((Ys2-getY()) * sin(-angle));
 	Ys2 = getY() + ((Xs2-getX()) * sin(-angle)) + ((Ys2-getY()) * cos(-angle));
 
-	Recta* RectaExterna = new Recta(Xs1, Ys1, Xs2, Ys2);
+	Segmento* segExterno = new Segmento(Xs1, Ys1, Xs2, Ys2);
 
 
 	Segmento segPropio1(ancho/2 + getX(), -alto/2 + getY(), -ancho/2 + getX(), -alto/2 + getY());
@@ -88,12 +88,12 @@ bool Cuadrado::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 	Segmento segPropio3(-ancho/2 + getX(), alto/2 + getY(), ancho/2 + getX(), alto/2 + getY());
 	Segmento segPropio4(ancho/2 + getX(), alto/2 + getY(), ancho/2 + getX(), -alto/2 + getY());	
 
-	if	 (segPropio1.intersecaCon(RectaExterna) || segPropio2.intersecaCon(RectaExterna) ||
-		segPropio3.intersecaCon(RectaExterna) || segPropio4.intersecaCon(RectaExterna)){
+	if	 (segPropio1.intersecaCon(segExterno) || segPropio2.intersecaCon(segExterno) ||
+		segPropio3.intersecaCon(segExterno) || segPropio4.intersecaCon(segExterno)){
 		return true;
 	}
 
-	delete RectaExterna;
+	delete segExterno;
 
 	return false;
 }
