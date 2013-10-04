@@ -26,6 +26,7 @@ class Ventana: public Fallable
 private:
 	SDL_Window* win;
 	SDL_Renderer* ren;
+	SDL_Surface* icon;
 
 public:
 	Ventana(void);//crea una ventana

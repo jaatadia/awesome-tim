@@ -24,6 +24,7 @@ private:
 	bool fallo;
 public:
 	Fallable();//cosntructor
+	virtual ~Fallable(){};
 	bool huboFallos();//devuelve true si hubo fallos
 	void fallar();//indica que el objeto debe fallar (uso interno pero se permite usar por que se me antoja :P )
 };

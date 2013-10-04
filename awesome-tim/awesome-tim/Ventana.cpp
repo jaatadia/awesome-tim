@@ -1,34 +1,30 @@
 #include "Ventana.h"
 #include "Constantes.h"
 #include "ErrorLogHandler.h"
+#include "SdlSurfaceManager.h"
 
 //crea la ventana
 Ventana::Ventana(void)
 {
-	win = NULL;
-	win = SDL_CreateWindow(NOMBRE_JUEGO,10,10,ANCHO_PANTALLA,ALTO_PANTALLA,SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL);
-	if(win == NULL){
+	icon = SdlSurfaceManager::cargarImagen("../images/Bowling.png");
+	int res = SDL_CreateWindowAndRenderer(ANCHO_PANTALLA,ALTO_PANTALLA,SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN,&win,&ren);
+	if(res == -1){
 		ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
 		fallar();
 	}else{
+		SDL_SetWindowTitle(win,NOMBRE_JUEGO);
 		SDL_SetWindowMinimumSize(win,150,150);
-		ren = NULL;
-		ren = SDL_CreateRenderer(win,-1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		if(ren == NULL){
-			ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
-			SDL_DestroyWindow(win);
-			fallar();
-		}
+		SDL_SetWindowPosition(win,10,10);
+		SDL_SetWindowIcon(win,icon);
 	}
 }
 
 //destruye la ventana
 Ventana::~Ventana(void)
 {
-	if(!huboFallos()){
-		SDL_DestroyWindow(win);
-		SDL_DestroyRenderer(ren);
-	}
+	SDL_DestroyWindow(win);
+	SDL_DestroyRenderer(ren);
+	SDL_FreeSurface(icon);
 }
 
 //dibuja en la ventana la superficie pasada
@@ -38,8 +34,8 @@ void Ventana::dibujar(Superficie* sup){
 	tex = SDL_CreateTextureFromSurface(ren,sup->superficie);
 	if(tex!=NULL){
 		SDL_RenderCopy(ren,tex,NULL,NULL);
-		SDL_RenderPresent(ren);
 		SDL_DestroyTexture(tex);
+		SDL_RenderPresent(ren);
 	}else{
 		ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
 	}
