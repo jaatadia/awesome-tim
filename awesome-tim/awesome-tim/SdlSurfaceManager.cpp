@@ -388,14 +388,14 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 	double coseno = cos(-angulo);
 	double seno = sin(-angulo);
 	
-	for(int i=0;i<sur->w;i++){
-		double temp1 = (i-centroX)*coseno;
-		double temp2 = (i-centroX)*seno;
-		for(int j=0;j<sur->h;j++){
+	for(int j=0;j<sur->h;j++){
+		double temp1 = (j-centroY)*seno;
+		double temp2 = (j-centroY)*coseno;
+		for(int i=0;i<sur->w;i++){
 			Uint32 pixel = getPixel(sur,i,j);
 			if((pixel!=alpha)&&((i-centroX != 0)||(j-centroY!=0))){	
-				int nuevoX = int((nuevoCentroX + temp1 - (j-centroY)*seno)+0.99);
-				int nuevoY = int((nuevoCentroY + temp2 + (j-centroY)*coseno)+0.99);
+				int nuevoX = int((nuevoCentroX + (i-centroX)*coseno - temp1) + 0.99);
+				int nuevoY = int((nuevoCentroY + (i-centroX)*seno + temp2) + 0.99);
 				putPixel(img,nuevoX,nuevoY,pixel);
 			}
 		}	

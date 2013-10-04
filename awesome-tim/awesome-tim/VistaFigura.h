@@ -10,7 +10,10 @@ class VistaFigura{
 
 private:
 	Figura* fig;
-	Imagen* img;
+	Imagen* orig;
+	Imagen* rotada;
+	bool modoGreedy;
+	int escalaAnterior;
 
 public:
 	VistaFigura(Figura* fig);
