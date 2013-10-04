@@ -2,7 +2,7 @@
 
 #define NOMBRE_JUEGO "The Incredible Machine"
 
-#define FPS 60
+#define FPS 30
 #define FRAME_FRECUENCY 1000.0/FPS
 
 #define ANCHO_PANTALLA 600 //ancho de la superficie
