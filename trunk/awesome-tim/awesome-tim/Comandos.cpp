@@ -91,7 +91,6 @@ Comandos::~Comandos(void){
 	delete BotonSaveOrigSinApretar;
 	delete BotonPlayOrigSinApretar;
 
-	delete this->sup;
 }
 
 Superficie* Comandos::getImpresion(){

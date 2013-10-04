@@ -56,8 +56,6 @@ public:
 
 	void buscarActiva(double posClickX ,double posClickY);
 
-	bool huboCambios();
-
 	void actualizarModelo(); 
 
 	void dibujate(Superficie* sup,int xIni,int yIni);

@@ -10,7 +10,7 @@ public:
 		this->x=x;
 		this->y=y;
 	}
-	//virtual ~Posicion(){};
+	virtual ~Posicion(){};
 	double getX(){return x;}
 	double getY(){return y;}
 	void setX(double x){this->x = x;}

@@ -11,6 +11,7 @@ class MEstados: public MaquinaEstados,public Fallable
 private:
 
 	Estado* Eactivo;
+	Estado* Eanterior;
 
 	Estado* Eeditor;
 	Estado* Eplay;

@@ -15,6 +15,8 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	img=NULL;
 	fondo = NULL;
 	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
+	this->setCambio(true);
+
 	//Box2D
 	if(fisicaActiva){
 		this->mundoBox2D = new Box2DWorld(0.0f,9.81f);
@@ -36,7 +38,8 @@ Terreno::~Terreno(void){
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		delete (*iteradorLista);
+		Figura* fig = (*iteradorLista);
+		delete fig;
 	}
 
 	//borro imagen del fondo
@@ -75,8 +78,10 @@ void Terreno::redraw(){
 }
 
 Superficie* Terreno::getImpresion(){
-	if(this->huboCambios()) redraw();
-	this->setCambio(false);
+	if(this->huboCambios()){
+		redraw();
+		this->setCambio(false);
+	}
 	return sup;
 }
 
@@ -284,10 +289,6 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 		return NULL;
 }
 
-bool Terreno::huboCambios(){
-	return true;
-}
-
 
 double Terreno::calcularAngulo(Figura* fig, double XVector1,double YVector1,double XVector2,double YVector2){
 
@@ -420,33 +421,25 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 
 void Terreno::actualizarModelo(){
 
-if (fisicaActiva){
-	this->mundoBox2D->actualizar();
-
-	std::list<Figura*>::iterator iteradorLista;
-
-	iteradorLista = figuras.begin();
-
 	Figura* figuraABorrar = NULL;
-
-	while ( (iteradorLista != figuras.end()) && (!figuras.empty()) ){
-
-		this->mundoBox2D->actualizar((*iteradorLista));
-
-		//reviso cuales se fueron para borrarlas
-		if (!posEnTerrenoExtendido((*iteradorLista)->getDimension()->getX(), (*iteradorLista)->getDimension()->getY())){
-			figuraABorrar = (*iteradorLista);
-		}
-
-		iteradorLista++;
-
-		if (figuraABorrar){
-			this->eliminarFigura(figuraABorrar);
-			figuraABorrar = NULL;
+	if (fisicaActiva){
+		this->setCambio(true);
+		this->mundoBox2D->actualizar();
+		std::list<Figura*>::iterator iteradorLista;
+		iteradorLista = figuras.begin();
+		while ( (iteradorLista != figuras.end()) && (!figuras.empty()) ){
+			this->mundoBox2D->actualizar((*iteradorLista));
+			//reviso cuales se fueron para borrarlas
+			if (!posEnTerrenoExtendido((*iteradorLista)->getDimension()->getX(), (*iteradorLista)->getDimension()->getY())){
+				figuraABorrar = (*iteradorLista);
+			}
+			iteradorLista++;
+			if (figuraABorrar){
+				this->eliminarFigura(figuraABorrar);
+				figuraABorrar = NULL;
+			}
 		}
 	}
-}
-
 }
 
 bool Terreno::posEnTerrenoExtendido(double posX,double posY){

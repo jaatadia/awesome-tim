@@ -103,7 +103,7 @@ bool Juego:: onRender(Superficie* superficie){
 }
 	
 void Juego:: onLoop(){
-	terreno->actualizarModelo();
+	//terreno->actualizarModelo();
 }
 
 //manejo de eventos
