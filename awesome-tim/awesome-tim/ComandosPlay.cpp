@@ -4,9 +4,10 @@ ComandosPlay::ComandosPlay(int ancho,int alto){
 	anchoOrig = this->ancho = ancho;
 	altoOrig = this->alto = alto;
 	
-	sup = new Superficie(ancho,alto);
-	sup->restoreAlpha();
-
+	this->sup = NULL;
+	/*this->sup = new Superficie(ancho,alto);
+	this->sup->restoreAlpha();*/
+	
 	int anchoTemp,altoTemp;
 
 	anchoTemp = ancho;
@@ -43,20 +44,21 @@ ComandosPlay::~ComandosPlay(void)
 }
 
 Superficie* ComandosPlay::getImpresion(){
-	if(this->huboCambios()) 
+	/*if(this->huboCambios()) 
 		redraw();
 	this->setCambio(false);
-	return sup;
+	return this->sup;*/
+	return NULL;
 }
 
 void ComandosPlay::redraw(){
-	sup->restoreGris();
+	/*sup->restoreGris();
 	if(botonStopActivo){
 		sup->dibujarImagen(BotonStopApretado,NULL,X_B_STOP,Y_B_STOP);
 	}
 	else{
 		sup->dibujarImagen(BotonStopSinApretar,NULL,X_B_STOP,Y_B_STOP);
-	}
+	}*/
 }
 
 void ComandosPlay::click(double x, double y,JuegoPlay* juego){
@@ -74,15 +76,13 @@ bool ComandosPlay::in(int x, int y, int ancho, int alto, double x2, double y2){
 
 void ComandosPlay::resizear(){
 
-	this->setCambio(true);
-	
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
 	ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(anchoOrig/5);
 	alto =  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(altoOrig/5);
 
-	delete sup;
-	sup = new Superficie(ancho,alto);
-	
+	/*delete sup;
+	sup = new Superficie(ancho,alto);*/
+		
 	int anchoTemp = ancho;
 	int altoTemp = alto;
 

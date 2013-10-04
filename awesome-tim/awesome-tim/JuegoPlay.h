@@ -22,6 +22,7 @@ public:
 	virtual void onEvent(Ventana* ventana,Superficie** sup);
 	virtual void onLoop();
 	virtual bool onRender(Superficie* sup);
+	
 	void quit();
 
 private:

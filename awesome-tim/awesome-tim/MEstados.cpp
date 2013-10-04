@@ -26,16 +26,18 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 	running = true;
 
 	Eactivo = Eeditor = new Juego(fileIn,fileOut,this);
-	Eplay = NULL;
+	Eanterior = Eplay = NULL;
 }
 
 MEstados::~MEstados(void){
 	
-	delete Eeditor;
-	delete Eplay;
-
 	delete ventana;
 	delete superficie;
+	
+	delete Eanterior;
+	delete Eeditor;
+	delete Eplay;
+	
 	SDL_Quit();
 	ErrorLogHandler::closeLog();
 }
@@ -49,6 +51,10 @@ void MEstados::onEvent(){
 }
 
 void MEstados::onLoop(){
+	if(Eanterior){
+		delete Eanterior;
+		Eanterior = NULL;
+	}
 	getEstadoActivo()->onLoop();
 }
 
@@ -66,10 +72,10 @@ void MEstados::salir(){
 }
 
 void MEstados::editor(){
-	delete Eplay;
+	Eanterior = Eplay;
 	Eplay = NULL;
 	Eactivo = Eeditor;
-	Eeditor->resume();
+	Eactivo->resume();
 }
 
 void MEstados::play(Terreno* ter){

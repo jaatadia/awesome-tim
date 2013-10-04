@@ -16,7 +16,6 @@ JuegoPlay::JuegoPlay(Superficie* fondo, Terreno* ter,MaquinaEstados* maq)
 		terreno->agregarFigura((*iteradorLista)->clonar());
 	}
 	terreno->resizear();
-
 	this->setCambio(true);
 }
 

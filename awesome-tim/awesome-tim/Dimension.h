@@ -15,7 +15,7 @@ public:
 		this->angulo=angulo;
 	};
 	
-	//virtual ~Dimension(){};
+	virtual ~Dimension(){};
 	virtual double getAncho()=0;
 	virtual double getAlto()=0;
 	virtual int getTipoDimension()=0;

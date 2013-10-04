@@ -138,29 +138,29 @@ void jugar(char* rutaIn, char* rutaOut){
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		
 
-		clock_t tInicial = clock();
+		//clock_t tInicial = clock();
 		
 		juego.onEvent();
 		juego.onLoop();
 		juego.onRender();
 		
-		clock_t tFinal = clock();
-		double tiempoTardado = ((double)(tFinal - tInicial))*1000/CLOCKS_PER_SEC;
-		double tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
+		//clock_t tFinal = clock();
+		//double tiempoTardado = ((double)(tFinal - tInicial))*1000/CLOCKS_PER_SEC;
+		//double tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
 
-		if(tiempoExtra>=0)
-			juego.esperar(tiempoExtra);
-		else{
+		//if(tiempoExtra>=0)
+		//	juego.esperar(tiempoExtra);
+		//else{
 
-			std::cout<<"\n ciclios salteados\n";
-			while(tiempoExtra<0){
-				//juego.onEvent();
-				juego.onLoop();
-				tiempoExtra += FRAME_FRECUENCY;
-				std::cout<<"|";
-			}
+		//	std::cout<<"\n ciclios salteados\n";
+		//	while(tiempoExtra<0){
+		//		//juego.onEvent();
+		//		juego.onLoop();
+		//		tiempoExtra += FRAME_FRECUENCY;
+		//		std::cout<<"|";
+		//	}
 
-		}
+		//}
 		
 
 	}

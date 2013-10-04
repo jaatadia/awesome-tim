@@ -23,7 +23,6 @@ class Fallable
 private:
 	bool fallo;
 public:
-	//virtual ~Fallable(){};
 	Fallable();//cosntructor
 	bool huboFallos();//devuelve true si hubo fallos
 	void fallar();//indica que el objeto debe fallar (uso interno pero se permite usar por que se me antoja :P )
