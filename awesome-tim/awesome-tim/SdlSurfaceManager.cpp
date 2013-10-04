@@ -402,11 +402,11 @@ SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup
 	}
 	
 	
-	for(int i=0;i<img->w;i++){
-		for(int j=0;j<img->h;j++){
+	for(int j=0;j<img->h;j++){
+		for(int i=0;i<img->w;i++){
 			if(getPixel(img,i,j)==alpha){
-				Uint32 pix1 = getPixel(img,i,j-1);
-				Uint32 pix2 = getPixel(img,i,j+1);
+				Uint32 pix1 = getPixel(img,i+1,j);
+				Uint32 pix2 = getPixel(img,i-1,j);
 				if((pix1!=alpha)&&(pix2!=alpha)){
 					putPixel(img,i,j,blendPixels(img->format,pix1,pix2));
 				}else if((pix1!=alpha)||(pix2!=alpha)){
