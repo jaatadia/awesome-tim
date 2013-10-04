@@ -18,7 +18,7 @@ Soga::Soga(const char* ID = ImgSegmSoga,Dimension* dim = new Cuadrado(ANCHO_DEFA
 	int i = 0;
 	for ( i ; i*LARGO_SEGMENTO_SOGA < largoExtra ; i++){
 //PUEDE ESTAR MAL EL SOLAPAMIENTO!!!********************
-		dimSegm = new Cuadrado(LARGO_SEGMENTO_SOGA, ALTO_SEGMENTO_SOGA, i*LARGO_SEGMENTO_SOGA + inicioSoga-0.1*i/*"-0.1" para solapar*/, dim->getY(), dim->getAngulo());
+		dimSegm = new Cuadrado(LARGO_SEGMENTO_SOGA, ALTO_SEGMENTO_SOGA, i*LARGO_SEGMENTO_SOGA + inicioSoga-1*i/*"-0.1" para solapar*/, dim->getY(), dim->getAngulo());
 		segm = new Figura(ID,dimSegm);
 		
 		segm->setCambio(true);
@@ -30,7 +30,7 @@ Soga::Soga(const char* ID = ImgSegmSoga,Dimension* dim = new Cuadrado(ANCHO_DEFA
 	/*agrego el ultimo segmento variable. (Si es necesario.)*/
 
 	if ((largoExtra - (i*LARGO_SEGMENTO_SOGA)) > 0){
-		dimSegm = new Cuadrado(ALTO_SEGMENTO_SOGA, largoExtra - (i*LARGO_SEGMENTO_SOGA), i*LARGO_SEGMENTO_SOGA + inicioSoga -0.1*i, dim->getY(), dim->getAngulo());
+		dimSegm = new Cuadrado(ALTO_SEGMENTO_SOGA, largoExtra - (i*LARGO_SEGMENTO_SOGA), i*LARGO_SEGMENTO_SOGA + inicioSoga -1*i, dim->getY(), dim->getAngulo());
 		segm = new Figura(ID,dimSegm);
 
 		segm->setCambio(true);
@@ -47,7 +47,16 @@ Soga::Soga(const char* ID = ImgSegmSoga,Dimension* dim = new Cuadrado(ANCHO_DEFA
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		angulos.push_back(0.f);
 	}
+//cargo los ids
+	listaID = new const char*[partesFigura.size()];
 
+	int C = 0;
+
+	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
+		(*(listaID+C))= (*iterFig)->getID();
+		/*por una vez queria escribir C++ :P*/
+		C++;	
+	}
 
 }
 
@@ -65,3 +74,5 @@ Figura* Soga::clonar(){
 
 	return figADevolver;
 }
+
+const char** getListaDeIDs();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Figura.h"
+# include "Cuadrado.h"
 #include "Constantes.h"
 #include <math.h>
 
@@ -16,6 +17,7 @@ protected:
 	std::list<double> angulosCentroIniciales; //los angulos de cada figura componente respecto del centro del grupo 
 	std::list<double> angulosCentroActuales;
 
+	const char** listaID;
 
 	std::list<Figura*>::iterator iterFig;
 
@@ -25,7 +27,10 @@ protected:
 
 public:
 	FiguraCompuesta(const char* ID, Dimension* dim);
-	~FiguraCompuesta(void);
+/*obviamente asumo que todo esta en la posicion correcta como para que encajen las junturas y demas!*/
+	FiguraCompuesta( std::list<Figura*> listaFiguras );
+
+	virtual ~FiguraCompuesta(void);
 
 	virtual void cambiarPosicion(double Movx,double Movy);
 
@@ -45,6 +50,7 @@ public:
 
 	//para este no devuelve nada valido (vacio)
 	virtual const char* getID();
+	const char** getListaDeIDs();
 
 	//para este devuelve un cuadrado que contiene a la figura
 	virtual Dimension* getDimension();

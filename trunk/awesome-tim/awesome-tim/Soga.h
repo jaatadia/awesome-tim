@@ -29,4 +29,5 @@ public:
 
 	virtual Figura* clonar();//copia la figura
 
+	const char** getListaDeIDs();
 };
