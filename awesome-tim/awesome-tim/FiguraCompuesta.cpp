@@ -4,27 +4,79 @@ FiguraCompuesta::FiguraCompuesta(const char* ID, Dimension* dim):Figura(ID,dim)
 {
 	this->dimension = dim;
 
+/*si se usa este inicializar angulos e ids en la figura que hereda*/
+}
 
+FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras ){
+	//guardo las figuras en la lista interna
+	partesFigura = listaFiguras;
+
+	//buscar x max y min e y max y min y crear el cuadrado
+
+	double xMax,xMin,yMax,yMin;
+
+	iterFig = partesFigura.begin();
+//si ya se deberia ordenarla por x y por y,y no hacerlo lineal, pero no tengo ganas
+	xMax = xMin = (*iterFig)->getDimension()->getX();
+	yMax = yMin = (*iterFig)->getDimension()->getY();
+	
+	while( iterFig != partesFigura.end() ) {
+		iterFig++;
+		
+		if ( (*iterFig)->getDimension()->getX() > xMax)
+			xMax = (*iterFig)->getDimension()->getX();
+		if ( (*iterFig)->getDimension()->getX() < xMin)
+			xMax = (*iterFig)->getDimension()->getX();
+		if ( (*iterFig)->getDimension()->getY() > yMax)
+			xMax = (*iterFig)->getDimension()->getY();
+		if ( (*iterFig)->getDimension()->getY() > yMin)
+			xMax = (*iterFig)->getDimension()->getY();
+	}
+
+	//obtengo ancho y alto y el centro y creo el cuadrado
+
+	double ancho = xMax - xMin;
+	double alto = yMax - yMin;
+	double x = ancho/2 + xMin;
+	double y = alto/2 + yMin;
+
+	dimension = new Cuadrado(ancho,alto,x,y,0);
+
+	//guardo los angulos correspondientes
 	this->inicAngulosCentro();
+	
+	listaID = new const char*[partesFigura.size()];
+	
+	int i = 0;
+
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		//y obviamente aca poner en quien herede los que correspondan
 		angulos.push_back((*iterFig)->getDimension()->getAngulo());
-	}
+		//de paso guardo los IDs
 
+		(*(listaID+i))= (*iterFig)->getID();
+		i++;	
+	}
 }
+
 
 FiguraCompuesta::~FiguraCompuesta(void)
 {
 	delete dimension;
 	dimension = NULL;
 
+	int i = 0;
+	//con la figura se elimina su id
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		delete (*iterFig);
+		i++;
 	}
+
+	delete[] listaID;
 }
 
 void FiguraCompuesta::cambiarPosicion(double Movx,double Movy){
-std::cout<<" cambian todas las posiciones    en FigComopus.cpp" <<std::endl;
+
 	iterFig = partesFigura.begin();
 	
 	while( iterFig != partesFigura.end() ) {
@@ -316,4 +368,9 @@ bool FiguraCompuesta::anguloEsPositivo(double X1, double Y1, double X2, double Y
 		}
 	//por defecto asumo que es positivo
 	return true;
+}
+
+const char** FiguraCompuesta::getListaDeIDs(){
+
+	return listaID;
 }
