@@ -37,7 +37,6 @@ void Ventana::dibujar(Superficie* sup){
 	SDL_Texture* tex = NULL;
 	tex = SDL_CreateTextureFromSurface(ren,sup->superficie);
 	if(tex!=NULL){
-		SDL_RenderClear(ren);
 		SDL_RenderCopy(ren,tex,NULL,NULL);
 		SDL_RenderPresent(ren);
 		SDL_DestroyTexture(tex);
