@@ -131,34 +131,67 @@ void test(void){
 	Contenedor::pruebaContenedor();
 }
 
+
+#include<sys/timeb.h>
+
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
 	MEstados juego = MEstados(rutaIn,rutaOut);
-	
+
+	double tiempoTardado = 0;
+	double tiempoExtra = 0;
+	double frames = 0;
+	double tiempo = 0;
+	double cant = 0;
+
+	struct timeb tInicial, tFinal;
+
 	while (juego.isRunning()&&(!juego.huboFallos())){
 		
-
-		clock_t tInicial = clock();
+		if(tiempo>=1000){
+			std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
+			tiempo = 0;
+			frames = 0;
+			cant=0;
+		}
 		
+		frames++;
+
+		//clock_t tInicial = clock();
+   		ftime(&tInicial);
+
 		juego.onEvent();
 		juego.onLoop();
 		juego.onRender();
 		
-		clock_t tFinal = clock();
-		double tiempoTardado = ((double)(tFinal - tInicial))*1000/CLOCKS_PER_SEC;
-		double tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
+		//clock_t tFinal = clock();
+		ftime(&tFinal);
+		
+		tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
 
-		if(tiempoExtra>=0)
+		tiempoExtra += FRAME_FRECUENCY - tiempoTardado;
+		tiempoExtra = FRAME_FRECUENCY - tiempoTardado;
+
+		tiempo += tiempoTardado;
+
+		if(tiempoExtra>=0){
 			juego.esperar(tiempoExtra);
-		else{
-
-			std::cout<<"\n ciclios salteados\n";
+			tiempo+=tiempoExtra;;
+			tiempoExtra=0;
+		}else{
 			while(tiempoExtra<0){
-				//juego.onEvent();
+				cant++;
+				
+				ftime(&tInicial);
 				juego.onLoop();
-				tiempoExtra += FRAME_FRECUENCY;
-				std::cout<<"|";
+				ftime(&tFinal);
+
+				tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
+				tiempo += tiempoTardado;
+				tiempoExtra += (FRAME_FRECUENCY -tiempoTardado);
+
 			}
+			//std::cout<<"Ciclios salteados: "<< cant << "\n";
 
 		}
 		
