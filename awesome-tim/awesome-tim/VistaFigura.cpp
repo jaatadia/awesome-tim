@@ -71,14 +71,13 @@ void VistaFigura::redraw(){
 	}else{
 		int tempAncho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->dimension->getAncho());
 		if(orig==NULL || tempAncho!= escalaAnterior){
-			std::cout<<"entro\n";
 			delete orig;
 			Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->ID.c_str()));
-			orig = temp->rotarZoom(tempAncho,int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->dimension->getAlto())),0);
+			orig = temp->scaleImagen(tempAncho,int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->dimension->getAlto())));
 			escalaAnterior = tempAncho;
 		}
 		delete rotada;
-		rotada = orig->rotarCuadradoImagen(fig->dimension->getAngulo());
+		rotada = orig->rotarImagen(fig->dimension->getAngulo());
 	}
 	if(fig->traslucido) rotada->setTransparency(150);
 
