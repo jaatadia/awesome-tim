@@ -2,9 +2,11 @@
 
 #define NOMBRE_JUEGO "The Incredible Machine"
 
+//frecuencias de simulacion y dibujo
 #define FPS 60
 #define FRAME_FRECUENCY 1000.0/FPS
 
+//posiciones de las distintas partes del juego
 #define ANCHO_PANTALLA 600 //ancho de la superficie
 #define ANCHO_PANTALLA_LOGICO 120
 #define ALTO_PANTALLA 600 //alto de la superficie
@@ -44,8 +46,7 @@
 
 #define UNIDADES_LOGICAS_TOTAL 120
 
-#define PI 3.1415926535897932384626433832795028841971693993751058209749
-
+//tipos de figuras
 #define TRIANGULO 1
 #define CUADRADO 2
 #define CIRCULO 3
@@ -57,6 +58,7 @@
 #define SOGA 9
 #define PLATAFORMA 10
 
+//valores fisicos
 #define RESTITUCION_PELOTABASQUET 4.0
 #define DENSIDAD_PELOTABASQUET 1.0
 #define RESTITUCION_PELOTABOWLING 0.3
@@ -64,9 +66,10 @@
 #define RESTITUCION_GLOBOHELIO 1.0
 #define DENSIDAD_GLOBOHELIO 1.0
 #define VELOCIDAD_GLOBOHELIO -4.0
-#define LARGO_SEGMENTO_SOGA 1
-#define ALTO_SEGMENTO_SOGA 0.3
+#define LARGO_SEGMENTO_SOGA 10
+#define ALTO_SEGMENTO_SOGA 5
 
+//cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
 #define CUADRANTE3 3
@@ -85,3 +88,9 @@
 #define INSTANCIAS_DEFAULT 100
 #define VERTICES_DEFAULT 5
 #define ID_DEFAULT ""
+
+//Por si no estuviese claro: PI
+#define PI 3.1415926535897932384626433832795028841971693993751058209749
+
+//id imagenes
+#define ImgSegmSoga "../images/Cuadrado.png"

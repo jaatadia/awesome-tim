@@ -66,7 +66,7 @@ private:
 	void corregirPosicion(Figura* fig);
 	void redraw();
 
-	double calcularAngulo(Figura* fig,double XVector1,double YVector1,double XVector2,double YVector2);
+	double calcularAngulo(Dimension* dim,double XVector1,double YVector1,double XVector2,double YVector2);
 	int obtenerCuadranteDeClick(double X, double Y);
 	bool anguloEsPositivo(double X1, double Y1, double X2, double Y2);
 

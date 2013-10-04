@@ -3,9 +3,9 @@
 #include "Constantes.h"
 #include "CargadorYaml.h"
 #include "GeneradorYaml.h"
-
 #include "Cuadrado.h"
 #include "Circulo.h"
+#include "Soga.h"
 #include "PoligonoRegular.h"
 #include "Triangulo.h"
 
@@ -27,6 +27,10 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 
 	shiftPressed = false;
 	estaActiva = false;
+
+//*********************prueba de soga***********************
+
+//	terreno->agregarFigura(new Soga(ImgSegmSoga,new Cuadrado(80,ALTO_SEGMENTO_SOGA,50,50,0)));
 
 }
 
