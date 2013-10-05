@@ -28,7 +28,7 @@ public:
 	~MEstados(void);
 
 	bool isRunning();
-	void onEvent();
+	bool onEvent();
 	void onLoop();
 	void onRender();
 	

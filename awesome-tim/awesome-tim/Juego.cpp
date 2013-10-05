@@ -111,10 +111,11 @@ void Juego:: onLoop(){
 }
 
 //manejo de eventos
-void Juego:: onEvent(Ventana* ventana,Superficie** sup){
+bool Juego:: onEvent(Ventana* ventana,Superficie** sup){
 
 SDL_Event evento;
 double posClickX, posClickY;
+bool aux = false;
 
 while(SDL_PollEvent(&evento)){
 	switch(evento.type){
@@ -245,7 +246,7 @@ while(SDL_PollEvent(&evento)){
 				soltarFiguraEnAire();
 			}
 
-			comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+			comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux,this);
 
 
 			break;
@@ -266,7 +267,7 @@ while(SDL_PollEvent(&evento)){
 		}
 	}
 }
-
+return aux;
 }
 
 

@@ -103,9 +103,10 @@ void ComandosPlay::resizear(){
 }
 
 
-void ComandosPlay::release(double x, double y,JuegoPlay* juego){
+void ComandosPlay::release(double x, double y,bool* flag,JuegoPlay* juego){
 	if(in(X_B_STOP,Y_B_STOP,ANCHO_B_STOP,ALTO_B_STOP,x,y)&&botonStopActivo){
 		juego->quit();
+		*flag = true;
 	}
 
 	botonStopActivo = false;
