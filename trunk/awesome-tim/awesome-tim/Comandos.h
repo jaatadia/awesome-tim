@@ -77,7 +77,7 @@ public:
 	void borrarLetra();
 	Superficie* getImpresion();
 	void click(double x, double y,Juego* juego);
-	void release(double x, double y,Juego* juego);
+	void release(double x, double y,bool* flag,Juego* juego);
 	void enterKeyPressed(Juego* juego);
 	void resizear();
 private:

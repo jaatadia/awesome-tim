@@ -26,10 +26,11 @@ JuegoPlay::~JuegoPlay(void)
 	delete fondo;
 }
 
-void JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
+bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 
 	SDL_Event evento;
 	double posClickX, posClickY;
+	bool aux = false;
 
 	while(SDL_PollEvent(&evento)){
 		switch(evento.type){
@@ -53,11 +54,12 @@ void JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 				posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
 				posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
-				comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+				comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux ,this);
 				break;
 			}
 		}
 	}
+	return aux;
 }
 
 void JuegoPlay::onLoop(){

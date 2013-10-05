@@ -19,7 +19,7 @@ public:
 	JuegoPlay(Superficie* fondo,Terreno* ter,MaquinaEstados* maq);
 	~JuegoPlay(void);
 
-	virtual void onEvent(Ventana* ventana,Superficie** sup);
+	virtual bool onEvent(Ventana* ventana,Superficie** sup);
 	virtual void onLoop();
 	virtual bool onRender(Superficie* sup);
 	

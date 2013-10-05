@@ -160,10 +160,12 @@ void jugar(char* rutaIn, char* rutaOut){
 		//clock_t tInicial = clock();
    		ftime(&tInicial);
 
-		juego.onEvent();
+		bool aux = juego.onEvent();
 		juego.onLoop();
 		juego.onRender();
 		
+		if (aux) continue;
+
 		//clock_t tFinal = clock();
 		ftime(&tFinal);
 		

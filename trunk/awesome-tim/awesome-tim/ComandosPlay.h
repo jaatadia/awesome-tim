@@ -34,7 +34,7 @@ public:
 	~ComandosPlay(void);
 
 	void click(double x, double y,JuegoPlay* juego);
-	void release(double x, double y,JuegoPlay* juego);
+	void release(double x, double y,bool* flag,JuegoPlay* juego);
 	Superficie* getImpresion();
 	void resizear();
 	void dibujate(Superficie* sup,int xIni,int yIni);
