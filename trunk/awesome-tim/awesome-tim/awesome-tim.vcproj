@@ -178,11 +178,27 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Balancin.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Box2DWorld.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\CintaTransportadora.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ComandosPlay.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Engranaje.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraCompuesta.cpp"
 				>
 			</File>
 			<File
@@ -202,11 +218,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Motor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PelotaBasquet.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\PelotaBowling.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Plataforma.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Soga.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\VistaFigAgrandable.cpp"
 				>
 			</File>
 			<Filter
@@ -328,7 +360,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Balancin.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Box2DWorld.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CintaTransportadora.h"
 				>
 			</File>
 			<File
@@ -340,7 +380,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Engranaje.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Estado.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FiguraCompuesta.h"
 				>
 			</File>
 			<File
@@ -360,11 +408,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Motor.h"
+				>
+			</File>
+			<File
 				RelativePath=".\PelotaBasquet.h"
 				>
 			</File>
 			<File
 				RelativePath=".\PelotaBowling.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Plataforma.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Soga.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VistaFigAgrandable.h"
 				>
 			</File>
 			<Filter
