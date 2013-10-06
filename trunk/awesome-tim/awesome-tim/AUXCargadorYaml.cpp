@@ -8,6 +8,12 @@
 
 std::string AUXCargadorYaml::ruta_archivo = "";
 
+/**********************************************************
+**                                                       **
+**                OBTENER PARAMETROS                     **
+**                                                       **
+**********************************************************/
+
 void AUXCargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY){
 
 	try{
@@ -67,49 +73,170 @@ void AUXCargadorYaml::obtenerID(const YAML::Node& nodoFigura, std::string* ID){
 		ErrorLogHandler::addError("AUXCargadorYaml: ",e.what()); 
 		*ID = ID_DEFAULT;
 	}
+
+	Imagen* img = new Imagen((*ID).c_str());
+	if (img->huboFallos()) {
+		int linea = nodoFigura["ID"].GetMark().line;
+		imprimir_error_linea("No se pudo crear la imagen, ID invalido. La figura no tendra imagen.",linea);
+	}
+	Contenedor::putMultimedia((*ID).c_str(),img);
+
 }
 
+void AUXCargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, double* largo){
+	try{
+		nodoFigura["largo"] >> *largo;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe largo de figura. Se carga largo por defecto.",e.what());
+		*largo = LARGO_PLATAFORMA_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del largo de figura. Se carga largo por defecto.",e.what());
+		*largo = LARGO_PLATAFORMA_DEFAULT;
+	}
+
+	if(!largo_valido(*largo)){
+		int linea = nodoFigura["largo"].GetMark().line;
+		imprimir_error_linea("Largo de Figura invalido. Se carga largo por defecto.", linea);
+		*largo = LARGO_PLATAFORMA_DEFAULT;
+	}
+}
+void AUXCargadorYaml::obtenerAncho(const YAML::Node& nodoFigura, double* ancho){
+	try{
+		nodoFigura["ancho"] >> *ancho;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe ancho de figura. Se carga ancho por defecto.",e.what());
+		*ancho = ANCHO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del ancho de figura. Se carga ancho por defecto.",e.what());
+		*ancho = ANCHO_DEFAULT;
+	}
+
+	if(!ancho_valido(*ancho)){
+		int linea = nodoFigura["ancho"].GetMark().line;
+		imprimir_error_linea("Ancho de Figura invalido. Se carga ancho por defecto.", linea);
+		*ancho = ANCHO_DEFAULT;
+	}
+}
+void AUXCargadorYaml::obtenerAlto(const YAML::Node& nodoFigura, double* alto){
+	try{
+		nodoFigura["alto"] >> *alto;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe alto de figura. Se carga alto por defecto.",e.what());
+		*alto = ALTO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del alto de figura. Se carga alto por defecto.",e.what());
+		*alto = ALTO_DEFAULT;
+	}
+
+	if(!alto_valido(*alto)){
+		int linea = nodoFigura["alto"].GetMark().line;
+		imprimir_error_linea("Alto de Figura invalido. Se carga alto por defecto.", linea);
+		*alto = ALTO_DEFAULT;
+	}
+}
+
+void AUXCargadorYaml::obtenerRadio(const YAML::Node& nodoFigura,double* radio){
+	try{
+		nodoFigura["radio"] >> *radio;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe radio de figura. Se carga radio por defecto.",e.what());
+		*radio = RADIO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del radio de figura. Se carga radio por defecto.",e.what());
+		*radio = RADIO_DEFAULT;
+	}
+
+	if(!radio_valido(*radio)){
+		int linea = nodoFigura["radio"].GetMark().line;
+		imprimir_error_linea("Radio de Figura invalido. Se carga radio por defecto.", linea);
+		*radio = RADIO_DEFAULT;
+	}
+}
+
+void AUXCargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
+	try{
+		nodoFigura["cant_vertices"] >> *vertices;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe cant_vertices de figura. Se carga cantidad de vertices por defecto.",e.what());
+		*vertices = VERTICES_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de la cantidad de vertices de figura. Se carga cantidad por defecto.",e.what());
+		*vertices = VERTICES_DEFAULT;
+	}
+
+	if(!cant_vertices_valida(*vertices)){
+		int linea = nodoFigura["cant_vertices"].GetMark().line;
+		imprimir_error_linea("Cantidad de Vertices de Figura invalida. Se carga cantidad por defecto.", linea);
+		*vertices = VERTICES_DEFAULT;
+	}
+}
+
+/**********************************************************
+**                                                       **
+**                    CREAR FIGURAS                      **
+**                                                       **
+**********************************************************/
 
 Figura* AUXCargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
+Figura* AUXCargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
+Figura* AUXCargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
+
+	double posX,posY,angulo,radio;
+	int vertices;
+	std::string ID;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerID(nodoFigura,&ID);
+	obtenerRadio(nodoFigura,&radio);
+	obtenerVertices(nodoFigura,&vertices);
+
+	return new Figura(ID.c_str(), new PoligonoRegular(posX,posY,radio,vertices,angulo));
+}
+
 Figura* AUXCargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
-	return NULL;
+	double posX,posY,angulo,largo;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerLargo(nodoFigura, &largo);
+
+	return new Plataforma(largo,posX,posY,angulo);
 }
 
 Figura* AUXCargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
 	
-	double posX,posY,angulo;
+	double posX,posY,angulo,radio;
 	std::string ID;
 	
 	obtenerAngulo(nodoFigura,&angulo);
-
 	obtenerPosicion(nodoFigura,&posX,&posY);
-
 	obtenerID(nodoFigura,&ID);
+	obtenerRadio(nodoFigura,&radio);
 
 	//FIXME: Circulo la pusieron como clase abstracta xq hicieron heredar a pelota de ahi, eso hay que cambiarlo.
-	//return new Figura(ID.c_str(), new Circulo(RADIO_DEFAULT,posX,posY,angulo));
-	return new Figura(ID.c_str(), new PelotaBasquet(RADIO_DEFAULT,posX,posY,angulo));
+	//return new Figura(ID.c_str(), new Circulo(radio,posX,posY,angulo));
+	return new Figura(ID.c_str(), new PelotaBasquet(radio,posX,posY,angulo));
 }
 
 Figura* AUXCargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
 
-	double posX, posY,angulo;
+	double posX, posY,angulo,ancho,alto;
 	std::string ID;
 
 	obtenerAngulo(nodoFigura,&angulo);
-
 	obtenerPosicion(nodoFigura,&posX,&posY);
-
+	obtenerAncho(nodoFigura,&ancho);
+	obtenerAlto(nodoFigura,&alto);
 	obtenerID(nodoFigura, &ID);
 
-	return new Figura(ID.c_str(),new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,posX,posY,angulo));
+	return new Figura(ID.c_str(),new Cuadrado(ancho,alto,posX,posY,angulo));
 }
 
 Figura* AUXCargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura){
@@ -125,6 +252,13 @@ Figura* AUXCargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* t
 		Figura* figura = crearCirculo(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Circular."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"TRIANGULO") == 0){
+		Figura* figura = crearTriangulo(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Triangular."); 	
 		return figura;
 	}
 
@@ -221,7 +355,7 @@ void AUXCargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terr
 
 	for(unsigned i=0;i<listaFiguras.size();i++) {
 	
-		Figura* fig = cargar_figura(listaFiguras[i]);
+		Figura* fig = cargar_figura(listaFiguras[i]["figura"]);
 
 		if (!fig) continue;
 		
@@ -437,10 +571,11 @@ bool AUXCargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,
 bool AUXCargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool cuadrado = (strcmp(tipo_figura,"CUADRADO") == 0);
 	bool circulo = (strcmp(tipo_figura,"CIRCULO") == 0);
+	bool triangulo = (strcmp(tipo_figura,"TRIANGULO") == 0);
 	bool poligono = (strcmp(tipo_figura,"POLIGONOREGULAR") == 0);
 	bool plataforma = (strcmp(tipo_figura,"PLATAFORMA") == 0);
 	bool balancin = (strcmp(tipo_figura,"BALANCIN") == 0);
-	return (cuadrado || circulo || poligono || plataforma || balancin);
+	return (cuadrado || circulo || triangulo || poligono || plataforma || balancin);
 }
 
 bool AUXCargadorYaml::posicion_validaX(double posX){
@@ -459,6 +594,26 @@ bool AUXCargadorYaml::cant_instancias_valida(int instancias){
 	return (instancias >= 0);
 }
 
+bool AUXCargadorYaml::largo_valido(double largo){
+	//FIXME: cuando es un largo valido?
+	return false;
+}
+
+bool AUXCargadorYaml::alto_valido(double alto){
+	return ((alto > 0) && (alto < ALTO_TERRENO_LOGICO));
+}
+
+bool AUXCargadorYaml::ancho_valido(double ancho){
+	return ((ancho > 0) && (ancho < ANCHO_TERRENO_LOGICO));
+}
+
+bool AUXCargadorYaml::radio_valido(double radio){
+	return ((radio > 0) && (radio < ANCHO_TERRENO_LOGICO));
+}
+
+bool AUXCargadorYaml::cant_vertices_valida(int cant){
+	return ((cant >= 3) && (cant < 100));
+}
 /**********************************************************
 **                                                       **
 **                    IMPRESIONES                        **

@@ -1,7 +1,7 @@
 #include "Juego.h"
 #include "ErrorLogHandler.h"
 #include "Constantes.h"
-#include "CargadorYaml.h"
+#include "AUXCargadorYaml.h"
 #include "GeneradorYaml.h"
 #include "Cuadrado.h"
 #include "Circulo.h"
@@ -35,7 +35,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 }
 
 bool Juego::cargar(){
-	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
+	AUXCargadorYaml::cargarJuego(fileIn,botonera,terreno);
 	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
 	//necesario para que se ordenen cosas dentro de botonera
 	botonera->resizear();
