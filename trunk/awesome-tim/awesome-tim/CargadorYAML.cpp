@@ -98,16 +98,16 @@ Dimension* CargadorYaml::crearTriangulo(const YAML::Node& dimension, double angu
 		dimension["base"] >> base;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("No existe base de dimension triangulo. Se carga base por defecto.",e.what());
-		base = BASE_TRIANGULO_DEFAULT;
+		base = BASE_DEFAULT;
 	}catch(YAML::InvalidScalar &e){
 		imprimir_error_excepcion("Dato erroneo de la base de dimension triangulo. Se carga base por defecto.",e.what());
-		base = BASE_TRIANGULO_DEFAULT;
+		base = BASE_DEFAULT;
 	}
 
 	if(!base_triangulo_valida(base)){
 		int linea = dimension["base"].GetMark().line;
 		imprimir_error_linea("Base de Triangulo invalida. Se carga base por defecto.",linea);
-		base = BASE_TRIANGULO_DEFAULT;
+		base = BASE_DEFAULT;
 	}
 
 	double altura;	
@@ -115,16 +115,16 @@ Dimension* CargadorYaml::crearTriangulo(const YAML::Node& dimension, double angu
 		dimension["altura"] >> altura;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("No existe altura de dimension triangulo. Se carga altura por defecto.",e.what());
-		altura = ALTO_TRIANGULO_DEFAULT;
+		altura = ALTO_DEFAULT;
 	}catch(YAML::InvalidScalar &e){
 		imprimir_error_excepcion("Dato erroneo de la altura de dimension triangulo. Se carga altura por defecto.",e.what());
-		altura = ALTO_TRIANGULO_DEFAULT;
+		altura = ALTO_DEFAULT;
 	}
 
 	if(!altura_triangulo_valida(altura)){
 		int linea = dimension["altura"].GetMark().line;
 		imprimir_error_linea("Altura de Triangulo invalida. Se carga altura por defecto.",linea);
-		altura = ALTO_TRIANGULO_DEFAULT;
+		altura = ALTO_DEFAULT;
 	}
 
 	Dimension* dim = new Triangulo(posX, posY, angulo,base,altura);

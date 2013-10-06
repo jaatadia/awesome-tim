@@ -100,23 +100,24 @@ void AUXCargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, double* largo){
 		*largo = LARGO_PLATAFORMA_DEFAULT;
 	}
 }
-void AUXCargadorYaml::obtenerAncho(const YAML::Node& nodoFigura, double* ancho){
+void AUXCargadorYaml::obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base){
 	try{
-		nodoFigura["ancho"] >> *ancho;
+		nodoFigura["base"] >> *base;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("No existe ancho de figura. Se carga ancho por defecto.",e.what());
-		*ancho = ANCHO_DEFAULT;
+		imprimir_error_excepcion("No existe base de figura. Se carga base por defecto.",e.what());
+		*base = BASE_DEFAULT;
 	}catch(YAML::InvalidScalar &e){
-		imprimir_error_excepcion("Dato erroneo del ancho de figura. Se carga ancho por defecto.",e.what());
-		*ancho = ANCHO_DEFAULT;
+		imprimir_error_excepcion("Dato erroneo de base de figura. Se carga base por defecto.",e.what());
+		*base = BASE_DEFAULT;
 	}
 
-	if(!ancho_valido(*ancho)){
-		int linea = nodoFigura["ancho"].GetMark().line;
-		imprimir_error_linea("Ancho de Figura invalido. Se carga ancho por defecto.", linea);
-		*ancho = ANCHO_DEFAULT;
+	if(!base_triangulo_valida(*base)){
+		int linea = nodoFigura["base"].GetMark().line;
+		imprimir_error_linea("Base de Figura invalida. Se carga base por defecto.", linea);
+		*base = BASE_DEFAULT;
 	}
 }
+
 void AUXCargadorYaml::obtenerAlto(const YAML::Node& nodoFigura, double* alto){
 	try{
 		nodoFigura["alto"] >> *alto;
@@ -132,6 +133,24 @@ void AUXCargadorYaml::obtenerAlto(const YAML::Node& nodoFigura, double* alto){
 		int linea = nodoFigura["alto"].GetMark().line;
 		imprimir_error_linea("Alto de Figura invalido. Se carga alto por defecto.", linea);
 		*alto = ALTO_DEFAULT;
+	}
+}
+
+void AUXCargadorYaml::obtenerAncho(const YAML::Node& nodoFigura, double* ancho){
+	try{
+		nodoFigura["ancho"] >> *ancho;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe ancho de figura. Se carga ancho por defecto.",e.what());
+		*ancho = ANCHO_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del ancho de figura. Se carga ancho por defecto.",e.what());
+		*ancho = ANCHO_DEFAULT;
+	}
+
+	if(!ancho_valido(*ancho)){
+		int linea = nodoFigura["ancho"].GetMark().line;
+		imprimir_error_linea("Ancho de Figura invalido. Se carga ancho por defecto.", linea);
+		*ancho = ANCHO_DEFAULT;
 	}
 }
 
@@ -182,7 +201,16 @@ Figura* AUXCargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
 }
 
 Figura* AUXCargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
-	return NULL;
+	double posX,posY,angulo,base,altura;
+	std::string ID;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerBaseTriangulo(nodoFigura,&base);
+	obtenerAlto(nodoFigura,&altura);
+	obtenerID(nodoFigura,&ID);
+
+	return new Figura(ID.c_str(), new Triangulo(posX,posY,angulo,base,altura));
 }
 
 Figura* AUXCargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
@@ -605,6 +633,10 @@ bool AUXCargadorYaml::alto_valido(double alto){
 
 bool AUXCargadorYaml::ancho_valido(double ancho){
 	return ((ancho > 0) && (ancho < ANCHO_TERRENO_LOGICO));
+}
+
+bool AUXCargadorYaml::base_triangulo_valida(double base){
+	return ancho_valido(base);
 }
 
 bool AUXCargadorYaml::radio_valido(double radio){
