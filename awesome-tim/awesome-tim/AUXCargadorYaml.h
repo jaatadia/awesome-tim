@@ -49,6 +49,7 @@ private:
 	static bool ancho_valido(double ancho);
 	static bool radio_valido(double radio);
 	static bool cant_vertices_valida(int cant);
+	static bool base_triangulo_valida(double base);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
@@ -72,6 +73,7 @@ private:
 	static void obtenerID(const YAML::Node& nodoFigura, std::string* ID);
 	static void obtenerRadio(const YAML::Node& nodoFigura,double* radio);
 	static void obtenerVertices(const YAML::Node& nodoFigura,int* vertices);
+	static void obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base);
 
 public:
 
