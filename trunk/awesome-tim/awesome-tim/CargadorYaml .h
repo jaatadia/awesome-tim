@@ -25,7 +25,7 @@
 #include "PelotaBowling.h"
 #include "GloboHelio.h"
 
-class AUXCargadorYaml{
+class CargadorYaml{
 public:
 	
 	static bool cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno);

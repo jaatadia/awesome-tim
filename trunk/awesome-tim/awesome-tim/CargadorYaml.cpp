@@ -1,4 +1,4 @@
-#include "AUXCargadorYaml.h"
+#include "CargadorYaml.h"
 #include "ErrorLogHandler.h"
 #include "Contenedor.h"
 
@@ -6,7 +6,7 @@
 
 #define CANT_CAR 40
 
-std::string AUXCargadorYaml::ruta_archivo = "";
+std::string CargadorYaml::ruta_archivo = "";
 
 /**********************************************************
 **                                                       **
@@ -14,7 +14,7 @@ std::string AUXCargadorYaml::ruta_archivo = "";
 **                                                       **
 **********************************************************/
 
-void AUXCargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY){
+void CargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY){
 
 	try{
 		nodoFigura["posX"] >> *posX;
@@ -42,7 +42,7 @@ void AUXCargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX
 	}
 }
 
-void AUXCargadorYaml::obtenerAngulo(const YAML::Node& nodoFigura, double* angulo){
+void CargadorYaml::obtenerAngulo(const YAML::Node& nodoFigura, double* angulo){
 	try{
 		nodoFigura["angulo"] >> *angulo;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -60,17 +60,17 @@ void AUXCargadorYaml::obtenerAngulo(const YAML::Node& nodoFigura, double* angulo
 	}
 }
 
-void AUXCargadorYaml::obtenerID(const YAML::Node& nodoFigura, std::string* ID){
+void CargadorYaml::obtenerID(const YAML::Node& nodoFigura, std::string* ID){
 
 	try{
 		nodoFigura["ID"] >> *ID;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		ErrorLogHandler::addError("AUXCargadorYaml","Error al cargar ID de figura. La figura no tendra imagen."); 
-		ErrorLogHandler::addError("AUXCargadorYaml: ",e.what()); 
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen."); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		*ID = ID_DEFAULT;
 	}catch(YAML::InvalidScalar &e){
-		ErrorLogHandler::addError("AUXCargadorYaml","Error al cargar ID de figura. La figura no tendra imagen."); 
-		ErrorLogHandler::addError("AUXCargadorYaml: ",e.what()); 
+		ErrorLogHandler::addError("CargadorYaml","Error al cargar ID de figura. La figura no tendra imagen."); 
+		ErrorLogHandler::addError("CargadorYaml: ",e.what()); 
 		*ID = ID_DEFAULT;
 	}
 
@@ -83,7 +83,7 @@ void AUXCargadorYaml::obtenerID(const YAML::Node& nodoFigura, std::string* ID){
 
 }
 
-void AUXCargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, double* largo){
+void CargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, double* largo){
 	try{
 		nodoFigura["largo"] >> *largo;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -100,7 +100,7 @@ void AUXCargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, double* largo){
 		*largo = LARGO_PLATAFORMA_DEFAULT;
 	}
 }
-void AUXCargadorYaml::obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base){
+void CargadorYaml::obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base){
 	try{
 		nodoFigura["base"] >> *base;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -118,7 +118,7 @@ void AUXCargadorYaml::obtenerBaseTriangulo(const YAML::Node& nodoFigura, double*
 	}
 }
 
-void AUXCargadorYaml::obtenerAlto(const YAML::Node& nodoFigura, double* alto){
+void CargadorYaml::obtenerAlto(const YAML::Node& nodoFigura, double* alto){
 	try{
 		nodoFigura["alto"] >> *alto;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -136,7 +136,7 @@ void AUXCargadorYaml::obtenerAlto(const YAML::Node& nodoFigura, double* alto){
 	}
 }
 
-void AUXCargadorYaml::obtenerAncho(const YAML::Node& nodoFigura, double* ancho){
+void CargadorYaml::obtenerAncho(const YAML::Node& nodoFigura, double* ancho){
 	try{
 		nodoFigura["ancho"] >> *ancho;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -154,7 +154,7 @@ void AUXCargadorYaml::obtenerAncho(const YAML::Node& nodoFigura, double* ancho){
 	}
 }
 
-void AUXCargadorYaml::obtenerRadio(const YAML::Node& nodoFigura,double* radio){
+void CargadorYaml::obtenerRadio(const YAML::Node& nodoFigura,double* radio){
 	try{
 		nodoFigura["radio"] >> *radio;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -172,7 +172,7 @@ void AUXCargadorYaml::obtenerRadio(const YAML::Node& nodoFigura,double* radio){
 	}
 }
 
-void AUXCargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
+void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 	try{
 		nodoFigura["cant_vertices"] >> *vertices;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -195,7 +195,7 @@ void AUXCargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices
 **                    CREAR FIGURAS                      **
 **                                                       **
 **********************************************************/
-Figura* AUXCargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
 	//FIXME: GLOBO de HELIO no deberia ser una dimension sino una figura
 	double posX,posY,radio,angulo;
 	std::string ID;
@@ -208,7 +208,7 @@ Figura* AUXCargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(), new GloboHelio(radio,posX,posY,angulo));
 }
 
-Figura* AUXCargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
 	//FIXME: BOLA DE BOWLING no deberia ser una dimension sino una figura
 	double posX,posY,radio,angulo;
 	std::string ID;
@@ -221,7 +221,7 @@ Figura* AUXCargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(), new PelotaBowling(radio,posX,posY,angulo));
 }
 
-Figura* AUXCargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
 	//FIXME: PELOTA DE BASQUET no deberia ser una dimension sino una figura
 	double posX,posY,radio,angulo;
 	std::string ID;
@@ -234,32 +234,32 @@ Figura* AUXCargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(), new PelotaBasquet(radio,posX,posY,angulo));
 }
 
-Figura* AUXCargadorYaml::crearMotor(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::crearSoga(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearSoga(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
 
-Figura* AUXCargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
 	double posX,posY,angulo,base,altura;
 	std::string ID;
 
@@ -272,7 +272,7 @@ Figura* AUXCargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(), new Triangulo(posX,posY,angulo,base,altura));
 }
 
-Figura* AUXCargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
 
 	double posX,posY,angulo,radio;
 	int vertices;
@@ -287,7 +287,7 @@ Figura* AUXCargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(), new PoligonoRegular(posX,posY,radio,vertices,angulo));
 }
 
-Figura* AUXCargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
 	double posX,posY,angulo,largo;
 
 	obtenerAngulo(nodoFigura,&angulo);
@@ -297,7 +297,7 @@ Figura* AUXCargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
 	return new Plataforma(largo,posX,posY,angulo);
 }
 
-Figura* AUXCargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
 	
 	double posX,posY,angulo,radio;
 	std::string ID;
@@ -312,7 +312,7 @@ Figura* AUXCargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(), new PelotaBasquet(radio,posX,posY,angulo));
 }
 
-Figura* AUXCargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
 
 	double posX, posY,angulo,ancho,alto;
 	std::string ID;
@@ -326,112 +326,112 @@ Figura* AUXCargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
 	return new Figura(ID.c_str(),new Cuadrado(ancho,alto,posX,posY,angulo));
 }
 
-Figura* AUXCargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura){
+Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura){
 
 	if (strcmp(tipo_figura,"CUADRADO") == 0){
 		Figura* figura = crearCuadrado(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Cuadrada."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Cuadrada."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"CIRCULO") == 0){
 		Figura* figura = crearCirculo(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Circular."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Circular."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"TRIANGULO") == 0){
 		Figura* figura = crearTriangulo(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Triangular."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Triangular."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"POLIGONOREGULAR") == 0){
 		Figura* figura = crearPoligono(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Poligono Regular."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Poligono Regular."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"BALANCIN") == 0){
 		Figura* figura = crearBalancin(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Balancin."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Balancin."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"PLATAFORMA") == 0){
 		Figura* figura = crearPlataforma(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Plataforma."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Plataforma."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"CINTA_TRANSPORTADORA") == 0){
 		Figura* figura = crearCintaTransportadora(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Cinta Transportadora."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Cinta Transportadora."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"ENGRANAJE") == 0){
 		Figura* figura = crearEngranaje(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Engranaje."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Engranaje."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"CORREA") == 0){
 		Figura* figura = crearCorrea(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Correa."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Correa."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"SOGA") == 0){
 		Figura* figura = crearCorrea(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Soga."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Soga."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"MOTOR") == 0){
 		Figura* figura = crearMotor(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Motor."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Motor."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"PELOTA_BASQUET") == 0){
 		Figura* figura = crearMotor(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Pelota de Basquet."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Pelota de Basquet."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"BOLA_BOWLING") == 0){
 		Figura* figura = crearBolaBowling(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Bola de Bowling."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Bola de Bowling."); 	
 		return figura;
 	}
 
 	if (strcmp(tipo_figura,"GLOBO_HELIO") == 0){
 		Figura* figura = crearGloboHelio(nodoFigura);
 		if(!figura)
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Globo de Helio."); 	
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Globo de Helio."); 	
 		return figura;
 	}
 
 	//No deberia llegar a este caso porque el error deberia haber saltado antes.
-	ErrorLogHandler::addError("AUXCargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
+	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
 	return NULL;
 }
 
-Figura* AUXCargadorYaml::cargar_figura(const YAML::Node& nodoFig){
+Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 
 	std::string tipo_figura;
 
@@ -455,13 +455,13 @@ Figura* AUXCargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 
 	if(!figura){
 		if (figura) delete(figura);
-		ErrorLogHandler::addError("AUXCargadorYaml","No se pudo crear la figura. La figura no sera cargada.");
+		ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada.");
 	}
 
 	return figura;
 }
 
-void AUXCargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno){
+void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno){
 
 	//Cargo el fondo del terreno
 	std::string img;
@@ -506,7 +506,7 @@ void AUXCargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terr
 	}
 }
 
-void AUXCargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera){
+void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera){
 
 	try{
 		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
@@ -577,7 +577,7 @@ void AUXCargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraCon
 **                      CARGADOR                         **
 **                                                       **
 **********************************************************/
-bool AUXCargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
+bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
 
 	//Abro el archivo Yaml para parsearlo.
 	YAML::Node doc;
@@ -587,9 +587,9 @@ bool AUXCargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,
 	
 	if(!mi_archivo.is_open()){
 		mi_archivo.open(RUTA_DEFAULT,std::ios::out);
-		AUXCargadorYaml::imprimir_error_sin_linea("No se encontro el abrir archivo de juego indicado. Se carga archivo default.");
+		CargadorYaml::imprimir_error_sin_linea("No se encontro el abrir archivo de juego indicado. Se carga archivo default.");
 		if (!mi_archivo.is_open()){
-			ErrorLogHandler::addError("AUXCargadorYaml","Error al abrir archivo de juego default."); 
+			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default."); 
 			return false;
 		}
 		mi_archivo.close();
@@ -711,7 +711,7 @@ bool AUXCargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,
 **                    VALIDACIONES                       **
 **                                                       **
 **********************************************************/
-bool AUXCargadorYaml::tipo_figura_valida(const char* tipo_figura){
+bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool cuadrado = (strcmp(tipo_figura,"CUADRADO") == 0);
 	bool circulo = (strcmp(tipo_figura,"CIRCULO") == 0);
 	bool triangulo = (strcmp(tipo_figura,"TRIANGULO") == 0);
@@ -735,44 +735,44 @@ bool AUXCargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	return (figuraSimple || figuraCompleja);
 }
 
-bool AUXCargadorYaml::posicion_validaX(double posX){
+bool CargadorYaml::posicion_validaX(double posX){
 	return ((posX >= 0) && (posX <= ANCHO_TERRENO_LOGICO)); //menor estricto o no???
 }
 
-bool AUXCargadorYaml::posicion_validaY(double posY){
+bool CargadorYaml::posicion_validaY(double posY){
 	return ((posY >= 0) && (posY <= ALTO_TERRENO_LOGICO)); //menor estricto o no???;
 }
 
-bool AUXCargadorYaml::angulo_valido(double angulo){
+bool CargadorYaml::angulo_valido(double angulo){
 	return ((angulo >=0) && (angulo < 360));
 }
 
-bool AUXCargadorYaml::cant_instancias_valida(int instancias){
+bool CargadorYaml::cant_instancias_valida(int instancias){
 	return (instancias >= 0);
 }
 
-bool AUXCargadorYaml::largo_valido(double largo){
+bool CargadorYaml::largo_valido(double largo){
 	//FIXME: cuando es un largo valido?
 	return ancho_valido(largo);
 }
 
-bool AUXCargadorYaml::alto_valido(double alto){
+bool CargadorYaml::alto_valido(double alto){
 	return ((alto > 0) && (alto < ALTO_TERRENO_LOGICO));
 }
 
-bool AUXCargadorYaml::ancho_valido(double ancho){
+bool CargadorYaml::ancho_valido(double ancho){
 	return ((ancho > 0) && (ancho < ANCHO_TERRENO_LOGICO));
 }
 
-bool AUXCargadorYaml::base_triangulo_valida(double base){
+bool CargadorYaml::base_triangulo_valida(double base){
 	return ancho_valido(base);
 }
 
-bool AUXCargadorYaml::radio_valido(double radio){
+bool CargadorYaml::radio_valido(double radio){
 	return ((radio > 0) && (radio < ANCHO_TERRENO_LOGICO));
 }
 
-bool AUXCargadorYaml::cant_vertices_valida(int cant){
+bool CargadorYaml::cant_vertices_valida(int cant){
 	return ((cant >= 3) && (cant < 100));
 }
 /**********************************************************
@@ -781,7 +781,7 @@ bool AUXCargadorYaml::cant_vertices_valida(int cant){
 **                                                       **
 **********************************************************/
 
-std::string AUXCargadorYaml::concatenar_archivo(std::string mensaje, int linea, std::string archivo){
+std::string CargadorYaml::concatenar_archivo(std::string mensaje, int linea, std::string archivo){
 	char buffer[CANT_CAR];
 	itoa(linea,buffer,10);//el ultimo valor es la base
 	std::string line = string(buffer);
@@ -789,24 +789,24 @@ std::string AUXCargadorYaml::concatenar_archivo(std::string mensaje, int linea, 
 	return msj;
 }
 
-std::string AUXCargadorYaml::concatenar_archivo(std::string mensaje, std::string archivo){
+std::string CargadorYaml::concatenar_archivo(std::string mensaje, std::string archivo){
 	std::string msj = mensaje + " Error en archivo Yaml: " + archivo; 
 	return msj;
 }
 
-void AUXCargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
+void CargadorYaml::imprimir_error_linea(std::string mensaje, int linea){
 	linea = linea + 1; //Porque empieza a contar en 0
-	std::string msj = AUXCargadorYaml::concatenar_archivo(mensaje,linea,ruta_archivo);
-	ErrorLogHandler::addError("AUXCargadorYaml",msj.c_str());
+	std::string msj = CargadorYaml::concatenar_archivo(mensaje,linea,ruta_archivo);
+	ErrorLogHandler::addError("CargadorYaml",msj.c_str());
 }
 
-void AUXCargadorYaml::imprimir_error_sin_linea(std::string mensaje){
-	std::string msj = AUXCargadorYaml::concatenar_archivo(mensaje,ruta_archivo);
-	ErrorLogHandler::addError("AUXCargadorYaml",msj.c_str());
+void CargadorYaml::imprimir_error_sin_linea(std::string mensaje){
+	std::string msj = CargadorYaml::concatenar_archivo(mensaje,ruta_archivo);
+	ErrorLogHandler::addError("CargadorYaml",msj.c_str());
 }
-void AUXCargadorYaml::imprimir_error_excepcion(std::string mensaje,std::string what){
-	std::string msj = AUXCargadorYaml::concatenar_archivo(mensaje,ruta_archivo);
+void CargadorYaml::imprimir_error_excepcion(std::string mensaje,std::string what){
+	std::string msj = CargadorYaml::concatenar_archivo(mensaje,ruta_archivo);
 	std::string full_msj = msj + what;
-	ErrorLogHandler::addError("AUXCargadorYaml",full_msj.c_str());
+	ErrorLogHandler::addError("CargadorYaml",full_msj.c_str());
 }
 
