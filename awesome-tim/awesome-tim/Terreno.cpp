@@ -43,7 +43,7 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 		agregarFigura(plat);
 
 	}
-//FIN PRUEBAS
+	//FIN PRUEBAS
 }
 
 Terreno::~Terreno(void){

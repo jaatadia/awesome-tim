@@ -69,6 +69,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(0);
 				cuerpo->ApplyLinearImpulse(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO), cuerpo->GetPosition());
+				
 				b2CircleShape forma;
 				forma.m_radius = ((Circulo *)dim)->getRadio();
 				
@@ -77,6 +78,10 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = FRICCION_GLOBOHELIO;
 				fD.restitution = RESTITUCION_GLOBOHELIO;
 				cuerpo->CreateFixture(&fD);
+				
+				cuerpo->SetFixedRotation(true);
+				cuerpo->SetAngularVelocity(0);
+
 				break;
 			}
 		case PELOTABASQUET:{
@@ -217,6 +222,27 @@ void Box2DWorld::actualizar(Figura * figura)
 		fig->getDimension()->setX(cuerpo->GetPosition().x);
 		fig->getDimension()->setY(cuerpo->GetPosition().y);
 	
+
+		if(fig->getTipoDimension()==GLOBOHELIO){
+			bool cambiar = false;
+			double margen = 0.4;
+			double margenA = 0.1;
+			double impulsoX = 0;
+			double impulsoY = 0;
+			
+			if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
+				impulsoX = 0 - cuerpo->GetLinearVelocity().x;
+				cambiar = true;
+			}
+			if((cuerpo->GetLinearVelocity().y < VELOCIDAD_GLOBOHELIO - margen)||(cuerpo->GetLinearVelocity().y > VELOCIDAD_GLOBOHELIO + margen)){
+				impulsoY = VELOCIDAD_GLOBOHELIO - cuerpo->GetLinearVelocity().y;
+				cambiar = true;
+			}
+			if(cambiar){
+				cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
+			}
+		}
+
 		cuerpo = cuerpo->GetNext();
 //PARA DEBUG
 		i++;
