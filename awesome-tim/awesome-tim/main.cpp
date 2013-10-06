@@ -7,7 +7,6 @@
 #include "Constantes.h"
 
 #include "Contenedor.h"
-#include "CargadorYaml.h"
 #include "GeneradorYaml.h"
 
 #define RUTA_DEFAULT_IN "../yaml/archivoDefault.yml"
@@ -127,7 +126,6 @@ void imprimir_version(){
 
 void test(void){
 	GeneradorYaml::pruebayaml();
-	CargadorYaml::pruebaCargador();
 	Contenedor::pruebaContenedor();
 }
 
