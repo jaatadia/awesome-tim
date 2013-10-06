@@ -32,7 +32,7 @@ juego:
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/Pelota-Tenis.png
-          tipo_figura: GLOBOHELIO
+          tipo_figura: GLOBO_HELIO
           radio: 3
           posX: 0
           posY: 0
@@ -61,7 +61,7 @@ juego:
           posY: 0
           angulo: 0
           base: 20
-          altura: 20
+          alto: 20
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/Circulo.png
