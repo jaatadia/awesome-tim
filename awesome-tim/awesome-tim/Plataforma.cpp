@@ -1,6 +1,6 @@
 #include "Plataforma.h"
 
-Plataforma::Plataforma(const char* ID,Dimension* dim):Figura("",dim){
+Plataforma::Plataforma(double largo,double pos_x,double pos_y,double angulo):Figura("",NULL){
 }
 
 Plataforma::~Plataforma(void){
