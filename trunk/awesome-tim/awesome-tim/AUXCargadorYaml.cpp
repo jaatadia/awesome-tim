@@ -195,10 +195,69 @@ void AUXCargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices
 **                    CREAR FIGURAS                      **
 **                                                       **
 **********************************************************/
+Figura* AUXCargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
+	//FIXME: GLOBO de HELIO no deberia ser una dimension sino una figura
+	double posX,posY,radio,angulo;
+	std::string ID;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerRadio(nodoFigura,&radio);
+	obtenerID(nodoFigura, &ID);
+
+	return new Figura(ID.c_str(), new GloboHelio(radio,posX,posY,angulo));
+}
+
+Figura* AUXCargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
+	//FIXME: BOLA DE BOWLING no deberia ser una dimension sino una figura
+	double posX,posY,radio,angulo;
+	std::string ID;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerRadio(nodoFigura,&radio);
+	obtenerID(nodoFigura, &ID);
+
+	return new Figura(ID.c_str(), new PelotaBowling(radio,posX,posY,angulo));
+}
+
+Figura* AUXCargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
+	//FIXME: PELOTA DE BASQUET no deberia ser una dimension sino una figura
+	double posX,posY,radio,angulo;
+	std::string ID;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerRadio(nodoFigura,&radio);
+	obtenerID(nodoFigura, &ID);
+
+	return new Figura(ID.c_str(), new PelotaBasquet(radio,posX,posY,angulo));
+}
+
+Figura* AUXCargadorYaml::crearMotor(const YAML::Node& nodoFigura){
+	return NULL;
+}
+
+Figura* AUXCargadorYaml::crearSoga(const YAML::Node& nodoFigura){
+	return NULL;
+}
+
+Figura* AUXCargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
+	return NULL;
+}
+
+Figura* AUXCargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
+	return NULL;
+}
+
+Figura* AUXCargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
+	return NULL;
+}
 
 Figura* AUXCargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
 	return NULL;
 }
+
 
 Figura* AUXCargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
 	double posX,posY,angulo,base,altura;
@@ -308,6 +367,62 @@ Figura* AUXCargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* t
 		Figura* figura = crearPlataforma(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Plataforma."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"CINTA_TRANSPORTADORA") == 0){
+		Figura* figura = crearCintaTransportadora(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Cinta Transportadora."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"ENGRANAJE") == 0){
+		Figura* figura = crearEngranaje(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Engranaje."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"CORREA") == 0){
+		Figura* figura = crearCorrea(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Correa."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"SOGA") == 0){
+		Figura* figura = crearCorrea(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Soga."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"MOTOR") == 0){
+		Figura* figura = crearMotor(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Motor."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"PELOTA_BASQUET") == 0){
+		Figura* figura = crearMotor(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Pelota de Basquet."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"BOLA_BOWLING") == 0){
+		Figura* figura = crearBolaBowling(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Bola de Bowling."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"GLOBO_HELIO") == 0){
+		Figura* figura = crearGloboHelio(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("AUXCargadorYaml","Error al crear figura Globo de Helio."); 	
 		return figura;
 	}
 
@@ -601,9 +716,23 @@ bool AUXCargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool circulo = (strcmp(tipo_figura,"CIRCULO") == 0);
 	bool triangulo = (strcmp(tipo_figura,"TRIANGULO") == 0);
 	bool poligono = (strcmp(tipo_figura,"POLIGONOREGULAR") == 0);
+
+	bool figuraSimple = (cuadrado || circulo || triangulo || poligono);
+
 	bool plataforma = (strcmp(tipo_figura,"PLATAFORMA") == 0);
 	bool balancin = (strcmp(tipo_figura,"BALANCIN") == 0);
-	return (cuadrado || circulo || triangulo || poligono || plataforma || balancin);
+	bool cintaTrans = (strcmp(tipo_figura,"CINTA_TRANSPORTADORA") == 0);
+	bool engranaje = (strcmp(tipo_figura,"ENGRANAJE") == 0);
+	bool correa = (strcmp(tipo_figura,"CORREA") == 0);
+	bool soga = (strcmp(tipo_figura,"SOGA") == 0);
+	bool motor = (strcmp(tipo_figura,"MOTOR") == 0);
+	bool pelotaBask = (strcmp(tipo_figura,"PELOTA_BASQUET") == 0);
+	bool bowling = (strcmp(tipo_figura,"BOLA_BOWLING") == 0);
+	bool globoHelio = (strcmp(tipo_figura,"GLOBO_HELIO") == 0);
+
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || correa || soga || motor || pelotaBask || bowling || globoHelio);
+
+	return (figuraSimple || figuraCompleja);
 }
 
 bool AUXCargadorYaml::posicion_validaX(double posX){
@@ -624,7 +753,7 @@ bool AUXCargadorYaml::cant_instancias_valida(int instancias){
 
 bool AUXCargadorYaml::largo_valido(double largo){
 	//FIXME: cuando es un largo valido?
-	return false;
+	return ancho_valido(largo);
 }
 
 bool AUXCargadorYaml::alto_valido(double alto){
@@ -681,23 +810,3 @@ void AUXCargadorYaml::imprimir_error_excepcion(std::string mensaje,std::string w
 	ErrorLogHandler::addError("AUXCargadorYaml",full_msj.c_str());
 }
 
-/**********************************************************
-**                                                       **
-**                       PRUEBAS                         **
-**                                                       **
-**********************************************************/
-
-void AUXCargadorYaml::pruebaCargador(){
-
-	BotoneraController* bot = new BotoneraController(20,20,3);
-	Terreno* terr = new Terreno(80,80);
-
-	//habria q imprimir en el error el nombre del archivo que no se pudo cargar, no?
-	AUXCargadorYaml::cargarJuego("../yaml/testcargar.yml",bot,terr); //no existe archivo
-	AUXCargadorYaml::cargarJuego("../yaml/testsinNodoJuego.yml",bot,terr); 
-	AUXCargadorYaml::cargarJuego("../yaml/testvacio.yml",bot,terr); //arch vacio
-	AUXCargadorYaml::cargarJuego("../yaml/testsinTerreno.yml",bot,terr);
-	AUXCargadorYaml::cargarJuego("../yaml/testsinBotonera.yml",bot,terr);
-	AUXCargadorYaml::cargarJuego("../yaml/testterrenoVacio.yml",bot,terr);
-
-}

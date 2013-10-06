@@ -17,12 +17,13 @@
 #include "Circulo.h"
 #include "Triangulo.h"
 #include "PoligonoRegular.h"
-#include "PelotaBasquet.h"
-#include "PelotaBowling.h"
-#include "GloboHelio.h"
+
 
 #include "Figura.h"
 #include "Plataforma.h"
+#include "PelotaBasquet.h"
+#include "PelotaBowling.h"
+#include "GloboHelio.h"
 
 class AUXCargadorYaml{
 public:
@@ -58,12 +59,21 @@ private:
 	static void imprimir_error_excepcion(std::string mensaje,std::string what);
 
 
-	static Figura* crearBalancin(const YAML::Node& nodoFigura);
 	static Figura* crearCirculo(const YAML::Node& nodoFigura);
 	static Figura* crearPoligono(const YAML::Node& nodoFigura);
-	static Figura* crearPlataforma(const YAML::Node& nodoFigura);
 	static Figura* crearCuadrado(const YAML::Node& nodoFigura);
 	static Figura* crearTriangulo(const YAML::Node& nodoFigura);
+
+	static Figura* crearPlataforma(const YAML::Node& nodoFigura);
+	static Figura* crearBalancin(const YAML::Node& nodoFigura);
+	static Figura* crearGloboHelio(const YAML::Node& nodoFigura);
+	static Figura* crearBolaBowling(const YAML::Node& nodoFigura);
+	static Figura* crearPelotaBasquet(const YAML::Node& nodoFigura);
+	static Figura* crearMotor(const YAML::Node& nodoFigura);
+	static Figura* crearSoga(const YAML::Node& nodoFigura);
+	static Figura* crearCorrea(const YAML::Node& nodoFigura);
+	static Figura* crearEngranaje(const YAML::Node& nodoFigura);
+	static Figura* crearCintaTransportadora(const YAML::Node& nodoFigura);
 
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
@@ -74,9 +84,5 @@ private:
 	static void obtenerRadio(const YAML::Node& nodoFigura,double* radio);
 	static void obtenerVertices(const YAML::Node& nodoFigura,int* vertices);
 	static void obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base);
-
-public:
-
-	static void pruebaCargador();
 
 };
