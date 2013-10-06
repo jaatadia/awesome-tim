@@ -205,7 +205,18 @@ Figura* CargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
 	obtenerRadio(nodoFigura,&radio);
 	obtenerID(nodoFigura, &ID);
 
-	return new Figura(ID.c_str(), new GloboHelio(radio,posX,posY,angulo));
+	Dimension* globo = new GloboHelio(radio,posX,posY,angulo);
+	if(!globo){
+		imprimir_error_sin_linea("No se pudo crear la dimension del Globo");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), globo);
+
+	if(!figura)
+		delete(globo);
+
+	return figura;
 }
 
 Figura* CargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
@@ -218,7 +229,17 @@ Figura* CargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
 	obtenerRadio(nodoFigura,&radio);
 	obtenerID(nodoFigura, &ID);
 
-	return new Figura(ID.c_str(), new PelotaBowling(radio,posX,posY,angulo));
+	Dimension* bola = new PelotaBowling(radio,posX,posY,angulo);
+	if(!bola){
+		imprimir_error_sin_linea("No se pudo crear la dimension de Bola de Bowling.");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), bola);
+	if(!figura)
+		delete(bola);
+
+	return figura;
 }
 
 Figura* CargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
@@ -231,7 +252,17 @@ Figura* CargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
 	obtenerRadio(nodoFigura,&radio);
 	obtenerID(nodoFigura, &ID);
 
-	return new Figura(ID.c_str(), new PelotaBasquet(radio,posX,posY,angulo));
+	Dimension* pelota = new PelotaBasquet(radio,posX,posY,angulo);
+	if(!pelota){
+		imprimir_error_sin_linea("No se pudo crear la dimension de Pelota.");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), pelota);
+	if(!figura)
+		delete(pelota);
+
+	return figura;
 }
 
 Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
@@ -269,7 +300,19 @@ Figura* CargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
 	obtenerAlto(nodoFigura,&altura);
 	obtenerID(nodoFigura,&ID);
 
-	return new Figura(ID.c_str(), new Triangulo(posX,posY,angulo,base,altura));
+	Dimension* triangulo = new Triangulo(posX,posY,angulo,base,altura);
+
+	if(!triangulo){
+		imprimir_error_sin_linea("No se pudo crear la dimension triangulo.");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), triangulo);
+
+	if(!figura)
+		delete(triangulo);
+	
+	return figura; 
 }
 
 Figura* CargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
@@ -284,7 +327,19 @@ Figura* CargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
 	obtenerRadio(nodoFigura,&radio);
 	obtenerVertices(nodoFigura,&vertices);
 
-	return new Figura(ID.c_str(), new PoligonoRegular(posX,posY,radio,vertices,angulo));
+	Dimension* poligono = new PoligonoRegular(posX,posY,radio,vertices,angulo);
+
+	if(!poligono){
+		imprimir_error_sin_linea("No se pudo crear la dimension de poligono regular.");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), poligono);
+
+	if(!figura)
+		delete(poligono);
+	
+	return figura; 
 }
 
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
@@ -308,8 +363,20 @@ Figura* CargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
 	obtenerRadio(nodoFigura,&radio);
 
 	//FIXME: Circulo la pusieron como clase abstracta xq hicieron heredar a pelota de ahi, eso hay que cambiarlo.
-	//return new Figura(ID.c_str(), new Circulo(radio,posX,posY,angulo));
-	return new Figura(ID.c_str(), new PelotaBasquet(radio,posX,posY,angulo));
+	//new Circulo(radio,posX,posY,angulo)
+	Dimension* circulo = new PelotaBasquet(radio,posX,posY,angulo);
+
+	if(!circulo){
+		imprimir_error_sin_linea("No se pudo crear la dimension de circulo.");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), circulo);
+
+	if(!figura)
+		delete(circulo);
+	
+	return figura; 
 }
 
 Figura* CargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
@@ -323,7 +390,19 @@ Figura* CargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
 	obtenerAlto(nodoFigura,&alto);
 	obtenerID(nodoFigura, &ID);
 
-	return new Figura(ID.c_str(),new Cuadrado(ancho,alto,posX,posY,angulo));
+	Dimension* cuadrado = new Cuadrado(ancho,alto,posX,posY,angulo);
+
+	if(!cuadrado){
+		imprimir_error_sin_linea("No se pudo crear la dimension de cuadrado.");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(), cuadrado);
+
+	if(!figura)
+		delete(cuadrado);
+	
+	return figura; 
 }
 
 Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura){
@@ -392,7 +471,7 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 	}
 
 	if (strcmp(tipo_figura,"SOGA") == 0){
-		Figura* figura = crearCorrea(nodoFigura);
+		Figura* figura = crearSoga(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Soga."); 	
 		return figura;
@@ -406,7 +485,7 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 	}
 
 	if (strcmp(tipo_figura,"PELOTA_BASQUET") == 0){
-		Figura* figura = crearMotor(nodoFigura);
+		Figura* figura = crearPelotaBasquet(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Pelota de Basquet."); 	
 		return figura;
