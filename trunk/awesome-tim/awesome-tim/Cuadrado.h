@@ -38,4 +38,5 @@ public:
 
 	virtual int getTipoDimension(){return CUADRADO;}
 	Dimension* clonar();
+	virtual void setAncho(double nuevoLargo);
 };

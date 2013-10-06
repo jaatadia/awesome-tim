@@ -104,3 +104,6 @@ void Figura::setAngulo(double angulo){
 		setCambio(true);
 	}
 }
+double Figura::getLargo(){
+	return 1;
+}

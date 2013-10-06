@@ -1,5 +1,4 @@
 #include "VistaFigura.h"
-#include "Contenedor.h"
 
 VistaFigura::VistaFigura(Figura* fig){
 	this->fig = fig;

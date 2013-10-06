@@ -38,41 +38,70 @@ void Box2DWorld::agregarFigura(Figura * figura)
 	bD.type = b2_dynamicBody;
 	b2Body * cuerpo = this->mundo->CreateBody(&bD);
 
-	cuerpo->SetTransform(cuerpo->GetPosition(),figura->getDimension()->getAngulo()/180*PI);
+	cuerpo->SetTransform(cuerpo->GetPosition(),-figura->getDimension()->getAngulo()/180*PI); //nuestros angulos son al reves de box2d
 	cuerpo->SetUserData(figura);
+
+	b2FixtureDef fD;
 
 	switch(figura->getTipoDimension())
 	{
 		case TRIANGULO:
 			break;
-		case CUADRADO:
-			{
+		case CUADRADO:{
 				b2PolygonShape forma;
-				forma.SetAsBox(((Cuadrado *) dim)->getAncho()/2, ((Cuadrado *) dim)->getAlto()/2);
-				b2FixtureDef fD;
+				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 				fD.shape = &forma;
 				fD.density = 1.0;
 				fD.friction = 0.3;
 				cuerpo->CreateFixture(&fD);
+				break;
 			}
-			break;
-		case GLOBOHELIO:
-			cuerpo->SetGravityScale(0);
-			cuerpo->ApplyLinearImpulse(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO), cuerpo->GetWorldCenter());
-		case PELOTABASQUET:
+		case PLATAFORMA:{
+				cuerpo->SetType(b2_staticBody);
+				b2PolygonShape forma;
+				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+				fD.shape = &forma;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
+				cuerpo->CreateFixture(&fD);
+				break;
+			}
+		case GLOBOHELIO:{
+				cuerpo->SetGravityScale(0);
+				cuerpo->ApplyLinearImpulse(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO), cuerpo->GetPosition());
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				fD.shape = &forma;
+				fD.density = DENSIDAD_GLOBOHELIO;
+				fD.friction = FRICCION_GLOBOHELIO;
+				fD.restitution = RESTITUCION_GLOBOHELIO;
+				cuerpo->CreateFixture(&fD);
+				break;
+			}
+		case PELOTABASQUET:{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				fD.shape = &forma;
+				fD.density = DENSIDAD_PELOTABASQUET;
+				fD.friction = FRICCION_PELOTABASQUET;
+				fD.restitution = RESTITUCION_PELOTABASQUET;
+				cuerpo->CreateFixture(&fD);
+				break;
+			}
 		case PELOTABOWLING:
 			{
 				b2CircleShape forma;
 				forma.m_radius = ((Circulo *)dim)->getRadio();
 				
-				b2FixtureDef fD;
 				fD.shape = &forma;
-				fD.density = dim->getDensidad();
-				fD.friction = 0.3;
-				fD.restitution = dim->getRestitucion();
+				fD.density = DENSIDAD_PELOTABOWLING;
+				fD.friction = FRICCION_PELOTABOWLING;
+				fD.restitution = RESTITUCION_PELOTABOWLING;
 				cuerpo->CreateFixture(&fD);
+				break;
 			}
-			break;
 		case POLIGONOREGULAR:
 			{
 				b2PolygonShape forma;
@@ -82,13 +111,12 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				vertices[2].Set(((Cuadrado *) dim)->getX() + 20, ((Cuadrado *) dim)->getY() - 20);
 				vertices[3].Set(((Cuadrado *) dim)->getX() + 20, ((Cuadrado *) dim)->getY());
 				forma.Set(vertices,4);
-				b2FixtureDef fD;
 				fD.shape = &forma;
 				fD.density = 1.0;
 				fD.friction = 0.3;
 				cuerpo->CreateFixture(&fD);
+				break;
 			}
-			break;
 		case SOGA:
 			{
 				b2Body* segmentoAnterior;
@@ -106,13 +134,11 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				segmentoAnterior = this->mundo->CreateBody(&bD);
 
 				b2PolygonShape forma;
-				
-				b2FixtureDef fD;
 
 				forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
 				fD.shape = &forma;
 //pendientes de AJUSTE luego de experimentar un poco
-				fD.density = 1.0;
+				fD.density = 1.0; //poner esto en constantes.h!!!
 				fD.friction = 0.3;
 
 				segmentoAnterior->CreateFixture(&fD);
@@ -146,9 +172,8 @@ void Box2DWorld::agregarFigura(Figura * figura)
 					//guardo el que se unira en el paso siguiente
 					segmentoAnterior = segmentoSiguiente;
 				}
-
-			}
 			break;
+			}
 	}
 }
 
