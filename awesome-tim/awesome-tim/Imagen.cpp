@@ -4,6 +4,21 @@
 #include "SDL_ttf.h"
 
 //crea una imagen sin superficie
+
+//nueva superficie de las dimensiones pasadas
+Imagen::Imagen(int ancho,int alto){
+	superficie = SdlSurfaceManager::crearSup(ancho,alto);
+	Uint32 negro = SDL_MapRGBA(superficie->format,0,0,0,255);
+	SdlSurfaceManager::pintarSup(superficie,negro);
+}
+
+//dibuja en las pocisiones x/yDestino el rectOrigen de sup (rectOrigen pude ser NULL si se desea copiar toda la superficie sup)
+void Imagen::dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,int yDestino){
+	if((this!=NULL)&&(img!=NULL))
+		SdlSurfaceManager::blitSurfaces(img->superficie,this->superficie,rectOrigen,xDestino,yDestino);
+}
+
+
 Imagen::Imagen(bool flag){
 	superficie = NULL;
 }
