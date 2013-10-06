@@ -1,0 +1,32 @@
+juego:
+  terreno:
+    fondo: ../images/fondo-gris.jpg
+    lista_figuras:
+      - figura:
+          tipo_figura: CUADRADO
+          ID: ../images/Cuadrado.png
+          posX: 0
+          posY: 0
+          angulo: 0
+      - figura:
+          tipo_figura: CIRCULO
+          ID: ../images/Circulo.png
+          posX: 0
+          posY: 0
+          angulo: 0
+  botonera:
+    lista_figuras:
+      - figura:
+          tipo_figura: CUADRADO
+          ID: ../images/Cuadrado.png
+          posX: 0
+          posY: 0
+          angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
+          tipo_figura: CIRCULO
+          ID: ../images/Circulo.png
+          posX: 0
+          posY: 0
+          angulo: 0
+        cantidad_de_instancias: 5
