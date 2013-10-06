@@ -97,3 +97,18 @@ bool Cuadrado::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 
 	return false;
 }
+void Cuadrado::setAncho(double nuevoLargo){
+	this->ancho = nuevoLargo;
+
+	vertice1.setX(ancho/2);
+	vertice1.setY(-alto/2);
+
+	vertice2.setX(-ancho/2);
+	vertice2.setY(-alto/2);
+
+	vertice3.setX(-ancho/2);
+	vertice3.setY(alto/2);
+
+	vertice4.setX(ancho/2);
+	vertice4.setY(alto/2);
+}

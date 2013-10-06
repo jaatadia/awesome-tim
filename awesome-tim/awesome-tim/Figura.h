@@ -21,6 +21,7 @@ protected:
 	Dimension* dimension;
 	std::string ID;
 	VistaFigura* myVista;
+public:
 	bool traslucido;
 
 public:
@@ -39,6 +40,7 @@ public:
 	virtual const char* getID();
 	virtual int getTipoDimension(){return dimension->getTipoDimension();};
 	virtual Dimension* getDimension();
+	virtual double getLargo();
 
 	virtual void setTraslucido(bool flag);
 	virtual void setAngulo(double angulo);

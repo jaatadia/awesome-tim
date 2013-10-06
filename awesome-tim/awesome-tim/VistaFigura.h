@@ -3,12 +3,13 @@
 #include "Imagen.h"
 #include "Figura.h"
 #include "EscalasDeEjes.h"
+#include "Contenedor.h"
 
 class Figura;
 
 class VistaFigura{
 
-private:
+protected:
 	Figura* fig;
 	Imagen* orig;
 	Imagen* rotada;
@@ -17,15 +18,16 @@ private:
 
 public:
 	VistaFigura(Figura* fig);
-	~VistaFigura();
+	virtual ~VistaFigura();
 	//dibuja la figura tomando su posicion como pixels
-	void dibujarEnPixel(Superficie* canvas);
+	virtual void dibujarEnPixel(Superficie* canvas);
 	//dibuja la figura tomando su posicion como unidades logicas , probablemente siempre hay que usar este
-	void dibujar(Superficie* canvas);
-	void dibujar(Superficie* canvas,int xIni,int yIni);
+	virtual void dibujar(Superficie* canvas);
+	virtual void dibujar(Superficie* canvas,int xIni,int yIni);
 
-private:
-	void redraw();
+protected:
+	virtual void redraw();
+	VistaFigura(){};
 
 };
 
