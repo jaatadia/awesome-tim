@@ -24,6 +24,7 @@
 #include "PelotaBasquet.h"
 #include "PelotaBowling.h"
 #include "GloboHelio.h"
+#include "PelotaTenis.h"
 
 class CargadorYaml{
 public:
@@ -63,7 +64,6 @@ private:
 	static Figura* crearPoligono(const YAML::Node& nodoFigura);
 	static Figura* crearCuadrado(const YAML::Node& nodoFigura);
 	static Figura* crearTriangulo(const YAML::Node& nodoFigura);
-
 	static Figura* crearPlataforma(const YAML::Node& nodoFigura);
 	static Figura* crearBalancin(const YAML::Node& nodoFigura);
 	static Figura* crearGloboHelio(const YAML::Node& nodoFigura);
@@ -74,6 +74,7 @@ private:
 	static Figura* crearCorrea(const YAML::Node& nodoFigura);
 	static Figura* crearEngranaje(const YAML::Node& nodoFigura);
 	static Figura* crearCintaTransportadora(const YAML::Node& nodoFigura);
+	static Figura* crearPelotaTenis(const YAML::Node& nodoFigura);
 
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
