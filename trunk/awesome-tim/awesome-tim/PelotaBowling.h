@@ -1,14 +1,16 @@
 #pragma once
 #include "circulo.h"
+#include "Constantes.h"
+#include "Figura.h"
 
-class PelotaBowling : public Circulo
+class PelotaBowling : public Figura
 {
 private:
-	PelotaBowling(void);
+	PelotaBowling(const char* id,Dimension* dim,bool flag):Figura(id,dim){};
 public:
-	PelotaBowling(double r,double pos_X,double pos_Y,double angulo);
-	~PelotaBowling(void);
+	PelotaBowling(double pos_X,double pos_Y,double angulo = 0):Figura(ID_PELOTABOWLING,new Circulo(RADIO_PELOTABOWLING,pos_X,pos_Y,angulo)){};
+	~PelotaBowling(void){};
 
 	virtual int getTipoDimension(){return PELOTABOWLING;}
-	virtual Dimension * clonar();
+	Figura* clonar(){return new PelotaBowling(ID.c_str(),dimension->clonar(),true);};
 };

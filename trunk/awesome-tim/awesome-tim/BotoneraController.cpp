@@ -1,4 +1,5 @@
 #include "BotoneraController.h"
+#include "Constantes.h"
 
 BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
 	altoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
@@ -334,61 +335,38 @@ void BotoneraController::ScrollDown(){
 	this->setCambio(true);
 }
 
+#include "PelotaBasquet.h"
+#include "PelotaBowling.h"
+#include "GloboHelio.h"
+#include "Plataforma.h"
+
 bool BotoneraController::agregarBotonesDefault(){
 	
-	const char* ID = "../images/triangulo.png";
+	const char* ID = "../images/Cuadrado.png";
 	Imagen* img = new Imagen(ID);
-	Figura* fig = new Figura(ID,new Triangulo(0,0,0,10,10));
+	Figura* fig = new Figura(ID,new Cuadrado(20,20,0,0,0));
 	Contenedor::putMultimedia(ID,img);
 	this->agregarBoton(fig,100);
 	
-	ID = "../images/Cuadrado.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new Cuadrado(20,20,0,0,0));
-	Contenedor::putMultimedia(ID,img);
+	img = new Imagen(ID_PELOTABASQUET);
+	fig = new PelotaBasquet(0,0);
+	Contenedor::putMultimedia(ID_PELOTABASQUET,img);
+	this->agregarBoton(fig,100);
+
+	img = new Imagen(ID_PELOTABOWLING);
+	fig = new PelotaBowling(0,0);
+	Contenedor::putMultimedia(ID_PELOTABOWLING,img);
 	this->agregarBoton(fig,100);
 	
-	ID = "../images/Pelota-Basket.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PelotaBasquet(10,0,0,0));
-	Contenedor::putMultimedia(ID,img);
+	img = new Imagen(ID_GLOBO);
+	fig = new GloboHelio(0,0);
+	Contenedor::putMultimedia(ID_GLOBO,img);
 	this->agregarBoton(fig,100);
 
-	ID = "../images/Ptriangulo.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PoligonoRegular(0,0,10,3,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
-	
-	ID = "../images/Pcuadrado.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PoligonoRegular(0,0,10,4,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
-
-	ID = "../images/Ppentagono.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PoligonoRegular(0,0,10,5,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
-
-	ID = "../images/Phexagono.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PoligonoRegular(0,0,10,6,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
-
-	ID = "../images/Pheptagono.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PoligonoRegular(0,0,10,7,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
-
-	ID = "../images/Poctogono.png";
-	img = new Imagen(ID);
-	fig = new Figura(ID,new PoligonoRegular(0,0,10,6,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
+	img = new Imagen(ID_PLATAFORMA);
+	fig = new Plataforma(1,0,0,0);
+	Contenedor::putMultimedia(ID_PLATAFORMA,img);
+	this->agregarBoton(fig,100); 
 
 	return true;
 }

@@ -1,19 +1,18 @@
-#ifndef __PELOTABASQUET_H__
-#define __PELOTABASQUET_H__
-
+#pragma once
 #include "Circulo.h"
 #include "Constantes.h"
+#include "Figura.h"
 
-class PelotaBasquet : public Circulo
+
+class PelotaBasquet : public Figura
 {
 private:
-	PelotaBasquet(void);
+	PelotaBasquet(const char* id,Dimension* dim,bool flag):Figura(id,dim){};
+
 public:
-	PelotaBasquet(double r,double pos_X,double pos_Y,double angulo);
-	~PelotaBasquet(void);
+	PelotaBasquet(double pos_X,double pos_Y,double angulo = 0):Figura(ID_PELOTABASQUET,new Circulo(RADIO_PELOTABASQUET,pos_X,pos_Y,angulo)){};
+	~PelotaBasquet(void){};
 
 	virtual int getTipoDimension(){return PELOTABASQUET;}
-	virtual Dimension * clonar();
+	Figura* clonar(){return new PelotaBasquet(ID.c_str(),dimension->clonar(),true);};
 };
-
-#endif // __PELOTABASQUET_H__

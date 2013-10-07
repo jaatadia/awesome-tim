@@ -45,6 +45,9 @@ public:
 	virtual void setTraslucido(bool flag);
 	virtual void setAngulo(double angulo);
 
+	virtual void agrandar(){};
+	virtual void achicar(){};
+
 	virtual Figura* clonar();//copia la figura
 
 };
