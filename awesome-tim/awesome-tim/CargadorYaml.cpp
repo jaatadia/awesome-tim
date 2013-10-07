@@ -196,14 +196,9 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 **                                                       **
 **********************************************************/
 Figura* CargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
-	//FIXME: GLOBO de HELIO no deberia ser una dimension sino una figura
-	double posX,posY,radio,angulo;
-	std::string ID;
+	double posX,posY;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerAngulo(nodoFigura,&angulo);
-	obtenerRadio(nodoFigura,&radio);
-	obtenerID(nodoFigura, &ID);
 
 	Figura* figura = new GloboHelio(posX,posY);
 
@@ -211,14 +206,9 @@ Figura* CargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
-	//FIXME: BOLA DE BOWLING no deberia ser una dimension sino una figura
-	double posX,posY,radio,angulo;
-	std::string ID;
+	double posX,posY;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerAngulo(nodoFigura,&angulo);
-	obtenerRadio(nodoFigura,&radio);
-	obtenerID(nodoFigura, &ID);
 
 	Figura* figura = new PelotaBowling(posX,posY);
 
@@ -226,14 +216,9 @@ Figura* CargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
-	//FIXME: PELOTA DE BASQUET no deberia ser una dimension sino una figura
-	double posX,posY,radio,angulo;
-	std::string ID;
+	double posX,posY;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerAngulo(nodoFigura,&angulo);
-	obtenerRadio(nodoFigura,&radio);
-	obtenerID(nodoFigura, &ID);
 
 	Figura* figura = new PelotaBasquet(posX,posY);;
 
@@ -264,6 +249,15 @@ Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
+Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
+	double posX,posY,angulo,largo;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerLargo(nodoFigura, &largo);
+
+	return new Plataforma(largo,posX,posY,angulo);
+}
 
 Figura* CargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
 	double posX,posY,angulo,base,altura;
@@ -317,16 +311,6 @@ Figura* CargadorYaml::crearPoligono(const YAML::Node& nodoFigura){
 	return figura; 
 }
 
-Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
-	double posX,posY,angulo,largo;
-
-	obtenerAngulo(nodoFigura,&angulo);
-	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerLargo(nodoFigura, &largo);
-
-	return new Plataforma(largo,posX,posY,angulo);
-}
-
 Figura* CargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
 	
 	double posX,posY,angulo,radio;
@@ -337,10 +321,17 @@ Figura* CargadorYaml::crearCirculo(const YAML::Node& nodoFigura){
 	obtenerID(nodoFigura,&ID);
 	obtenerRadio(nodoFigura,&radio);
 
-	//FIXME: Circulo la pusieron como clase abstracta xq hicieron heredar a pelota de ahi, eso hay que cambiarlo.
-	//new Circulo(radio,posX,posY,angulo)
+	Dimension* circulo = new Circulo(radio,posX,posY,angulo);
 
-	Figura* figura = new PelotaBasquet(posX,posY);
+	if(!circulo){
+		imprimir_error_sin_linea("No se pudo crear la dimension del circulo");
+		return NULL;
+	}
+
+	Figura* figura = new Figura(ID.c_str(),circulo); 
+
+	if(!figura)
+		delete(circulo);
 
 	return figura; 
 }
