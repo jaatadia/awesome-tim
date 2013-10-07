@@ -3,13 +3,14 @@
 #include "Constantes.h"
 #include <math.h>
 
-Figura::Figura(const char* ID,Dimension* dim){
+Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->ID = ID;
 	this->dimension = dim;
 	this->setCambio(true);
-	this->myVista = new VistaFigura(this);
+	if (crearVista) this->myVista = new VistaFigura(this);
 	this->traslucido = false;
 }
+
 
 Figura::~Figura(void){
 	if (myVista != NULL)

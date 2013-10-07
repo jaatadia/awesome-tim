@@ -170,6 +170,32 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 	}
 }
 
+
+void Terreno::agrandarFigura()
+{
+	if (figuraActiva != NULL){
+		figuraActiva->agrandar();
+
+		//si se fue el centro del terreno lo vuelvo a meter
+		corregirPosicion(figuraActiva);
+		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
+		this->setCambio(true);
+	}
+}
+
+void Terreno::achicarFigura()
+{
+	if (figuraActiva != NULL){
+
+		figuraActiva->achicar();
+
+		//si se fue el centro del terreno lo vuelvo a meter
+		corregirPosicion(figuraActiva);
+		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
+		this->setCambio(true);
+	}
+}
+
 void Terreno::soltarFigura()
 {
 	if (figuraActiva){

@@ -1,8 +1,7 @@
 #include "Plataforma.h"
 
-Plataforma::Plataforma(double largo,double posX,double posY,double angulo):Figura(ID_PLATAFORMA,new Cuadrado(ANCHO_PLATAFORMA*largo,ALTO_PLATAFORMA,posX,posY,angulo)){
+Plataforma::Plataforma(double largo,double posX,double posY,double angulo):Figura(ID_PLATAFORMA,new Cuadrado(ANCHO_PLATAFORMA*largo,ALTO_PLATAFORMA,posX,posY,angulo),false){
 	this->largo = largo;
-	delete this->myVista;
 	this->myVista = new VistaFigAgrandable(this);
 }
 

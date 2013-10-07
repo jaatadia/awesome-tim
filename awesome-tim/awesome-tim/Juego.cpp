@@ -27,6 +27,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 
 	shiftPressed = false;
 	estaActiva = false;
+	clickPressed = false;
 
 //*********************prueba de soga***********************
 
@@ -151,7 +152,13 @@ while(SDL_PollEvent(&evento)){
 			char charIngresado;
 
 			charIngresado = evento.text.text[0];
-			comandos->agregarLetra(charIngresado);
+			if(clickPressed){
+				if(charIngresado == '+'){
+					terreno->agrandarFigura();
+				}else if(charIngresado == '-'){
+					terreno->achicarFigura();
+				}
+			}else comandos->agregarLetra(charIngresado);
 
 			break;
 		}
@@ -191,7 +198,7 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
-
+			clickPressed = true;
 			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
@@ -232,6 +239,7 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_MOUSEBUTTONUP:
 		{
+			clickPressed=false;
 			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
