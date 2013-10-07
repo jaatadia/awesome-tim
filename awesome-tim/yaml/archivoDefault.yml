@@ -108,3 +108,16 @@ juego:
           cant_vertices: 8
           radio: 10
         cantidad_de_instancias: 5
+      - figura:
+          tipo_figura: PLATAFORMA
+          largo: 20
+          posX: 0
+          posY: 0
+          angulo: 0	
+        cantidad_de_instancias: 5
+      - figura:
+          tipo_figura: PELOTA_TENIS
+          posX: 0
+          posY: 0
+          angulo: 0	
+        cantidad_de_instancias: 5
