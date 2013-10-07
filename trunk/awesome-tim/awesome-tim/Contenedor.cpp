@@ -46,6 +46,22 @@ void Contenedor::deleteContenedor(){
 
 
 Contenedor::Contenedor(void){
+
+	////cargo las imagenes de los elementos del juego
+	//putMultimedia(ID_PLATAFORMA,new Imagen(ID_PLATAFORMA)); //si el id estuviese en el archivo yaml esto no iria
+	//putMultimedia(ImgSegmSoga,new Imagen(ImgSegmSoga));
+	//putMultimedia(ID_GLOBO,new Imagen(ID_GLOBO));
+	//putMultimedia(ID_PELOTATENIS,new Imagen(ID_PELOTATENIS));
+	//putMultimedia(ID_PELOTABASQUET,new Imagen(ID_PELOTABASQUET));
+	//putMultimedia(ID_PELOTABOWLING,new Imagen(ID_PELOTABOWLING));
+	////putMultimedia(ID_CINTA,new Imagen(ID_CINTA)); //cinta transportadora
+	////putMultimedia(ID_PUNTA_CINTA_IZQ,new Imagen(ID_PUNTA_CINTA_IZQ)); //punta izq de cinta
+	////putMultimedia(ID_PUNTA_CINTA_DER,new Imagen(ID_PUNTA_CINTA_DER)); //punta der de cinta
+	////putMultimedia(ID_MOTOR,new Imagen(ID_MOTOR)); //motor
+	////putMultimedia(ID_CORREA,new Imagen(ID_CORREA)); //correa
+	////putMultimedia(ID_ENGRANAJE,new Imagen(ID_ENGRANAJE)); //engranaje
+	////putMultimedia(ID_TABLA_BALANCIN,new Imagen(ID_TABLA_BALANCIN)); //tabla balancin
+	////putMultimedia(ID_PUNTA_BALANCIN,new Imagen(ID_PUNTA_BALANCIN)); //puntas balancin
 }
 
 Contenedor::~Contenedor(void){

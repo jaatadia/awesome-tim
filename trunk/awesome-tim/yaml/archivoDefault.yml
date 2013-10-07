@@ -14,6 +14,14 @@ juego:
           angulo: 0
         cantidad_de_instancias: 5
       - figura:
+          # ID: ../images/plataforma_madera.png
+          tipo_figura: PLATAFORMA
+          largo: 2
+          posX: 80
+          posY: 80
+          angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
           ID: ../images/Circulo.png
           tipo_figura: CIRCULO
           radio: 20

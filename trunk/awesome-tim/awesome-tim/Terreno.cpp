@@ -25,7 +25,7 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	}else{
 		this->mundoBox2D = NULL;
 	}
-//----PRUEBAS	
+	//----PRUEBAS	
 	if (fisicaActiva){
 	/*
 		//*********************prueba de soga***********************

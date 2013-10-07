@@ -1,5 +1,4 @@
 #pragma once
-
 #define NOMBRE_JUEGO "The Incredible Machine"
 
 //frecuencias de simulacion y dibujo
@@ -88,7 +87,7 @@
 #define ALTO_PLATAFORMA 5
 #define PLATAFORMA_DENSIDAD 1
 #define PLATAFORMA_FRICCION 1
-#define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA)
+#define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, denberia cubrir la diagonal
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -120,3 +119,12 @@
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
 #define ID_PELOTABOWLING "../images/Bowling.png"
+#define ID_CINTA ""
+#define ID_PUNTA_CINTA_IZQ ""
+#define ID_PUNTA_CINTA_DER ""
+#define ID_MOTOR ""
+#define ID_CORREA ""
+#define ID_ENGRANAJE ""
+#define ID_TABLA_BALANCIN ""
+#define ID_PUNTA_BALANCIN ""
+

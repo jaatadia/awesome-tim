@@ -27,3 +27,6 @@ int Plataforma::getTipoDimension(){
 double Plataforma::getLargo(){
 	return this->largo;
 }
+Figura* Plataforma::clonar(){
+	return new Plataforma(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+}
