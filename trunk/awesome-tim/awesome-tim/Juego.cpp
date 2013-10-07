@@ -266,15 +266,15 @@ while(SDL_PollEvent(&evento)){
 			//scroll de botonera SIEMPRE sin importar la posicion
 			if (evento.wheel.y > 0){	
 				if(clickPressed){
-					if(figuraEnAire) figuraEnAire->achicar();
-					else terreno->achicarFigura();
+					if(figuraEnAire) figuraEnAire->agrandar();
+					else terreno->agrandarFigura();
 				}else{
 					this->botonera->ScrollUp();
 				}
 			}else if (evento.wheel.y < 0){
 				if(clickPressed){
-					if(figuraEnAire) figuraEnAire->agrandar();
-					else terreno->agrandarFigura();
+					if(figuraEnAire) figuraEnAire->achicar();
+					else terreno->achicarFigura();
 				}else{
 					this->botonera->ScrollDown();
 				}

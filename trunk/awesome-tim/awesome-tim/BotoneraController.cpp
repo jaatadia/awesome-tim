@@ -340,41 +340,16 @@ void BotoneraController::ScrollDown(){
 #include "PelotaTenis.h"
 #include "GloboHelio.h"
 #include "Plataforma.h"
+#include "Engranaje.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
-	const char* ID = "../images/Cuadrado.png";
-	Imagen* img = new Imagen(ID);
-	Figura* fig = new Figura(ID,new Cuadrado(20,20,0,0,0));
-	Contenedor::putMultimedia(ID,img);
-	this->agregarBoton(fig,100);
-	
-
-	img = new Imagen(ID_PLATAFORMA);
-	fig = new Plataforma(1,0,0,0);
-	Contenedor::putMultimedia(ID_PLATAFORMA,img);
-	this->agregarBoton(fig,100); 
-
-
-	img = new Imagen(ID_GLOBO);
-	fig = new GloboHelio(0,0);
-	Contenedor::putMultimedia(ID_GLOBO,img);
-	this->agregarBoton(fig,100);
-
-	img = new Imagen(ID_PELOTATENIS);
-	fig = new PelotaTenis(0,0);
-	Contenedor::putMultimedia(ID_PELOTATENIS,img);
-	this->agregarBoton(fig,100);
-
-	img = new Imagen(ID_PELOTABOWLING);
-	fig = new PelotaBowling(0,0);
-	Contenedor::putMultimedia(ID_PELOTABOWLING,img);
-	this->agregarBoton(fig,100);
-
-	img = new Imagen(ID_PELOTABASQUET);
-	fig = new PelotaBasquet(0,0);
-	Contenedor::putMultimedia(ID_PELOTABASQUET,img);
-	this->agregarBoton(fig,100);
+	this->agregarBoton(new Plataforma(1,0,0,0),100); 
+	this->agregarBoton(new GloboHelio(0,0),100);
+	this->agregarBoton(new PelotaTenis(0,0),100);
+	this->agregarBoton(new PelotaBowling(0,0),100);
+	this->agregarBoton(new PelotaBasquet(0,0),100);
+	this->agregarBoton(new Engranaje(0,0),100);
 	
 	return true;
 }
