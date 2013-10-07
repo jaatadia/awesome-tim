@@ -220,7 +220,18 @@ Figura* CargadorYaml::crearPelotaBasquet(const YAML::Node& nodoFigura){
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
 
-	Figura* figura = new PelotaBasquet(posX,posY);;
+	Figura* figura = new PelotaBasquet(posX,posY);
+
+	return figura;
+}
+
+Figura* CargadorYaml::crearPelotaTenis(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+
+	Figura* figura = new PelotaTenis(posX,posY,angulo) ;
 
 	return figura;
 }
@@ -459,6 +470,13 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		Figura* figura = crearGloboHelio(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Globo de Helio."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"PELOTA_TENIS") == 0){
+		Figura* figura = crearPelotaTenis(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Pelota de Tenis."); 	
 		return figura;
 	}
 
@@ -765,8 +783,9 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool pelotaBask = (strcmp(tipo_figura,"PELOTA_BASQUET") == 0);
 	bool bowling = (strcmp(tipo_figura,"BOLA_BOWLING") == 0);
 	bool globoHelio = (strcmp(tipo_figura,"GLOBO_HELIO") == 0);
+	bool tenis = (strcmp(tipo_figura,"PELOTA_TENIS") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || correa || soga || motor || pelotaBask || bowling || globoHelio);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || correa || soga || motor || pelotaBask || bowling || globoHelio || tenis);
 
 	return (figuraSimple || figuraCompleja);
 }
