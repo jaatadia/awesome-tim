@@ -588,10 +588,10 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 		try {
 			const YAML::Node& nodoFig = listaFiguras[i]["figura"];
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
-			imprimir_error_excepcion("No se encontro el nodo figura. El boton no sera cargado",e.what());
+			imprimir_error_excepcion("No se encontro el nodo figura. El boton no sera cargado.",e.what());
 			continue;
 		}catch(YAML::InvalidScalar &e){
-			imprimir_error_excepcion("No se encontro el nodo figura. El boton no sera cargado",e.what());
+			imprimir_error_excepcion("No se encontro el nodo figura. El boton no sera cargado.",e.what());
 			continue;
 		}
 
@@ -807,8 +807,8 @@ bool CargadorYaml::cant_instancias_valida(int instancias){
 }
 
 bool CargadorYaml::largo_valido(double largo){
-	//FIXME: cuando es un largo valido?
-	return ancho_valido(largo);
+	//FIXME: cuando es un largo valido? //checked. -flor
+	return (largo > 0 || largo <= PLATAFORMA_MAXLARGO);
 }
 
 bool CargadorYaml::alto_valido(double alto){
@@ -861,7 +861,7 @@ void CargadorYaml::imprimir_error_sin_linea(std::string mensaje){
 }
 void CargadorYaml::imprimir_error_excepcion(std::string mensaje,std::string what){
 	std::string msj = CargadorYaml::concatenar_archivo(mensaje,ruta_archivo);
-	std::string full_msj = msj + what;
+	std::string full_msj = msj + " " + what;
 	ErrorLogHandler::addError("CargadorYaml",full_msj.c_str());
 }
 

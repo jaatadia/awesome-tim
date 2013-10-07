@@ -13,4 +13,5 @@ public:
 	void achicar();
 	int getTipoDimension();
 	virtual double getLargo();
+	virtual Figura* clonar();
 };
