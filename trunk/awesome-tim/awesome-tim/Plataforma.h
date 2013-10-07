@@ -1,6 +1,7 @@
 #pragma once
 #include "figura.h"
 #include "Cuadrado.h"
+#include "VistaFigAgrandable.h"
 
 class Plataforma : public Figura{
 private:
@@ -11,5 +12,5 @@ public:
 	void agrandar();
 	void achicar();
 	int getTipoDimension();
-	double getLargo();
+	virtual double getLargo();
 };

@@ -248,7 +248,7 @@ void Box2DWorld::actualizar(Figura * figura)
 		i++;
 	}
 
-	std::cout<<i<<std::endl;
+	//std::cout<<i<<std::endl;
 
 }
 
