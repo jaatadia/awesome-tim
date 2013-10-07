@@ -13,6 +13,7 @@ public:
 	double getAncho();
 	double getAlto();
 	double getRadio();
+	void setRadio(double radio);
 	bool puntoPertenece(double pos_X, double pos_Y);
 	bool intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2);
 	int getTipoDimension(){return CIRCULO;};

@@ -23,6 +23,10 @@ double Circulo::getRadio(){
 	return (this->radio);
 }
 
+void Circulo::setRadio(double radio){
+	this->radio = radio;
+}
+
 bool Circulo::puntoPertenece(double X, double Y){
 
 	double moduloCuadrado = (X-getX())*(X-getX())+ (Y-getY())*(Y-getY());

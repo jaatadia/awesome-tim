@@ -194,10 +194,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Engranaje.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\FiguraCompuesta.cpp"
 				>
 			</File>

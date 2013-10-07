@@ -57,6 +57,7 @@
 #define SOGA 9
 #define PLATAFORMA 10
 #define PELOTATENIS 11
+#define ENGRANAJE 12
 
 //valores fisicos
 #define RADIO_PELOTATENIS 2.0
@@ -89,6 +90,12 @@
 #define PLATAFORMA_FRICCION 1
 #define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, denberia cubrir la diagonal
 
+#define RADIO_MINENGRANAJE 5.0
+#define RADIO_MAXENGRANAJE 8.0
+#define RESTITUCION_ENGRANAJE 0.3
+#define DENSIDAD_ENGRANAJE 6.0
+#define FRICCION_ENGRANAJE 0.3
+
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
@@ -119,12 +126,13 @@
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
 #define ID_PELOTABOWLING "../images/Bowling.png"
+#define ID_ENGRANAJE "../images/Bowling.png"
+
 #define ID_CINTA ""
 #define ID_PUNTA_CINTA_IZQ ""
 #define ID_PUNTA_CINTA_DER ""
 #define ID_MOTOR ""
 #define ID_CORREA ""
-#define ID_ENGRANAJE ""
 #define ID_TABLA_BALANCIN ""
 #define ID_PUNTA_BALANCIN ""
 
