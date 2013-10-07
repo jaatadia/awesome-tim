@@ -25,7 +25,7 @@ public:
 	bool traslucido;
 
 public:
-	Figura(const char* ID,Dimension* dim);
+	Figura(const char* ID,Dimension* dim,bool crearVista = true);
 	virtual ~Figura(void);
 
 	virtual void cambiarPosicion(double Movx,double Movy);

@@ -32,6 +32,7 @@ private:
 	bool estaActiva; //indica si la figura en aire esta habilitada a moverse
 
 	bool shiftPressed;
+	bool clickPressed;
 
 public:
 	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
