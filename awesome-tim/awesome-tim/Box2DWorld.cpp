@@ -107,6 +107,18 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+		case PELOTATENIS:
+			{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				fD.shape = &forma;
+				fD.density = DENSIDAD_PELOTATENIS;
+				fD.friction = FRICCION_PELOTATENIS;
+				fD.restitution = RESTITUCION_PELOTATENIS;
+				cuerpo->CreateFixture(&fD);
+				break;
+			}
 		case POLIGONOREGULAR:
 			{
 				b2PolygonShape forma;
@@ -214,10 +226,7 @@ void Box2DWorld::actualizar(Figura * figura)
 	{
 		Figura* fig  = (Figura*)cuerpo->GetUserData();
 		
-		if(cuerpo->GetAngle() < 0)
-			fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
-		else
-			fig->setAngulo((cuerpo->GetAngle())*180/PI);
+		fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
 
 		fig->getDimension()->setX(cuerpo->GetPosition().x);
 		fig->getDimension()->setY(cuerpo->GetPosition().y);

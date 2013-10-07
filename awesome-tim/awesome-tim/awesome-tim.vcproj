@@ -408,6 +408,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PelotaTenis.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Plataforma.h"
 				>
 			</File>

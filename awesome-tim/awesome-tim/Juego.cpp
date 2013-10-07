@@ -154,9 +154,11 @@ while(SDL_PollEvent(&evento)){
 			charIngresado = evento.text.text[0];
 			if(clickPressed){
 				if(charIngresado == '+'){
-					terreno->agrandarFigura();
+					if(figuraEnAire) figuraEnAire->agrandar();
+					else terreno->agrandarFigura();
 				}else if(charIngresado == '-'){
-					terreno->achicarFigura();
+					if(figuraEnAire) figuraEnAire->achicar();
+					else terreno->achicarFigura();
 				}
 			}else comandos->agregarLetra(charIngresado);
 
@@ -262,9 +264,21 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEWHEEL:
 		{
 			//scroll de botonera SIEMPRE sin importar la posicion
-			if (evento.wheel.y > 0)	this->botonera->ScrollUp();
-			else if (evento.wheel.y < 0) this->botonera->ScrollDown();
-
+			if (evento.wheel.y > 0){	
+				if(clickPressed){
+					if(figuraEnAire) figuraEnAire->agrandar();
+					else terreno->agrandarFigura();
+				}else{
+					this->botonera->ScrollUp();
+				}
+			}else if (evento.wheel.y < 0){
+				if(clickPressed){
+					if(figuraEnAire) figuraEnAire->achicar();
+					else terreno->achicarFigura();
+				}else{
+					this->botonera->ScrollDown();
+				}
+			}
 			break;
 		}
 		case SDL_QUIT: 
