@@ -1,14 +1,16 @@
 #pragma once
-#include "circulo.h"
+#include "Circulo.h"
+#include "Constantes.h"
+#include "Figura.h"
 
-class GloboHelio : public Circulo
+class GloboHelio : public Figura
 {
 private:
-	GloboHelio(void);
-public:
-	GloboHelio(double r,double pos_X,double pos_Y,double angulo);
-	~GloboHelio(void);
+	GloboHelio(const char* id,Dimension* dim,bool flag):Figura(id,dim){};
 
-	virtual int getTipoDimension(){return GLOBOHELIO;}
-	virtual Dimension * clonar();
+public:
+	GloboHelio(double pos_X,double pos_Y):Figura(ID_GLOBO,new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0)){};
+	~GloboHelio(void){};
+	int virtual getTipoDimension(){return GLOBOHELIO;}
+	Figura* clonar(){return new GloboHelio(ID.c_str(),dimension->clonar(),true);};
 };

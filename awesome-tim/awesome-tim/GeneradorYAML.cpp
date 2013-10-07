@@ -230,28 +230,28 @@ int GeneradorYaml::pruebayaml(){
 //Cuadrado* dim_cuad = new Cuadrado(10,10,3,3,60);
 //Circulo* dim_circ = new Circulo(5,30,40,9);
 //Figura* fig1 = new Figura("../images/Cuadrado.png",dim_cuad);
-Figura* fig1 = new Figura("../images/Cuadrado.png",new Cuadrado(10,10,3,3,60));
+//Figura* fig1 = new Figura("../images/Cuadrado.png",new Cuadrado(10,10,3,3,60));
 //Figura* fig2 = new Figura("../images/Circulo.png",dim_circ);
-Figura* fig2 = new Figura("../images/Circulo.png",new PelotaBasquet(5,30,40,9));
+//Figura* fig2 = new Figura("../images/Circulo.png",new PelotaBasquet(5,30,40,9));
 
 
-std::list<Figura*> lista_fig = std::list<Figura*>();
-lista_fig.push_back(fig1);
-lista_fig.push_back(fig2);
-
-
-BotoneraController* botonera = new BotoneraController(8,80,2);
-botonera->agregarBoton(fig1,10);
-botonera->agregarBoton(fig2,10);
-
-Terreno* terr = new Terreno(80,80);
-terr->agregarFigura(fig1);
-terr->agregarFigura(fig2);
-
-guardarJuego("../yaml/GameStatePrueba.yml",botonera,terr);
-
-delete fig1;
-delete fig2;
-
+//std::list<Figura*> lista_fig = std::list<Figura*>();
+//lista_fig.push_back(fig1);
+//lista_fig.push_back(fig2);
+//
+//
+//BotoneraController* botonera = new BotoneraController(8,80,2);
+//botonera->agregarBoton(fig1,10);
+//botonera->agregarBoton(fig2,10);
+//
+//Terreno* terr = new Terreno(80,80);
+//terr->agregarFigura(fig1);
+//terr->agregarFigura(fig2);
+//
+//guardarJuego("../yaml/GameStatePrueba.yml",botonera,terr);
+//
+//delete fig1;
+//delete fig2;
+//
 return 0;
 }

@@ -41,3 +41,7 @@ bool Circulo::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 
 	return interseca;
 }
+
+Dimension* Circulo::clonar(){
+	return new Circulo(this->radio,this->getX(),this->getY(),this->getAngulo());
+}

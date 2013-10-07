@@ -202,10 +202,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GloboHelio.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\JuegoPlay.cpp"
 				>
 			</File>
@@ -219,14 +215,6 @@
 			</File>
 			<File
 				RelativePath=".\Motor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\PelotaBasquet.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\PelotaBowling.cpp"
 				>
 			</File>
 			<File

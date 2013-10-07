@@ -59,18 +59,25 @@
 #define PLATAFORMA 10
 
 //valores fisicos
+#define RADIO_PELOTABASQUET 8.0
 #define RESTITUCION_PELOTABASQUET 4.0
 #define DENSIDAD_PELOTABASQUET 1.0
 #define FRICCION_PELOTABASQUET 0.3
+
+#define RADIO_PELOTABOWLING 5.0
 #define RESTITUCION_PELOTABOWLING 0.3
 #define DENSIDAD_PELOTABOWLING 4.0
 #define FRICCION_PELOTABOWLING 0.3
+
+#define RADIO_GLOBOHELIO 10.0
 #define RESTITUCION_GLOBOHELIO 1.0
 #define FRICCION_GLOBOHELIO 0.3
 #define DENSIDAD_GLOBOHELIO 1.0
-#define VELOCIDAD_GLOBOHELIO -10.0
+#define VELOCIDAD_GLOBOHELIO -20.0
+
 #define LARGO_SEGMENTO_SOGA 10
 #define ALTO_SEGMENTO_SOGA 5
+
 #define ANCHO_PLATAFORMA 10
 #define ALTO_PLATAFORMA 5
 #define PLATAFORMA_DENSIDAD 1
@@ -103,3 +110,6 @@
 //id imagenes
 #define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
+#define ID_GLOBO "../images/Globo-Azul.jpg"
+#define ID_PELOTABASQUET "../images/Pelota-Basket.png"
+#define ID_PELOTABOWLING "../images/Bowling.png"

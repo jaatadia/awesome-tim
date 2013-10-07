@@ -33,14 +33,6 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 		agregarFigura(new Soga("../images/Cuadrado.png",new Cuadrado(5,5,10,10,0)));
 	*/
 		//********prueba de plataforma****************
-		Contenedor::putMultimedia(ID_PLATAFORMA,new Imagen(ID_PLATAFORMA));
-		agregarFigura(new Plataforma(1,10,10,0));
-		agregarFigura(new Plataforma(1,30,30,45));
-		agregarFigura(new Plataforma(2,50,50,-45));
-		Plataforma* plat = new Plataforma(1,50,60,0);
-		plat->setAngulo(-45);
-		plat->agrandar();
-		agregarFigura(plat);
 
 	}
 	//FIN PRUEBAS
