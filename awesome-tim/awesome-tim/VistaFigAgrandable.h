@@ -3,12 +3,13 @@
 
 class VistaFigAgrandable :	public VistaFigura
 {
+private:
+	double largo_anterior;
+	Imagen* imggrande;
+
 public:
 	VistaFigAgrandable(Figura* fig);
 	~VistaFigAgrandable(void);
+protected:
 	virtual void redraw();
-	//dibuja la figura tomando su posicion como pixels
-	virtual void dibujarEnPixel(Superficie* canvas);
-	virtual void dibujar(Superficie* canvas,int xIni,int yIni);
-	virtual void dibujar(Superficie* canvas);
 };
