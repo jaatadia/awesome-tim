@@ -31,28 +31,19 @@ juego:
           angulo: 0	
         cantidad_de_instancias: 5
       - figura:
-          ID: ../images/Pelota-Tenis.png
           tipo_figura: GLOBO_HELIO
-          radio: 3
           posX: 0
           posY: 0
-          angulo: 0
         cantidad_de_instancias: 5
       - figura:
-          ID: ../images/Pelota-Basket.png
           tipo_figura: PELOTA_BASQUET
-          radio: 8
           posX: 0
           posY: 0
-          angulo: 0
         cantidad_de_instancias: 5
       - figura:
-          ID: ../images/Bowling.png
           tipo_figura: BOLA_BOWLING
-          radio: 7
           posX: 0
           posY: 0
-          angulo: 0
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/triangulo.png
@@ -62,14 +53,6 @@ juego:
           angulo: 0
           base: 20
           alto: 20
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Circulo.png
-          tipo_figura: GLOBO_HELIO
-          radio: 10
-          posX: 0
-          posY: 0
-          angulo: 0
         cantidad_de_instancias: 5
       - figura:
           ID: ../images/Ptriangulo.png
