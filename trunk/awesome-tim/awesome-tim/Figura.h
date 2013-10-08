@@ -8,6 +8,8 @@
 #include "EscalasDeEjes.h"
 #include <string>
 
+#include "Box2D/Box2D.h"
+
 
 class VistaFigura;
 
@@ -21,6 +23,11 @@ protected:
 	Dimension* dimension;
 	std::string ID;
 	VistaFigura* myVista;
+	
+	b2Body* cuerpo;
+	unsigned long int numeroID;
+	unsigned long int extremo1, extremo2;
+
 public:
 	bool traslucido;
 
@@ -50,4 +57,7 @@ public:
 
 	virtual Figura* clonar();//copia la figura
 
+	virtual void setCuerpo(b2Body* cuerpo){
+		this->cuerpo = cuerpo;
+	}
 };

@@ -20,7 +20,7 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 
 	//Box2D
 	if(fisicaActiva){
-		this->mundoBox2D = new Box2DWorld(0.0f,9.81f);
+		this->mundoBox2D = new Box2DWorld(GRAVEDADX,GRAVEDADY);
 		this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 8, 3);
 	}else{
 		this->mundoBox2D = NULL;
@@ -440,7 +440,8 @@ void Terreno::actualizarModelo(){
 }
 */
 //hice que actualize todas las figuras de una sin iterar afuera...
-	this->mundoBox2D->actualizar(NULL);
+		this->mundoBox2D->actualizar(NULL);
+		this->setCambio(true);
 	}
 }
 
