@@ -138,6 +138,13 @@ while(SDL_PollEvent(&evento)){
 			if (evento.key.keysym.sym == SDLK_KP_ENTER || evento.key.keysym.sym == SDLK_RETURN)
 				comandos->enterKeyPressed(this);
 
+			if (evento.key.keysym.sym == SDLK_TAB){
+				if(clickPressed){
+					if(figuraEnAire) figuraEnAire->shift();
+					else terreno->shiftFigura();
+				}
+			}	
+
 			break;
 		}
 		case SDL_KEYUP: 

@@ -64,4 +64,6 @@ public:
 	virtual b2Body* getCuerpo(){
 		return cuerpo;
 	}
+
+	virtual void shift(){};
 };

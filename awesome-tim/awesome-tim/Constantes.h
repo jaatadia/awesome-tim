@@ -140,7 +140,7 @@
 #define ID_ENGRANAJE "../images/engranaje.png"
 
 #define ID_ENGRANAJE2_1 "../images/engranaje2-1.png"
-#define ID_ENGRANAJE2_2 "../images/engranaje2-1.png"
+#define ID_ENGRANAJE2_2 "../images/engranaje2-2.png"
 
 #define ID_CINTA ""
 #define ID_PUNTA_CINTA_IZQ ""

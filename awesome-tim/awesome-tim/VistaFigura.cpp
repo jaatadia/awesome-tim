@@ -14,7 +14,7 @@ VistaFigura::~VistaFigura(void){
 }
 
 void VistaFigura::dibujarEnPixel(Superficie *canvas){
-	if (this->fig->huboCambios()){
+	if (this->fig->huboCambios()||(orig==NULL)){
 		redraw();			
 		this->fig->setCambio(false);
 	}
@@ -28,7 +28,7 @@ void VistaFigura::dibujarEnPixel(Superficie *canvas){
 void VistaFigura::dibujar(Superficie *canvas){
 	
 
-	if (this->fig->huboCambios()){
+	if (this->fig->huboCambios()||(orig==NULL)){
 		redraw();
 		this->fig->setCambio(false);
 	}
@@ -40,7 +40,7 @@ void VistaFigura::dibujar(Superficie *canvas){
 }
 
 void VistaFigura::dibujar(Superficie *canvas,int xIni,int yIni){
-	if (this->fig->huboCambios()){
+	if (this->fig->huboCambios()||(orig==NULL)){
 		redraw();			
 		this->fig->setCambio(false);
 	}
