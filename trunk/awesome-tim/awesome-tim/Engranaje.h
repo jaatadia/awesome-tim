@@ -50,10 +50,6 @@ public:
 		}
 	}
 
-	virtual int getTipoDimension(){
-		return ENGRANAJE;
-	}
-
 	virtual void setRadio(double radio){
 		this->radio1= int(radio);
 		((Circulo*)(this->getDimension()))->setRadio(this->radio1);
@@ -69,4 +65,7 @@ public:
 		eng->setRadio(this->radio1);
 		return eng;
 	};
+
+	virtual int getTipoFigura(){return ENGRANAJE;}
+	virtual int getTipoDimension(){return CIRCULO;}
 };

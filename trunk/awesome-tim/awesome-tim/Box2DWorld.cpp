@@ -46,9 +46,9 @@ void Box2DWorld::agregarFigura(Figura * figura)
 
 	b2FixtureDef fD;
 
-	switch(figura->getTipoDimension())
+	switch(figura->getTipoFigura())
 	{
-		case TRIANGULO:
+		/*case TRIANGULO:
 			break;
 		case CUADRADO:{
 				b2PolygonShape forma;
@@ -58,7 +58,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = 0.3;
 				cuerpo->CreateFixture(&fD);
 				break;
-			}
+			}*/
 		case PLATAFORMA:{
 				cuerpo->SetType(b2_staticBody);
 				b2PolygonShape forma;
@@ -249,7 +249,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
-		case POLIGONOREGULAR:
+		/*case POLIGONOREGULAR:
 			{
 				b2PolygonShape forma;
 				b2Vec2 vertices[4];
@@ -263,7 +263,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = 0.3;
 				cuerpo->CreateFixture(&fD);
 				break;
-			}
+			}*/
 		case SOGA:
 			{
 				b2Body* segmentoAnterior;

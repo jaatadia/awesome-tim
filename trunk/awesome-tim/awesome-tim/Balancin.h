@@ -30,6 +30,7 @@ public:
 	void setAngulo(double angulo);
 	~Balancin(void);
 
-	int getTipoDimension(){return BALANCIN;};
+	virtual int getTipoFigura(){return BALANCIN;}
+	virtual int getTipoDimension(){return CUADRADO;}
 
 };

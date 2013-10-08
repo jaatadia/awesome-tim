@@ -8,6 +8,8 @@
 #include "Triangulo.h"
 #include "PoligonoRegular.h"
 
+#include "Plataforma.h"
+
 #include <iostream>
 #include <fstream>
 

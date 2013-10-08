@@ -11,6 +11,9 @@ private:
 public:
 	GloboHelio(double pos_X,double pos_Y):Figura(ID_GLOBO,new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0)){};
 	~GloboHelio(void){};
-	int virtual getTipoDimension(){return GLOBOHELIO;}
+
+	virtual int getTipoFigura(){return GLOBOHELIO;}
+	virtual int getTipoDimension(){return CIRCULO;}
+
 	Figura* clonar(){return new GloboHelio(ID.c_str(),dimension->clonar(),true);};
 };

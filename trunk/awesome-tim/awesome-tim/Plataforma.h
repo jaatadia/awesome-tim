@@ -11,7 +11,10 @@ public:
 	~Plataforma(void);
 	void agrandar();
 	void achicar();
-	int getTipoDimension();
+
+	virtual int getTipoDimension();
+	virtual int getTipoFigura();
+
 	virtual double getLargo();
 	virtual Figura* clonar();
 };
