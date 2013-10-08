@@ -292,13 +292,13 @@ void Terreno::buscarActiva(double posClickX ,double posClickY){
 
 		figuraActiva = buscarFigura(posClickX ,posClickY);
 		//si no la encontre confirmo que es null (o podria no hacer nada...)
-		if (!figuraActiva)
+		if (!figuraActiva){
 			figuraActiva=NULL;
-		else
+		}else{
 			figuraActiva->setTraslucido(true);
 			this->setCambio(true);
-			
 			eliminarFigura(figuraActiva);
+		}
 	}
 }
 
@@ -335,7 +335,7 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 		if (figuraEncontrada)
 			return figuraBuscada;
 	}
-		return NULL;
+	return NULL;
 }
 
 int Terreno::obtenerCuadranteDeClick(double X, double Y){
