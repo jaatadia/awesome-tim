@@ -42,6 +42,7 @@ public:
 	virtual void dibujar(Superficie* super,int xIni,int yIni);
 
 	virtual int getTipoDimension()=0;
+	virtual int getTipoFigura()=0;
 
 	virtual void setTraslucido(bool flag);
 	virtual void setAngulo(double angulo);
