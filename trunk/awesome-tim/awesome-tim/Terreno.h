@@ -62,6 +62,7 @@ public:
 
 	void agrandarFigura();
 	void achicarFigura();
+	void shiftFigura();
 
 private:
 	bool hayFiguras();

@@ -187,6 +187,18 @@ void Terreno::agrandarFigura()
 	}
 }
 
+void Terreno::shiftFigura()
+{
+	if (figuraActiva != NULL){
+		figuraActiva->shift();
+
+		//si se fue el centro del terreno lo vuelvo a meter
+		corregirPosicion(figuraActiva);
+		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
+		this->setCambio(true);
+	}
+}
+
 void Terreno::achicarFigura()
 {
 	if (figuraActiva != NULL){

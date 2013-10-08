@@ -1,5 +1,6 @@
 #include "Box2DWorld.h"
 #include "Engranaje.h"
+#include "Engranaje2.h"
 
 Box2DWorld::Box2DWorld(void)
 {
@@ -148,7 +149,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
-					if((fig!=NULL)&&(fig!=figura)&&(fig->getCuerpo()!=cuerpo)){
+					if((fig!=NULL)&&(fig!=figura)){
 						if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
 							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 							if(
@@ -160,12 +161,14 @@ void Box2DWorld::agregarFigura(Figura * figura)
 								b2GearJointDef joint2;
 								joint2.bodyA = cuerpo;
 								joint2.bodyB = fig->getCuerpo();
-								joint2.joint1 = enlace;
-								joint2.joint2 = ((Engranaje*)fig)->joint;
-								joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
+								if ((cuerpo!=NULL) &&(fig->getCuerpo()!=NULL)){
+									joint2.joint1 = enlace;
+									joint2.joint2 = ((Engranaje*)fig)->joint;
+									joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
 
-								this->mundo->CreateJoint(&joint2);
-								//break;
+									this->mundo->CreateJoint(&joint2);
+									//break;
+								}
 							}
 						}
 					}
@@ -200,13 +203,13 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				
 				b2RevoluteJointDef joint;
 				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
-				//joint.bodyA = eje;
-				//joint.bodyB = cuerpo;
+				joint.bodyA = eje;
+				joint.bodyB = cuerpo;
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
 				if(activo){
 					cuerpo->SetFixedRotation(true);
-					cuerpo->SetAngularVelocity(VELOCIDAD_ENGRANAJE2);
+					cuerpo->SetAngularVelocity(VELOCIDAD_ENGRANAJE2*((Engranaje2*)figura)->sentido);
 				}
 
 				((Engranaje*)figura)->joint = enlace;
@@ -214,7 +217,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
-					if((fig!=NULL)&&(fig!=figura)&&(fig->getCuerpo()!=cuerpo)){
+					if((fig!=NULL)&&(fig!=figura)){
 						if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
 							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 							if(
@@ -226,12 +229,14 @@ void Box2DWorld::agregarFigura(Figura * figura)
 								b2GearJointDef joint2;
 								joint2.bodyA = cuerpo;
 								joint2.bodyB = fig->getCuerpo();
-								joint2.joint1 = enlace;
-								joint2.joint2 = ((Engranaje*)fig)->joint;
-								joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
+								if ((cuerpo!=NULL) &&(fig->getCuerpo()!=NULL)){
+									joint2.joint1 = enlace;
+									joint2.joint2 = ((Engranaje*)fig)->joint;
+									joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
 
-								this->mundo->CreateJoint(&joint2);
-								//break;
+									this->mundo->CreateJoint(&joint2);
+									//break;
+								}
 							}
 						}
 					}
