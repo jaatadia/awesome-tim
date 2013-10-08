@@ -24,10 +24,11 @@ public:
 	~Soga(void);
 
 public:
-	
-	virtual int getTipoDimension(){return SOGA;};
 
 	virtual Figura* clonar();//copia la figura
 
 	const char** getListaDeIDs();
+
+	virtual int getTipoFigura(){return SOGA;}
+	virtual int getTipoDimension(){return CUADRADO;}
 };

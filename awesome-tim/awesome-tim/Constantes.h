@@ -50,6 +50,7 @@
 #define CUADRADO 2
 #define CIRCULO 3
 #define POLIGONOREGULAR 4
+
 #define PELOTABASQUET 5
 #define PELOTABOWLING 6
 #define GLOBOHELIO 7
@@ -59,6 +60,9 @@
 #define PELOTATENIS 11
 #define ENGRANAJE 12
 #define ENGRANAJE2 13
+#define CINTATRANSPORTADORA 14
+#define MOTOR 15
+#define CORREA 16
 
 //valores fisicos
 
@@ -93,7 +97,7 @@
 #define ALTO_PLATAFORMA 5
 #define PLATAFORMA_DENSIDAD 1
 #define PLATAFORMA_FRICCION 1
-#define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, denberia cubrir la diagonal
+#define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, deberia cubrir la diagonal
 
 #define RADIO_MINENGRANAJE 5.0
 #define RADIO_MAXENGRANAJE 15.0

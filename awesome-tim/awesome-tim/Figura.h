@@ -48,6 +48,7 @@ public:
 	virtual int getTipoDimension(){return dimension->getTipoDimension();};
 	virtual Dimension* getDimension();
 	virtual double getLargo();
+	virtual int getTipoFigura(){return -1;};//=0;
 
 	virtual void setTraslucido(bool flag);
 	virtual void setAngulo(double angulo);

@@ -249,7 +249,24 @@ Figura* CargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
-	return NULL;
+	double posX,posY,angulo,radio;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerRadio(nodoFigura,&radio);
+
+	Figura* fig = new Engranaje(posX,posY,radio,angulo);
+	return fig;
+}
+Figura* CargadorYaml::crearEngranaje2(const YAML::Node& nodoFigura){ //FIX
+	double posX,posY,angulo,radio;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerRadio(nodoFigura,&radio);
+
+	Figura* fig = new Engranaje2(posX,posY,radio,angulo);
+	return fig;
 }
 
 Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
@@ -428,6 +445,12 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		Figura* figura = crearEngranaje(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Engranaje."); 	
+		return figura;
+	}
+	if (strcmp(tipo_figura,"ENGRANAJE2") == 0){ //FIX
+		Figura* figura = crearEngranaje2(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Engranaje2."); 	
 		return figura;
 	}
 
@@ -765,7 +788,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 **                    VALIDACIONES                       **
 **                                                       **
 **********************************************************/
-bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
+bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
 	bool cuadrado = (strcmp(tipo_figura,"CUADRADO") == 0);
 	bool circulo = (strcmp(tipo_figura,"CIRCULO") == 0);
 	bool triangulo = (strcmp(tipo_figura,"TRIANGULO") == 0);
@@ -777,6 +800,7 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool balancin = (strcmp(tipo_figura,"BALANCIN") == 0);
 	bool cintaTrans = (strcmp(tipo_figura,"CINTA_TRANSPORTADORA") == 0);
 	bool engranaje = (strcmp(tipo_figura,"ENGRANAJE") == 0);
+	bool engranaje2 = (strcmp(tipo_figura,"ENGRANAJE2") == 0); // FIX
 	bool correa = (strcmp(tipo_figura,"CORREA") == 0);
 	bool soga = (strcmp(tipo_figura,"SOGA") == 0);
 	bool motor = (strcmp(tipo_figura,"MOTOR") == 0);
@@ -785,7 +809,7 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool globoHelio = (strcmp(tipo_figura,"GLOBO_HELIO") == 0);
 	bool tenis = (strcmp(tipo_figura,"PELOTA_TENIS") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || correa || soga || motor || pelotaBask || bowling || globoHelio || tenis);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || engranaje2 || correa || soga || motor || pelotaBask || bowling || globoHelio || tenis);
 
 	return (figuraSimple || figuraCompleja);
 }

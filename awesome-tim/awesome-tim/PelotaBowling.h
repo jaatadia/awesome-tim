@@ -11,6 +11,8 @@ public:
 	PelotaBowling(double pos_X,double pos_Y,double angulo = 0):Figura(ID_PELOTABOWLING,new Circulo(RADIO_PELOTABOWLING,pos_X,pos_Y,angulo)){};
 	~PelotaBowling(void){};
 
-	virtual int getTipoDimension(){return PELOTABOWLING;}
+	virtual int getTipoFigura(){return PELOTABOWLING;}
+	virtual int getTipoDimension(){return CIRCULO;}
+
 	Figura* clonar(){return new PelotaBowling(ID.c_str(),dimension->clonar(),true);};
 };

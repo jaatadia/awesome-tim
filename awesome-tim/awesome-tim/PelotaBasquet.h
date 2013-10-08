@@ -13,6 +13,8 @@ public:
 	PelotaBasquet(double pos_X,double pos_Y,double angulo = 0):Figura(ID_PELOTABASQUET,new Circulo(RADIO_PELOTABASQUET,pos_X,pos_Y,angulo)){};
 	~PelotaBasquet(void){};
 
-	virtual int getTipoDimension(){return PELOTABASQUET;}
+	virtual int getTipoFigura(){return PELOTABASQUET;}
+	virtual int getTipoDimension(){return CIRCULO;}
+
 	Figura* clonar(){return new PelotaBasquet(ID.c_str(),dimension->clonar(),true);};
 };

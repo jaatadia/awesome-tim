@@ -4,15 +4,15 @@ juego:
     lista_figuras:
   botonera:
     lista_figuras:
-      - figura:
-          ID: ../images/Cuadrado.png
-          tipo_figura: CUADRADO
-          ancho: 20
-          alto: 10
-          posX: 0
-          posY: 0
-          angulo: 0
-        cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Cuadrado.png
+          # tipo_figura: CUADRADO
+          # ancho: 20
+          # alto: 10
+          # posX: 0
+          # posY: 0
+          # angulo: 0
+        # cantidad_de_instancias: 5
       - figura:
           # ID: ../images/plataforma_madera.png
           tipo_figura: PLATAFORMA
@@ -21,23 +21,23 @@ juego:
           posY: 80
           angulo: 0
         cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Circulo.png
-          tipo_figura: CIRCULO
-          radio: 20
-          posX: 0
-          posY: 0
-          angulo: 0	
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Pheptagono.png
-          tipo_figura: POLIGONOREGULAR
-          radio: 20
-          cant_vertices: 7
-          posX: 0
-          posY: 0
-          angulo: 0	
-        cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Circulo.png
+          # tipo_figura: CIRCULO
+          # radio: 20
+          # posX: 0
+          # posY: 0
+          # angulo: 0	
+        # cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Pheptagono.png
+          # tipo_figura: POLIGONOREGULAR
+          # radio: 20
+          # cant_vertices: 7
+          # posX: 0
+          # posY: 0
+          # angulo: 0	
+        # cantidad_de_instancias: 5
       - figura:
           tipo_figura: GLOBO_HELIO
           posX: 0
@@ -53,75 +53,71 @@ juego:
           posX: 0
           posY: 0
         cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/triangulo.png
+          # tipo_figura: TRIANGULO
+          # posX: 0
+          # posY: 0
+          # angulo: 0
+          # base: 20
+          # alto: 20
+        # cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Ptriangulo.png
+          # tipo_figura: POLIGONOREGULAR
+          # posX: 0
+          # posY: 0
+          # angulo: 0
+          # cant_vertices: 3
+          # radio: 10
+        # cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Pcuadrado.png
+          # tipo_figura: POLIGONOREGULAR
+          # posX: 0
+          # posY: 0
+          # angulo: 0
+          # cant_vertices: 4
+          # radio: 10
+        # cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Ppentagono.png
+          # tipo_figura: POLIGONOREGULAR
+          # posX: 0
+          # posY: 0
+          # angulo: 0
+          # cant_vertices: 5
+          # radio: 10
+        # cantidad_de_instancias: 5
+      # - figura:
+          # ID: ../images/Phexagono.png
+          # tipo_figura: POLIGONOREGULAR
+          # posX: 0
+          # posY: 0
+          # angulo: 0
+          # cant_vertices: 6
+          # radio: 10
+        # cantidad_de_instancias: 5
       - figura:
-          ID: ../images/triangulo.png
-          tipo_figura: TRIANGULO
+          tipo_figura: ENGRANAJE
           posX: 0
           posY: 0
           angulo: 0
-          base: 20
-          alto: 20
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Ptriangulo.png
-          tipo_figura: POLIGONOREGULAR
-          posX: 0
-          posY: 0
-          angulo: 0
-          cant_vertices: 3
           radio: 10
         cantidad_de_instancias: 5
       - figura:
-          ID: ../images/Pcuadrado.png
-          tipo_figura: POLIGONOREGULAR
+          tipo_figura: ENGRANAJE2
           posX: 0
           posY: 0
           angulo: 0
-          cant_vertices: 4
-          radio: 10
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Ppentagono.png
-          tipo_figura: POLIGONOREGULAR
-          posX: 0
-          posY: 0
-          angulo: 0
-          cant_vertices: 5
-          radio: 10
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Phexagono.png
-          tipo_figura: POLIGONOREGULAR
-          posX: 0
-          posY: 0
-          angulo: 0
-          cant_vertices: 6
-          radio: 10
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Pheptagono.png
-          tipo_figura: POLIGONOREGULAR
-          posX: 0
-          posY: 0
-          angulo: 0
-          cant_vertices: 7
-          radio: 10
-        cantidad_de_instancias: 5
-      - figura:
-          ID: ../images/Poctogono.png
-          tipo_figura: POLIGONOREGULAR
-          posX: 0
-          posY: 0
-          angulo: 0
-          cant_vertices: 8
-          radio: 10
+          radio: 25
         cantidad_de_instancias: 5
       - figura:
           tipo_figura: PLATAFORMA
-          largo: 20
+          largo: 15
           posX: 0
           posY: 0
-          angulo: 0	
+          angulo: 45	
         cantidad_de_instancias: 5
       - figura:
           tipo_figura: PELOTA_TENIS

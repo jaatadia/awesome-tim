@@ -1,32 +1,32 @@
 #include "GeneradorYaml.h"
 
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
-out << YAML::BeginMap;
-out << YAML::Key << "ancho";
-out << YAML::Value << cuad->getAncho();
-out << YAML::Key << "alto";
-out << YAML::Value << cuad->getAlto();
+//out << YAML::BeginMap;
+//out << YAML::Key << "ancho";
+//out << YAML::Value << cuad->getAncho();
+//out << YAML::Key << "alto";
+//out << YAML::Value << cuad->getAlto();
 out << YAML::Key << "posX";
 out << YAML::Value << cuad->getX();
 out << YAML::Key << "posY";
 out << YAML::Value << cuad->getY();
 out << YAML::Key << "angulo";
 out << YAML::Value << cuad->getAngulo();
-out << YAML::EndMap;
+//out << YAML::EndMap;
 return out;
 };
 
 YAML::Emitter& operator << (YAML::Emitter& out,Circulo* circ){
-out << YAML::BeginMap;
-out << YAML::Key << "radio";
-out << YAML::Value << circ->getRadio();
+//out << YAML::BeginMap;
+//out << YAML::Key << "radio";
+//out << YAML::Value << circ->getRadio();
 out << YAML::Key << "posX";
 out << YAML::Value << circ->getX();
 out << YAML::Key << "posY";
 out << YAML::Value << circ->getY();
 out << YAML::Key << "angulo";
 out << YAML::Value << circ->getAngulo();
-out << YAML::EndMap;
+//out << YAML::EndMap;
 return out;
 };
 
@@ -64,39 +64,74 @@ return out;
 
 YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 	out << YAML::BeginMap;
-	out << YAML::Key << "ID";
-	out << YAML::Value << fig->getID();
-	out << YAML::Key << "tipo_dimension";
+	/*out << YAML::Key << "ID";
+	out << YAML::Value << fig->getID();*/
+	out << YAML::Key << "tipo_figura";
 
-	switch (fig->getTipoDimension()) {
-			case CUADRADO:
-				out << YAML::Value << "CUADRADO";
+	switch (fig->getTipoFigura()) {
 
-				out << YAML::Key << "dimension";
-				out << YAML::Value << (Cuadrado*) fig->getDimension();
+			case PLATAFORMA:
+				out << YAML::Value << "PLATAFORMA";
+				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "largo";
+				out << YAML::Value << fig->getLargo();
+				break;
+
+			case SOGA: //que hay q guardar?
+				out << YAML::Value << "SOGA";
+				out << (Cuadrado*) fig->getDimension();
 				break;
 				
-			case CIRCULO:
-				out << YAML::Value << "CIRCULO";
-
-				out << YAML::Key << "dimension";
-				out << YAML::Value << (Circulo*) fig->getDimension();
+			case PELOTABASQUET:
+				out << YAML::Value << "PELOTA_BASQUET";
+				out << (Circulo*) fig->getDimension();
 				break;
 
-			case TRIANGULO:
-				out << YAML::Value << "TRIANGULO";
-
-				out << YAML::Key << "dimension";
-				out << YAML::Value << (Triangulo*) fig->getDimension();
+			case PELOTATENIS:
+				out << YAML::Value << "PELOTA_TENIS";
+				out << (Circulo*) fig->getDimension();
 				break;
 
-			case POLIGONOREGULAR:
-				out << YAML::Value << "POLIGONOREGULAR";
+			case PELOTABOWLING:
+				out << YAML::Value << "BOLA_BOWLING";
+				out << (Circulo*) fig->getDimension();
+				break;
 
-				out << YAML::Key << "dimension";
-				out << YAML::Value << (PoligonoRegular*) fig->getDimension();
+			case GLOBOHELIO:
+				out << YAML::Value << "GLOBO_HELIO";
+				out << (Circulo*) fig->getDimension();
+				break;
+
+			case ENGRANAJE:
+				out << YAML::Value << "ENGRANAJE";
+				out << (Circulo*) fig->getDimension();
+				break;
+
+			case ENGRANAJE2: //FIX: POLEA !!
+				out << YAML::Value << "ENGRANAJE2";
+				out << (Circulo*) fig->getDimension();
 				break;
 			
+			case BALANCIN:
+				out << YAML::Value << "BALANCIN";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case CINTATRANSPORTADORA:
+				out << YAML::Value << "CINTA_TRANSPORTADORA";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case MOTOR:
+				out << YAML::Value << "MOTOR";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case CORREA:
+				out << YAML::Value << "CORREA";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
 			default:
 				out << YAML::Value << "";
 		};
@@ -159,11 +194,15 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 		//lista de figuras
 		out << YAML::Key << "lista_figuras";
 		out << YAML::Value << YAML::BeginSeq;
+
 			//itero y imprimo de a una las figuras en sequence
 			std::list<Figura*> lista_figs = terreno->getListaFigs();
 			std::list<Figura*>::iterator iter;
 			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
-				out << (*iter);
+				out << YAML::BeginMap;
+				out << YAML::Key << "figura";
+				out << YAML::Value << (*iter);
+				out << YAML::EndMap;
 			};
 		out << YAML::EndSeq;
 
