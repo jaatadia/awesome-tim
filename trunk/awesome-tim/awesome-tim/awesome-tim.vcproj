@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Linea.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -385,6 +389,10 @@
 			</File>
 			<File
 				RelativePath=".\JuegoPlay.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Linea.h"
 				>
 			</File>
 			<File

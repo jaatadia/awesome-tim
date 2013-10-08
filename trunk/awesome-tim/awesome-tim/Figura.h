@@ -26,7 +26,6 @@ protected:
 	
 	b2Body* cuerpo;
 	unsigned long int numeroID;
-	unsigned long int extremo1, extremo2;
 
 public:
 	bool traslucido;
