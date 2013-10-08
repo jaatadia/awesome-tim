@@ -149,7 +149,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
 					if((fig!=NULL)&&(fig!=figura)&&(fig->getCuerpo()!=cuerpo)){
-						if((fig->getTipoDimension()==ENGRANAJE)||(fig->getTipoDimension()==ENGRANAJE2)){
+						if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
 							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 							if(
 								(sqrt(
@@ -165,7 +165,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 								joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
 
 								this->mundo->CreateJoint(&joint2);
-								break;
+								//break;
 							}
 						}
 					}
@@ -199,8 +199,9 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				
 				b2RevoluteJointDef joint;
-				joint.bodyA = eje;
-				joint.bodyB = cuerpo;
+				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
+				//joint.bodyA = eje;
+				//joint.bodyB = cuerpo;
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
 				if(activo){
@@ -214,7 +215,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
 					if((fig!=NULL)&&(fig!=figura)&&(fig->getCuerpo()!=cuerpo)){
-						if((fig->getTipoDimension()==ENGRANAJE)||(fig->getTipoDimension()==ENGRANAJE2)){
+						if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
 							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 							if(
 								(sqrt(
@@ -230,7 +231,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 								joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
 
 								this->mundo->CreateJoint(&joint2);
-								break;
+								//break;
 							}
 						}
 					}
