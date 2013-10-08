@@ -369,7 +369,7 @@ void Box2DWorld::actualizar(Figura * figura)
 			fig->getDimension()->setY(cuerpo->GetPosition().y);
 		
 			if(activo){
-				if(fig->getTipoDimension()==GLOBOHELIO){
+				if(fig->getTipoFigura()==GLOBOHELIO){
 					bool cambiar = false;
 					double margen = 0.4;
 					double margenA = 0.1;
