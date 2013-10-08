@@ -60,8 +60,11 @@ Contenedor::Contenedor(void){
 	mapa[ID_MOTOR] = new Imagen(ID_MOTOR); //motor
 	mapa[ID_CORREA] = new Imagen(ID_CORREA); //correa
 	mapa[ID_ENGRANAJE] = new Imagen(ID_ENGRANAJE); //engranaje
+	mapa[ID_ENGRANAJE2_1] = new Imagen(ID_ENGRANAJE2_1); //engranaje
+	mapa[ID_ENGRANAJE2_2] = new Imagen(ID_ENGRANAJE2_2); //engranaje
 	mapa[ID_TABLA_BALANCIN] = new Imagen(ID_TABLA_BALANCIN); //tabla balancin
 	mapa[ID_PUNTA_BALANCIN] = new Imagen(ID_PUNTA_BALANCIN); //puntas balancin
+
 }
 
 Contenedor::~Contenedor(void){

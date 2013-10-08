@@ -5,9 +5,11 @@ Box2DWorld::Box2DWorld(void)
 {
 }
 
-Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY)
+Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true)
 {
-	this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
+	this->activo = flag;
+	if(activo)this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
+	else this->mundo = new b2World(b2Vec2(0,0));
 	//GROUNDBOX
 /*
 	b2BodyDef groundBodyDef;
@@ -69,7 +71,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			}
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(0);
-				cuerpo->ApplyLinearImpulse(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO), cuerpo->GetPosition());
+				
 				
 				b2CircleShape forma;
 				forma.m_radius = ((Circulo *)dim)->getRadio();
@@ -80,8 +82,11 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.restitution = RESTITUCION_GLOBOHELIO;
 				cuerpo->CreateFixture(&fD);
 				
-				cuerpo->SetFixedRotation(true);
-				cuerpo->SetAngularVelocity(0);
+				if(activo){
+					cuerpo->ApplyLinearImpulse(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO), cuerpo->GetPosition());
+					cuerpo->SetFixedRotation(true);
+					cuerpo->SetAngularVelocity(0);
+				}
 
 				break;
 			}
@@ -106,14 +111,14 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = FRICCION_PELOTABOWLING;
 				fD.restitution = RESTITUCION_PELOTABOWLING;
 				cuerpo->CreateFixture(&fD);
-				break;
+			break;
 			}
 		case ENGRANAJE:
 			{
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;
 				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
-								
+												
 				b2FixtureDef ejeFix;
 				b2CircleShape ejeCirculo;
 				ejeCirculo.m_radius = 0.00001;
@@ -132,9 +137,39 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				
 				b2RevoluteJointDef joint;
-				joint.bodyA = eje;
-				joint.bodyB = cuerpo;
+				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
+				//joint.bodyA = eje;
+				//joint.bodyB = cuerpo;
+						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
+				((Engranaje*)figura)->joint = enlace;
+				figura->setCuerpo(cuerpo);
+				
+
+				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
+					Figura* fig = (Figura*)c->GetUserData();
+					if((fig!=NULL)&&(fig!=figura)&&(fig->getCuerpo()!=cuerpo)){
+						if((fig->getTipoDimension()==ENGRANAJE)||(fig->getTipoDimension()==ENGRANAJE2)){
+							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
+							if(
+								(sqrt(
+								pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
+								pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
+								)<margen)
+							){
+								b2GearJointDef joint2;
+								joint2.bodyA = cuerpo;
+								joint2.bodyB = fig->getCuerpo();
+								joint2.joint1 = enlace;
+								joint2.joint2 = ((Engranaje*)fig)->joint;
+								joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
+
+								this->mundo->CreateJoint(&joint2);
+								break;
+							}
+						}
+					}
+				}
 
 				((Engranaje*)figura)->joint = enlace;
 
@@ -168,11 +203,38 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				joint.bodyB = cuerpo;
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
-				cuerpo->SetFixedRotation(true);
-				cuerpo->SetAngularVelocity(20);
+				if(activo){
+					cuerpo->SetFixedRotation(true);
+					cuerpo->SetAngularVelocity(VELOCIDAD_ENGRANAJE2);
+				}
 
 				((Engranaje*)figura)->joint = enlace;
+				figura->setCuerpo(cuerpo);
 
+				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
+					Figura* fig = (Figura*)c->GetUserData();
+					if((fig!=NULL)&&(fig!=figura)&&(fig->getCuerpo()!=cuerpo)){
+						if((fig->getTipoDimension()==ENGRANAJE)||(fig->getTipoDimension()==ENGRANAJE2)){
+							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
+							if(
+								(sqrt(
+								pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
+								pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
+								)<margen)
+							){
+								b2GearJointDef joint2;
+								joint2.bodyA = cuerpo;
+								joint2.bodyB = fig->getCuerpo();
+								joint2.joint1 = enlace;
+								joint2.joint2 = ((Engranaje*)fig)->joint;
+								joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
+
+								this->mundo->CreateJoint(&joint2);
+								break;
+							}
+						}
+					}
+				}
 				break;
 			}
 		case PELOTATENIS:
@@ -300,24 +362,25 @@ void Box2DWorld::actualizar(Figura * figura)
 			fig->getDimension()->setX(cuerpo->GetPosition().x);
 			fig->getDimension()->setY(cuerpo->GetPosition().y);
 		
-
-			if(fig->getTipoDimension()==GLOBOHELIO){
-				bool cambiar = false;
-				double margen = 0.4;
-				double margenA = 0.1;
-				double impulsoX = 0;
-				double impulsoY = 0;
-				
-				if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
-					impulsoX = 0 - cuerpo->GetLinearVelocity().x;
-					cambiar = true;
-				}
-				if((cuerpo->GetLinearVelocity().y < VELOCIDAD_GLOBOHELIO - margen)||(cuerpo->GetLinearVelocity().y > VELOCIDAD_GLOBOHELIO + margen)){
-					impulsoY = VELOCIDAD_GLOBOHELIO - cuerpo->GetLinearVelocity().y;
-					cambiar = true;
-				}
-				if(cambiar){
-					cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
+			if(activo){
+				if(fig->getTipoDimension()==GLOBOHELIO){
+					bool cambiar = false;
+					double margen = 0.4;
+					double margenA = 0.1;
+					double impulsoX = 0;
+					double impulsoY = 0;
+					
+					if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
+						impulsoX = 0 - cuerpo->GetLinearVelocity().x;
+						cambiar = true;
+					}
+					if((cuerpo->GetLinearVelocity().y < VELOCIDAD_GLOBOHELIO - margen)||(cuerpo->GetLinearVelocity().y > VELOCIDAD_GLOBOHELIO + margen)){
+						impulsoY = VELOCIDAD_GLOBOHELIO - cuerpo->GetLinearVelocity().y;
+						cambiar = true;
+					}
+					if(cambiar){
+						cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
+					}
 				}
 			}
 		}

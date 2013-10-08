@@ -16,7 +16,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	this->maq = maq;
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,false);
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	figuraEnAire=NULL;

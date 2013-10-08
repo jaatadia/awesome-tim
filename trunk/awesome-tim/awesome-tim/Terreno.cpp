@@ -7,7 +7,11 @@
 #include "Plataforma.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
-	this->fisicaActiva = fisicaActiva;
+	
+	//this->fisicaActiva = fisicaActiva;
+	this->fisicaActiva = true;
+
+
 	this->ancho = ancho;
 	this->alto = alto;
 	sup = new Superficie(ancho,alto);
@@ -19,8 +23,8 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	this->setCambio(true);
 
 	//Box2D
-	if(fisicaActiva){
-		this->mundoBox2D = new Box2DWorld(GRAVEDADX,GRAVEDADY);
+	if(this->fisicaActiva){
+		this->mundoBox2D = new Box2DWorld(GRAVEDADX,GRAVEDADY,fisicaActiva);
 		this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 8, 3);
 	}else{
 		this->mundoBox2D = NULL;
