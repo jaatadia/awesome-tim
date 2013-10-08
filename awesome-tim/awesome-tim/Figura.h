@@ -60,4 +60,7 @@ public:
 	virtual void setCuerpo(b2Body* cuerpo){
 		this->cuerpo = cuerpo;
 	}
+	virtual b2Body* getCuerpo(){
+		return cuerpo;
+	}
 };

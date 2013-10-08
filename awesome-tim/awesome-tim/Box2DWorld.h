@@ -17,8 +17,11 @@ private:
 	b2World * mundo;
 	float tiempoStep;
 	int velIteracion, posIteracion;
+
+	bool activo;
+
 public:
-	Box2DWorld(float fuerzaX, float fuerzaY);
+	Box2DWorld(float fuerzaX, float fuerzaY,bool flag);
 	void setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion);
 	void actualizar();
 	void actualizar(Figura * figura);

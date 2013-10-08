@@ -96,10 +96,12 @@
 #define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, denberia cubrir la diagonal
 
 #define RADIO_MINENGRANAJE 5.0
-#define RADIO_MAXENGRANAJE 8.0
+#define RADIO_MAXENGRANAJE 15.0
 #define RESTITUCION_ENGRANAJE 0.3
 #define DENSIDAD_ENGRANAJE 6.0
-#define FRICCION_ENGRANAJE 0.3
+#define FRICCION_ENGRANAJE 5
+
+#define VELOCIDAD_ENGRANAJE2 10
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -131,7 +133,10 @@
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
 #define ID_PELOTABOWLING "../images/Bowling.png"
-#define ID_ENGRANAJE "../images/Bowling.png"
+#define ID_ENGRANAJE "../images/engranaje.png"
+
+#define ID_ENGRANAJE2_1 "../images/engranaje2-1.png"
+#define ID_ENGRANAJE2_2 "../images/engranaje2-1.png"
 
 #define ID_CINTA ""
 #define ID_PUNTA_CINTA_IZQ ""
