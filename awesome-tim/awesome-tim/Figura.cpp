@@ -9,8 +9,6 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->setCambio(true);
 	if (crearVista) this->myVista = new VistaFigura(this);
 	this->traslucido = false;
-	this->extremo1 = NULL;
-	this->extremo2 = NULL;
 	this->cuerpo = NULL;
 }
 

@@ -342,6 +342,7 @@ void BotoneraController::ScrollDown(){
 #include "Plataforma.h"
 #include "Engranaje.h"
 #include "Engranaje2.h"
+#include "Linea.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
@@ -352,6 +353,7 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new PelotaBasquet(0,0),100);
 	this->agregarBoton(new Engranaje(0,0),100);
 	this->agregarBoton(new Engranaje2(0,0),100);
+	this->agregarBoton(new Linea(0,0,20,20),100);
 	
 	return true;
 }
