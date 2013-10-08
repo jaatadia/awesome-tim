@@ -368,6 +368,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Engranaje2.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Estado.h"
 				>
 			</File>

@@ -1,4 +1,5 @@
 #include "Box2DWorld.h"
+#include "Engranaje.h"
 
 Box2DWorld::Box2DWorld(void)
 {
@@ -105,6 +106,73 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = FRICCION_PELOTABOWLING;
 				fD.restitution = RESTITUCION_PELOTABOWLING;
 				cuerpo->CreateFixture(&fD);
+				break;
+			}
+		case ENGRANAJE:
+			{
+				b2BodyDef ejeDef;
+				ejeDef.type = b2_staticBody;
+				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
+								
+				b2FixtureDef ejeFix;
+				b2CircleShape ejeCirculo;
+				ejeCirculo.m_radius = 0.00001;
+				ejeFix.shape = &ejeCirculo;
+				ejeFix.isSensor = true;
+				
+				b2Body* eje = this->mundo->CreateBody(&ejeDef);
+				eje->CreateFixture(&ejeFix);
+												
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				fD.shape = &forma;
+				fD.density = DENSIDAD_ENGRANAJE;
+				fD.friction = FRICCION_ENGRANAJE;
+				fD.restitution = RESTITUCION_ENGRANAJE;
+				cuerpo->CreateFixture(&fD);
+				
+				b2RevoluteJointDef joint;
+				joint.bodyA = eje;
+				joint.bodyB = cuerpo;
+				b2Joint* enlace = this->mundo->CreateJoint(&joint);
+
+				((Engranaje*)figura)->joint = enlace;
+
+				break;
+			}
+		case ENGRANAJE2:
+			{
+				b2BodyDef ejeDef;
+				ejeDef.type = b2_staticBody;
+				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
+								
+				b2FixtureDef ejeFix;
+				b2CircleShape ejeCirculo;
+				ejeCirculo.m_radius = 0.00001;
+				ejeFix.shape = &ejeCirculo;
+				ejeFix.isSensor = true;
+				
+				b2Body* eje = this->mundo->CreateBody(&ejeDef);
+				eje->CreateFixture(&ejeFix);
+												
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				fD.shape = &forma;
+				fD.density = DENSIDAD_ENGRANAJE;
+				fD.friction = FRICCION_ENGRANAJE;
+				fD.restitution = RESTITUCION_ENGRANAJE;
+				cuerpo->CreateFixture(&fD);
+				
+				b2RevoluteJointDef joint;
+				joint.bodyA = eje;
+				joint.bodyB = cuerpo;
+				b2Joint* enlace = this->mundo->CreateJoint(&joint);
+
+				cuerpo->SetFixedRotation(true);
+				cuerpo->SetAngularVelocity(20);
+
+				((Engranaje*)figura)->joint = enlace;
+
 				break;
 			}
 		case PELOTATENIS:
@@ -226,32 +294,33 @@ void Box2DWorld::actualizar(Figura * figura)
 	{
 		Figura* fig  = (Figura*)cuerpo->GetUserData();
 		
-		fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
+		if(fig!=NULL){
+			fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
 
-		fig->getDimension()->setX(cuerpo->GetPosition().x);
-		fig->getDimension()->setY(cuerpo->GetPosition().y);
-	
+			fig->getDimension()->setX(cuerpo->GetPosition().x);
+			fig->getDimension()->setY(cuerpo->GetPosition().y);
+		
 
-		if(fig->getTipoDimension()==GLOBOHELIO){
-			bool cambiar = false;
-			double margen = 0.4;
-			double margenA = 0.1;
-			double impulsoX = 0;
-			double impulsoY = 0;
-			
-			if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
-				impulsoX = 0 - cuerpo->GetLinearVelocity().x;
-				cambiar = true;
-			}
-			if((cuerpo->GetLinearVelocity().y < VELOCIDAD_GLOBOHELIO - margen)||(cuerpo->GetLinearVelocity().y > VELOCIDAD_GLOBOHELIO + margen)){
-				impulsoY = VELOCIDAD_GLOBOHELIO - cuerpo->GetLinearVelocity().y;
-				cambiar = true;
-			}
-			if(cambiar){
-				cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
+			if(fig->getTipoDimension()==GLOBOHELIO){
+				bool cambiar = false;
+				double margen = 0.4;
+				double margenA = 0.1;
+				double impulsoX = 0;
+				double impulsoY = 0;
+				
+				if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
+					impulsoX = 0 - cuerpo->GetLinearVelocity().x;
+					cambiar = true;
+				}
+				if((cuerpo->GetLinearVelocity().y < VELOCIDAD_GLOBOHELIO - margen)||(cuerpo->GetLinearVelocity().y > VELOCIDAD_GLOBOHELIO + margen)){
+					impulsoY = VELOCIDAD_GLOBOHELIO - cuerpo->GetLinearVelocity().y;
+					cambiar = true;
+				}
+				if(cambiar){
+					cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
+				}
 			}
 		}
-
 		cuerpo = cuerpo->GetNext();
 //PARA DEBUG
 		i++;
