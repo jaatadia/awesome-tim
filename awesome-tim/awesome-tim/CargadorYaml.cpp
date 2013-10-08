@@ -189,6 +189,13 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 		*vertices = VERTICES_DEFAULT;
 	}
 }
+/**********************************************************
+**                                                       **
+**               CREAR FIGURAS COMPUESTAS                **
+**                                                       **
+**********************************************************/
+
+
 
 /**********************************************************
 **                                                       **
@@ -274,7 +281,12 @@ Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
-	return NULL;
+	double posX,posY,angulo;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	
+	return GeneradorDeFigurasCompuestas::construirBalancin(posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){

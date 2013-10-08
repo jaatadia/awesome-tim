@@ -27,6 +27,9 @@
 #include "PelotaTenis.h"
 #include "Engranaje.h"
 #include "Engranaje2.h"
+#include "Balancin.h"
+
+#include "GeneradorDeFigurasCompuestas.h"
 
 class CargadorYaml{
 public:

@@ -1,6 +1,10 @@
 #pragma once
 #include "FiguraCompuesta.h"
 
+#include "Dimension.h"
+#include "Circulo.h"
+#include "Cuadrado.h"
+
 #define CANT_ELEM_BALANCIN 4
 
 class Balancin :
@@ -9,28 +13,22 @@ class Balancin :
 
 private:
 	Figura* tabla;
-	Figura* punta1;
-	Figura* punta2;
-	Figura* base;
-	const char* listaID[CANT_ELEM_BALANCIN];
-	double posX;
-	double posY;
+	Figura* circDer;
+	Figura* circIzq;
+
+	bool atadoDerecha;
+	bool atadoIzquierda;
 
 public:
 
-	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
-	Balancin(Figura** figuras);
-	void cambiarPosicion(double x,double y);
-	bool esMiPosicion(double x,double y);
-	void dibujar(Superficie* super);
-	const char** getListaDeIDs();
-	bool intersecaCon(double X1, double Y1, double X2, double Y2);
-	Figura* clonar();
-	void setTraslucido(bool flag);
-	void setAngulo(double angulo);
-	~Balancin(void);
+	Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras);
+	static void calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla);
+	bool atar(double posX, double posY);
+	bool desatar(double posX, double posY);
+	bool esAtable(double* posX, double* posY);
 
-	virtual int getTipoFigura(){return BALANCIN;}
-	virtual int getTipoDimension(){return CUADRADO;}
+	Figura* clonar();
+	int getTipoDimension();
+	int getTipoFigura();
 
 };

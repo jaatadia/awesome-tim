@@ -3,96 +3,100 @@
 #include "Cuadrado.h"
 
 #define TABLA 0
-#define PUNTA1 1
-#define PUNTA2 2
-#define BASE 3
+#define DERECHA 1
+#define IZQUIERDA 2
 
-Balancin::Balancin(Figura** figuras):FiguraCompuesta("",new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,POSX_DEFAULT,POSY_DEFAULT, ANGULO_DEFAULT)){
-	this->tabla = figuras[TABLA];
-	this->punta1 = figuras[PUNTA1];
-	this->punta2 = figuras[PUNTA2];
-	this->base = figuras[BASE];
+#define PUNTA_NO_GIRADA 0
 
-	this->listaID[TABLA] = this->tabla->getID();
-	this->listaID[PUNTA1] = this->punta1->getID();
-	this->listaID[PUNTA2] = this->punta2->getID();
-	this->listaID[BASE] = this->base->getID();
+Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras){
+	
+	//FIXME: Esta horrible esto hecho
+	int i = 0;
+	std::list<Figura*>::iterator iter;
+	for (iter = listaFiguras.begin(); iter != listaFiguras.end(); iter++){
+		switch(i){
+			case 0: this->tabla = *iter;
+					break;
+			case 1: this->circDer = *iter;
+					break;
+			case 2: this->circIzq = *iter;
+					break;
+		}
+	}
+	/////////////////////
 
-	this->posX = (tabla->getDimension())->getX();
-	this->posY = (tabla->getDimension())->getY();
-
-	this->myVista = new VistaFigura(this);
+	this->atadoDerecha = false;
+	this->atadoIzquierda = false;
 }
 
-void Balancin::cambiarPosicion(double x,double y){
-	tabla->cambiarPosicion(x,y);
-	punta1->cambiarPosicion(x,y);
-	punta2->cambiarPosicion(x,y);
-	base->cambiarPosicion(x,y);
+void Balancin::calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla){
+
+	*posXizq = ( posX_Tabla - (ANCHO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
+	*posXder = ( posX_Tabla + (ANCHO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
+	*posY = ( posY_Tabla + (ALTO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
 }
 
-bool Balancin::esMiPosicion(double x,double y){
+bool Balancin::atar(double posX, double posY){
+	bool der = this->circDer->esMiPosicion(posX,posY);
+	if(der && (!this->atadoDerecha)){
+		this->atadoDerecha = true;
+		return true;
+	}
 
-	bool perTabla = tabla->esMiPosicion(x,y);
-	bool perPunta1 = punta1->esMiPosicion(x,y);
-	bool perPunta2 = punta2->esMiPosicion(x,y);
-	bool perBase = base->esMiPosicion(x,y);
+	bool izq = this->circIzq->esMiPosicion(posX,posY);
+	if(izq && (!this->atadoIzquierda)){
+		this->atadoIzquierda = true;
+		return true;
+	}
 
-	return (perTabla || perPunta1 || perPunta2 || perBase);
+	return false;
 }
 
-void Balancin::dibujar(Superficie* super){
+bool Balancin::desatar(double posX, double posY){
+	bool der = this->circDer->esMiPosicion(posX,posY);
+	if(der && this->atadoDerecha){
+		this->atadoDerecha = false;
+		return true;
+	}
 
-	tabla->dibujar(super);
-	punta1->dibujar(super);
-	punta2->dibujar(super);
-	base->dibujar(super);
-	setCambio(false);
+	bool izq = this->circIzq->esMiPosicion(posX,posY);
+	if(izq && this->atadoIzquierda){
+		this->atadoIzquierda = false;
+		return true;
+	}
+
+	return false;
 }
 
-const char** Balancin::getListaDeIDs(){
-	return (this->listaID);
+bool Balancin::esAtable(double* posX, double* posY){
+	bool izq = this->circIzq->esMiPosicion(*posX,*posY);
+	if(izq){
+		*posX = (this->circIzq->getDimension())->getX();
+		*posY = (this->circIzq->getDimension())->getY();
+		return true;
+	}
+	bool der = this->circDer->esMiPosicion(*posX,*posY);
+	if(der){
+		*posX = (this->circDer->getDimension())->getX();
+		*posY = (this->circDer->getDimension())->getY();
+		return true;
+	}
+	return false;
 }
 
-bool Balancin::intersecaCon(double X1, double Y1, double X2, double Y2){
-	//FIXME: No se que tiene que hacer
-	bool interTabla = tabla->intersecaCon(X1,Y1,X2,Y2);
-	bool interPunta1 = punta1->intersecaCon(X1,Y1,X2,Y2);
-	bool interPunta2 = punta2->intersecaCon(X1,Y1,X2,Y2);
-	bool interBase = base->intersecaCon(X1,Y1,X2,Y2);
-
-	return (interTabla || interPunta1 || interPunta2 || interBase);
-}
+//void Balancin::setAngulo(double angulo){
+//FIXME: se redefine? xq hay que mover los circulos cuando se gira la tabla	
+//}
 
 Figura* Balancin::clonar(){
-	Figura* figuras[CANT_ELEM_BALANCIN];
-	figuras[TABLA] = tabla->clonar();
-	figuras[PUNTA1] = punta1->clonar();
-	figuras[PUNTA2] = punta2->clonar();
-	figuras[BASE] = base->clonar();
-	return new Balancin(figuras);
+		return NULL;
+}//copia la figura
+
+
+int Balancin::getTipoDimension(){
+	return 0;
 }
 
-void Balancin::setTraslucido(bool flag){
-	(this->tabla)->setTraslucido(flag);
-	(this->punta1)->setTraslucido(flag);
-	(this->punta2)->setTraslucido(flag);
-	(this->base)->setTraslucido(flag);
-	setCambio(true);
-}
-
-void Balancin::setAngulo(double angulo){ 
-	//FIXME
-	//setea el angulo de la tabla
-	tabla->setAngulo(angulo);
-
-	//Seteamos el angulo de la base solo si ambas pueden girar
-}
-
-Balancin::~Balancin(void){
-	delete tabla;
-	delete punta1;
-	delete punta2;
-	delete base;
-	delete myVista;
+int Balancin::getTipoFigura(){
+	return 0;
 }
