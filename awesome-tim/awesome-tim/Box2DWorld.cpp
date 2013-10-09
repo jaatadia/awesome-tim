@@ -1,6 +1,8 @@
 #include "Box2DWorld.h"
 #include "Engranaje.h"
 #include "Engranaje2.h"
+#include "Linea.h"
+
 
 Box2DWorld::Box2DWorld(void)
 {
@@ -113,6 +115,46 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				fD.restitution = RESTITUCION_PELOTABOWLING;
 				cuerpo->CreateFixture(&fD);
 			break;
+			}
+		case LINEA:
+			{
+				std::cout<<"entro\n";
+				this->mundo->DestroyBody(cuerpo);
+				Figura* fig1=NULL;
+				Figura* fig2=NULL;
+
+				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
+					Figura* fig = (Figura*)c->GetUserData();
+					if((fig!=NULL)&&(fig!=figura)){
+						if(fig->esAtableCorrea()){
+							if(fig->esMiPosicion( ((DLinea*)dim)->x1,((DLinea*)dim)->y1) ){
+								fig1 = fig;
+							}
+							else if(fig->esMiPosicion( ((DLinea*)dim)->x2,((DLinea*)dim)->y2) ){
+								fig2 = fig;
+							}
+						}
+					}
+				}
+				if(fig1 && fig2){
+					fig1->setCorrea(figura);
+					fig2->setCorrea(figura);
+					((Linea* )figura)->setPunto1(fig1);
+					((Linea* )figura)->setPunto2(fig2);
+
+					b2GearJointDef joint2;
+					joint2.bodyA = fig1->getCuerpo();
+					joint2.bodyB = fig2->getCuerpo();
+					if ((fig1->getCuerpo()!=NULL) &&(fig2->getCuerpo()!=NULL)){
+						joint2.joint1 = ((Engranaje*)fig1)->joint;
+						joint2.joint2 = ((Engranaje*)fig2)->joint;
+						joint2.ratio = -((Engranaje*)fig2)->getRadio()/((Engranaje*)fig1)->getRadio();
+
+						this->mundo->CreateJoint(&joint2);
+						//break;
+					}
+				}
+				break;
 			}
 		case ENGRANAJE:
 			{

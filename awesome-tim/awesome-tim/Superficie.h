@@ -47,6 +47,8 @@ public:
 
 	void dibujarCuadradoNegro(int x, int y, int ancho,int alto);
 
+	void dibujarLinea(int x1,int y1,int x2, int y2,int ancho);
+
 	Uint32 getPixel(int x,int y );
 
 	//las siguientes devuelve NULL en caso de error

@@ -108,3 +108,7 @@ void Superficie::restoreGris(){
 Uint32 Superficie::getPixel(int x, int y) {
 	return SdlSurfaceManager::getPixel(this->superficie, x, y);
 }
+
+void Superficie::dibujarLinea(int x1,int y1,int x2, int y2,int ancho){
+	SdlSurfaceManager::dibujarLinea(this->superficie,x1,y1,x2,y2,ancho);
+}

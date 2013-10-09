@@ -71,16 +71,31 @@ void Terreno::redraw(){
 		sup->dibujarImagen(this->img,NULL,0,0);
 	}
 
+	std::list<Figura*> figurasAux;
 	std::list<Figura*>::iterator iteradorLista;
-
+	
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		if((*iteradorLista)->getTipoFigura()==LINEA){
+			double x = (*iteradorLista)->getDimension()->getX();
+			double y = (*iteradorLista)->getDimension()->getY();
+			double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
+			double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
+			
+			if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
+					(*iteradorLista)->dibujar(this->sup);	
+			
+		}else{
+			figurasAux.push_back((*iteradorLista));
+		}
+	}
+
+	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
 		double x = (*iteradorLista)->getDimension()->getX();
 		double y = (*iteradorLista)->getDimension()->getY();
 		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
 		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 		
-		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&
-			((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
+		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
 				(*iteradorLista)->dibujar(this->sup);
 	}
 	//por ultimo dibujo la que estoy manipulando;
@@ -89,10 +104,10 @@ void Terreno::redraw(){
 }
 
 Superficie* Terreno::getImpresion(){
-//	if(this->huboCambios()){
+	if(this->huboCambios()){
 		redraw();
 		this->setCambio(false);
-//	}
+	}
 	return sup;
 }
 
@@ -237,9 +252,14 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 		//saco de la lista y libero memoria
 		eliminarFigura(figuraABorrar);
 		setCambio(true);
+		Figura* aux = figuraABorrar->getCorrea();
 		delete figuraABorrar;
+		
+		if(aux !=  NULL){
+			eliminarFigura(aux);
+			delete aux;
+		}
 	}
-
 }
 
 int Terreno::getAncho(){
@@ -295,9 +315,16 @@ void Terreno::buscarActiva(double posClickX ,double posClickY){
 		if (!figuraActiva){
 			figuraActiva=NULL;
 		}else{
-			figuraActiva->setTraslucido(true);
-			this->setCambio(true);
-			eliminarFigura(figuraActiva);
+			if(figuraActiva->getTipoFigura()==LINEA){
+				eliminarFigura(figuraActiva);
+				delete figuraActiva;
+				this->setCambio(true);
+				figuraActiva = NULL;
+			}else{
+				figuraActiva->setTraslucido(true);
+				this->setCambio(true);
+				eliminarFigura(figuraActiva);
+			}
 		}
 	}
 }
@@ -541,4 +568,27 @@ double Terreno::calcularAngulo(Dimension* dim, double XVector1,double YVector1,d
 		variacionAngulo = 0;
 	}
 		return (dim->getAngulo() + variacionAngulo);
+}
+
+Figura* Terreno::getFiguraAtableCorrea(double x,double y){
+	if(hayFiguras()){	
+		Figura* figuraBuscada = NULL;
+
+		bool figuraEncontrada = false;
+		//recorro al reves asi "agarro" la figura dibujada arriba
+		std::list<Figura*>::reverse_iterator iteradorLista;
+		iteradorLista = figuras.rbegin();
+
+		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+			
+			figuraEncontrada = (((*iteradorLista)->esMiPosicion(x,y))&&((*iteradorLista)->esAtableCorrea()));
+			figuraBuscada = (*iteradorLista);
+			
+			iteradorLista++;
+		}
+
+		if (figuraEncontrada)
+			return figuraBuscada;
+	}
+	return NULL;
 }
