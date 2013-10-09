@@ -229,6 +229,10 @@
 				RelativePath=".\VistaFigAgrandable.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\VistaLinea.cpp"
+				>
+			</File>
 			<Filter
 				Name="Modelo"
 				>
@@ -368,6 +372,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DLinea.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Engranaje.h"
 				>
 			</File>
@@ -429,6 +437,10 @@
 			</File>
 			<File
 				RelativePath=".\VistaFigAgrandable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VistaLinea.h"
 				>
 			</File>
 			<Filter

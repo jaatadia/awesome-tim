@@ -4,7 +4,7 @@
 
 class Posicion
 {
-private:
+protected:
 	double x,y;
 public:
 	Posicion(){x=y=0;}
@@ -15,12 +15,12 @@ public:
 	virtual ~Posicion(){};
 	double getX(){return x;}
 	double getY(){return y;}
-	void setX(double x){
+	virtual void setX(double x){
 		this->x = x;
 //		std::cout<<" X en posicion.h"<< x <<std::endl;
 	}
 
-	void setY(double y){
+	virtual void setY(double y){
 		this->y = y;
 //		std::cout<<" Y en posicion.h"<< y <<std::endl;
 	}

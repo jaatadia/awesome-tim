@@ -68,4 +68,5 @@ public:
 
 	virtual int getTipoFigura(){return ENGRANAJE;}
 	virtual int getTipoDimension(){return CIRCULO;}
+	virtual bool esAtableCorrea(){return (correa==NULL);}
 };

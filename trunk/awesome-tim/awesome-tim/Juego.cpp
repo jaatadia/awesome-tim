@@ -207,6 +207,10 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
+			if(figuraEnAire){
+				soltarFiguraEnAire();
+				break;
+			}
 			clickPressed = true;
 			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
@@ -496,6 +500,8 @@ bool Juego::figEnComandos(){
 	return false;
 }
 
+
+#include "Linea.h"
 void Juego::soltarFiguraEnAire(){
 //cambiar cuando ande la interseccion con un circulo
 //	confirmarPosicionFiguraEnAire(); //descomentar
@@ -508,9 +514,39 @@ void Juego::soltarFiguraEnAire(){
 
 	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 		//relativizar posiciones al terreno!
-		figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
-		terreno->agregarFigura( figuraEnAire );
-		figuraEnAire = NULL;
+		if(figuraEnAire->getTipoFigura()==LINEA){
+			
+			Linea* linea = ((Linea*)figuraEnAire);
+			linea->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+			
+			double x = linea->getDimension()->getX();
+			double y = linea->getDimension()->getY();
+
+			Figura* result = terreno->getFiguraAtableCorrea(x,y);
+			
+			if(result==NULL){
+				delete figuraEnAire;
+				figuraEnAire = NULL;
+			}else{
+				result->posAtableCorrea(&x,&y);
+				if(!linea->primerPuntoPuesto()){
+					linea->setPunto1(x,y);
+					//linea->setPunto1(result);
+					//result->setCorrea(linea);
+				}else{
+					linea->setPunto2(x,y);
+					//linea->setPunto2(result);
+					//result->setCorrea(linea);
+					terreno->agregarFigura( figuraEnAire );
+					figuraEnAire = NULL;
+				}
+			}
+
+		}else{
+			figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+			terreno->agregarFigura( figuraEnAire );
+			figuraEnAire = NULL;
+		}
 	}else{
 
 		botonera->restaurarInstanciaActual();

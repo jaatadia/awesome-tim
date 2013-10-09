@@ -25,7 +25,7 @@ protected:
 	VistaFigura* myVista;
 	
 	b2Body* cuerpo;
-	unsigned long int numeroID;
+	Figura* correa;
 
 public:
 	bool traslucido;
@@ -65,4 +65,22 @@ public:
 	}
 
 	virtual void shift(){};
+
+	virtual bool esAtableCorrea(){return false;};
+	virtual void posAtableCorrea(double* x,double* y){
+		*x = this->getDimension()->getX();
+		*y = this->getDimension()->getY();
+	}
+
+	virtual void setCorrea(Figura* correa){
+		this->correa = correa;
+	}
+	
+	virtual Figura* getCorrea(){
+		return this->correa;
+	}
+
+	virtual Figura* getFigura1(){return NULL;};
+	virtual Figura* getFigura2(){return NULL;};
+
 };

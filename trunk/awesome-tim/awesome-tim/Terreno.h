@@ -63,6 +63,7 @@ public:
 	void agrandarFigura();
 	void achicarFigura();
 	void shiftFigura();
+	Figura* getFiguraAtableCorrea(double x,double y);
 
 private:
 	bool hayFiguras();

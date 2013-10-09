@@ -29,7 +29,7 @@
 #include "Engranaje2.h"
 #include "Balancin.h"
 
-#include "GeneradorDeFigurasCompuestas.h"
+//#include "GeneradorDeFigurasCompuestas.h"
 
 class CargadorYaml{
 public:
