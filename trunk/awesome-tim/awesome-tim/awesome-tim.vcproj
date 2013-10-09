@@ -200,6 +200,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GeneradorDeFigurasCompuestas.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\JuegoPlay.cpp"
 				>
 			</File>
@@ -395,6 +399,10 @@
 			</File>
 			<File
 				RelativePath=".\FiguraCompuesta.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneradorDeFigurasCompuestas.h"
 				>
 			</File>
 			<File

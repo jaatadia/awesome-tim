@@ -7,7 +7,11 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->ID = ID;
 	this->dimension = dim;
 	this->setCambio(true);
-	if (crearVista) this->myVista = new VistaFigura(this);
+	if (crearVista){
+		this->myVista = new VistaFigura(this);
+	}else{
+		this->myVista = NULL;
+	}
 	this->traslucido = false;
 	this->cuerpo = NULL;
 }

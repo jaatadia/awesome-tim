@@ -21,16 +21,17 @@ FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras ){
 	yMax = yMin = (*iterFig)->getDimension()->getY();
 	
 	while( iterFig != partesFigura.end() ) {
-		iterFig++;
 		
 		if ( (*iterFig)->getDimension()->getX() > xMax)
 			xMax = (*iterFig)->getDimension()->getX();
 		if ( (*iterFig)->getDimension()->getX() < xMin)
-			xMax = (*iterFig)->getDimension()->getX();
+			xMin = (*iterFig)->getDimension()->getX();
 		if ( (*iterFig)->getDimension()->getY() > yMax)
-			xMax = (*iterFig)->getDimension()->getY();
+			yMax = (*iterFig)->getDimension()->getY();
 		if ( (*iterFig)->getDimension()->getY() > yMin)
-			xMax = (*iterFig)->getDimension()->getY();
+			yMin = (*iterFig)->getDimension()->getY();
+	
+		iterFig++;
 	}
 
 	//obtengo ancho y alto y el centro y creo el cuadrado
@@ -57,6 +58,9 @@ FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras ){
 		(*(listaID+i))= (*iterFig)->getID();
 		i++;	
 	}
+
+	myVista = NULL;
+	ID = "";
 }
 
 
