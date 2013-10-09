@@ -51,7 +51,80 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
-		/*case TRIANGULO:
+		case CORREA:{
+			b2Body * inicio = cuerpo;
+			fD.density = 1;
+			b2PolygonShape polygonShape;
+			polygonShape.SetAsBox(1,0.25);
+			fD.shape = &polygonShape;
+			
+			cuerpo->CreateFixture(&fD);
+			b2RevoluteJointDef rJD;
+			rJD.localAnchorA.Set( 0.75,0);
+			rJD.localAnchorB.Set(-0.75,0);
+
+			// Creacion y union de eslabones
+			for (int i = 0; i < 10; i++) {
+				b2Body * eslabon = this->mundo->CreateBody(&bD);
+				eslabon->CreateFixture(&fD);
+				
+				rJD.bodyA = cuerpo;
+				rJD.bodyB = eslabon;
+				this->mundo->CreateJoint(&rJD);
+				
+				cuerpo = eslabon;
+			}
+
+			// Union de ultimo eslabon con el primero
+			rJD.bodyA = cuerpo;
+			rJD.bodyB = inicio;
+			this->mundo->CreateJoint(&rJD);
+			break;
+		}
+		case MOTOR:{
+			b2BodyDef bDBase;
+			bDBase.position.Set(dim->getX(), dim->getY());
+			bDBase.type = b2_staticBody;
+
+			b2Body * base = this->mundo->CreateBody(&bDBase);
+											
+			b2FixtureDef fDBase;
+			b2PolygonShape polygonShape;
+			polygonShape.SetAsBox(1,0.25);
+			fDBase.shape = &polygonShape;
+			fDBase.isSensor = true;
+
+			base->CreateFixture(&fDBase);
+			
+			b2CircleShape circleShape;
+			circleShape.m_radius = 2;
+			fD.shape = &circleShape;
+			cuerpo->CreateFixture(&fD);
+			
+			b2RevoluteJointDef rJD;
+			rJD.bodyA = base;
+			rJD.bodyB = cuerpo;
+			rJD.localAnchorA.Set(dim->getX(), dim->getY());
+			rJD.localAnchorB.Set(0,0);
+			rJD.enableMotor = true;
+			rJD.motorSpeed = 2;
+			rJD.maxMotorTorque = 1;
+			this->mundo->CreateJoint(&rJD);
+			 
+			// Conexion entre motor y correa
+			// Esta comentado porque se crean por separado y habria que ver donde se deberia ubicar este bloque de codigo
+			/*
+			rJD.bodyA = eslabon;
+			rJD.bodyB = cuerpo;
+			rJD.localAnchorA.Set(0.75,0);
+			rJD.localAnchorB.Set(1.75,0);
+			this->mundo->CreateJoint(&rJD);
+			*/
+			
+			break;
+		}
+
+ 		/*case TRIANGULO:
 			break;
 		case CUADRADO:{
 				b2PolygonShape forma;
@@ -118,6 +191,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			}
 		case LINEA:
 			{
+				std::cout<<"entro\n";
 				this->mundo->DestroyBody(cuerpo);
 				Figura* fig1=NULL;
 				Figura* fig2=NULL;
@@ -152,8 +226,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						this->mundo->CreateJoint(&joint2);
 						//break;
 					}
-				}else{
-					return false;
 				}
 				break;
 			}
@@ -184,7 +256,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
 				//joint.bodyA = eje;
 				//joint.bodyB = cuerpo;
-										
+						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 				((Engranaje*)figura)->joint = enlace;
 				figura->setCuerpo(cuerpo);
@@ -208,7 +280,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 									joint2.joint1 = enlace;
 									joint2.joint2 = ((Engranaje*)fig)->joint;
 									joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
-									
+
 									this->mundo->CreateJoint(&joint2);
 									//break;
 								}
@@ -373,7 +445,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 //					//guardo el que se unira en el paso siguiente
 //					segmentoAnterior = segmentoSiguiente;
 //				}
-			break;
+				break;
 			}
 	}
 	return true;
