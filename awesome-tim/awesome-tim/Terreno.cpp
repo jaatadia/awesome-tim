@@ -44,14 +44,22 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 
 Terreno::~Terreno(void){
 
-	if(fisicaActiva) delete this->mundoBox2D;
-
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		Figura* fig = (*iteradorLista);
-		delete fig;
+
+		if(fig->getTipoFigura()==LINEA){
+			Figura* aux = fig->getCorrea();
+			if(aux !=  NULL){
+				eliminarFigura(aux);
+				delete aux;
+			}
+			delete fig;
+		}
 	}
+
+	if(fisicaActiva) delete this->mundoBox2D;
 
 	//borro imagen del fondo
 	if (img) delete img;
@@ -140,8 +148,16 @@ void Terreno::agregarFigura(Figura* fig){
 	corregirPosicion(fig);
 
 	try{
-		(this->figuras).push_back(fig);
-		 if(fisicaActiva) this->mundoBox2D->agregarFigura(fig);
+		if(fisicaActiva){
+			bool aux = this->mundoBox2D->agregarFigura(fig);
+			if(aux){
+				(this->figuras).push_back(fig);
+			}else{ 
+				delete fig;
+			}
+		}else{
+			(this->figuras).push_back(fig);
+		}
 	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
 		//si hay error, tira la excepcion nomas? y termina no haciendo nada???

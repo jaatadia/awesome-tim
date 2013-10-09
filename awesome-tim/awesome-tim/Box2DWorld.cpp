@@ -36,7 +36,7 @@ void Box2DWorld::actualizar()
 	this->mundo->Step(this->tiempoStep, this->velIteracion, this->posIteracion);
 }
 
-void Box2DWorld::agregarFigura(Figura * figura)
+bool Box2DWorld::agregarFigura(Figura * figura)
 {
 	Dimension * dim = figura->getDimension();
 	b2BodyDef bD;
@@ -118,7 +118,6 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			}
 		case LINEA:
 			{
-				std::cout<<"entro\n";
 				this->mundo->DestroyBody(cuerpo);
 				Figura* fig1=NULL;
 				Figura* fig2=NULL;
@@ -153,6 +152,8 @@ void Box2DWorld::agregarFigura(Figura * figura)
 						this->mundo->CreateJoint(&joint2);
 						//break;
 					}
+				}else{
+					return false;
 				}
 				break;
 			}
@@ -183,7 +184,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
 				//joint.bodyA = eje;
 				//joint.bodyB = cuerpo;
-						
+										
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 				((Engranaje*)figura)->joint = enlace;
 				figura->setCuerpo(cuerpo);
@@ -207,7 +208,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 									joint2.joint1 = enlace;
 									joint2.joint2 = ((Engranaje*)fig)->joint;
 									joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
-
+									
 									this->mundo->CreateJoint(&joint2);
 									//break;
 								}
@@ -370,6 +371,7 @@ void Box2DWorld::agregarFigura(Figura * figura)
 			break;
 			}
 	}
+	return true;
 }
 
 void Box2DWorld::actualizar(Figura * figura)
