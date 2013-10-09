@@ -25,7 +25,7 @@ public:
 	void setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion);
 	void actualizar();
 	void actualizar(Figura * figura);
-	void agregarFigura(Figura * figura);
+	bool agregarFigura(Figura * figura);
 	void cambiarParametros(Figura * figura);
 	void eliminarFigura(Figura * figura);
 	~Box2DWorld(void);
