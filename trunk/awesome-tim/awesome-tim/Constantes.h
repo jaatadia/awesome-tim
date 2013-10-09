@@ -149,7 +149,7 @@
 #define ID_CINTA ""
 #define ID_PUNTA_CINTA_IZQ ""
 #define ID_PUNTA_CINTA_DER ""
-#define ID_MOTOR ""
+#define ID_MOTOR "../images/motor.jpg"
 #define ID_CORREA "../images/correa.png"
 #define ID_TABLA_BALANCIN ""
 #define ID_PUNTA_BALANCIN ""
