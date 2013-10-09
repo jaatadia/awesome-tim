@@ -136,7 +136,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}*/
 		case PLATAFORMA:{
-				cuerpo->SetType(b2_staticBody);
+				if(activo)cuerpo->SetType(b2_staticBody);
 				b2PolygonShape forma;
 				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 				fD.shape = &forma;
@@ -191,7 +191,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			}
 		case LINEA:
 			{
-				std::cout<<"entro\n";
 				this->mundo->DestroyBody(cuerpo);
 				Figura* fig1=NULL;
 				Figura* fig2=NULL;
@@ -210,8 +209,10 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					}
 				}
 				if(fig1 && fig2){
-					fig1->setCorrea(figura);
-					fig2->setCorrea(figura);
+					//fig1->setCorrea(figura);
+					//fig2->setCorrea(figura);
+					fig1->atarCorrea();
+					fig2->atarCorrea();
 					((Linea* )figura)->setPunto1(fig1);
 					((Linea* )figura)->setPunto2(fig2);
 

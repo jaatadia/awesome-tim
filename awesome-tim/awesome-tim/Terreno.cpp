@@ -1,6 +1,7 @@
 #include "Terreno.h"
 #include "ErrorLogHandler.h"
 #include "Contenedor.h"
+#include "Linea.h"
 #include <new>
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
@@ -35,14 +36,14 @@ Terreno::~Terreno(void){
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		Figura* fig = (*iteradorLista);
 
-		if(fig->getTipoFigura()==LINEA){
+		/*if(fig->getTipoFigura()==LINEA){
 			Figura* aux = fig->getCorrea();
 			if(aux !=  NULL){
 				eliminarFigura(aux);
 				delete aux;
-			}
+			}*/
 			delete fig;
-		}
+		/*}*/
 	}
 
 	if(fisicaActiva) delete this->mundoBox2D;
@@ -253,12 +254,38 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 		//saco de la lista y libero memoria
 		eliminarFigura(figuraABorrar);
 		setCambio(true);
-		Figura* aux = figuraABorrar->getCorrea();
-		delete figuraABorrar;
+		//Figura* aux = figuraABorrar->getCorrea();
 		
-		if(aux !=  NULL){
+		/*if(aux !=  NULL){
 			eliminarFigura(aux);
 			delete aux;
+		}*/
+		
+		if(hayFiguras()){	
+			std::list<Figura*>::iterator iteradorLista;
+			std::list<Figura*> listaFigAux;
+			iteradorLista = figuras.begin();
+
+
+			while (iteradorLista != figuras.end()) {
+				if((*iteradorLista)->getTipoFigura()==LINEA){
+					Linea* correa = (Linea*) (*iteradorLista);
+					if ((correa->fig1 == figuraABorrar)||(correa->fig2 == figuraABorrar)){
+						listaFigAux.push_back(correa);
+					}
+				}
+				iteradorLista++;
+			}
+			for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
+				eliminarFigura(*iter);
+				if((*iter)->getTipoFigura()==LINEA){
+					Linea* correa = (Linea*) (*iter);
+					correa->fig1->desatarCorrea();
+					correa->fig2->desatarCorrea();
+				}
+				delete (*iter);
+			}
+			delete figuraABorrar;
 		}
 	}
 }
