@@ -232,6 +232,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VistaFiguraEstatica.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaLinea.cpp"
 				>
 			</File>
@@ -439,6 +443,10 @@
 			</File>
 			<File
 				RelativePath=".\VistaFigAgrandable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VistaFiguraEstatica.h"
 				>
 			</File>
 			<File

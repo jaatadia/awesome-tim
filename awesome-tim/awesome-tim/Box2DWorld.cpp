@@ -232,12 +232,16 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 		case ENGRANAJE:
 			{
 				b2BodyDef ejeDef;
-				ejeDef.type = b2_staticBody;
+				//if(activo){
+					ejeDef.type = b2_staticBody;
+				//}else{
+				//	ejeDef.type = b2_dynamicBody;
+				//}
 				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
 												
 				b2FixtureDef ejeFix;
 				b2CircleShape ejeCirculo;
-				ejeCirculo.m_radius = 0.00001;
+				ejeCirculo.m_radius = ((Circulo *)dim)->getRadio()*4/5;
 				ejeFix.shape = &ejeCirculo;
 				ejeFix.isSensor = true;
 				
@@ -265,7 +269,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
 					if((fig!=NULL)&&(fig!=figura)){
-						if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
+						if((fig->getTipoFigura()==ENGRANAJE)/*||(fig->getTipoFigura()==ENGRANAJE2)*/){
 							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 							if(
 								(sqrt(
@@ -296,15 +300,21 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 		case ENGRANAJE2:
 			{
 				b2BodyDef ejeDef;
-				ejeDef.type = b2_staticBody;
-				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
+				if(activo){
+					ejeDef.type = b2_staticBody;
+				}else{
+					ejeDef.type = b2_dynamicBody;
+				}
+				ejeDef.position.Set(figura->getDimension()->getX(),figura->getDimension()->getY());
 								
 				b2FixtureDef ejeFix;
-				b2CircleShape ejeCirculo;
-				ejeCirculo.m_radius = 0.00001;
-				ejeFix.shape = &ejeCirculo;
-				ejeFix.isSensor = true;
 				
+				
+				//b2CircleShape ejeCirculo;
+				//ejeCirculo.m_radius = 0.00001;
+				b2PolygonShape ejeCirculo;
+				ejeCirculo.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+				ejeFix.shape = &ejeCirculo;
 				b2Body* eje = this->mundo->CreateBody(&ejeDef);
 				eje->CreateFixture(&ejeFix);
 												
@@ -330,32 +340,32 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				((Engranaje*)figura)->joint = enlace;
 				figura->setCuerpo(cuerpo);
 
-				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
-					Figura* fig = (Figura*)c->GetUserData();
-					if((fig!=NULL)&&(fig!=figura)){
-						if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
-							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
-							if(
-								(sqrt(
-								pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
-								pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
-								)<margen)
-							){
-								b2GearJointDef joint2;
-								joint2.bodyA = cuerpo;
-								joint2.bodyB = fig->getCuerpo();
-								if ((cuerpo!=NULL) &&(fig->getCuerpo()!=NULL)){
-									joint2.joint1 = enlace;
-									joint2.joint2 = ((Engranaje*)fig)->joint;
-									joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
-
-									this->mundo->CreateJoint(&joint2);
-									//break;
-								}
-							}
-						}
-					}
-				}
+				//for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
+				//	Figura* fig = (Figura*)c->GetUserData();
+				//	if((fig!=NULL)&&(fig!=figura)){
+				//		if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
+				//			double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
+				//			if(
+				//				(sqrt(
+				//				pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
+				//				pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
+				//				)<margen)
+				//			){
+				//				b2GearJointDef joint2;
+				//				joint2.bodyA = cuerpo;
+				//				joint2.bodyB = fig->getCuerpo();
+				//				if ((cuerpo!=NULL) &&(fig->getCuerpo()!=NULL)){
+				//					joint2.joint1 = enlace;
+				//					joint2.joint2 = ((Engranaje*)fig)->joint;
+				//					joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
+				//
+				//					this->mundo->CreateJoint(&joint2);
+				//					//break;
+				//				}
+				//			}
+				//		}
+				//	}
+				//}
 				break;
 			}
 		case PELOTATENIS:
