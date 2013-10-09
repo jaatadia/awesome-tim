@@ -130,9 +130,11 @@ void FiguraCompuesta::dibujarEnPixel(Superficie* superficie){
 }
 
 void FiguraCompuesta::dibujar(Superficie* superficie){
-
+//	std::cout<<"***********************Una vuelta de dibujar fig compuesta*******************"<<std::endl;
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		(*iterFig)->dibujar(superficie);
+//		std::cout<<"X: "<<(*iterFig)->getDimension()->getX()<<std::endl;
+//		std::cout<<"Y: "<<(*iterFig)->getDimension()->getY()<<std::endl;
 		setCambio(false);
 	}
 }

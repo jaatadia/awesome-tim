@@ -5,10 +5,8 @@
 #include "GeneradorYaml.h"
 #include "Cuadrado.h"
 #include "Circulo.h"
-#include "Soga.h"
 #include "PoligonoRegular.h"
 #include "Triangulo.h"
-
 #include "Figura.h"
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
@@ -28,11 +26,6 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	shiftPressed = false;
 	estaActiva = false;
 	clickPressed = false;
-
-//*********************prueba de soga***********************
-
-//	terreno->agregarFigura(new Soga(ImgSegmSoga,new Cuadrado(80,ALTO_SEGMENTO_SOGA,50,50,0)));
-
 }
 
 bool Juego::cargar(){
@@ -221,6 +214,7 @@ while(SDL_PollEvent(&evento)){
 					//click izq y shift
 					terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				else
+					//aca no buscar activa, sino tener metodo onClick()
 					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				
 
@@ -242,11 +236,6 @@ while(SDL_PollEvent(&evento)){
 				if (evento.button.state == SDL_BUTTON_LMASK){
 					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
-// y borrar esto cuando la botonera funcione
-// y en realidad ni me va a imprtar que este activa o no
-			if (figuraEnAire)
-				if (figuraEnAire->esMiPosicion(posClickX,posClickY))
-					estaActiva = true;
 
 			break;
 		}
@@ -503,14 +492,8 @@ bool Juego::figEnComandos(){
 
 #include "Linea.h"
 void Juego::soltarFiguraEnAire(){
-//cambiar cuando ande la interseccion con un circulo
-//	confirmarPosicionFiguraEnAire(); //descomentar
-	//borrar
-	setCambio(true);
-	terreno->setCambio(true);
-	botonera->setCambio(true);
-	comandos->setCambio(true);
-	//borrar
+
+	confirmarPosicionFiguraEnAire();
 
 	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 		//relativizar posiciones al terreno!

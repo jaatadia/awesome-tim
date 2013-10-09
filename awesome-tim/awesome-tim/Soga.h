@@ -1,34 +1,44 @@
 #pragma once
-#include "FiguraCompuesta.h"
+#include "Figura.h"
 #include "Cuadrado.h"
 
 #include <math.h>
 
-//sera una concatenacion de rectangulos.
-//por ahora 1 de largo y 0.3 de ancho para el segmento en general.
-//y largo arbitrario para el ultimo.
-class Soga :public FiguraCompuesta{
+//NO la puedo agregar al mundo del box2d
+//PERO la tengo que agregar a terreno!
+
+//supongo que ahora sera un rectangulo y ya.
+//por ahora de 0.3 de alto.
+
+class Soga :public Figura{
 
 private:
 
 	double largoEstirada;
+	Figura* extremo1,extremo2;
 
 public:
-	//llamar con el ID de un cuadrado/rectangulo (de ser posible el de segmento de soga...)
-	//en dimension las de las soga estirada (pasarla como un cuadrado HORIZONTAL, yo creo las nuevas)
-	//POR AHORA : Voy a ignorar el ancho que me pasen, digamos que siempre es el mismo.
+	//llamar con el ID (de ser posible el de segmento de soga...)
+	//no me interesan las dimensiones, hasta null me sirve.
 	Soga(const char* ID, Dimension* dim);
-
-	//hacer otra version con una lista de dimensiones!!
-
 	~Soga(void);
 
 public:
 
 	virtual Figura* clonar();//copia la figura
 
-	const char** getListaDeIDs();
+////redefinir el dibujar, que averigue su dimension cada vez...
+//	/*	
+//	myVista->dibujar(super);
+//	setCambio(false);
+//	*/
+//	void dibujarEnPixel(Superficie* super);
+//	void dibujar(Superficie* super);
+//	void dibujar(Superficie* super,int xIni, int yIni);
 
 	virtual int getTipoFigura(){return SOGA;}
 	virtual int getTipoDimension(){return CUADRADO;}
+
+private:
+	//recalcularDimension();
 };

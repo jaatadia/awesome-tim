@@ -97,6 +97,8 @@ bool Cuadrado::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 
 	return false;
 }
+
+
 void Cuadrado::setAncho(double nuevoLargo){
 	this->ancho = nuevoLargo;
 

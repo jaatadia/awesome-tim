@@ -2,9 +2,6 @@
 #include "ErrorLogHandler.h"
 #include "Contenedor.h"
 #include <new>
-//***********sacar, solo para probar******************
-#include "Soga.h"
-#include "Plataforma.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
@@ -29,17 +26,6 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	}else{
 		this->mundoBox2D = NULL;
 	}
-	//----PRUEBAS	
-	if (fisicaActiva){
-	/*
-		//*********************prueba de soga***********************
-
-		agregarFigura(new Soga("../images/Cuadrado.png",new Cuadrado(5,5,10,10,0)));
-	*/
-		//********prueba de plataforma****************
-
-	}
-	//FIN PRUEBAS
 }
 
 Terreno::~Terreno(void){
@@ -160,7 +146,6 @@ void Terreno::agregarFigura(Figura* fig){
 		}
 	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
-		//si hay error, tira la excepcion nomas? y termina no haciendo nada???
 	};
 }
 
@@ -585,6 +570,41 @@ double Terreno::calcularAngulo(Dimension* dim, double XVector1,double YVector1,d
 	}
 		return (dim->getAngulo() + variacionAngulo);
 }
+
+//void Terreno::onClick(){
+//
+///*si hay activa
+//	->es de las que se ponen con dos puntos
+//	porque no puede haber una activa en otro caso si se puede clickear en terreno
+//	interactuar de nuevo para setear la segunda figura o eliminar!
+//	y ver que juntura poner!
+//	para esto poner def de juntura en soga y en correa
+//sino
+//	buscarActiva();
+//*/
+//}
+//
+//int Terreno::interactuar(Figura* fig, double x, double y){
+//
+///*
+//fig a figura activa
+//
+//averiguar si choca con alguna
+//o si se une con alguna
+//para esto iterar todas las figuras e interactuar con ellas
+//esto mientras no halla union o choque
+//
+//devuelve
+//0 para choque
+//1 para posicionar
+//3 para unir
+//
+//
+//si hay union setear en soga o correa figura que se unirá y no sacarla de figura activa
+//si no hay union y chocan no ponerla (soga y correa no pueden generar choque!)
+//si no hay union ni choque ponerla en terreno	
+//*/
+//}
 
 Figura* Terreno::getFiguraAtableCorrea(double x,double y){
 	if(hayFiguras()){	
