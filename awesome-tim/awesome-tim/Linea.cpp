@@ -10,7 +10,6 @@ Linea::Linea(double x1,double y1,double x2, double y2,double ancho):Figura(ID_CO
 
 Linea::~Linea(void)
 {
-	
 }
 
 void Linea::setPunto1(double x1,double y1){
