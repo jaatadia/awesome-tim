@@ -25,7 +25,7 @@ protected:
 	VistaFigura* myVista;
 	
 	b2Body* cuerpo;
-	Figura* correa;
+	//Figura* correa;
 
 public:
 	bool traslucido;
@@ -66,19 +66,42 @@ public:
 
 	virtual void shift(){};
 
+	
 	virtual bool esAtableCorrea(){return false;};
 	virtual void posAtableCorrea(double* x,double* y){
 		*x = this->getDimension()->getX();
 		*y = this->getDimension()->getY();
 	}
+	virtual void atarCorrea(){};
+	virtual void desatarCorrea(){};
+	//virtual void setCorrea(Figura* correa){
+	//	this->correa = correa;
+	//}
+	//virtual Figura* getCorrea(){
+	//	return this->correa;
+	//}
 
-	virtual void setCorrea(Figura* correa){
-		this->correa = correa;
-	}
 	
-	virtual Figura* getCorrea(){
-		return this->correa;
-	}
+	////devuelve int -1 si no es atable 1, si se ata en la primera union de soga y 2 en la segunda
+	//virtual int esAtableSoga(double* x,double* y){
+	//	*x = this->getDimension()->getX();
+	//	*y = this->getDimension()->getY();
+	//	return false;
+	//}
+	//virtual void setSoga1(Figura* soga){
+	//	this->soga1 = soga;
+	//}
+	//virtual void setSoga2(Figura* soga){
+	//	this->soga2 = soga;
+	//}
+	//virtual Figura* getSoga1(){
+	//	return this->soga1;
+	//}
+	//virtual Figura* getSoga2(){
+	//	return this->soga2;
+	//}
+
+
 
 	virtual Figura* getFigura1(){return NULL;};
 	virtual Figura* getFigura2(){return NULL;};

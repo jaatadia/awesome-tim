@@ -7,14 +7,18 @@
 class Engranaje : public Figura
 {
 protected:
-	Engranaje(const char* id,Dimension* dim,bool flag):Figura(id,dim){};
+	Engranaje(const char* id,Dimension* dim,bool flag):Figura(id,dim){
+		atado = false;
+	};
 	double radio1;
+	bool atado;
 
 	Engranaje(const char* ID, double pos_X,double pos_Y,double radio1 = RADIO_MINENGRANAJE, double angulo = 0):Figura(ID,new Circulo(radio1,pos_X,pos_Y,angulo)){
 		joint = NULL;
 		if (radio1< RADIO_MINENGRANAJE)	this->radio1 = RADIO_MINENGRANAJE;
 		else if (radio1 > RADIO_MAXENGRANAJE) this->radio1 = RADIO_MAXENGRANAJE;
 		else this->radio1 = int(radio1);
+		atado = false;
 
 		((Circulo*)(this->getDimension()))->setRadio(this->radio1);
 	};
@@ -28,6 +32,7 @@ public:
 		if (radio1< RADIO_MINENGRANAJE)	this->radio1 = RADIO_MINENGRANAJE;
 		else if (radio1 > RADIO_MAXENGRANAJE) this->radio1 = RADIO_MAXENGRANAJE;
 		else this->radio1 = int(radio1);
+		atado = false;
 
 		((Circulo*)(this->getDimension()))->setRadio(this->radio1);
 	};
@@ -68,5 +73,7 @@ public:
 
 	virtual int getTipoFigura(){return ENGRANAJE;}
 	virtual int getTipoDimension(){return CIRCULO;}
-	virtual bool esAtableCorrea(){return (correa==NULL);}
+	virtual bool esAtableCorrea(){return !atado;}
+	virtual void atarCorrea(){atado = true;}
+	virtual void desatarCorrea(){atado = false;}
 };
