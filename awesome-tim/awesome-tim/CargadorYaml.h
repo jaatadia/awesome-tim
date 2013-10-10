@@ -70,7 +70,7 @@ private:
 	static Figura* crearCuadrado(const YAML::Node& nodoFigura);
 	static Figura* crearTriangulo(const YAML::Node& nodoFigura);
 	static Figura* crearPlataforma(const YAML::Node& nodoFigura);
-	static Figura* crearBalancin(const YAML::Node& nodoFigura);
+	static Figura* crearBalancin(const YAML::Node& nodoFigura, int sentido);
 	static Figura* crearGloboHelio(const YAML::Node& nodoFigura);
 	static Figura* crearBolaBowling(const YAML::Node& nodoFigura);
 	static Figura* crearPelotaBasquet(const YAML::Node& nodoFigura);
