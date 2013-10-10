@@ -36,4 +36,6 @@ public:
 		fig1->desatarCorrea();
 		fig2->desatarCorrea();
 	}
+
+//	bool choqueConFigura(Figura* fig);
 };

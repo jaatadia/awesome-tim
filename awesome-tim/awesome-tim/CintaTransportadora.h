@@ -13,4 +13,6 @@ public:
 
 	virtual int getTipoFigura(){return CINTATRANSPORTADORA;}
 	virtual int getTipoDimension(){return CUADRADO;}
+
+//	bool choqueConFigura(Figura* fig);
 };

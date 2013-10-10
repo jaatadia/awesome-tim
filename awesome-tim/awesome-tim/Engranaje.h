@@ -72,4 +72,6 @@ public:
 	virtual bool esAtableCorrea(){return !atado;}
 	virtual void atarCorrea(){atado = true;}
 	virtual void desatarCorrea(){atado = false;}
+
+//	bool choqueConFigura(Figura* fig);
 };

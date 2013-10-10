@@ -229,8 +229,8 @@ while(SDL_PollEvent(&evento)){
 			if (figuraEnAire){
 				estaActiva = true;
 				//innecesario pero por si acaso
-				figuraEnAire->getDimension()->setX(posClickX);
-				figuraEnAire->getDimension()->setY(posClickY);
+				figuraEnAire->setX(posClickX);
+				figuraEnAire->setY(posClickY);
 			}
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos

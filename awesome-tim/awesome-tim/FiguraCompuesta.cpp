@@ -2,9 +2,7 @@
 
 FiguraCompuesta::FiguraCompuesta(const char* ID, Dimension* dim):Figura(ID,dim)
 {
-	//this->dimension = dim; no lo hace el padre esto?
-
-/*si se usa este inicializar dimensiones,angulos,etc en la figura que hereda*/
+/*si se usa este inicializar dimensiones,angulos,etc en la figura que hereda*/	
 }
 
 FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras,double angulo){
@@ -48,8 +46,6 @@ FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras,double angulo)
 	//guardo los angulos correspondientes
 	this->inicAngulosCentro();
 	
-	int i = 0;
-
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		//y obviamente aca poner en quien herede los que correspondan
 		angulos.push_back((*iterFig)->getDimension()->getAngulo());
@@ -363,4 +359,19 @@ bool FiguraCompuesta::anguloEsPositivo(double X1, double Y1, double X2, double Y
 		}
 	//por defecto asumo que es positivo
 	return true;
+}
+
+
+void FiguraCompuesta::setX( double x ){
+
+	double difDePos = x - dimension->getX();
+
+	this->cambiarPosicion(difDePos , 0);
+}
+
+void FiguraCompuesta::setY( double y ){
+
+	double difDePos = y - dimension->getY();
+
+	this->cambiarPosicion( 0 , difDePos);
 }
