@@ -74,13 +74,6 @@ public:
 	}
 	virtual void atarCorrea(){};
 	virtual void desatarCorrea(){};
-	//virtual void setCorrea(Figura* correa){
-	//	this->correa = correa;
-	//}
-	//virtual Figura* getCorrea(){
-	//	return this->correa;
-	//}
-
 	
 	////devuelve int -1 si no es atable 1, si se ata en la primera union de soga y 2 en la segunda
 	//virtual int esAtableSoga(double* x,double* y){
