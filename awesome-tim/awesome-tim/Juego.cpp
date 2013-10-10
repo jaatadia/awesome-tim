@@ -8,6 +8,7 @@
 #include "PoligonoRegular.h"
 #include "Triangulo.h"
 #include "Figura.h"
+#include "Linea.h"
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	
@@ -201,7 +202,7 @@ while(SDL_PollEvent(&evento)){
 		case SDL_MOUSEBUTTONDOWN:
 		{
 			if(figuraEnAire){
-				soltarFiguraEnAire();
+				set2Click();
 				break;
 			}
 			clickPressed = true;
@@ -253,7 +254,11 @@ while(SDL_PollEvent(&evento)){
 
 			if (figuraEnAire){
 				//o es de figura viva
-				soltarFiguraEnAire();
+				if(figuraEnAire->getTipoFigura()==LINEA){
+
+				}else{
+					soltarFiguraEnAire();
+				}
 			}
 
 			comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux,this);
@@ -490,46 +495,17 @@ bool Juego::figEnComandos(){
 }
 
 
-#include "Linea.h"
+
+
 void Juego::soltarFiguraEnAire(){
 
 	confirmarPosicionFiguraEnAire();
 
 	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 		//relativizar posiciones al terreno!
-		if(figuraEnAire->getTipoFigura()==LINEA){
-			
-			Linea* linea = ((Linea*)figuraEnAire);
-			linea->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
-			
-			double x = linea->getDimension()->getX();
-			double y = linea->getDimension()->getY();
-
-			Figura* result = terreno->getFiguraAtableCorrea(x,y);
-			
-			if(result==NULL){
-				delete figuraEnAire;
-				figuraEnAire = NULL;
-			}else{
-				result->posAtableCorrea(&x,&y);
-				if(!linea->primerPuntoPuesto()){
-					linea->setPunto1(x,y);
-					//linea->setPunto1(result);
-					//result->setCorrea(linea);
-				}else{
-					linea->setPunto2(x,y);
-					//linea->setPunto2(result);
-					//result->setCorrea(linea);
-					terreno->agregarFigura( figuraEnAire );
-					figuraEnAire = NULL;
-				}
-			}
-
-		}else{
-			figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
-			terreno->agregarFigura( figuraEnAire );
-			figuraEnAire = NULL;
-		}
+		figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+		terreno->agregarFigura( figuraEnAire );
+		figuraEnAire = NULL;
 	}else{
 
 		botonera->restaurarInstanciaActual();
@@ -537,5 +513,37 @@ void Juego::soltarFiguraEnAire(){
 		delete figuraEnAire;
 		figuraEnAire = NULL;
 	}
+}
 
+
+void Juego::set2Click(){
+	
+	if(figuraEnAire->getTipoFigura()==LINEA){
+		
+		Linea* linea = ((Linea*)figuraEnAire);
+		linea->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+		
+		double x = linea->getDimension()->getX();
+		double y = linea->getDimension()->getY();
+
+		Figura* result = terreno->getFiguraAtableCorrea(x,y);
+		
+		if(result==NULL){
+			delete figuraEnAire;
+			figuraEnAire = NULL;
+		}else{
+			result->posAtableCorrea(&x,&y);
+			if(!linea->primerPuntoPuesto()){
+				linea->setPunto1(x,y);
+				//linea->setPunto1(result);
+				//result->setCorrea(linea);
+			}else{
+				linea->setPunto2(x,y);
+				//linea->setPunto2(result);
+				//result->setCorrea(linea);
+				terreno->agregarFigura( figuraEnAire );
+				figuraEnAire = NULL;
+			}
+		}
+	}
 }

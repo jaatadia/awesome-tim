@@ -64,4 +64,6 @@ private:
 	bool figEnBotonera();
 	bool figEnComandos();
 	void resizear();
+	void set2Click();
+
 };
