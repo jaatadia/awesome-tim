@@ -3,6 +3,7 @@
 #include "Engranaje2.h"
 #include "Linea.h"
 #include "Soga.h"
+#include "Balancin.h"
 
 
 Box2DWorld::Box2DWorld(void)
@@ -115,9 +116,49 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			
 			break;
 		}
-		case BALANCIN:{};
+		case BALANCIN:{
+				
+				cuerpo->SetTransform(cuerpo->GetPosition(),0); 
+
+				b2BodyDef ejeDef;
+				ejeDef.type = b2_staticBody;
+				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
+												
+				b2FixtureDef ejeFix;
+				b2CircleShape ejeCirculo;
+				ejeCirculo.m_radius = 0.0001;
+				ejeFix.shape = &ejeCirculo;
+				ejeFix.isSensor = true;
+				
+				b2Body* eje = this->mundo->CreateBody(&ejeDef);
+				eje->CreateFixture(&ejeFix);
+
+				b2PolygonShape forma;
+				Balancin* bal = (Balancin*) figura;
+				forma.SetAsBox((bal->getTabla()->getDimension()->getAncho())/2,(bal->getTabla()->getDimension()->getAlto())/2);
+				fD.shape = &forma;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
+				cuerpo->CreateFixture(&fD);
+
+				b2RevoluteJointDef joint;
+				joint.enableLimit = true;
+				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
+				joint.lowerAngle = -PI/4;
+				joint.upperAngle = PI/4;
+				joint.maxMotorTorque = 0.5; //???
+						
+				b2Joint* enlace = this->mundo->CreateJoint(&joint);
+				if (figura->getDimension()->getAngulo() < 180){
+					cuerpo->SetTransform(cuerpo->GetPosition(),-figura->getDimension()->getAngulo()/180*PI);
+				}else{
+					cuerpo->SetTransform(cuerpo->GetPosition(),2*PI-figura->getDimension()->getAngulo()/180*PI);
+				}
+
+				break;
+			}
 		case PLATAFORMA:{
-				if(activo)cuerpo->SetType(b2_staticBody);
+				cuerpo->SetType(b2_staticBody);
 				b2PolygonShape forma;
 				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 				fD.shape = &forma;
@@ -199,19 +240,21 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					figura->setFigura1(fig1);
 					figura->setFigura2(fig2);
 
-					b2GearJointDef joint2;
-					joint2.bodyA = cuerpo1;
-					joint2.bodyB = cuerpo2;
-					b2JointEdge* edge1 = cuerpo1->GetJointList();
-					b2JointEdge* edge2 = cuerpo2->GetJointList();
-					while(edge1->joint->GetType()!=e_revoluteJoint) {edge1 = edge1->next;}
-					while(edge2->joint->GetType()!=e_revoluteJoint) {edge2 = edge2->next;}
-					
-					joint2.joint1 = edge1->joint;
-					joint2.joint2 = edge2->joint;
-					joint2.ratio = -(fig2->getRadio()/fig1->getRadio());
-
-					this->mundo->CreateJoint(&joint2);
+					if(activo){
+						b2GearJointDef joint2;
+						joint2.bodyA = cuerpo1;
+						joint2.bodyB = cuerpo2;
+						b2JointEdge* edge1 = cuerpo1->GetJointList();
+						b2JointEdge* edge2 = cuerpo2->GetJointList();
+						while(edge1->joint->GetType()!=e_revoluteJoint) {edge1 = edge1->next;}
+						while(edge2->joint->GetType()!=e_revoluteJoint) {edge2 = edge2->next;}
+						
+						joint2.joint1 = edge1->joint;
+						joint2.joint2 = edge2->joint;
+						joint2.ratio = -(fig2->getRadio()/fig1->getRadio());
+						
+						this->mundo->CreateJoint(&joint2);
+					}
 				}else{
 					return false;
 				}
@@ -315,28 +358,30 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
 						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
-
-				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
-					Figura* fig = (Figura*)c->GetUserData();
-					if((fig!=NULL)&&(fig!=figura)){
-						if((fig->getTipoFigura()==ENGRANAJE)/*||(fig->getTipoFigura()==ENGRANAJE2)*/){
-							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
-							if(
-								sqrt(
-								pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
-								pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
-								)<margen
-							){
-								b2GearJointDef joint2;
-								joint2.bodyA = cuerpo;
-								joint2.bodyB = c;
-								b2JointEdge* edge1 = c->GetJointList();
-								while(edge1->joint->GetType()!=e_revoluteJoint) {edge1 = edge1->next;}
-								if ((cuerpo!=NULL) &&(c!=NULL)){
-									joint2.joint1 = enlace;
-									joint2.joint2 = edge1->joint;
-									joint2.ratio = fig->getRadio()/figura->getRadio();
-									this->mundo->CreateJoint(&joint2);
+				
+				if(activo){
+					for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
+						Figura* fig = (Figura*)c->GetUserData();
+						if((fig!=NULL)&&(fig!=figura)){
+							if((fig->getTipoFigura()==ENGRANAJE)/*||(fig->getTipoFigura()==ENGRANAJE2)*/){
+								double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
+								if(
+									sqrt(
+									pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
+									pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
+									)<margen
+								){
+									b2GearJointDef joint2;
+									joint2.bodyA = cuerpo;
+									joint2.bodyB = c;
+									b2JointEdge* edge1 = c->GetJointList();
+									while(edge1->joint->GetType()!=e_revoluteJoint) {edge1 = edge1->next;}
+									if ((cuerpo!=NULL) &&(c!=NULL)){
+										joint2.joint1 = enlace;
+										joint2.joint2 = edge1->joint;
+										joint2.ratio = fig->getRadio()/figura->getRadio();
+										this->mundo->CreateJoint(&joint2);
+									}
 								}
 							}
 						}

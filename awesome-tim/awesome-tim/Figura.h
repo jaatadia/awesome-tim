@@ -65,7 +65,7 @@ public:
 
 	virtual double getRadio(){return dimension->getAncho()/2.0;}
 	virtual void shift(){};//cambia los modos de la figura
-	virtual bool rotable(){return false;} //devuelve si la figura es rotable
+	virtual bool rotable(){return true;} //devuelve si la figura es rotable
 	virtual bool esUnion(){return false;}//devuelve si la figura se trata de una union entre fig1 y fig2
 	virtual void desUnir(){};
 
@@ -75,7 +75,8 @@ public:
 	virtual Figura* getFigura2(){return fig2;};
 	virtual void posFigura1(double* x, double* y){};
 	virtual void posFigura2(double* x, double* y){};
-	
+
+
 	virtual bool esAtableCorrea(){return false;};
 	virtual void posAtableCorrea(double* x,double* y){
 		*x = this->getDimension()->getX();
@@ -83,7 +84,6 @@ public:
 	}
 	virtual void atarCorrea(){};
 	virtual void desatarCorrea(){};
-	
 
 	
 	//se le pasa la poicion en la que esta queriendo atar y devuelve el numero de posicion atable mas cercano(-1 es que no habia)

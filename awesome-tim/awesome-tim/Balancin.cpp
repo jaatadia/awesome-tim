@@ -6,7 +6,7 @@
 #define DERECHA 1
 #define IZQUIERDA 2
 
-#define PUNTA_NO_GIRADA 0
+//#define PUNTA_NO_GIRADA 0
 
 //Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras,angulo){
 //	
@@ -28,7 +28,7 @@
 //	this->atadoIzquierda = false;
 //}
 
-Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,posX,posY,angulo)){
+Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN+2*RADIO_PUNTA_BALANCIN,posX,posY,0)){
 	
 	this->partesFigura = std::list<Figura*>();
 	double posXPuntaIzq,posXPuntaDer,posYPunta;
@@ -69,7 +69,7 @@ void Balancin::calcularPosPuntas(double* posXizq,double* posXder, double* posY, 
 	*posY = ( posY_Tabla - (ALTO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
 }
 
-bool Balancin::atar(double posX, double posY){
+/*bool Balancin::atar(double posX, double posY){
 	bool der = this->circDer->esMiPosicion(posX,posY);
 	if(der && (!this->atadoDerecha)){
 		this->atadoDerecha = true;
@@ -115,11 +115,7 @@ bool Balancin::esAtable(double* posX, double* posY){
 		return true;
 	}
 	return false;
-}
-
-//void Balancin::setAngulo(double angulo){
-//FIXME: se redefine? xq hay que mover los circulos cuando se gira la tabla	
-//}
+}*/
 
 Figura* Balancin::clonar(){
 
@@ -135,4 +131,36 @@ int Balancin::getTipoDimension(){
 
 int Balancin::getTipoFigura(){
 	return BALANCIN;
+}
+
+Figura* Balancin::getTabla(){
+	return this->tabla;
+}
+
+Figura* Balancin::getPuntaIzq(){
+	return this->circIzq;
+}
+
+Figura* Balancin::getPuntaDer(){
+	return this->circDer;
+}
+
+int Balancin::esAtableSoga(double x,double y){
+	if ((!this->atadoIzquierda) && x < this->getDimension()->getX()) return 1;
+	else if ((!this->atadoDerecha) && x > this->getDimension()->getX()) return 2;
+	return -1;
+}
+
+void Balancin::posAtableSoga(int numero,double* x,double* y){
+	if (numero == 1){
+		*x = this->circIzq->getDimension()->getX();
+		*y = this->circIzq->getDimension()->getY();
+	}else if (numero == 2){
+		*x = this->circDer->getDimension()->getX();
+		*y = this->circDer->getDimension()->getY();
+	}
+}
+void Balancin::atarSoga(int numero){
+}
+void Balancin::desatarSoga(int numero){
 }
