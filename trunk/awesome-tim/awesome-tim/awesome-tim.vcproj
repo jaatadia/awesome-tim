@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PelotaBasquet.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Plataforma.cpp"
 				>
 			</File>

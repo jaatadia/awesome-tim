@@ -13,16 +13,16 @@ class Balancin :
 
 private:
 	Figura* tabla;
-	Figura* circDer;
 	Figura* circIzq;
-
+	Figura* circDer;
+	
 	bool atadoDerecha;
 	bool atadoIzquierda;
 
 public:
 
 	//Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras); 
-	Balancin(double posX, double posY, double angulo);	//la pos es la del centro de la tabla!
+	Balancin(const char* ID,double posX, double posY, double angulo);	//la pos es la del centro de la tabla!
 	~Balancin(void);
 	static void calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla);
 	bool atar(double posX, double posY);

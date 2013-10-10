@@ -28,16 +28,23 @@
 //	this->atadoIzquierda = false;
 //}
 
-Balancin::Balancin(double posX, double posY, double angulo):FiguraCompuesta("",new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,posX,posY,angulo)){
+Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,posX,posY,angulo)){
 	
 	this->partesFigura = std::list<Figura*>();
 	double posXPuntaIzq,posXPuntaDer,posYPunta;
 
 	calcularPosPuntas(&posXPuntaIzq,&posXPuntaDer,&posYPunta,posX,posY);
 
-	this->partesFigura.push_back(new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,angulo))); //tabla
-	this->partesFigura.push_back(new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPunta,0))); //punta izq
-	this->partesFigura.push_back(new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPunta,0))); //punta der
+	this->tabla = new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,angulo));
+	this->circIzq = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPunta,0));
+	this->circDer = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPunta,0));
+
+	this->partesFigura.push_back(this->tabla); //tabla
+	this->partesFigura.push_back(this->circIzq); //punta izq
+	this->partesFigura.push_back(this->circDer); //punta der
+
+	this->atadoDerecha = false;
+	this->atadoIzquierda = false;
 
 	this->inicAngulosCentro();
 
@@ -118,7 +125,7 @@ Figura* Balancin::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
 
-	return new Balancin(dim->getX(),dim->getY(),dim->getAngulo());
+	return new Balancin("",dim->getX(),dim->getY(),dim->getAngulo());
 }//copia la figura
 
 

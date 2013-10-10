@@ -287,7 +287,7 @@ Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
 	obtenerAngulo(nodoFigura,&angulo);
 	
 	//return GeneradorDeFigurasCompuestas::construirBalancin(posX,posY,angulo);
-	return new Balancin(posX,posY,angulo);
+	return new Balancin("",posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
