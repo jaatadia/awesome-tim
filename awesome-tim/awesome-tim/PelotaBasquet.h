@@ -18,7 +18,7 @@ public:
 
 	Figura* clonar(){return new PelotaBasquet(ID.c_str(),dimension->clonar(),true);};
 
-	virtual bool choqueConFigura(Figura* fig);
+//	virtual bool choqueConFigura(Figura* fig);
 
-	virtual bool choqueConDimension(Dimension* dim);
+//	virtual bool choqueConDimension(Dimension* dim);
 };

@@ -144,3 +144,38 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 Dimension* PoligonoRegular::clonar(){
 	return new PoligonoRegular(getX(),getY(),radio,vertices,getAngulo());
 }
+
+
+bool PoligonoRegular::choqueConDimension(Dimension* dim){
+
+	//me fijo si alguna de sus aristas corta la otra dimension
+	bool interseca = false;
+
+	int i = 0;
+
+	double x1,y1,x2,y2;
+
+	//entre el primero y el ultimo
+	x1 = getX() + vectorX[0];
+	y1 = getY() + vectorY[0];
+	x2 = getX() + vectorX[vertices-1];
+	y2 = getY() + vectorY[vertices-1];
+
+	interseca = dim->intersecaCon( x1, y1, x2, y2);
+
+	//el resto
+	while ( (i < vertices-1) && (!interseca) ){
+
+		x1 = getX() + vectorX[i];
+		y1 = getY() + vectorY[i];
+		x2 = getX() + vectorX[i+1];
+		y2 = getY() + vectorY[i+1];
+
+		interseca = dim->intersecaCon( x1, y1, x2, y2);
+
+		i++;
+	}
+
+	return interseca;
+
+}

@@ -114,3 +114,20 @@ void Cuadrado::setAncho(double nuevoLargo){
 	vertice4.setX(ancho/2);
 	vertice4.setY(alto/2);
 }
+
+
+bool Cuadrado::choqueConDimension(Dimension* dim){
+
+	//me fijo si alguna de sus aristas corta la otra dimension
+	bool interseca = false;
+
+	if( dim->intersecaCon(vertice1.getX(),vertice1.getY(),vertice2.getX(),vertice2.getY()) ||
+		dim->intersecaCon(vertice2.getX(),vertice2.getY(),vertice3.getX(),vertice3.getY()) ||
+		dim->intersecaCon(vertice3.getX(),vertice3.getY(),vertice4.getX(),vertice4.getY()) ||
+		dim->intersecaCon(vertice4.getX(),vertice4.getY(),vertice1.getX(),vertice1.getY()) ){
+		interseca = true;
+	}
+	
+	return interseca;
+
+}

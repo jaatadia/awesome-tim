@@ -66,6 +66,8 @@ public:
 	Figura* getFiguraAtableCorrea(double x,double y);
 	Figura* getFiguraAtableSoga(double x,double y);
 
+	bool posicionOcupada(Figura* figAPosicionar);
+
 private:
 	bool hayFiguras();
 	Figura* buscarFigura(double posClickX, double posClickY);

@@ -131,3 +131,20 @@ void Figura::setX( double x ){
 void Figura::setY( double y ){
 	dimension->setY(y);
 }
+
+bool Figura::choqueConFigura(Figura* fig){
+
+	//me fijo si fig que me pasaron choca con esta dimension (para cada una que tenga en este caso solo 1)
+	bool choca = false;
+	choca = fig->choqueConDimension(this->dimension);
+
+	return choca;
+}
+
+
+//de nuevo deberia ser contra todas las dimensiones si es compuesta
+// pero aca solo tengo una
+bool Figura::choqueConDimension(Dimension* dim){
+//como no lo se en la figura delego a la dimension (o dimensiones).
+	return dimension->choqueConDimension(dim);
+}
