@@ -192,7 +192,8 @@ while(SDL_PollEvent(&evento)){
 					confirmarPosicionFiguraEnAire();
 					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
 					bool choca = terreno->posicionOcupada(figuraEnAire);
-					if (choca) std::cout<<"chocan"<<std::endl;
+					if (choca) 
+						std::cout<<"chocan"<<std::endl;
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
