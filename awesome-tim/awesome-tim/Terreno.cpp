@@ -1,7 +1,6 @@
 #include "Terreno.h"
 #include "ErrorLogHandler.h"
 #include "Contenedor.h"
-#include "Linea.h"
 #include <new>
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
@@ -35,15 +34,7 @@ Terreno::~Terreno(void){
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 		Figura* fig = (*iteradorLista);
-
-		/*if(fig->getTipoFigura()==LINEA){
-			Figura* aux = fig->getCorrea();
-			if(aux !=  NULL){
-				eliminarFigura(aux);
-				delete aux;
-			}*/
-			delete fig;
-		/*}*/
+		delete fig;
 	}
 
 	if(fisicaActiva) delete this->mundoBox2D;
@@ -70,7 +61,7 @@ void Terreno::redraw(){
 	std::list<Figura*>::iterator iteradorLista;
 	
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		if((*iteradorLista)->getTipoFigura()==LINEA){
+		if((*iteradorLista)->esUnion()){
 			double x = (*iteradorLista)->getDimension()->getX();
 			double y = (*iteradorLista)->getDimension()->getY();
 			double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
@@ -135,8 +126,9 @@ void Terreno::agregarFigura(Figura* fig){
 	corregirPosicion(fig);
 
 	try{
+		bool aux;
 		if(fisicaActiva){
-			bool aux = this->mundoBox2D->agregarFigura(fig);
+			aux = this->mundoBox2D->agregarFigura(fig);
 			if(aux){
 				(this->figuras).push_back(fig);
 			}else{ 
@@ -152,7 +144,7 @@ void Terreno::agregarFigura(Figura* fig){
 
 void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
 	//practicamente lo mismo que arrastraFigura
-	if (figuraActiva != NULL){
+	if ((figuraActiva != NULL) && (figuraActiva->rotable())){
 		//calculo el angulo y se lo pongo a figura
 		double X2,Y2;
 		X2 = posClickX + cantMovX;
@@ -254,12 +246,6 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 		//saco de la lista y libero memoria
 		eliminarFigura(figuraABorrar);
 		setCambio(true);
-		//Figura* aux = figuraABorrar->getCorrea();
-		
-		/*if(aux !=  NULL){
-			eliminarFigura(aux);
-			delete aux;
-		}*/
 		
 		if(hayFiguras()){	
 			std::list<Figura*>::iterator iteradorLista;
@@ -268,9 +254,9 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 
 
 			while (iteradorLista != figuras.end()) {
-				if((*iteradorLista)->getTipoFigura()==LINEA){
-					Linea* correa = (Linea*) (*iteradorLista);
-					if ((correa->fig1 == figuraABorrar)||(correa->fig2 == figuraABorrar)){
+				if((*iteradorLista)->esUnion()){
+					Figura* correa = (*iteradorLista);
+					if ((correa->getFigura1() == figuraABorrar)||(correa->getFigura2() == figuraABorrar)){
 						listaFigAux.push_back(correa);
 					}
 				}
@@ -278,11 +264,7 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 			}
 			for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
 				eliminarFigura(*iter);
-				if((*iter)->getTipoFigura()==LINEA){
-					Linea* correa = (Linea*) (*iter);
-					correa->fig1->desatarCorrea();
-					correa->fig2->desatarCorrea();
-				}
+				(*iter)->desUnir();
 				delete (*iter);
 			}
 			delete figuraABorrar;
@@ -343,16 +325,9 @@ void Terreno::buscarActiva(double posClickX ,double posClickY){
 		if (!figuraActiva){
 			figuraActiva=NULL;
 		}else{
-			if(figuraActiva->getTipoFigura()==LINEA){
-				eliminarFigura(figuraActiva);
-				delete figuraActiva;
-				this->setCambio(true);
-				figuraActiva = NULL;
-			}else{
-				figuraActiva->setTraslucido(true);
-				this->setCambio(true);
-				eliminarFigura(figuraActiva);
-			}
+			figuraActiva->setTraslucido(true);
+			this->setCambio(true);
+			eliminarFigura(figuraActiva);
 		}
 	}
 }

@@ -668,33 +668,18 @@ SDL_Surface* SdlSurfaceManager::rotarZoom2(SDL_Surface* sur, int pixAncho, int p
 	return res;
 }
 
-void SdlSurfaceManager::dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int y2,int ancho){
+void SdlSurfaceManager::dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int y2,int ancho,int r,int g,int b){
 	
 	SDL_LockSurface(sup); 
 
-	Uint32 color = SDL_MapRGBA(sup->format,0,0,0,255);
+	Uint32 color = SDL_MapRGBA(sup->format,r,g,b,255);
 
-	if(y1 == y2){
-		for(int j = y1;j<=y1+(ancho);j++){
-			for(int i = x1;i<=x2;i++){
-				putPixel(sup,i,j,color);
-			}
-		}
-		
-	}else if(x1 == x2){
-		for(int j = y1;j<=y2;j++){
-			for(int i = x1;i<=ancho;i++){
-				putPixel(sup,i,j,color);
-			}
-		}
-		
-	}else{
-
-		int auxX1 = x1;
-		int auxY1 = y1;
-		int auxX2 = x2;
-		int auxY2 = y2;
-		
+	int auxX1 = x1;
+	int auxY1 = y1;
+	int auxX2 = x2;
+	int auxY2 = y2;
+	
+	if(abs((y2-y1))>=abs((x2-x1))){
 		if(y1>y2){
 			auxX1 = x2;
 			auxY1 = y2;
@@ -708,6 +693,22 @@ void SdlSurfaceManager::dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int 
 			int x = a*(j-auxY1)+b;
 			for(int i = -ancho/2; i<ancho/2;i++){
 				putPixel(sup,x+i,j,color);
+			}
+		}
+	}else{
+		if(x1>x2){
+			auxX1 = x2;
+			auxY1 = y2;
+			auxX2 = x1;
+			auxY2 = y1;
+		}
+
+		double a = 1/(double(auxX2-auxX1))*(auxY2-auxY1);
+		int b = auxY1;
+		for(int i = auxX1;i<=auxX2;i++){
+			int y = a*(i-auxX1)+b;
+			for(int j = -ancho/2; j<ancho/2;j++){
+				putPixel(sup,i,y+j,color);
 			}
 		}
 	}

@@ -23,14 +23,15 @@ protected:
 	Dimension* dimension;
 	std::string ID;
 	VistaFigura* myVista;
-	
-	b2Body* cuerpo;
-	//Figura* correa;
+	Figura* fig1;
+	Figura* fig2;
 
 public:
 	bool traslucido;
 
 public:
+	
+
 	Figura(const char* ID,Dimension* dim,bool crearVista = true);
 	virtual ~Figura(void);
 
@@ -57,15 +58,16 @@ public:
 
 	virtual Figura* clonar();//copia la figura
 
-	virtual void setCuerpo(b2Body* cuerpo){
-		this->cuerpo = cuerpo;
-	}
-	virtual b2Body* getCuerpo(){
-		return cuerpo;
-	}
+	virtual double getRadio(){return dimension->getAncho()/2.0;}
+	virtual void shift(){};//cambia los modos de la figura
+	virtual bool rotable(){return false;} //devuelve si la figura es rotable
+	virtual bool esUnion(){return false;}//devuelve si la figura se trata de una union entre fig1 y fig2
+	virtual void desUnir(){};
 
-	virtual void shift(){};
-
+	virtual void setFigura1(Figura* fig){this->fig1 = fig;};
+	virtual void setFigura2(Figura* fig){this->fig2 = fig;};
+	virtual Figura* getFigura1(){return fig1;};
+	virtual Figura* getFigura2(){return fig2;};
 	
 	virtual bool esAtableCorrea(){return false;};
 	virtual void posAtableCorrea(double* x,double* y){
@@ -93,10 +95,5 @@ public:
 	//virtual Figura* getSoga2(){
 	//	return this->soga2;
 	//}
-
-
-
-	virtual Figura* getFigura1(){return NULL;};
-	virtual Figura* getFigura2(){return NULL;};
 
 };
