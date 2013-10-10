@@ -19,6 +19,7 @@ public:
 	~Linea(void);
 
 	virtual int getTipoFigura(){return LINEA;};
+	//virtual int getTipoDimension(){return DLINEA;};   Y ESTO?? FIX
 	virtual void setPunto1(double x1,double y1);
 	virtual void setPunto2(double x2,double y2);
 	virtual void setFigura1(Figura* fig);

@@ -8,32 +8,51 @@
 
 #define PUNTA_NO_GIRADA 0
 
-Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras,angulo){
-	
-	//FIXME: Esta horrible esto hecho
-	int i = 0;
-	std::list<Figura*>::iterator iter;
-	for (iter = listaFiguras.begin(); iter != listaFiguras.end(); iter++){
-		switch(i){
-			case 0: this->tabla = *iter;
-					break;
-			case 1: this->circDer = *iter;
-					break;
-			case 2: this->circIzq = *iter;
-					break;
-		}
-	}
-	/////////////////////
+//Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras,angulo){
+//	
+//	//FIXME: Esta horrible esto hecho
+//	int i = 0;
+//	std::list<Figura*>::iterator iter;
+//	for (iter = listaFiguras.begin(); iter != listaFiguras.end(); iter++){
+//		switch(i){
+//			case 0: this->tabla = *iter;
+//					break;
+//			case 1: this->circDer = *iter;
+//					break;
+//			case 2: this->circIzq = *iter;
+//					break;
+//		}
+//	}
+//
+//	this->atadoDerecha = false;
+//	this->atadoIzquierda = false;
+//}
 
-	this->atadoDerecha = false;
-	this->atadoIzquierda = false;
+Balancin::Balancin(double posX, double posY, double angulo):FiguraCompuesta("",new Cuadrado(ANCHO_DEFAULT,ALTO_DEFAULT,posX,posY,angulo)){
+	
+	this->partesFigura = std::list<Figura*>();
+	double posXPuntaIzq,posXPuntaDer,posYPunta;
+
+	calcularPosPuntas(&posXPuntaIzq,&posXPuntaDer,&posYPunta,posX,posY);
+
+	this->partesFigura.push_back(new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,angulo))); //tabla
+	this->partesFigura.push_back(new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPunta,0))); //punta izq
+	this->partesFigura.push_back(new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPunta,0))); //punta der
 }
 
+Balancin::~Balancin(void){
+	//std::list<Figura*>::iterator iter = this->partesFigura.begin();
+	//
+	//for(iter; iter != this->partesFigura.end();iter++){
+	//	delete (*iter);
+	//}
+
+}
 void Balancin::calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla){
 
 	*posXizq = ( posX_Tabla - (ANCHO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
 	*posXder = ( posX_Tabla + (ANCHO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
-	*posY = ( posY_Tabla + (ALTO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
+	*posY = ( posY_Tabla - (ALTO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
 }
 
 bool Balancin::atar(double posX, double posY){
@@ -89,14 +108,14 @@ bool Balancin::esAtable(double* posX, double* posY){
 //}
 
 Figura* Balancin::clonar(){
-		return NULL;
+	return new Balancin(this->getDimension()->getX(),this->getDimension()->getY(),this->getDimension()->getAngulo());
 }//copia la figura
 
 
 int Balancin::getTipoDimension(){
-	return 0;
+	return CUADRADO;
 }
 
 int Balancin::getTipoFigura(){
-	return 0;
+	return BALANCIN;
 }

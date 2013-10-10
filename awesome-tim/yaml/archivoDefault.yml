@@ -120,8 +120,8 @@ juego:
           angulo: 45	
         cantidad_de_instancias: 5
       - figura:
-          tipo_figura: PELOTA_TENIS
-          posX: 0
-          posY: 0
-          angulo: 0	
+          tipo_figura: BALANCIN
+          posX: 50
+          posY: 50
+          angulo: 0
         cantidad_de_instancias: 5

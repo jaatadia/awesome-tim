@@ -135,6 +135,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}*/
+		case BALANCIN:{};
 		case PLATAFORMA:{
 				if(activo)cuerpo->SetType(b2_staticBody);
 				b2PolygonShape forma;

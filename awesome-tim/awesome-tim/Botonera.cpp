@@ -27,8 +27,8 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 		}
 		++itFig;
 	}
-	if (encontrada){
-		//if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {
+	if (encontrada){ 
+		//if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {    //para q funcione lo de la cant de instancias
 			retorno = (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first)->clonar();
 			//--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
 			retorno->setTraslucido(true);

@@ -281,13 +281,13 @@ Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
-	//double posX,posY,angulo;
-	//
-	//obtenerPosicion(nodoFigura,&posX,&posY);
-	//obtenerAngulo(nodoFigura,&angulo);
-	//
+	double posX,posY,angulo;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+	
 	//return GeneradorDeFigurasCompuestas::construirBalancin(posX,posY,angulo);
-	return NULL;
+	return new Balancin(posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
