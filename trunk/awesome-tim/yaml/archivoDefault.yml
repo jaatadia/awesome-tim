@@ -120,8 +120,12 @@ juego:
           angulo: 45	
         cantidad_de_instancias: 5
       - figura:
-          tipo_figura: BALANCIN
+          tipo_figura: BALANCIN_IZQUIERDA
           posX: 50
           posY: 50
-          angulo: 0
+        cantidad_de_instancias: 5
+      - figura:
+          tipo_figura: BALANCIN_DERECHA
+          posX: 50
+          posY: 50
         cantidad_de_instancias: 5

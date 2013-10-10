@@ -5,6 +5,8 @@
 #define RUTA_DEFAULT "../yaml/archivoDefault.yml"
 
 #define CANT_CAR 40
+#define IZQUIERDA 0
+#define DERECHA 1
 
 std::string CargadorYaml::ruta_archivo = "";
 
@@ -189,13 +191,6 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 		*vertices = VERTICES_DEFAULT;
 	}
 }
-/**********************************************************
-**                                                       **
-**               CREAR FIGURAS COMPUESTAS                **
-**                                                       **
-**********************************************************/
-
-
 
 /**********************************************************
 **                                                       **
@@ -280,14 +275,24 @@ Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
 	return NULL;
 }
 
-Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura){
+Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura, int sentido){
 	double posX,posY,angulo;
 	
 	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerAngulo(nodoFigura,&angulo);
 	
-	//return GeneradorDeFigurasCompuestas::construirBalancin(posX,posY,angulo);
-	return new Balancin("",posX,posY,angulo);
+	//if sentido es DERECHA se setea el angulo default derecha:
+	angulo = 45;
+
+	if(sentido == IZQUIERDA)
+		angulo = -45;
+
+	//if sentido es DERECHA se setea el ID default derecha:
+	std::string IDBotonera = ID_BALANCIN_DER;
+
+	if(sentido == IZQUIERDA)
+		IDBotonera = ID_BALANCIN_IZQ;
+
+	return new Balancin(IDBotonera.c_str(),posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
@@ -433,8 +438,15 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		return figura;
 	}
 
-	if (strcmp(tipo_figura,"BALANCIN") == 0){
-		Figura* figura = crearBalancin(nodoFigura);
+	if (strcmp(tipo_figura,"BALANCIN_IZQUIERDA") == 0){
+		Figura* figura = crearBalancin(nodoFigura, IZQUIERDA);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Balancin."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"BALANCIN_DERECHA") == 0){
+		Figura* figura = crearBalancin(nodoFigura, DERECHA);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Balancin."); 	
 		return figura;
@@ -460,6 +472,7 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Engranaje."); 	
 		return figura;
 	}
+
 	if (strcmp(tipo_figura,"ENGRANAJE2") == 0){ //FIX
 		Figura* figura = crearEngranaje2(nodoFigura);
 		if(!figura)
@@ -810,7 +823,9 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
 	bool figuraSimple = (cuadrado || circulo || triangulo || poligono);
 
 	bool plataforma = (strcmp(tipo_figura,"PLATAFORMA") == 0);
-	bool balancin = (strcmp(tipo_figura,"BALANCIN") == 0);
+	bool balIzq = (strcmp(tipo_figura,"BALANCIN_IZQUIERDA") == 0);
+	bool balDer = (strcmp(tipo_figura,"BALANCIN_DERECHA") == 0);
+	bool balancin = (balIzq || balDer);
 	bool cintaTrans = (strcmp(tipo_figura,"CINTA_TRANSPORTADORA") == 0);
 	bool engranaje = (strcmp(tipo_figura,"ENGRANAJE") == 0);
 	bool engranaje2 = (strcmp(tipo_figura,"ENGRANAJE2") == 0); // FIX
