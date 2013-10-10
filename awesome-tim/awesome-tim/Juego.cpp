@@ -254,7 +254,7 @@ while(SDL_PollEvent(&evento)){
 
 			if (figuraEnAire){
 				//o es de figura viva
-				if(figuraEnAire->getTipoFigura()==LINEA){
+				if((figuraEnAire->getTipoFigura()==LINEA)||(figuraEnAire->getTipoFigura()==SOGA)){
 
 				}else{
 					soltarFiguraEnAire();
@@ -537,6 +537,34 @@ void Juego::set2Click(){
 			comandos->setCambio(true);
 		}else{
 			result->posAtableCorrea(&x,&y);
+			if(!linea->primerPuntoPuesto()){
+				linea->setPunto1(x,y);
+			}else{
+				linea->setPunto2(x,y);
+				terreno->agregarFigura( figuraEnAire );
+				figuraEnAire = NULL;
+			}
+		}
+	}else if(figuraEnAire->getTipoFigura()==SOGA){
+		
+		Linea* linea = ((Linea*)figuraEnAire);
+		linea->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+		
+		double x = linea->getDimension()->getX();
+		double y = linea->getDimension()->getY();
+
+		Figura* result = terreno->getFiguraAtableSoga(x,y);
+		
+		if(result==NULL){
+			delete figuraEnAire;
+			figuraEnAire = NULL;
+			this->setCambio(true);
+			terreno->setCambio(true);
+			botonera->setCambio(true);
+			comandos->setCambio(true);
+		}else{
+			int res = result->esAtableSoga(x,y);
+			result->posAtableSoga(res,&x,&y);
 			if(!linea->primerPuntoPuesto()){
 				linea->setPunto1(x,y);
 			}else{

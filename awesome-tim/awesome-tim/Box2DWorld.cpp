@@ -2,6 +2,7 @@
 #include "Engranaje.h"
 #include "Engranaje2.h"
 #include "Linea.h"
+#include "Soga.h"
 
 
 Box2DWorld::Box2DWorld(void)
@@ -233,6 +234,79 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					joint2.ratio = -(fig2->getRadio()/fig1->getRadio());
 
 					this->mundo->CreateJoint(&joint2);
+				}else{
+					return false;
+				}
+				break;
+			}
+		case SOGA:
+			{
+				this->mundo->DestroyBody(cuerpo);
+				Figura* fig1=NULL;
+				b2Body* cuerpo1 = NULL;
+				int num1 = -1;
+				Figura* fig2=NULL;
+				b2Body* cuerpo2 = NULL;
+				int num2 = -1;
+
+
+				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
+					Figura* fig = (Figura*)c->GetUserData();
+					if((fig!=NULL)&&(fig!=figura)){
+						if(fig->esMiPosicion( ((DLinea*)dim)->x1,((DLinea*)dim)->y1)){
+							int atadura = fig->esAtableSoga(((DLinea*)dim)->x1,((DLinea*)dim)->y1);
+							if(atadura!=-1){
+								fig1 = fig;
+								cuerpo1 = c;
+								num1 = atadura;
+							}
+						}
+						else if(fig->esMiPosicion( ((DLinea*)dim)->x2,((DLinea*)dim)->y2)){
+							int atadura = fig->esAtableSoga(((DLinea*)dim)->x2,((DLinea*)dim)->y2);
+							if(atadura!=-1){
+								fig2 = fig;
+								cuerpo2 = c;
+								num2 = atadura;
+							}
+						}
+					
+					}
+				}
+				if(fig1 && fig2){
+
+					fig1->atarSoga(num1);
+					fig2->atarSoga(num2);
+					figura->setFigura1(fig1);
+					figura->setFigura2(fig2);
+					((Soga*)figura)->setNumsPosAtable(num1,num2);
+
+					if(activo){
+						double cx1,cy1,cx2,cy2;
+						double x1,y1,x2,y2; x1=x2=y1=y2=0;
+						
+						cx1 = fig1->getDimension()->getX();
+						cy1 = fig1->getDimension()->getY();
+						cx2 = fig2->getDimension()->getX();
+						cy2 = fig2->getDimension()->getY();
+
+						fig1->posAtableSoga(num1,&x1,&y1);
+						fig2->posAtableSoga(num2,&x2,&y2);
+
+						b2Vec2 anchor1(cx1-x1,cy1-y1);
+						b2Vec2 anchor2(cx2-x2,cy2-y2);
+
+						b2RopeJointDef unionSoga;
+						unionSoga.bodyA=cuerpo1;
+						unionSoga.bodyB=cuerpo2;
+						unionSoga.localAnchorA = anchor1;
+						unionSoga.localAnchorB = anchor1;
+						unionSoga.collideConnected = true;
+						unionSoga.maxLength = sqrt(pow(x1-x2,2)+pow(y1-y2,2)); 
+
+						this->mundo->CreateJoint(&unionSoga);
+					}
+				}else{
+					return false;
 				}
 				break;
 			}
@@ -338,83 +412,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
-		/*case POLIGONOREGULAR:
-			{
-				b2PolygonShape forma;
-				b2Vec2 vertices[4];
-				vertices[0].Set(((Cuadrado *) dim)->getX(), ((Cuadrado *) dim)->getY());
-				vertices[1].Set(((Cuadrado *) dim)->getX(), ((Cuadrado *) dim)->getY() - 20);
-				vertices[2].Set(((Cuadrado *) dim)->getX() + 20, ((Cuadrado *) dim)->getY() - 20);
-				vertices[3].Set(((Cuadrado *) dim)->getX() + 20, ((Cuadrado *) dim)->getY());
-				forma.Set(vertices,4);
-				fD.shape = &forma;
-				fD.density = 1.0;
-				fD.friction = 0.3;
-				cuerpo->CreateFixture(&fD);
-				break;
-			}*/
-		case SOGA:
-			{
-//				b2Body* segmentoAnterior;
-//				b2Body* segmentoSiguiente;
-//				//obtengo iterador para recorrer los segmentos de soga
-//				FiguraCompuesta* fig = (FiguraCompuesta*) figura;
-//				std::list<Figura*> segmentosSoga = fig->getFigurasComp();
-//
-//				std::list<Figura*>::iterator iterSegmentos;
-//				
-//				//meto el primero
-//				iterSegmentos = segmentosSoga.begin();
-//
-//				bD.position.Set((*iterSegmentos)->getDimension()->getX(), (*iterSegmentos)->getDimension()->getY());
-//				segmentoAnterior = this->mundo->CreateBody(&bD);
-//
-//				b2PolygonShape forma;
-//
-//				forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
-//				fD.shape = &forma;
-////pendientes de AJUSTE luego de experimentar un poco
-//				fD.density = 1.0; //poner esto en constantes.h!!!
-//				fD.friction = 0.3;
-//
-//				segmentoAnterior->CreateFixture(&fD);
-//				//completo el cuerpo de box2d del 1er segmento de soga
-//				segmentoAnterior->SetTransform(segmentoAnterior->GetPosition(),(*iterSegmentos)->getDimension()->getAngulo()/180*PI);
-//				segmentoAnterior->SetUserData((*iterSegmentos));
-//
-//				iterSegmentos++;
-//
-//				for (iterSegmentos ; iterSegmentos != segmentosSoga.end(); iterSegmentos++){
-//					bD.position.Set((*iterSegmentos)->getDimension()->getX(), (*iterSegmentos)->getDimension()->getY());
-//					segmentoSiguiente = this->mundo->CreateBody(&bD);
-////necesario porque el ultimo puede no tener longitud 1
-////O podria hacerlo al reves y tener al ultimo de caso aparte lo cual tendria mas sentido
-////CAMBIARLO si tengo tiempo
-//					b2PolygonShape forma;
-//					forma.SetAsBox((*iterSegmentos)->getDimension()->getAncho(),(*iterSegmentos)->getDimension()->getAlto());
-//					fD.shape = &forma;
-//
-//					segmentoSiguiente->CreateFixture(&fD);
-//					//completo el cuerpo de box2d del segmento en cuestion
-//					segmentoSiguiente->SetTransform(segmentoSiguiente->GetPosition(),(*iterSegmentos)->getDimension()->getAngulo()/180*PI);
-//					segmentoSiguiente->SetUserData((*iterSegmentos));
-//
-//					//los uno
-//					b2RevoluteJointDef jointDef;
-//
-//					double posSegmento = (*iterSegmentos)->getDimension()->getX() + 0.001;
-//					double anchoSegmento = (*iterSegmentos)->getDimension()->getAncho();
-//
-//					b2Vec2 puntoAnclaje (posSegmento - anchoSegmento/2 ,(*iterSegmentos)->getDimension()->getY());
-//					jointDef.Initialize(segmentoAnterior, segmentoSiguiente, puntoAnclaje);
-//
-//					mundo->CreateJoint(&jointDef);
-//
-//					//guardo el que se unira en el paso siguiente
-//					segmentoAnterior = segmentoSiguiente;
-//				}
-				break;
-			}
 	}
 	return true;
 }
@@ -455,7 +452,7 @@ void Box2DWorld::actualizar(Figura * figura)
 			fig->getDimension()->setY(cuerpo->GetPosition().y);
 		
 			if(activo){
-				if(fig->getTipoFigura()==GLOBOHELIO){
+				/*if(fig->getTipoFigura()==GLOBOHELIO){
 					bool cambiar = false;
 					double margen = 0.4;
 					double margenA = 0.1;
@@ -473,7 +470,7 @@ void Box2DWorld::actualizar(Figura * figura)
 					if(cambiar){
 						cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
 					}
-				}
+				}*/
 			}
 		}
 		cuerpo = cuerpo->GetNext();

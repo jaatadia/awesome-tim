@@ -1,44 +1,30 @@
 #pragma once
-#include "Figura.h"
-#include "Cuadrado.h"
+#include "Linea.h"
 
-#include <math.h>
-
-//NO la puedo agregar al mundo del box2d
-//PERO la tengo que agregar a terreno!
-
-//supongo que ahora sera un rectangulo y ya.
-//por ahora de 0.3 de alto.
-
-class Soga :public Figura{
+class Soga :public Linea{
 
 private:
-
-	double largoEstirada;
-	Figura* extremo1,extremo2;
+	int num1,num2;
+	Soga(DLinea* dim);
 
 public:
-	//llamar con el ID (de ser posible el de segmento de soga...)
-	//no me interesan las dimensiones, hasta null me sirve.
-	Soga(const char* ID, Dimension* dim);
+	Soga(double x1,double y1,double x2, double y2,double ancho = 1);
 	~Soga(void);
 
 public:
-
 	virtual Figura* clonar();//copia la figura
-
-////redefinir el dibujar, que averigue su dimension cada vez...
-//	/*	
-//	myVista->dibujar(super);
-//	setCambio(false);
-//	*/
-//	void dibujarEnPixel(Superficie* super);
-//	void dibujar(Superficie* super);
-//	void dibujar(Superficie* super,int xIni, int yIni);
-
 	virtual int getTipoFigura(){return SOGA;}
-	virtual int getTipoDimension(){return CUADRADO;}
 
-private:
-	//recalcularDimension();
+	virtual void posFigura1(double* x, double* y){fig1->posAtableSoga(num1,x,y);};
+	virtual void posFigura2(double* x, double* y){fig2->posAtableSoga(num2,x,y);};
+
+	virtual void setNumsPosAtable(int num1, int num2){
+		this->num1 = num1;
+		this->num2 = num2;
+	}
+
+	virtual void desUnir(){
+		fig1->desatarSoga(num1);
+		fig2->desatarSoga(num2);
+	}
 };

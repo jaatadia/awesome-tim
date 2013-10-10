@@ -20,7 +20,7 @@ void VistaLinea::dibujar(Superficie* canvas){
 
 		if(linea->getFigura1()){
 			double x,y;
-			linea->getFigura1()->posAtableCorrea(&x,&y);
+			linea->posFigura1(&x,&y);
 			linea->setPunto1(x,y);
 		}
 		
@@ -29,7 +29,7 @@ void VistaLinea::dibujar(Superficie* canvas){
 			
 		if(linea->getFigura2()){
 			double x,y;
-			linea->getFigura2()->posAtableCorrea(&x,&y);
+			linea->posFigura2(&x,&y);
 			linea->setPunto2(x,y);
 		}
 		calcX2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->x2));
@@ -40,7 +40,7 @@ void VistaLinea::dibujar(Superficie* canvas){
 
 		
 		if(simple){
-			canvas->dibujarLinea(calcX1,calcY1,calcX2,calcY2,calcAncho,0,0,0);
+			canvas->dibujarLinea(calcX1,calcY1,calcX2,calcY2,calcAncho,100,30,30);
 		}else{
 			int desfasajeX;
 			int desfasajeY;

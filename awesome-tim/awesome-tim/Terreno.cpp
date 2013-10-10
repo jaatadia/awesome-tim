@@ -630,3 +630,26 @@ Figura* Terreno::getFiguraAtableCorrea(double x,double y){
 	}
 	return NULL;
 }
+
+Figura* Terreno::getFiguraAtableSoga(double x,double y){
+	if(hayFiguras()){	
+		Figura* figuraBuscada = NULL;
+
+		bool figuraEncontrada = false;
+		//recorro al reves asi "agarro" la figura dibujada arriba
+		std::list<Figura*>::reverse_iterator iteradorLista;
+		iteradorLista = figuras.rbegin();
+
+		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+			
+			figuraEncontrada = (((*iteradorLista)->esMiPosicion(x,y))&&((*iteradorLista)->esAtableSoga(x,y)!=-1));
+			figuraBuscada = (*iteradorLista);
+			
+			iteradorLista++;
+		}
+
+		if (figuraEncontrada)
+			return figuraBuscada;
+	}
+	return NULL;
+}

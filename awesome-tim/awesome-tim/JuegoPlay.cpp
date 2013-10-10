@@ -14,7 +14,7 @@ JuegoPlay::JuegoPlay(Superficie* fondo, Terreno* ter,MaquinaEstados* maq)
 	std::list<Figura*> figuras = ter->getListaFigs();
 	std::list<Figura*>::iterator iteradorLista;
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		if((*iteradorLista)->getTipoFigura()==LINEA){
+		if((*iteradorLista)->esUnion()){
 			figurasAux.push_back((*iteradorLista));
 		}else{
 			terreno->agregarFigura((*iteradorLista)->clonar());
