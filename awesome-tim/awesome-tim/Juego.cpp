@@ -531,16 +531,16 @@ void Juego::set2Click(){
 		if(result==NULL){
 			delete figuraEnAire;
 			figuraEnAire = NULL;
+			this->setCambio(true);
+			terreno->setCambio(true);
+			botonera->setCambio(true);
+			comandos->setCambio(true);
 		}else{
 			result->posAtableCorrea(&x,&y);
 			if(!linea->primerPuntoPuesto()){
 				linea->setPunto1(x,y);
-				//linea->setPunto1(result);
-				//result->setCorrea(linea);
 			}else{
 				linea->setPunto2(x,y);
-				//linea->setPunto2(result);
-				//result->setCorrea(linea);
 				terreno->agregarFigura( figuraEnAire );
 				figuraEnAire = NULL;
 			}
