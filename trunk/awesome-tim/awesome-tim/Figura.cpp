@@ -13,7 +13,7 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 		this->myVista = NULL;
 	}
 	this->traslucido = false;
-	this->cuerpo = NULL;
+	fig1 = fig2 = NULL;
 }
 
 

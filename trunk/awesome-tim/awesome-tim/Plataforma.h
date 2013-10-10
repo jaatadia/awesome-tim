@@ -17,4 +17,6 @@ public:
 
 	virtual double getLargo();
 	virtual Figura* clonar();
+
+	virtual bool rotable(){return true;}
 };

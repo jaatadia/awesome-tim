@@ -11,20 +11,28 @@ private:
 	Linea(DLinea* linea);
 	bool puesto;
 
+protected:
+	Linea(const char* ID,double x1,double y1,double x2, double y2,double ancho = 1 );
+
 public:
-	Figura *fig1,*fig2;
-	Linea(double x1,double y1,double x2, double y2,double ancho = 2 );
+	Linea(double x1,double y1,double x2, double y2,double ancho = 1 );
 	~Linea(void);
 
 	virtual int getTipoFigura(){return LINEA;};
 	virtual void setPunto1(double x1,double y1);
 	virtual void setPunto2(double x2,double y2);
-	virtual void setPunto1(Figura* fig);
-	virtual void setPunto2(Figura* fig);
+	virtual void setFigura1(Figura* fig);
+
 
 	virtual Figura* clonar();
 	virtual bool primerPuntoPuesto(){return puesto;};
 
-	virtual Figura* getFigura1(){return fig1;};
-	virtual Figura* getFigura2(){return fig2;};
+
+	virtual bool esUnion(){
+		return true;
+	}
+	virtual void desUnir(){
+		fig1->desatarCorrea();
+		fig2->desatarCorrea();
+	}
 };

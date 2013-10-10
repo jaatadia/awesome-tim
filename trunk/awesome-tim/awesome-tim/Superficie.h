@@ -47,7 +47,7 @@ public:
 
 	void dibujarCuadradoNegro(int x, int y, int ancho,int alto);
 
-	void dibujarLinea(int x1,int y1,int x2, int y2,int ancho);
+	void dibujarLinea(int x1,int y1,int x2, int y2,int ancho,int r,int g,int b);
 
 	Uint32 getPixel(int x,int y );
 

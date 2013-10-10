@@ -193,7 +193,10 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			{
 				this->mundo->DestroyBody(cuerpo);
 				Figura* fig1=NULL;
+				b2Body* cuerpo1 = NULL;
 				Figura* fig2=NULL;
+				b2Body* cuerpo2 = NULL;
+
 
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
@@ -201,48 +204,46 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						if(fig->esAtableCorrea()){
 							if(fig->esMiPosicion( ((DLinea*)dim)->x1,((DLinea*)dim)->y1) ){
 								fig1 = fig;
+								cuerpo1 = c;
 							}
 							else if(fig->esMiPosicion( ((DLinea*)dim)->x2,((DLinea*)dim)->y2) ){
 								fig2 = fig;
+								cuerpo2 = c;
 							}
 						}
 					}
 				}
 				if(fig1 && fig2){
-					//fig1->setCorrea(figura);
-					//fig2->setCorrea(figura);
 					fig1->atarCorrea();
 					fig2->atarCorrea();
-					((Linea* )figura)->setPunto1(fig1);
-					((Linea* )figura)->setPunto2(fig2);
+					figura->setFigura1(fig1);
+					figura->setFigura2(fig2);
 
 					b2GearJointDef joint2;
-					joint2.bodyA = fig1->getCuerpo();
-					joint2.bodyB = fig2->getCuerpo();
-					if ((fig1->getCuerpo()!=NULL) &&(fig2->getCuerpo()!=NULL)){
-						joint2.joint1 = ((Engranaje*)fig1)->joint;
-						joint2.joint2 = ((Engranaje*)fig2)->joint;
-						joint2.ratio = -((Engranaje*)fig2)->getRadio()/((Engranaje*)fig1)->getRadio();
+					joint2.bodyA = cuerpo1;
+					joint2.bodyB = cuerpo2;
+					b2JointEdge* edge1 = cuerpo1->GetJointList();
+					b2JointEdge* edge2 = cuerpo2->GetJointList();
+					while(edge1->joint->GetType()!=e_revoluteJoint) {edge1 = edge1->next;}
+					while(edge2->joint->GetType()!=e_revoluteJoint) {edge2 = edge2->next;}
+					
+					joint2.joint1 = edge1->joint;
+					joint2.joint2 = edge2->joint;
+					joint2.ratio = -(fig2->getRadio()/fig1->getRadio());
 
-						this->mundo->CreateJoint(&joint2);
-						//break;
-					}
+					this->mundo->CreateJoint(&joint2);
 				}
 				break;
 			}
 		case ENGRANAJE:
 			{
 				b2BodyDef ejeDef;
-				//if(activo){
-					ejeDef.type = b2_staticBody;
-				//}else{
-				//	ejeDef.type = b2_dynamicBody;
-				//}
+				ejeDef.type = b2_staticBody;
 				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
 												
 				b2FixtureDef ejeFix;
 				b2CircleShape ejeCirculo;
-				ejeCirculo.m_radius = ((Circulo *)dim)->getRadio()*4/5;
+				ejeCirculo.m_radius = ((Circulo *)dim)->getRadio();
 				ejeFix.shape = &ejeCirculo;
 				ejeFix.isSensor = true;
 				
@@ -259,13 +260,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				
 				b2RevoluteJointDef joint;
 				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
-				//joint.bodyA = eje;
-				//joint.bodyB = cuerpo;
 						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
-				((Engranaje*)figura)->joint = enlace;
-				figura->setCuerpo(cuerpo);
-				
 
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 					Figura* fig = (Figura*)c->GetUserData();
@@ -273,46 +269,36 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						if((fig->getTipoFigura()==ENGRANAJE)/*||(fig->getTipoFigura()==ENGRANAJE2)*/){
 							double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 							if(
-								(sqrt(
+								sqrt(
 								pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
 								pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
-								)<margen)
+								)<margen
 							){
 								b2GearJointDef joint2;
 								joint2.bodyA = cuerpo;
-								joint2.bodyB = fig->getCuerpo();
-								if ((cuerpo!=NULL) &&(fig->getCuerpo()!=NULL)){
+								joint2.bodyB = c;
+								b2JointEdge* edge1 = c->GetJointList();
+								while(edge1->joint->GetType()!=e_revoluteJoint) {edge1 = edge1->next;}
+								if ((cuerpo!=NULL) &&(c!=NULL)){
 									joint2.joint1 = enlace;
-									joint2.joint2 = ((Engranaje*)fig)->joint;
-									joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
-
+									joint2.joint2 = edge1->joint;
+									joint2.ratio = fig->getRadio()/figura->getRadio();
 									this->mundo->CreateJoint(&joint2);
-									//break;
 								}
 							}
 						}
 					}
 				}
 
-				((Engranaje*)figura)->joint = enlace;
-
 				break;
 			}
 		case ENGRANAJE2:
 			{
 				b2BodyDef ejeDef;
-				if(activo){
-					ejeDef.type = b2_staticBody;
-				}else{
-					ejeDef.type = b2_dynamicBody;
-				}
+				ejeDef.type = b2_staticBody;
 				ejeDef.position.Set(figura->getDimension()->getX(),figura->getDimension()->getY());
 								
 				b2FixtureDef ejeFix;
-				
-				
-				//b2CircleShape ejeCirculo;
-				//ejeCirculo.m_radius = 0.00001;
 				b2PolygonShape ejeCirculo;
 				ejeCirculo.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 				ejeFix.shape = &ejeCirculo;
@@ -337,36 +323,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					cuerpo->SetFixedRotation(true);
 					cuerpo->SetAngularVelocity(VELOCIDAD_ENGRANAJE2*((Engranaje2*)figura)->sentido);
 				}
-
-				((Engranaje*)figura)->joint = enlace;
-				figura->setCuerpo(cuerpo);
-
-				//for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
-				//	Figura* fig = (Figura*)c->GetUserData();
-				//	if((fig!=NULL)&&(fig!=figura)){
-				//		if((fig->getTipoFigura()==ENGRANAJE)||(fig->getTipoFigura()==ENGRANAJE2)){
-				//			double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
-				//			if(
-				//				(sqrt(
-				//				pow(fig->getDimension()->getX()-figura->getDimension()->getX(),2)+
-				//				pow(fig->getDimension()->getY()-figura->getDimension()->getY(),2)
-				//				)<margen)
-				//			){
-				//				b2GearJointDef joint2;
-				//				joint2.bodyA = cuerpo;
-				//				joint2.bodyB = fig->getCuerpo();
-				//				if ((cuerpo!=NULL) &&(fig->getCuerpo()!=NULL)){
-				//					joint2.joint1 = enlace;
-				//					joint2.joint2 = ((Engranaje*)fig)->joint;
-				//					joint2.ratio = ((Engranaje*)fig)->getRadio()/((Engranaje*)figura)->getRadio();
-				//
-				//					this->mundo->CreateJoint(&joint2);
-				//					//break;
-				//				}
-				//			}
-				//		}
-				//	}
-				//}
 				break;
 			}
 		case PELOTATENIS:

@@ -10,9 +10,10 @@ class VistaLinea: public VistaFigura
 {
 private:
 	Linea* linea;
+	bool simple;
 
 public:
-	VistaLinea(Linea* lin);
+	VistaLinea(Linea* lin,bool simple = true);
 	~VistaLinea(void);
 	
 	void dibujar(Superficie* canvas);
