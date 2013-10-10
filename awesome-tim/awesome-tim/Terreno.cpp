@@ -336,11 +336,11 @@ void Terreno::corregirPosicion(Figura* fig){
 
 	Dimension* dimension = fig->getDimension();
 
-	while (dimension->getX() > ANCHO_TERRENO_LOGICO) dimension->setX( dimension->getX() - 1);
-	while (dimension->getX() < 0) dimension->setX( dimension->getX() + 1);
+	while (dimension->getX() > ANCHO_TERRENO_LOGICO) fig->setX( dimension->getX() - 1);
+	while (dimension->getX() < 0) fig->setX( dimension->getX() + 1);
 
-	while (dimension->getY() > ALTO_TERRENO_LOGICO) dimension->setY( dimension->getY() - 1);
-	while (dimension->getY() < 0) dimension->setY( dimension->getY() + 1);
+	while (dimension->getY() > ALTO_TERRENO_LOGICO) fig->setY( dimension->getY() - 1);
+	while (dimension->getY() < 0) fig->setY( dimension->getY() + 1);
 
 }
 
