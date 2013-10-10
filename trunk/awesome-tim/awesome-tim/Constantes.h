@@ -155,4 +155,5 @@
 #define ID_PUNTA_BALANCIN "../images/Circulo.png"
 #define ID_BALANCIN_IZQ "../images/balancin_izq.png"
 #define ID_BALANCIN_DER "../images/balancin_der.png"
+#define ID_SOGA "../images/rope.png"
 

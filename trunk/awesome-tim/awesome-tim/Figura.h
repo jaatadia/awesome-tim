@@ -73,6 +73,8 @@ public:
 	virtual void setFigura2(Figura* fig){this->fig2 = fig;};
 	virtual Figura* getFigura1(){return fig1;};
 	virtual Figura* getFigura2(){return fig2;};
+	virtual void posFigura1(double* x, double* y){};
+	virtual void posFigura2(double* x, double* y){};
 	
 	virtual bool esAtableCorrea(){return false;};
 	virtual void posAtableCorrea(double* x,double* y){
@@ -82,27 +84,20 @@ public:
 	virtual void atarCorrea(){};
 	virtual void desatarCorrea(){};
 	
-	////devuelve int -1 si no es atable 1, si se ata en la primera union de soga y 2 en la segunda
-	//virtual int esAtableSoga(double* x,double* y){
-	//	*x = this->getDimension()->getX();
-	//	*y = this->getDimension()->getY();
-	//	return false;
-	//}
-	//virtual void setSoga1(Figura* soga){
-	//	this->soga1 = soga;
-	//}
-	//virtual void setSoga2(Figura* soga){
-	//	this->soga2 = soga;
-	//}
-	//virtual Figura* getSoga1(){
-	//	return this->soga1;
-	//}
-	//virtual Figura* getSoga2(){
-	//	return this->soga2;
-	//}
 
-//indican si se esta o no chocando con la figura o la dimension en cuestion
+	
+	//se le pasa la poicion en la que esta queriendo atar y devuelve el numero de posicion atable mas cercano(-1 es que no habia)
+	virtual int esAtableSoga(double x,double y){return -1;}
+	//se le pasa un numero de posicion atable y devuelve la posicion x e y de donde se ata por mas que ya este atado
+	virtual void posAtableSoga(int numero,double* x,double* y){
+		*x = this->getDimension()->getX();
+		*y = this->getDimension()->getY();
+	}
+	virtual void atarSoga(int numero){};//le dice que ate una soga en su pocicion atable numero
+	virtual void desatarSoga(int numero){};//le dice que desate una soga de su posicion atable numero
+
+
+	//indican si se esta o no chocando con la figura o la dimension en cuestion
 	virtual bool choqueConFigura(Figura* fig){return false;};
-
 	virtual bool choqueConDimension(Dimension* dim){return dim->choqueConDimension(dim);};
 };

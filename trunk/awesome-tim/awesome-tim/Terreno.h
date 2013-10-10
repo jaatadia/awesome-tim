@@ -64,6 +64,7 @@ public:
 	void achicarFigura();
 	void shiftFigura();
 	Figura* getFiguraAtableCorrea(double x,double y);
+	Figura* getFiguraAtableSoga(double x,double y);
 
 private:
 	bool hayFiguras();
