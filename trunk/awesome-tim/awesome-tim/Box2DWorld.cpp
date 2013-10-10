@@ -14,15 +14,6 @@ Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true)
 	this->activo = flag;
 	if(activo)this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
 	else this->mundo = new b2World(b2Vec2(0,0));
-	//GROUNDBOX
-/*
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(50.0f, 100.0f);
-	b2Body* groundBody = (this->mundo)->CreateBody(&groundBodyDef);
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(50.0f, 0.0f);
-	groundBody->CreateFixture(&groundBox, 0.0f);
-*/
 }
 
 void Box2DWorld::setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion)
@@ -124,18 +115,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			
 			break;
 		}
-
- 		/*case TRIANGULO:
-			break;
-		case CUADRADO:{
-				b2PolygonShape forma;
-				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
-				fD.shape = &forma;
-				fD.density = 1.0;
-				fD.friction = 0.3;
-				cuerpo->CreateFixture(&fD);
-				break;
-			}*/
 		case BALANCIN:{};
 		case PLATAFORMA:{
 				if(activo)cuerpo->SetType(b2_staticBody);
@@ -148,8 +127,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case GLOBOHELIO:{
-				cuerpo->SetGravityScale(0);
-				
+				cuerpo->SetGravityScale(-1);
 				
 				b2CircleShape forma;
 				forma.m_radius = ((Circulo *)dim)->getRadio();
@@ -161,7 +139,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				
 				if(activo){
-					cuerpo->ApplyLinearImpulse(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO), cuerpo->GetPosition());
+					cuerpo->SetLinearVelocity(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO));
 					cuerpo->SetFixedRotation(true);
 					cuerpo->SetAngularVelocity(0);
 				}
@@ -446,31 +424,40 @@ void Box2DWorld::actualizar(Figura * figura)
 		Figura* fig  = (Figura*)cuerpo->GetUserData();
 		
 		if(fig!=NULL){
+			
+			if(fig->getTipoFigura()==PLATAFORMA){
+				cuerpo = cuerpo->GetNext();
+				continue;
+			}
+
 			fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
 
 			fig->getDimension()->setX(cuerpo->GetPosition().x);
 			fig->getDimension()->setY(cuerpo->GetPosition().y);
 		
 			if(activo){
-				/*if(fig->getTipoFigura()==GLOBOHELIO){
+				if(fig->getTipoFigura()==GLOBOHELIO){
 					bool cambiar = false;
-					double margen = 0.4;
-					double margenA = 0.1;
-					double impulsoX = 0;
-					double impulsoY = 0;
+					double margen = 10;
+					double velX = 0;
+					double velY = 0;
 					
 					if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
-						impulsoX = 0 - cuerpo->GetLinearVelocity().x;
+						velX = int( cuerpo->GetLinearVelocity().x  + (( 0 - cuerpo->GetLinearVelocity().x)/100));
 						cambiar = true;
+					}else{
+						velX = cuerpo->GetLinearVelocity().x;
 					}
-					if((cuerpo->GetLinearVelocity().y < VELOCIDAD_GLOBOHELIO - margen)||(cuerpo->GetLinearVelocity().y > VELOCIDAD_GLOBOHELIO + margen)){
-						impulsoY = VELOCIDAD_GLOBOHELIO - cuerpo->GetLinearVelocity().y;
+					if(abs(cuerpo->GetLinearVelocity().y) > abs(VELOCIDAD_GLOBOHELIO)){
+						velY = VELOCIDAD_GLOBOHELIO;
 						cambiar = true;
+					}else{
+						velY = cuerpo->GetLinearVelocity().y;
 					}
 					if(cambiar){
-						cuerpo->ApplyLinearImpulse(b2Vec2(impulsoX,impulsoY),cuerpo->GetPosition());
+						cuerpo->SetLinearVelocity(b2Vec2(velX,velY));
 					}
-				}*/
+				}
 			}
 		}
 		cuerpo = cuerpo->GetNext();
