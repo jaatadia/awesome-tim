@@ -49,16 +49,6 @@ Soga::Soga(const char* ID = ImgSegmSoga,Dimension* dim = NULL):Figura("",dim)
 //		angulos.push_back(0.f);
 //	}
 //
-////cargo los ids
-//	listaID = new const char*[partesFigura.size()];
-//
-//	int C = 0;
-//
-//	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-//		(*(listaID+C))= (*iterFig)->getID();
-//		C++;	
-//	}
-
 }
 
 Soga::~Soga(void)

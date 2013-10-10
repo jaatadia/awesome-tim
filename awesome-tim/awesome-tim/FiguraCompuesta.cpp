@@ -4,10 +4,10 @@ FiguraCompuesta::FiguraCompuesta(const char* ID, Dimension* dim):Figura(ID,dim)
 {
 	this->dimension = dim;
 
-/*si se usa este inicializar angulos e ids en la figura que hereda*/
+/*si se usa este inicializar dimensiones,angulos,etc en la figura que hereda*/
 }
 
-FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras ){
+FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras,double angulo){
 	//guardo las figuras en la lista interna
 	partesFigura = listaFiguras;
 
@@ -17,46 +17,42 @@ FiguraCompuesta::FiguraCompuesta( std::list<Figura*> listaFiguras ){
 
 	iterFig = partesFigura.begin();
 //si ya se deberia ordenarla por x y por y,y no hacerlo lineal, pero no tengo ganas
-	xMax = xMin = (*iterFig)->getDimension()->getX();
-	yMax = yMin = (*iterFig)->getDimension()->getY();
+	xMax = (*iterFig)->getDimension()->getX() + (*iterFig)->getDimension()->getAncho()/2;
+	xMin = (*iterFig)->getDimension()->getX() - (*iterFig)->getDimension()->getAncho()/2;
+	yMax = (*iterFig)->getDimension()->getY() + (*iterFig)->getDimension()->getAlto()/2;
+	yMin = (*iterFig)->getDimension()->getY() - (*iterFig)->getDimension()->getAlto()/2;
 	
 	while( iterFig != partesFigura.end() ) {
 		
-		if ( (*iterFig)->getDimension()->getX() > xMax)
+		if ( (*iterFig)->getDimension()->getX() + (*iterFig)->getDimension()->getAncho()/2 > xMax)
 			xMax = (*iterFig)->getDimension()->getX();
-		if ( (*iterFig)->getDimension()->getX() < xMin)
+		if ( (*iterFig)->getDimension()->getX() - (*iterFig)->getDimension()->getAncho()/2 < xMin)
 			xMin = (*iterFig)->getDimension()->getX();
-		if ( (*iterFig)->getDimension()->getY() > yMax)
+		if ( (*iterFig)->getDimension()->getY() + (*iterFig)->getDimension()->getAlto()/2 > yMax)
 			yMax = (*iterFig)->getDimension()->getY();
-		if ( (*iterFig)->getDimension()->getY() > yMin)
+		if ( (*iterFig)->getDimension()->getY() - (*iterFig)->getDimension()->getAlto()/2 > yMin)
 			yMin = (*iterFig)->getDimension()->getY();
 	
 		iterFig++;
 	}
 
-	//obtengo ancho y alto y el centro y creo el cuadrado
+	//obtengo el centro y creo el cuadrado
 
 	double ancho = xMax - xMin;
 	double alto = yMax - yMin;
 	double x = ancho/2 + xMin;
 	double y = alto/2 + yMin;
 
-	dimension = new Cuadrado(ancho,alto,x,y,0);
+	dimension = new Cuadrado(ancho,alto,x,y,angulo);
 
 	//guardo los angulos correspondientes
 	this->inicAngulosCentro();
-	
-	listaID = new const char*[partesFigura.size()];
 	
 	int i = 0;
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		//y obviamente aca poner en quien herede los que correspondan
 		angulos.push_back((*iterFig)->getDimension()->getAngulo());
-		//de paso guardo los IDs
-
-		(*(listaID+i))= (*iterFig)->getID();
-		i++;	
 	}
 
 	myVista = NULL;
@@ -69,14 +65,9 @@ FiguraCompuesta::~FiguraCompuesta(void)
 	delete dimension;
 	dimension = NULL;
 
-	int i = 0;
-	//con la figura se elimina su id
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		delete (*iterFig);
-		i++;
 	}
-
-	delete[] listaID;
 }
 
 void FiguraCompuesta::cambiarPosicion(double Movx,double Movy){
@@ -134,11 +125,9 @@ void FiguraCompuesta::dibujarEnPixel(Superficie* superficie){
 }
 
 void FiguraCompuesta::dibujar(Superficie* superficie){
-//	std::cout<<"***********************Una vuelta de dibujar fig compuesta*******************"<<std::endl;
+
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		(*iterFig)->dibujar(superficie);
-//		std::cout<<"X: "<<(*iterFig)->getDimension()->getX()<<std::endl;
-//		std::cout<<"Y: "<<(*iterFig)->getDimension()->getY()<<std::endl;
 		setCambio(false);
 	}
 }
@@ -225,7 +214,7 @@ const char* FiguraCompuesta::getID(){
 	return "";
 }
 
-//para este devuelve un cuadrado que contiene a la figura
+//para este devuelve un cuadrado con la posicion y angulo de la figura
 Dimension* FiguraCompuesta::getDimension(){
 	return dimension;
 }
@@ -374,9 +363,4 @@ bool FiguraCompuesta::anguloEsPositivo(double X1, double Y1, double X2, double Y
 		}
 	//por defecto asumo que es positivo
 	return true;
-}
-
-const char** FiguraCompuesta::getListaDeIDs(){
-
-	return listaID;
 }
