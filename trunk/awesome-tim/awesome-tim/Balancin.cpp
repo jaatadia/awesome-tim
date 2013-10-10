@@ -35,7 +35,7 @@ Balancin::Balancin(const char* id,double posX, double posY, double angulo):Figur
 
 	calcularPosPuntas(&posXPuntaIzq,&posXPuntaDer,&posYPunta,posX,posY);
 
-	this->tabla = new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,angulo));
+	this->tabla = new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,0));
 	this->circIzq = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPunta,0));
 	this->circDer = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPunta,0));
 
@@ -52,6 +52,7 @@ Balancin::Balancin(const char* id,double posX, double posY, double angulo):Figur
 		//y obviamente aca poner en quien herede los que correspondan
 		angulos.push_back((*iterFig)->getDimension()->getAngulo());
 	}
+	this->setAngulo(angulo);
 }
 
 Balancin::~Balancin(void){
@@ -60,7 +61,6 @@ Balancin::~Balancin(void){
 	//for(iter; iter != this->partesFigura.end();iter++){
 	//	delete (*iter);
 	//}
-
 }
 void Balancin::calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla){
 

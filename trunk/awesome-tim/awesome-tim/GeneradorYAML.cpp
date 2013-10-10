@@ -107,7 +107,7 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << (Circulo*) fig->getDimension();
 				break;
 
-			case ENGRANAJE2: //FIX: POLEA !!
+			case ENGRANAJE2:
 				out << YAML::Value << "ENGRANAJE2";
 				out << (Circulo*) fig->getDimension();
 				break;
@@ -115,8 +115,7 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 			case BALANCIN:
 				out << YAML::Value << "BALANCIN";
 				out << (Cuadrado*) fig->getDimension();
-				out << YAML::Key << "ID";
-				out << YAML::Value << fig->getID();
+				//FALTA SENTIDO
 				break;
 
 			case CINTATRANSPORTADORA:
