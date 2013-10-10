@@ -207,7 +207,7 @@ void FiguraCompuesta::setAngulo(double angulo){
 
 //para este no devuelve nada valido
 const char* FiguraCompuesta::getID(){
-	return "";
+	return this->ID.c_str();
 }
 
 //para este devuelve un cuadrado con la posicion y angulo de la figura

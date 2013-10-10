@@ -115,6 +115,8 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 			case BALANCIN:
 				out << YAML::Value << "BALANCIN";
 				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "ID";
+				out << YAML::Value << fig->getID();
 				break;
 
 			case CINTATRANSPORTADORA:
