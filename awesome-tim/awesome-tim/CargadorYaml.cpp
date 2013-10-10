@@ -281,10 +281,10 @@ Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura, int sentido){
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	
 	//if sentido es DERECHA se setea el angulo default derecha:
-	angulo = 45;
+	angulo = -45;
 
 	if(sentido == IZQUIERDA)
-		angulo = -45;
+		angulo = 45;
 
 	//if sentido es DERECHA se setea el ID default derecha:
 	std::string IDBotonera = ID_BALANCIN_DER;
