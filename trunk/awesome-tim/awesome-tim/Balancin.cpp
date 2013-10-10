@@ -8,7 +8,7 @@
 
 #define PUNTA_NO_GIRADA 0
 
-Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras){
+Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras,angulo){
 	
 	//FIXME: Esta horrible esto hecho
 	int i = 0;

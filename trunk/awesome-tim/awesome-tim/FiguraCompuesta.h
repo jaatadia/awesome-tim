@@ -17,8 +17,6 @@ protected:
 	std::list<double> angulosCentroIniciales; //los angulos de cada figura componente respecto del centro del grupo 
 	std::list<double> angulosCentroActuales;
 
-	const char** listaID;
-
 	std::list<Figura*>::iterator iterFig;
 
 	//no tiene ID
@@ -26,9 +24,28 @@ protected:
 	//no tiene vista 
 
 public:
+
+	/*
+	Yo usaria el primer constructor y no el segundo,
+	 pero hagan como quieran.
+	*/
+
+	/*
+	Para usar este:
+	1) dim deberia tener el angulo y la posicion de lo que sea el centro, todo el resto a mi no me importa.
+	2) En ID puede ir lo que sea no se usa, y no se supone que sea valido pedirla.
+	3) En quien herede (en este orden):
+		-Poner todas las figuras en la lista partesFigura, ustedes sabran en que posicion estan.
+		-Llamar a inicAngulosCentro();
+		-En la lista angulos meter los angulos iniciales LOCALES o PROPIOS de cada figura componente en el
+		 mismo orden que se metieron en partesFigura.
+	*/
 	FiguraCompuesta(const char* ID, Dimension* dim);
-/*obviamente asumo que todo esta en la posicion correcta como para que encajen las junturas y demas!*/
-	FiguraCompuesta( std::list<Figura*> listaFiguras );
+
+/*obviamente asumo que todo esta en la posicion correcta como para que encajen las junturas y demas!
+  y angulo es el de la figura compuesta.
+*/
+	FiguraCompuesta( std::list<Figura*> listaFiguras, double angulo );
 
 	virtual ~FiguraCompuesta(void);
 
@@ -51,9 +68,8 @@ public:
 
 	//para este no devuelve nada valido (vacio)
 	virtual const char* getID();
-	const char** getListaDeIDs();
 
-	//para este devuelve un cuadrado que contiene a la figura
+	//para este devuelve un cuadrado con posicion y angulo de la figura
 	virtual Dimension* getDimension();
 
 	virtual std::list<Figura*> getFigurasComp(){return partesFigura;};
@@ -61,9 +77,9 @@ public:
 protected:
 
 	void inicAngulosCentro();
+
 //sí, los saque tal cual del terreno, sí, deberian estar en un clase aparte tipo "CosasDeGeometria" y sí pienso hacerlo 
 //en algun momento
-
 private:
 	double calcularAngulo(Dimension* dim, double XVector1,double YVector1,double XVector2,double YVector2);
 	int obtenerCuadranteDeClick(double X, double Y);
