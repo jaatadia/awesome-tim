@@ -104,7 +104,5 @@ public:
 //indican si se esta o no chocando con la figura o la dimension en cuestion
 	virtual bool choqueConFigura(Figura* fig){return false;};
 
-	virtual bool choqueConDimension(PoligonoRegular* pol){return false;};
-	virtual bool choqueConDimension(Cuadrado* cuadrado){return false;};
-	virtual bool choqueConDimension(Circulo* circ){return false;};
+	virtual bool choqueConDimension(Dimension* dim){return dim->choqueConDimension(dim);};
 };
