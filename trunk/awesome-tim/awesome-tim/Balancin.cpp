@@ -38,6 +38,13 @@ Balancin::Balancin(double posX, double posY, double angulo):FiguraCompuesta("",n
 	this->partesFigura.push_back(new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,angulo))); //tabla
 	this->partesFigura.push_back(new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPunta,0))); //punta izq
 	this->partesFigura.push_back(new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPunta,0))); //punta der
+
+	this->inicAngulosCentro();
+
+	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
+		//y obviamente aca poner en quien herede los que correspondan
+		angulos.push_back((*iterFig)->getDimension()->getAngulo());
+	}
 }
 
 Balancin::~Balancin(void){
@@ -108,7 +115,10 @@ bool Balancin::esAtable(double* posX, double* posY){
 //}
 
 Figura* Balancin::clonar(){
-	return new Balancin(this->getDimension()->getX(),this->getDimension()->getY(),this->getDimension()->getAngulo());
+
+	Cuadrado* dim = (Cuadrado*) this->getDimension();
+
+	return new Balancin(dim->getX(),dim->getY(),dim->getAngulo());
 }//copia la figura
 
 

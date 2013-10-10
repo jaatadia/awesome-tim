@@ -50,6 +50,8 @@ public:
 	virtual ~FiguraCompuesta(void);
 
 	virtual void cambiarPosicion(double Movx,double Movy);
+	virtual void setX( double x );
+	virtual void setY( double y );
 
 	virtual bool esMiPosicion(double x,double y);
 	virtual bool intersecaCon(double X1, double Y1, double X2, double Y2);
@@ -73,6 +75,8 @@ public:
 	virtual Dimension* getDimension();
 
 	virtual std::list<Figura*> getFigurasComp(){return partesFigura;};
+
+//	bool choqueConFigura(Figura* fig);
 
 protected:
 

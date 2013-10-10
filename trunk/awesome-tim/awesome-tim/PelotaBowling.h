@@ -15,4 +15,6 @@ public:
 	virtual int getTipoDimension(){return CIRCULO;}
 
 	Figura* clonar(){return new PelotaBowling(ID.c_str(),dimension->clonar(),true);};
+
+//	bool choqueConFigura(Figura* fig);
 };

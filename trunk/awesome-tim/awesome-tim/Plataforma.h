@@ -19,4 +19,6 @@ public:
 	virtual Figura* clonar();
 
 	virtual bool rotable(){return true;}
+
+//	bool choqueConFigura(Figura* fig);
 };

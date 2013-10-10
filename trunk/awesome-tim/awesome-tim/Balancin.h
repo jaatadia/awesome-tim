@@ -33,4 +33,5 @@ public:
 	int getTipoDimension();
 	int getTipoFigura();
 
+//	bool choqueConFigura(Figura* fig);
 };

@@ -3,6 +3,9 @@
 #include "Posicion.h"
 #include "Dibujable.h"
 #include "Dimension.h"
+#include "PoligonoRegular.h"
+#include "Cuadrado.h"
+#include "Circulo.h"
 #include "Cambiable.h"
 #include "VistaFigura.h"
 #include "EscalasDeEjes.h"
@@ -36,6 +39,8 @@ public:
 	virtual ~Figura(void);
 
 	virtual void cambiarPosicion(double Movx,double Movy);
+	virtual void setX( double x );
+	virtual void setY( double y );
 
 	virtual bool esMiPosicion(double x,double y);
 	virtual bool intersecaCon(double X1, double Y1, double X2, double Y2);
@@ -96,4 +101,10 @@ public:
 	//	return this->soga2;
 	//}
 
+//indican si se esta o no chocando con la figura o la dimension en cuestion
+	virtual bool choqueConFigura(Figura* fig){return false;};
+
+	virtual bool choqueConDimension(PoligonoRegular* pol){return false;};
+	virtual bool choqueConDimension(Cuadrado* cuadrado){return false;};
+	virtual bool choqueConDimension(Circulo* circ){return false;};
 };

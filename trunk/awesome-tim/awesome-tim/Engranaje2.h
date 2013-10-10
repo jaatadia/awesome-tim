@@ -48,4 +48,6 @@ public:
 		myVista->dibujar(super);
 		setCambio(false);
 	}
+
+//	bool choqueConFigura(Figura* fig);
 };

@@ -49,3 +49,8 @@ bool Circulo::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 Dimension* Circulo::clonar(){
 	return new Circulo(this->radio,this->getX(),this->getY(),this->getAngulo());
 }
+
+Dimension* Circulo::devolverPoligonEnvolvente(){
+
+	return (new PoligonoRegular(this->getX(),this->getY(),this->getRadio(),50,this->getAngulo()));
+}

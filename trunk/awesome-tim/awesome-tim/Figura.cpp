@@ -122,3 +122,12 @@ void Figura::setAngulo(double angulo){
 double Figura::getLargo(){
 	return 1;
 }
+
+
+void Figura::setX( double x ){
+	dimension->setX(x);
+}
+
+void Figura::setY( double y ){
+	dimension->setY(y);
+}
