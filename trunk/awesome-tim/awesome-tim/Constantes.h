@@ -153,4 +153,6 @@
 #define ID_CORREA "../images/correa.png"
 #define ID_TABLA_BALANCIN "../images/Rectangulo.png"
 #define ID_PUNTA_BALANCIN "../images/Circulo.png"
+#define ID_BALANCIN_IZQ "../images/balancin_izq.png"
+#define ID_BALANCIN_DER "../images/balancin_der.png"
 
