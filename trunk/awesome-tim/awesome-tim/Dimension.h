@@ -37,5 +37,8 @@ public:
 	//la haria abstracta pero ahora mismo no se que dimensiones van a quedar, asi que implemento en poligono, circulo y cuadrado
 	virtual bool intersecaCon(double X1, double Y1, double X2, double Y2){ return true;};
 
+	//SOLO pensado para usar con circulos! (No olvidar castearlo si es necesario)
 	virtual Dimension* devolverPoligonEnvolvente(){return NULL;};
+
+	virtual bool choqueConDimension(Dimension* dim){return false;};
 };
