@@ -107,9 +107,9 @@
 #define FRICCION_ENGRANAJE 5 //1.5
 #define VELOCIDAD_ENGRANAJE2 10
 
-#define RADIO_PUNTA_BALANCIN 1.5
-#define ANCHO_BALANCIN 4
-#define ALTO_BALANCIN 2
+#define RADIO_PUNTA_BALANCIN 2
+#define ANCHO_BALANCIN 30
+#define ALTO_BALANCIN 5
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -151,6 +151,6 @@
 #define ID_PUNTA_CINTA_DER ""
 #define ID_MOTOR "../images/motor.jpg"
 #define ID_CORREA "../images/correa.png"
-#define ID_TABLA_BALANCIN ""
-#define ID_PUNTA_BALANCIN ""
+#define ID_TABLA_BALANCIN "../images/Rectangulo.png"
+#define ID_PUNTA_BALANCIN "../images/Circulo.png"
 

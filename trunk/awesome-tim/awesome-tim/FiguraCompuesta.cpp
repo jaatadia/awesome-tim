@@ -2,7 +2,7 @@
 
 FiguraCompuesta::FiguraCompuesta(const char* ID, Dimension* dim):Figura(ID,dim)
 {
-	this->dimension = dim;
+	//this->dimension = dim; no lo hace el padre esto?
 
 /*si se usa este inicializar dimensiones,angulos,etc en la figura que hereda*/
 }
