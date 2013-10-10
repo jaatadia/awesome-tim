@@ -653,3 +653,19 @@ Figura* Terreno::getFiguraAtableSoga(double x,double y){
 	}
 	return NULL;
 }
+
+bool Terreno::posicionOcupada(Figura* figAPosicionar){
+
+	bool choca = false;
+	//recorro al reves asi "agarro" la figura dibujada arriba
+	std::list<Figura*>::iterator iteradorLista;
+	iteradorLista = figuras.begin();
+
+	while ( iteradorLista != figuras.end() && !choca ) {
+		
+		figAPosicionar->choqueConFigura((*iteradorLista));
+		
+		iteradorLista++;
+	}
+
+	return choca;}

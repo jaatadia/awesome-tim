@@ -54,3 +54,17 @@ Dimension* Circulo::devolverPoligonEnvolvente(){
 
 	return (new PoligonoRegular(this->getX(),this->getY(),this->getRadio(),50,this->getAngulo()));
 }
+
+bool Circulo::choqueConDimension(Dimension* dim){
+
+	//envuelvo en un poligono de 50 vertices
+	PoligonoRegular* polEnvolvente = (PoligonoRegular*)devolverPoligonEnvolvente();
+	
+	//y lo choco con el que me pasaron
+
+	bool interseca = dim->choqueConDimension(polEnvolvente);
+
+	delete polEnvolvente;
+
+	return interseca;
+}

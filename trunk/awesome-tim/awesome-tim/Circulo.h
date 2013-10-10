@@ -19,5 +19,7 @@ public:
 	int getTipoDimension(){return CIRCULO;};
 	Dimension* clonar();
 
+	virtual bool choqueConDimension(Dimension* dim);
+
 	virtual Dimension* devolverPoligonEnvolvente();
 };
