@@ -88,7 +88,7 @@
 #define RADIO_GLOBOHELIO 4.0
 #define RESTITUCION_GLOBOHELIO 0.1
 #define FRICCION_GLOBOHELIO 0.01
-#define DENSIDAD_GLOBOHELIO 0.01
+#define DENSIDAD_GLOBOHELIO 1 //si se baja verificar que siga moviendo las plataformas
 #define VELOCIDAD_GLOBOHELIO -20.0
 
 #define LARGO_SEGMENTO_SOGA 1

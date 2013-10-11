@@ -314,6 +314,9 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 						b2Vec2 anchor1((x1-cx1),(-y1+cy1));//los y en box2d son positivos para arriba aca (?
 						b2Vec2 anchor2((x2-cx2),(-y2+cy2));
+						std::cout<<"p.x: "<<cx1<<" p.y: "<<cy1<<" | a.x: "<<anchor1.x<<" a.y: "<<anchor1.y<<"\n";
+						std::cout<<"p.x: "<<cx2<<" p.y: "<<cy2<<" | a.x: "<<anchor2.x<<" a.y: "<<anchor2.y<<"\n";
+						std::cout<<"largo soga: "<< sqrt(pow((x1+anchor1.x)-(x2+anchor2.x),2)+pow((y1-anchor1.y)-(y2-anchor2.y),2))<<"\n"; 
 
 						b2RopeJointDef unionSoga;
 						unionSoga.bodyA=cuerpo1;
@@ -321,7 +324,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						unionSoga.localAnchorA = anchor1;
 						unionSoga.localAnchorB = anchor1;
 						unionSoga.collideConnected = true;
-						unionSoga.maxLength = sqrt(pow(x1-x2,2)+pow(y1-y2,2)); 
+						unionSoga.maxLength = sqrt(pow((x1+anchor1.x)-(x2+anchor2.x),2)+pow((y1-anchor1.y)-(y2-anchor2.y),2)); 
 
 						this->mundo->CreateJoint(&unionSoga);
 					}

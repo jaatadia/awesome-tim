@@ -20,4 +20,8 @@ public:
 	Figura* clonar(){return new PelotaTenis(ID.c_str(),dimension->clonar(),true);};
 
 //	bool choqueConFigura(Figura* fig);
+	
+	virtual int esAtableSoga(double x,double y){
+		return 1;
+	}
 };
