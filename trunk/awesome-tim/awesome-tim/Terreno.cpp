@@ -84,9 +84,6 @@ void Terreno::redraw(){
 		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 		
 		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
-			/*****DEBUG****/
-			FiguraCompuesta* fig2 = (FiguraCompuesta*)(*iteradorLista);
-			///**********///	
 			(*iteradorLista)->dibujar(this->sup);\
 		}
 	}
@@ -129,12 +126,6 @@ void Terreno::agregarFigura(Figura* fig){
 	fig->setTraslucido(false);
 	this->setCambio(true);
 
-/*****DEBUG****/
-
-	FiguraCompuesta* fig2 = (FiguraCompuesta*)fig;
-
-
-///**********///
 //si se fue de rango del terreno lo empujo para dentro
 	Dimension* dim = fig->getDimension();
 	corregirPosicion(fig);
