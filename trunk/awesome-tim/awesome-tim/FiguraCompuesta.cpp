@@ -146,7 +146,7 @@ void FiguraCompuesta::setTraslucido(bool flag){
 
 void FiguraCompuesta::setAngulo(double angulo){
 
-	double variacionAng = angulo - dimension->getAngulo();
+	double variacionAng = angulo; //- dimension->getAngulo();
 	
 	std::list<double>::iterator iterAngulosLocales;
 	iterAngulosLocales = angulos.begin();

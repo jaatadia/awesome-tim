@@ -502,7 +502,7 @@ void Box2DWorld::actualizar(Figura * figura)
 			if(activo){
 				if(fig->getTipoFigura()==GLOBOHELIO){
 					bool cambiar = false;
-					double margen = 10;
+					double margen = 5;
 					double velX = 0;
 					double velY = 0;
 					
