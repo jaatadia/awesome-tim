@@ -7,6 +7,7 @@ class DLinea: public Dimension
 {
 public:
 	double x1, y1, x2, y2, ancho;
+	bool activo;
 public:
 	DLinea(double x1,double y1,double x2,double y2,double ancho):Dimension(x1,y1,0){
 		this->x1 = x1;
@@ -14,12 +15,19 @@ public:
 		this->x2 = x2;
 		this->y2 = y2;
 		this->ancho = ancho;
+		activo = false;
 	};
 
 	~DLinea(void){};
 
-	virtual double getAncho(){return 10;};
-	virtual double getAlto(){return 10;};
+	virtual double getAncho(){
+		if(!activo)return 10;
+		else return abs(x1-x2);
+	};
+	virtual double getAlto(){
+		if(!activo)return 10;
+		else return abs(y1-y2)*2;
+	};
 	
 	virtual int getTipoDimension(){return LINEA;};
 	
@@ -31,6 +39,7 @@ public:
 
 	
 	void putP1(double x,double y){
+		activo = true;
 		this->x1 = x;
 		this->y1 = y;
 	}

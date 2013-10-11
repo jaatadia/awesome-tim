@@ -146,7 +146,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
 				joint.lowerAngle = -PI/4;
 				joint.upperAngle = PI/4;
-				joint.maxMotorTorque = 0.5; //???
+				//joint.maxMotorTorque = 0.5; //???
 						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 				if (figura->getDimension()->getAngulo() < 180){
@@ -312,19 +312,36 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						fig1->posAtableSoga(num1,&x1,&y1);
 						fig2->posAtableSoga(num2,&x2,&y2);
 
-						b2Vec2 anchor1((x1-cx1),(-y1+cy1));//los y en box2d son positivos para arriba aca (?
-						b2Vec2 anchor2((x2-cx2),(-y2+cy2));
-						std::cout<<"p.x: "<<cx1<<" p.y: "<<cy1<<" | a.x: "<<anchor1.x<<" a.y: "<<anchor1.y<<"\n";
-						std::cout<<"p.x: "<<cx2<<" p.y: "<<cy2<<" | a.x: "<<anchor2.x<<" a.y: "<<anchor2.y<<"\n";
-						std::cout<<"largo soga: "<< sqrt(pow((x1+anchor1.x)-(x2+anchor2.x),2)+pow((y1-anchor1.y)-(y2-anchor2.y),2))<<"\n"; 
+						//---------------------------------------------------------------
+						double angf1 = fig1->getDimension()->getAngulo();
+						double angf2 = fig2->getDimension()->getAngulo();
+						fig1->setAngulo(0);
+						fig2->setAngulo(0);
+						fig1->posAtableSoga(num1,&x1,&y1);
+						fig2->posAtableSoga(num2,&x2,&y2);
+						fig1->setAngulo(angf1);
+						fig2->setAngulo(angf2);
+						////--------------------------------------------------------------
 
+
+						b2Vec2 anchor1((x1-cx1),(y1-cy1));//los y en box2d son positivos para arriba aca (? creo(?
+						b2Vec2 anchor2((x2-cx2),(y2-cy2));
+				
+						
 						b2RopeJointDef unionSoga;
+						unionSoga.collideConnected = true;
 						unionSoga.bodyA=cuerpo1;
 						unionSoga.bodyB=cuerpo2;
 						unionSoga.localAnchorA = anchor1;
-						unionSoga.localAnchorB = anchor1;
-						unionSoga.collideConnected = true;
-						unionSoga.maxLength = sqrt(pow((x1+anchor1.x)-(x2+anchor2.x),2)+pow((y1-anchor1.y)-(y2-anchor2.y),2)); 
+						unionSoga.localAnchorB = anchor2;
+						
+						x1 = cuerpo1->GetWorldPoint(anchor1).x;
+						x2 = cuerpo2->GetWorldPoint(anchor2).x;
+						y1 = cuerpo1->GetWorldPoint(anchor1).y;
+						y2 = cuerpo2->GetWorldPoint(anchor2).y;
+
+						
+						unionSoga.maxLength = sqrt(pow(x1-x2,2)+pow(y1-y2,2)); 
 
 						this->mundo->CreateJoint(&unionSoga);
 					}
