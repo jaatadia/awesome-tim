@@ -65,7 +65,7 @@ public:
 
 	virtual double getRadio(){return dimension->getAncho()/2.0;}
 	virtual void shift(){};//cambia los modos de la figura
-	virtual bool rotable(){return true;} //devuelve si la figura es rotable
+	virtual bool rotable(){return false;} //devuelve si la figura es rotable
 	virtual bool esUnion(){return false;}//devuelve si la figura se trata de una union entre fig1 y fig2
 	virtual void desUnir(){};
 
