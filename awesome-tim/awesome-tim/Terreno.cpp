@@ -3,6 +3,8 @@
 #include "Contenedor.h"
 #include <new>
 
+#include "FiguraCompuesta.h"
+
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
 	//this->fisicaActiva = fisicaActiva;
@@ -81,8 +83,12 @@ void Terreno::redraw(){
 		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
 		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 		
-		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
-				(*iteradorLista)->dibujar(this->sup);
+		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
+			/*****DEBUG****/
+			FiguraCompuesta* fig2 = (FiguraCompuesta*)(*iteradorLista);
+			///**********///	
+			(*iteradorLista)->dibujar(this->sup);\
+		}
 	}
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
@@ -118,14 +124,22 @@ bool Terreno::setFondo(const char* ruta_img){
 
 void Terreno::agregarFigura(Figura* fig){
 
+	bool choca = this->posicionOcupada(fig);
+
 	fig->setTraslucido(false);
 	this->setCambio(true);
 
+/*****DEBUG****/
+
+	FiguraCompuesta* fig2 = (FiguraCompuesta*)fig;
+
+
+///**********///
 //si se fue de rango del terreno lo empujo para dentro
 	Dimension* dim = fig->getDimension();
 	corregirPosicion(fig);
 
-	try{
+   	try{
 		bool aux;
 		if(fisicaActiva){
 			aux = this->mundoBox2D->agregarFigura(fig);
@@ -657,15 +671,16 @@ Figura* Terreno::getFiguraAtableSoga(double x,double y){
 bool Terreno::posicionOcupada(Figura* figAPosicionar){
 
 	bool choca = false;
-	//recorro al reves asi "agarro" la figura dibujada arriba
+
 	std::list<Figura*>::iterator iteradorLista;
 	iteradorLista = figuras.begin();
 
 	while ( iteradorLista != figuras.end() && !choca ) {
 		
-		figAPosicionar->choqueConFigura((*iteradorLista));
+		choca = figAPosicionar->choqueConFigura((*iteradorLista));
 		
 		iteradorLista++;
 	}
 
-	return choca;}
+	return choca;
+}
