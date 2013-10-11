@@ -180,7 +180,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				
 				if(activo){
-					cuerpo->SetLinearVelocity(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO));
+					//cuerpo->SetLinearVelocity(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO));
 					cuerpo->SetFixedRotation(true);
 					cuerpo->SetAngularVelocity(0);
 				}
@@ -265,10 +265,10 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				this->mundo->DestroyBody(cuerpo);
 				Figura* fig1=NULL;
 				b2Body* cuerpo1 = NULL;
-				int num1 = -1;
+				int num1 = 0;
 				Figura* fig2=NULL;
 				b2Body* cuerpo2 = NULL;
-				int num2 = -1;
+				int num2 = 0;
 
 
 				for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
@@ -300,7 +300,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					figura->setFigura1(fig1);
 					figura->setFigura2(fig2);
 					((Soga*)figura)->setNumsPosAtable(num1,num2);
-
 					if(activo){
 						double cx1,cy1,cx2,cy2;
 						double x1,y1,x2,y2; x1=x2=y1=y2=0;
@@ -313,8 +312,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						fig1->posAtableSoga(num1,&x1,&y1);
 						fig2->posAtableSoga(num2,&x2,&y2);
 
-						b2Vec2 anchor1(cx1-x1,cy1-y1);
-						b2Vec2 anchor2(cx2-x2,cy2-y2);
+						b2Vec2 anchor1((x1-cx1),(-y1+cy1));//los y en box2d son positivos para arriba aca (?
+						b2Vec2 anchor2((x2-cx2),(-y2+cy2));
 
 						b2RopeJointDef unionSoga;
 						unionSoga.bodyA=cuerpo1;
@@ -488,7 +487,7 @@ void Box2DWorld::actualizar(Figura * figura)
 					double velY = 0;
 					
 					if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
-						velX = int( cuerpo->GetLinearVelocity().x  + (( 0 - cuerpo->GetLinearVelocity().x)/100));
+						velX = int( cuerpo->GetLinearVelocity().x  + (( 0 - cuerpo->GetLinearVelocity().x)/FPS));
 						cambiar = true;
 					}else{
 						velX = cuerpo->GetLinearVelocity().x;
