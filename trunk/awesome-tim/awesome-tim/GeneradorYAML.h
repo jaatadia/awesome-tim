@@ -7,6 +7,7 @@
 #include "Circulo.h"
 #include "Triangulo.h"
 #include "PoligonoRegular.h"
+#include "DLinea.h"
 
 #include "Plataforma.h"
 
@@ -31,6 +32,7 @@ private:
 	YAML::Emitter& operator << (Circulo* circ);
 	YAML::Emitter& operator << (Triangulo* triang);
 	YAML::Emitter& operator << (PoligonoRegular* polig);
+	YAML::Emitter& operator << (DLinea* dimlinea);
 
 public:
 	static bool guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno);

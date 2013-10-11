@@ -15,6 +15,19 @@ out << YAML::Value << cuad->getAngulo();
 //out << YAML::EndMap;
 return out;
 };
+YAML::Emitter& operator << (YAML::Emitter& out,DLinea* dimlinea){
+
+out << YAML::Key << "x1";
+out << YAML::Value << dimlinea->x1;
+out << YAML::Key << "y1";
+out << YAML::Value << dimlinea->y1;
+out << YAML::Key << "x2";
+out << YAML::Value << dimlinea->x2;
+out << YAML::Key << "y2";
+out << YAML::Value << dimlinea->y2;
+
+return out;
+};
 
 YAML::Emitter& operator << (YAML::Emitter& out,Circulo* circ){
 //out << YAML::BeginMap;
@@ -79,7 +92,12 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 
 			case SOGA: //que hay q guardar?
 				out << YAML::Value << "SOGA";
-				out << (Cuadrado*) fig->getDimension();
+				out << (DLinea*) fig->getDimension();
+				break;
+
+			case CORREA:
+				out << YAML::Value << "CORREA";
+				out << (DLinea*) fig->getDimension();
 				break;
 				
 			case PELOTABASQUET:
@@ -125,11 +143,6 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 
 			case MOTOR:
 				out << YAML::Value << "MOTOR";
-				out << (Cuadrado*) fig->getDimension();
-				break;
-
-			case CORREA:
-				out << YAML::Value << "CORREA";
 				out << (Cuadrado*) fig->getDimension();
 				break;
 
