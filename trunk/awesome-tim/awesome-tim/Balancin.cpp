@@ -28,16 +28,16 @@
 //	this->atadoIzquierda = false;
 //}
 
-Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN+2*RADIO_PUNTA_BALANCIN,posX,posY,0)){
-	
+Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN+2*RADIO_PUNTA_BALANCIN,posX,posY,angulo)){
+
 	this->partesFigura = std::list<Figura*>();
-	double posXPuntaIzq,posXPuntaDer,posYPunta;
+	double posXPuntaIzq,posXPuntaDer,posYPuntaIzq,posYPuntaDer;
 
-	calcularPosPuntas(&posXPuntaIzq,&posXPuntaDer,&posYPunta,posX,posY);
+	calcularPosPuntas(posXPuntaIzq,posXPuntaDer,posYPuntaIzq,posYPuntaDer,posX,posY,angulo, 162.89727103 , 17.10272897);
 
-	this->tabla = new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,0));
-	this->circIzq = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPunta,0));
-	this->circDer = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPunta,0));
+	this->tabla = new Figura(ID_TABLA_BALANCIN,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN,posX,posY,angulo));
+	this->circIzq = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaIzq,posYPuntaIzq,0));
+	this->circDer = new Figura(ID_PUNTA_BALANCIN,new Circulo(RADIO_PUNTA_BALANCIN,posXPuntaDer,posYPuntaDer,0));
 
 	this->partesFigura.push_back(this->tabla); //tabla
 	this->partesFigura.push_back(this->circIzq); //punta izq
@@ -52,7 +52,6 @@ Balancin::Balancin(const char* id,double posX, double posY, double angulo):Figur
 		//y obviamente aca poner en quien herede los que correspondan
 		angulos.push_back((*iterFig)->getDimension()->getAngulo());
 	}
-	this->setAngulo(angulo);
 }
 
 Balancin::~Balancin(void){
@@ -62,11 +61,43 @@ Balancin::~Balancin(void){
 	//	delete (*iter);
 	//}
 }
-void Balancin::calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla){
+void Balancin::calcularPosPuntas(double& posXizq,double& posXder, double& posYizq,double& posYder, double posX_Tabla, double posY_Tabla, double angulo, double angulo1, double angulo2){
 
-	*posXizq = ( posX_Tabla - (ANCHO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
-	*posXder = ( posX_Tabla + (ANCHO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
-	*posY = ( posY_Tabla - (ALTO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
+	posXizq = ( posX_Tabla - (ANCHO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
+	posXder = ( posX_Tabla + (ANCHO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
+	posYizq = posYder = ( posY_Tabla - (ALTO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
+
+	double centroX = posX_Tabla;
+	double centroY = posY_Tabla;
+
+	double angle ;
+	angle = (angulo + angulo1) *PI/180;
+//roto el de la derecha
+	double XRelCentro = posXder - centroX;
+	double YRelCentro = posYder - centroY;
+
+	double radio = sqrt ( XRelCentro*XRelCentro + YRelCentro*YRelCentro );
+
+	double nuevoX = radio*cos(-angle) + centroX;
+	double nuevoY = radio*sin(-angle) + centroY;
+		
+	posXder = nuevoX ;
+	posYder = nuevoY;
+
+//roto el de la izquierda
+	angle = (angulo + angulo2) *PI/180;
+
+	XRelCentro = posXizq - centroX;
+	YRelCentro = posYizq - centroY;
+
+	radio = sqrt ( XRelCentro*XRelCentro + YRelCentro*YRelCentro );
+
+	nuevoX = radio*cos(-angle) + centroX;
+	nuevoY = radio*sin(-angle) + centroY;
+		
+	posXizq = nuevoX ;
+	posYizq = nuevoY;
+
 }
 
 /*bool Balancin::atar(double posX, double posY){

@@ -24,7 +24,7 @@ public:
 	//Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras); 
 	Balancin(const char* ID,double posX, double posY, double angulo);	//pos y angulo son de la tabla!
 	~Balancin(void);
-	static void calcularPosPuntas(double* posXizq,double* posXder, double* posY, double posX_Tabla, double posY_Tabla);
+	static void calcularPosPuntas(double& posXizq,double& posXder, double& posYizq, double& posYder, double posX_Tabla, double posY_Tabla, double angulo, double angulo1, double angulo2);
 	//bool atar(double posX, double posY);
 	//bool desatar(double posX, double posY);
 	//bool esAtable(double* posX, double* posY);

@@ -3,12 +3,10 @@
 #include "Constantes.h"
 #include "CargadorYaml.h"
 #include "GeneradorYaml.h"
-#include "Cuadrado.h"
-#include "Circulo.h"
-#include "PoligonoRegular.h"
-#include "Triangulo.h"
 #include "Figura.h"
 #include "Linea.h"
+
+#include "Plataforma.h"
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	
@@ -193,7 +191,7 @@ while(SDL_PollEvent(&evento)){
 					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
 					bool choca = terreno->posicionOcupada(figuraEnAire);
 					if (choca) 
-						std::cout<<"chocan"<<std::endl;
+						std::cout<<"al fin chocan"<<std::endl;
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno

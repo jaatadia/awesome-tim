@@ -43,16 +43,18 @@ bool Segmento::intersecaCon(Recta* otraRecta){
 	if (algunoVertical){
 		//el segmento es vertical
 		if (this->vertical()){
-			if (otraRecta->puntoPorDebajo(XInicial,YInicial) && otraRecta->puntoPorArriba(XFinal,YFinal))
+			if ( (otraRecta->puntoPorDebajo(XInicial,YInicial) && otraRecta->puntoPorArriba(XFinal,YFinal)) ||
+				(otraRecta->puntoPorArriba(XInicial,YInicial) && otraRecta->puntoPorDebajo(XFinal,YFinal)) )
 				return true;
 		}else{//la recta es vertical
-			if (otraRecta->puntoAIzquierda(XInicial,YInicial) && otraRecta->puntoADerecha(XFinal,YFinal))
+			if ( (otraRecta->puntoAIzquierda(XInicial,YInicial) && otraRecta->puntoADerecha(XFinal,YFinal)) ||
+				(otraRecta->puntoADerecha(XInicial,YInicial) && otraRecta->puntoAIzquierda(XFinal,YFinal)) )
 				return true;
 		}
 		return false;
 	}else
 		//paralelos
-		if (this->getPendiente() == otraRecta->getPendiente()){
+		if (paralelos){
 			//incluyen al caso de que esta sobre la recta
 			if ((otraRecta->puntoPorDebajo(XInicial,YInicial)) && (otraRecta->puntoPorArriba(XInicial,YInicial))){
 				return true;
@@ -81,7 +83,7 @@ bool Segmento::intersecaCon(Segmento* otroSegmento){
 			return this->intersecaCon(&recta2);
 		}
 	}else{
-		return ( this->intersecaCon(&recta2) || otroSegmento->intersecaCon(&recta1) );
+		return ( this->intersecaCon(&recta2) && otroSegmento->intersecaCon(&recta1) );
 	}
 
 	return false;

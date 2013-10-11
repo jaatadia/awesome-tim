@@ -129,7 +129,13 @@ bool PoligonoRegular::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys
 		segPropio = new Segmento(x1,y1,x2,y2);
 
 		interseca = segPropio->intersecaCon(segExterno);
+/*****************************DEBUG********************/
+//		if (interseca){
+//			interseca=true; //esto solo esta para poner un breakpoint
+//		}
 
+//		interseca = segPropio->intersecaCon(segExterno);
+/****************************/
 		delete segPropio;
 		segPropio = NULL;
 
@@ -156,7 +162,7 @@ bool PoligonoRegular::choqueConDimension(Dimension* dim){
 	double x1,y1,x2,y2;
 
 	//entre el primero y el ultimo
-	x1 = getX() + vectorX[0];
+	x1 = this->getX() + vectorX[0];
 	y1 = getY() + vectorY[0];
 	x2 = getX() + vectorX[vertices-1];
 	y2 = getY() + vectorY[vertices-1];

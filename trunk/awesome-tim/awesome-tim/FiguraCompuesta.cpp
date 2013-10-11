@@ -124,7 +124,7 @@ void FiguraCompuesta::dibujar(Superficie* superficie){
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		(*iterFig)->dibujar(superficie);
-		setCambio(false);
+		this->setCambio(false);
 	}
 }
 
@@ -145,6 +145,8 @@ void FiguraCompuesta::setTraslucido(bool flag){
 }
 
 void FiguraCompuesta::setAngulo(double angulo){
+
+	double variacionAng = angulo - dimension->getAngulo();
 	
 	std::list<double>::iterator iterAngulosLocales;
 	iterAngulosLocales = angulos.begin();
@@ -156,9 +158,9 @@ void FiguraCompuesta::setAngulo(double angulo){
 	iterAngulosCentroActuales = angulosCentroActuales.begin();
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-		//el nuevo mas el inicial propio
-		(*iterFig)->setAngulo(angulo + (*iterAngulosLocales));
-		(*iterAngulosCentroActuales) = (angulo + (*iterAngulosCentro));
+		//la variacion mas el inicial propio
+		(*iterFig)->setAngulo(variacionAng + (*iterAngulosLocales));
+		(*iterAngulosCentroActuales) = (variacionAng + (*iterAngulosCentro));
 		
 		iterAngulosLocales++;
 		iterAngulosCentro++;
@@ -219,9 +221,10 @@ void FiguraCompuesta::inicAngulosCentro(){
 
 //calculo el angulo de cada parte respecto del centro y los guardo!
 //pasarle el cuadrado y uno horizontal y el centro de la figura componente.
+//restarle el que ya tiene por como es el metodo de calcular angulo
 //y guardar el resultado.
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-		angulosCentroIniciales.push_back (calcularAngulo(dimension, dimension->getX()+1,dimension->getY(), (*iterFig)->getDimension()->getX(),(*iterFig)->getDimension()->getY()));
+		angulosCentroIniciales.push_back (calcularAngulo(dimension, dimension->getX()+1,dimension->getY(), (*iterFig)->getDimension()->getX(),(*iterFig)->getDimension()->getY()) - dimension->getAngulo());
 	}	
 //Empiezan siendo los mismos hasta que la figura rote
 	angulosCentroActuales = angulosCentroIniciales;

@@ -121,10 +121,10 @@ bool Cuadrado::choqueConDimension(Dimension* dim){
 	//me fijo si alguna de sus aristas corta la otra dimension
 	bool interseca = false;
 
-	if( dim->intersecaCon(vertice1.getX(),vertice1.getY(),vertice2.getX(),vertice2.getY()) ||
-		dim->intersecaCon(vertice2.getX(),vertice2.getY(),vertice3.getX(),vertice3.getY()) ||
-		dim->intersecaCon(vertice3.getX(),vertice3.getY(),vertice4.getX(),vertice4.getY()) ||
-		dim->intersecaCon(vertice4.getX(),vertice4.getY(),vertice1.getX(),vertice1.getY()) ){
+	if( dim->intersecaCon(vertice1.getX() + getX(),vertice1.getY() + getY(),vertice2.getX() + getX(),vertice2.getY() + getY()) ||
+		dim->intersecaCon(vertice2.getX() + getX(),vertice2.getY() + getY(),vertice3.getX() + getX(),vertice3.getY() + getY()) ||
+		dim->intersecaCon(vertice3.getX() + getX(),vertice3.getY() + getY(),vertice4.getX() + getX(),vertice4.getY() + getY()) ||
+		dim->intersecaCon(vertice4.getX() + getX(),vertice4.getY() + getY(),vertice1.getX() + getX(),vertice1.getY() + getY()) ){
 		interseca = true;
 	}
 	
