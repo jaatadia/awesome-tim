@@ -72,13 +72,13 @@ Dimension* Cuadrado::clonar(){
 	return new Cuadrado(ancho,alto,getX(),getY(),angulo);
 }
 
-bool Cuadrado::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
+bool Cuadrado::intersecaCon(double XsUno, double YsUno, double XsDos, double YsDos){
 
 	double angle = -(PI*this->getAngulo())/180.0;
-	Xs1 = getX() + ((Xs1-getX()) * cos(-angle)) - ((Ys1-getY()) * sin(-angle));
-	Ys1 = getY() + ((Xs1-getX()) * sin(-angle)) + ((Ys1-getY()) * cos(-angle));
-	Xs2 = getX() + ((Xs2-getX()) * cos(-angle)) - ((Ys2-getY()) * sin(-angle));
-	Ys2 = getY() + ((Xs2-getX()) * sin(-angle)) + ((Ys2-getY()) * cos(-angle));
+	double Xs1 = getX() + ((XsUno-getX()) * cos(-angle)) - ((YsUno-getY()) * sin(-angle));
+	double Ys1 = getY() + ((XsUno-getX()) * sin(-angle)) + ((YsUno-getY()) * cos(-angle));
+	double Xs2 = getX() + ((XsDos-getX()) * cos(-angle)) - ((YsDos-getY()) * sin(-angle));
+	double Ys2 = getY() + ((XsDos-getX()) * sin(-angle)) + ((YsDos-getY()) * cos(-angle));
 
 	Segmento* segExterno = new Segmento(Xs1, Ys1, Xs2, Ys2);
 
