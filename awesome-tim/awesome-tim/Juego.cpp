@@ -6,7 +6,7 @@
 #include "Figura.h"
 #include "Linea.h"
 
-#include "Balancin.h"
+
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	
@@ -193,6 +193,7 @@ while(SDL_PollEvent(&evento)){
 					bool choca = terreno->posicionOcupada(figuraEnAire);
 					if (choca) 
 						std::cout<<"al fin chocan"<<std::endl;
+
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
@@ -447,7 +448,7 @@ bool Juego::figEnEspacioIntermedio(){
 	//tiene ganas de chequear eso hagalo.
 
 	//obviamente tambien asumo que no puede estar por completo en la separacion.
-/*if( figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO) ||
+if( figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO) ||
 	figuraEnAire->intersecaCon(X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
 	figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
 	figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
@@ -463,8 +464,8 @@ bool Juego::figEnEspacioIntermedio(){
 	figuraEnAire->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) 
 	)
 	return true;
-else*/
-	return true;
+else
+	return false;
 }
 
 //solo se usan si la figura en aire no toco contra ningun borde
