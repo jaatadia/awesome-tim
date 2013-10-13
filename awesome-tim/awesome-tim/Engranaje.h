@@ -78,7 +78,7 @@ public:
 		//me fijo si fig que me pasaron choca con esta dimension (para cada una que tenga en este caso solo 1)
 		bool choca = false;
 
-		Dimension* dimAux = new Circulo(0.8 * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
+		Dimension* dimAux = new Circulo(PORCENTAJE_SUPERPOSICION_ENGRANAJE * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
 
 		Dimension* dimensionRotada = dimAux->rotarDimension(dimension->getX(),dimension->getY(),dimension->getAngulo());
 
@@ -97,7 +97,7 @@ public:
 
 	bool choqueConDimension(Dimension* dim){
 
-		Dimension* dimAux = new Circulo(0.8 * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
+		Dimension* dimAux = new Circulo(PORCENTAJE_SUPERPOSICION_ENGRANAJE * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
 		
 		bool choca = dimAux->choqueConDimension(dim);
 
