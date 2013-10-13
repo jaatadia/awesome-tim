@@ -4,10 +4,10 @@
 class Soga :public Linea{
 
 private:
-	int num1,num2;
 	Soga(DLinea* dim);
 
 public:
+	int num1,num2;
 	Soga(double x1,double y1,double x2, double y2,double ancho = 1);
 	~Soga(void);
 
