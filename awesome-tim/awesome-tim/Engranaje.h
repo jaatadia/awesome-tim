@@ -73,5 +73,36 @@ public:
 	virtual void atarCorrea(){atado = true;}
 	virtual void desatarCorrea(){atado = false;}
 
-//	bool choqueConFigura(Figura* fig);
+	bool choqueConFigura(Figura* fig){
+
+		//me fijo si fig que me pasaron choca con esta dimension (para cada una que tenga en este caso solo 1)
+		bool choca = false;
+
+		Dimension* dimAux = new Circulo(0.8 * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
+
+		Dimension* dimensionRotada = dimAux->rotarDimension(dimension->getX(),dimension->getY(),dimension->getAngulo());
+
+		choca = fig->choqueConDimension(dimensionRotada);
+		//caso en que una esta dentro de la otra
+		if ( (!choca) && fig->esMiPosicion(this->getDimension()->getX() , this->getDimension()->getY()) ){
+			choca = true;
+		}
+
+		delete dimensionRotada;
+		delete dimAux;
+
+		return choca;
+	}
+
+
+	bool choqueConDimension(Dimension* dim){
+
+		Dimension* dimAux = new Circulo(0.8 * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
+		
+		bool choca = dimAux->choqueConDimension(dim);
+
+		delete dimAux; 
+
+		return choca;
+	}
 };

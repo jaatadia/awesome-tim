@@ -40,5 +40,7 @@ public:
 		fig2->desatarCorrea();
 	}
 
-//	bool choqueConFigura(Figura* fig);
+	virtual bool choqueConFigura(Figura* fig);
+	virtual bool choqueConDimension(Dimension* dim);
+
 };

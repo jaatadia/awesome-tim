@@ -145,8 +145,6 @@ void FiguraCompuesta::setTraslucido(bool flag){
 }
 
 void FiguraCompuesta::setAngulo(double angulo){
-
-	double variacionAng = angulo; //- dimension->getAngulo();
 	
 	std::list<double>::iterator iterAngulosLocales;
 	iterAngulosLocales = angulos.begin();
@@ -154,13 +152,14 @@ void FiguraCompuesta::setAngulo(double angulo){
 	std::list<double>::iterator iterAngulosCentro;
 	iterAngulosCentro = angulosCentroIniciales.begin();
 
+	std::list<double> angulosCentroActuales = angulosCentroIniciales;
 	std::list<double>::iterator iterAngulosCentroActuales;
 	iterAngulosCentroActuales = angulosCentroActuales.begin();
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		//la variacion mas el inicial propio
-		(*iterFig)->setAngulo(variacionAng + (*iterAngulosLocales));
-		(*iterAngulosCentroActuales) = (variacionAng + (*iterAngulosCentro));
+		(*iterFig)->setAngulo(angulo + (*iterAngulosLocales));
+		(*iterAngulosCentroActuales) = (angulo + (*iterAngulosCentro));
 		
 		iterAngulosLocales++;
 		iterAngulosCentro++;
@@ -226,8 +225,6 @@ void FiguraCompuesta::inicAngulosCentro(){
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
 		angulosCentroIniciales.push_back (calcularAngulo(dimension, dimension->getX()+1,dimension->getY(), (*iterFig)->getDimension()->getX(),(*iterFig)->getDimension()->getY()) - dimension->getAngulo());
 	}	
-//Empiezan siendo los mismos hasta que la figura rote
-	angulosCentroActuales = angulosCentroIniciales;
 }
 
 
@@ -377,4 +374,47 @@ void FiguraCompuesta::setY( double y ){
 	double difDePos = y - dimension->getY();
 
 	this->cambiarPosicion( 0 , difDePos);
+}
+
+bool FiguraCompuesta::choqueConFigura(Figura* fig){
+
+	//me fijo si fig que me pasaron choca con alguna dimension
+	bool choca = false;
+	
+	Dimension* dimensionRotada = NULL;
+
+	iterFig = partesFigura.begin();
+	
+	while( (iterFig != partesFigura.end()) && (!choca) ){
+
+		dimensionRotada = (*iterFig)->getDimension()->rotarDimension((*iterFig)->getDimension()->getX(),(*iterFig)->getDimension()->getY(),(*iterFig)->getDimension()->getAngulo());
+
+		choca = fig->choqueConDimension(dimensionRotada);
+
+		delete dimensionRotada;
+		iterFig++;
+	}
+	//caso en que una esta dentro de la otra
+	if ((!choca) && fig->esMiPosicion(this->getDimension()->getX() , this->getDimension()->getY() ) ){
+		choca = true;
+	}
+
+	return choca;
+}
+
+
+//de nuevo, pruebo contra todas las dimensiones
+bool FiguraCompuesta::choqueConDimension(Dimension* dim){
+//como no lo se en la figura delego a la dimension (o dimensiones).
+	
+	bool choca = false;
+
+	iterFig = partesFigura.begin();
+	
+	while( (iterFig != partesFigura.end()) && (!choca) ){
+		choca = (*iterFig)->getDimension()->choqueConDimension(dim);
+		iterFig++;
+	}
+
+	return choca;
 }

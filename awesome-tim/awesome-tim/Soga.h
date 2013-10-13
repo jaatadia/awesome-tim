@@ -27,4 +27,8 @@ public:
 		fig1->desatarSoga(num1);
 		fig2->desatarSoga(num2);
 	}
+	
+	virtual bool choqueConFigura(Figura* fig);
+
+	virtual bool choqueConDimension(Dimension* dim);
 };

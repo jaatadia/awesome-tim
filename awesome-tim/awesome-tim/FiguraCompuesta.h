@@ -15,7 +15,6 @@ protected:
 	std::list<double> angulos; //los angulos iniciales de cada figura componente respecto de su centro local
 							   //empieza en cero
 	std::list<double> angulosCentroIniciales; //los angulos de cada figura componente respecto del centro del grupo 
-	std::list<double> angulosCentroActuales;
 
 	std::list<Figura*>::iterator iterFig;
 
@@ -76,7 +75,9 @@ public:
 
 	virtual std::list<Figura*> getFigurasComp(){return partesFigura;};
 
-//	bool choqueConFigura(Figura* fig);
+	//indican si se esta o no chocando con la figura o la dimension en cuestion
+	virtual bool choqueConFigura(Figura* fig);
+	virtual bool choqueConDimension(Dimension* dim);
 
 protected:
 

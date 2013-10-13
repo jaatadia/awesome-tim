@@ -50,3 +50,13 @@ Linea::Linea(const char* ID,DLinea* dim):Figura(ID,dim,true)
 	puesto = false;
 	simple = false;
 }
+
+bool Linea::choqueConFigura(Figura* fig){
+
+	return false;
+}
+
+bool Linea::choqueConDimension(Dimension* dim){
+
+	return false;
+}

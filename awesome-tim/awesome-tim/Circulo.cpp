@@ -47,7 +47,12 @@ bool Circulo::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 }
 
 Dimension* Circulo::clonar(){
-	return new Circulo(this->radio,this->getX(),this->getY(),this->getAngulo());
+
+	Dimension* circADevolver = new Circulo(this->radio,this->getX(),this->getY(),this->getAngulo());
+
+	circADevolver->setAnguloReal( this->getAnguloReal() );
+
+	return circADevolver;
 }
 
 Dimension* Circulo::devolverPoligonEnvolvente(){
@@ -56,6 +61,8 @@ Dimension* Circulo::devolverPoligonEnvolvente(){
 }
 
 bool Circulo::choqueConDimension(Dimension* dim){
+
+	//podria rotarlo al reves que el circulo pero no hay necesidad geometrica de hacerlo.
 
 	//envuelvo en un poligono de 10 vertices
 	PoligonoRegular* polEnvolvente = (PoligonoRegular*)devolverPoligonEnvolvente();
@@ -67,4 +74,21 @@ bool Circulo::choqueConDimension(Dimension* dim){
 	delete polEnvolvente;
 
 	return interseca;
+}
+
+Dimension* Circulo::rotarDimension(double xRot, double yRot, double angulo){
+	
+	double angle = (PI*angulo)/180.0;
+
+	Dimension* cirADevolver = (Circulo*) this->clonar();	
+	
+	cirADevolver->setX( xRot + ((this->getX()-xRot) * cos(-angle)) - ((this->getY()-yRot) * sin(-angle)) );
+	cirADevolver->setY( yRot + ((this->getX()-xRot) * sin(-angle)) + ((this->getY()-yRot) * cos(-angle)) );
+//tengo que hacer esto porque pueden estar desfasdos (antes de la primera rotacion)	
+	cirADevolver->setAngulo( cirADevolver->getAnguloReal() );
+
+	cirADevolver->setAngulo( cirADevolver->getAngulo() + angulo );
+	cirADevolver->setAnguloReal( cirADevolver->getAnguloReal() + angulo );
+
+	return cirADevolver;
 }
