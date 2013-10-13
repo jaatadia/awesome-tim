@@ -33,6 +33,7 @@ private:
 
 	bool shiftPressed;
 	bool clickPressed;
+	int contEventosMov;
 
 public:
 	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
