@@ -85,7 +85,7 @@
 #define DENSIDAD_PELOTABOWLING 6.0
 #define FRICCION_PELOTABOWLING 0.3
 
-#define RADIO_GLOBOHELIO 4.0
+#define RADIO_GLOBOHELIO 8.0
 #define RESTITUCION_GLOBOHELIO 0.1
 #define FRICCION_GLOBOHELIO 0.01
 #define DENSIDAD_GLOBOHELIO 0.5 //si se baja verificar que siga moviendo las plataformas
@@ -140,11 +140,11 @@
 //id imagenes
 #define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
-#define ID_GLOBO "../images/Globo-Azul.jpg"
+#define ID_GLOBO "../images/globo2.png"
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
 #define ID_PELOTABOWLING "../images/Bowling.png"
-#define ID_ENGRANAJE "../images/engranaje.png"
+#define ID_ENGRANAJE "../images/Icon-Gear02-Blue.png"
 
 #define ID_ENGRANAJE2_1 "../images/engranaje2-1.png"
 #define ID_ENGRANAJE2_2 "../images/engranaje2-2.png"

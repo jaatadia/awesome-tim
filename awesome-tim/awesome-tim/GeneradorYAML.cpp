@@ -17,14 +17,22 @@ return out;
 };
 YAML::Emitter& operator << (YAML::Emitter& out,DLinea* dimlinea){
 
-out << YAML::Key << "x1";
-out << YAML::Value << dimlinea->x1;
-out << YAML::Key << "y1";
-out << YAML::Value << dimlinea->y1;
-out << YAML::Key << "x2";
-out << YAML::Value << dimlinea->x2;
-out << YAML::Key << "y2";
-out << YAML::Value << dimlinea->y2;
+out << YAML::Key << "extremo1";
+out << YAML::Value << YAML::BeginMap;
+	out << YAML::Key << "posX";
+	out << YAML::Value << dimlinea->x1;
+	out << YAML::Key << "posY";
+	out << YAML::Value << dimlinea->y1;
+out << YAML::EndMap;
+
+
+out << YAML::Key << "extremo2";
+out << YAML::Value << YAML::BeginMap;
+	out << YAML::Key << "posX";
+	out << YAML::Value << dimlinea->x2;
+	out << YAML::Key << "posY";
+	out << YAML::Value << dimlinea->y2;
+out << YAML::EndMap;
 
 return out;
 };
@@ -90,7 +98,7 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << YAML::Value << fig->getLargo();
 				break;
 
-			case SOGA: //que hay q guardar?
+			case SOGA:
 				out << YAML::Value << "SOGA";
 				out << (DLinea*) fig->getDimension();
 				break;
@@ -212,12 +220,24 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 			//itero y imprimo de a una las figuras en sequence
 			std::list<Figura*> lista_figs = terreno->getListaFigs();
 			std::list<Figura*>::iterator iter;
+			std::list<Figura*> figurasAux;
+
 			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
-				out << YAML::BeginMap;
-				out << YAML::Key << "figura";
-				out << YAML::Value << (*iter);
-				out << YAML::EndMap;
+				if((*iter)->esUnion()){
+					figurasAux.push_back((*iter));
+				}else{
+					out << YAML::BeginMap;
+					out << YAML::Key << "figura";
+					out << YAML::Value << (*iter);
+					out << YAML::EndMap;
+				}
 			};
+			for (iter = figurasAux.begin() ; iter != figurasAux.end(); ++iter){
+					out << YAML::BeginMap;
+					out << YAML::Key << "figura";
+					out << YAML::Value << (*iter);
+					out << YAML::EndMap;
+			}
 		out << YAML::EndSeq;
 
 	out << YAML::EndMap;

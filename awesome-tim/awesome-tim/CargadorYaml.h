@@ -28,6 +28,8 @@
 #include "Engranaje.h"
 #include "Engranaje2.h"
 #include "Balancin.h"
+#include "Linea.h"
+#include "Soga.h"
 
 #include "GeneradorDeFigurasCompuestas.h"
 
@@ -91,5 +93,5 @@ private:
 	static void obtenerRadio(const YAML::Node& nodoFigura,double* radio);
 	static void obtenerVertices(const YAML::Node& nodoFigura,int* vertices);
 	static void obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base);
-
+	static void obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2);
 };

@@ -22,7 +22,7 @@ public:
 
 	virtual double getAncho(){
 		if(!activo)return 10;
-		else return abs(x1-x2);
+		else return abs(x1-x2)*2;
 	};
 	virtual double getAlto(){
 		if(!activo)return 10;

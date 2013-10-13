@@ -191,7 +191,30 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 		*vertices = VERTICES_DEFAULT;
 	}
 }
+void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2){
 
+	const YAML::Node& nodoPos = nodoFigura;
+	try{
+		//nodoFigura["extremo1"] >> nodoPos;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe extremo1 de figura. No se carga la figura.",e.what());
+		return;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de extremo1 de figura. No se carga la figura.",e.what());
+		return;
+	}
+	obtenerPosicion(nodoPos,x1,y1);
+
+	try{
+		//nodoFigura["extremo2"] >> nodoPos;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe extremo2 de figura. No se carga la figura.",e.what());
+		return;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de extremo2 de figura. No se carga la figura.",e.what());
+		return;
+	}
+}
 /**********************************************************
 **                                                       **
 **                    CREAR FIGURAS                      **
@@ -243,7 +266,9 @@ Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearSoga(const YAML::Node& nodoFigura){
-	return NULL;
+	double x1,y1,x2,y2;
+	
+	return new Soga(x1,y1,x2,y2);
 }
 
 Figura* CargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
@@ -916,4 +941,3 @@ void CargadorYaml::imprimir_error_excepcion(std::string mensaje,std::string what
 	std::string full_msj = msj + " " + what;
 	ErrorLogHandler::addError("CargadorYaml",full_msj.c_str());
 }
-
