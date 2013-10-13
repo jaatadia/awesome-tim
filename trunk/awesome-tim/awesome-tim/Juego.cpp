@@ -557,9 +557,19 @@ void Juego::set2Click(){
 		}else{
 			result->posAtableCorrea(&x,&y);
 			if(!linea->primerPuntoPuesto()){
-				linea->setPunto1(x,y);
+				linea->setFigura1(result);
 			}else{
-				linea->setPunto2(x,y);
+				if(linea->getFigura1() == result){
+					delete figuraEnAire;
+					figuraEnAire = NULL;
+					this->setCambio(true);
+					terreno->setCambio(true);
+					botonera->setCambio(true);
+					comandos->setCambio(true);
+				}
+				linea->setFigura2(result);
+				linea->getFigura1()->atarCorrea();
+				linea->getFigura2()->atarCorrea();
 				terreno->agregarFigura( figuraEnAire );
 				figuraEnAire = NULL;
 			}
@@ -579,17 +589,29 @@ void Juego::set2Click(){
 			figuraEnAire = NULL;
 			this->setCambio(true);
 			terreno->setCambio(true);
-			botonera->setCambio(true);
 			comandos->setCambio(true);
+			botonera->setCambio(true);
 		}else{
 			int res = result->esAtableSoga(x,y);
-			result->posAtableSoga(res,&x,&y);
 			if(!linea->primerPuntoPuesto()){
-				linea->setPunto1(x,y);
+				linea->setFigura1(result);
+				((Soga*)linea)->setNumsPosAtable(res,0);
 			}else{
-				linea->setPunto2(x,y);
-				terreno->agregarFigura( figuraEnAire );
-				figuraEnAire = NULL;
+				if (result == linea->getFigura1()){
+					delete figuraEnAire;
+					figuraEnAire = NULL;
+					this->setCambio(true);
+					terreno->setCambio(true);
+					comandos->setCambio(true);
+					botonera->setCambio(true);
+				}else{
+					linea->setFigura2(result);
+					((Soga*)linea)->setNumsPosAtable(((Soga*)linea)->num1,res);
+					linea->getFigura1()->atarSoga(((Soga*)linea)->num1);
+					linea->getFigura2()->atarSoga(((Soga*)linea)->num2);
+					terreno->agregarFigura( figuraEnAire );
+					figuraEnAire = NULL;
+				}
 			}
 		}
 	}

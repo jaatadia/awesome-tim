@@ -9,6 +9,7 @@ class CintaTransportadora: public Figura
 private:
 	double largo;
 	double angulo;
+	bool atada;
 public:
 
 	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
@@ -23,7 +24,9 @@ public:
 
 	virtual Figura* clonar();
 
-	virtual bool esAtableCorrea(){return true;};
+	virtual bool esAtableCorrea(){return !atada;};
+	virtual void atarCorrea(){atada = true;};
+	virtual void desatarCorrea(){atada = false;};
 
 	double getRadio(){return RADIO_CINTA_TRANSPORTADORA;};
 

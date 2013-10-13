@@ -8,7 +8,7 @@
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
 	//this->fisicaActiva = fisicaActiva;
-	this->fisicaActiva = true;
+	this->fisicaActiva = fisicaActiva;
 
 
 	this->ancho = ancho;
