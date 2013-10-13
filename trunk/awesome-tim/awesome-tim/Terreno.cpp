@@ -122,8 +122,8 @@ bool Terreno::setFondo(const char* ruta_img){
 void Terreno::agregarFigura(Figura* fig){
 
 	bool choca = this->posicionOcupada(fig);
-	if (choca){
-	//no la puedo poner
+	if (choca && (figuraActiva == NULL) ){
+	//no la puedo poner y viene de fuera del terreno
 		delete fig; 
 		fig = NULL;
 	}else{
@@ -239,7 +239,9 @@ void Terreno::soltarFigura()
 			agregarFigura(figuraActiva);
 			figuraActiva=NULL;
 		}else{
-			delete figuraActiva;
+			//la agrego y la borro asi se desatan las goas y correas
+			agregarFigura(figuraActiva);
+			borrarFigura(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY());
 			figuraActiva = NULL;
 		}
 	}
