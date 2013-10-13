@@ -21,3 +21,13 @@ Soga::Soga(DLinea* dim):Linea(ID_SOGA,dim)
 	puesto = false;
 	simple = true;
 }
+
+bool Soga::choqueConFigura(Figura* fig){
+
+	return false;
+}
+
+bool Soga::choqueConDimension(Dimension* dim){
+
+	return false;
+}

@@ -190,10 +190,16 @@ while(SDL_PollEvent(&evento)){
 				if ((estaActiva)){
 					confirmarPosicionFiguraEnAire();
 					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
-					bool choca = terreno->posicionOcupada(figuraEnAire);
-					if (choca) 
-						std::cout<<"al fin chocan"<<std::endl;
 
+					//para saber si choca con las de terreno tengo que relativizar su posicion!
+					figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+
+					bool choca = terreno->posicionOcupada(figuraEnAire);
+					//if choca pintar de rojo! o cambiar la vista! o lo que sea!
+					// -> O setear booleano para la vista y tener las imagenes guardadas!
+
+					figuraEnAire->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
+					//y vuelvo para atras
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno

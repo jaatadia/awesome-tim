@@ -28,10 +28,17 @@ PoligonoRegular::~PoligonoRegular(void)
 
 bool PoligonoRegular::puntoPertenece(double tX, double tY){
 	
-	double angle = -(PI*this->getAngulo())/180.0;
-	double X = getX() + ((tX-getX()) * cos(-angle)) - ((tY-getY()) * sin(-angle));
-	double Y = getY() + ((tX-getX()) * sin(-angle)) + ((tY-getY()) * cos(-angle));
+	double X;
+	double Y;
 
+	if (this->getAnguloReal() != this->getAngulo()){	
+		double angle = -(PI*this->getAngulo())/180.0;
+		X = getX() + ((tX-getX()) * cos(-angle)) - ((tY-getY()) * sin(-angle));
+		Y = getY() + ((tX-getX()) * sin(-angle)) + ((tY-getY()) * cos(-angle));
+	}else{
+		X = tX;
+		Y = tY;
+	}
 	
 	 
 	bool signoOK = true;
@@ -91,11 +98,24 @@ double PoligonoRegular::getCantVertices(){
 
 bool PoligonoRegular::intersecaCon(double XsUno, double YsUno, double XsDos, double YsDos){
 
-	double angle = -(PI*this->getAngulo())/180.0;
-	double Xs1 = getX() + ((XsUno-getX()) * cos(-angle)) - ((YsUno-getY()) * sin(-angle));
-	double Ys1 = getY() + ((XsUno-getX()) * sin(-angle)) + ((YsUno-getY()) * cos(-angle));
-	double Xs2 = getX() + ((XsDos-getX()) * cos(-angle)) - ((YsDos-getY()) * sin(-angle));
-	double Ys2 = getY() + ((XsDos-getX()) * sin(-angle)) + ((YsDos-getY()) * cos(-angle));
+	double Xs1;
+	double Ys1;
+	double Xs2;
+	double Ys2;
+
+	//roto al reves de como esta el poligono!
+	if (this->getAnguloReal() != this->getAngulo()){
+		double angle = -(PI*this->getAngulo())/180.0;
+		Xs1 = getX() + ((XsUno-getX()) * cos(-angle)) - ((YsUno-getY()) * sin(-angle));
+		Ys1 = getY() + ((XsUno-getX()) * sin(-angle)) + ((YsUno-getY()) * cos(-angle));
+		Xs2 = getX() + ((XsDos-getX()) * cos(-angle)) - ((YsDos-getY()) * sin(-angle));
+		Ys2 = getY() + ((XsDos-getX()) * sin(-angle)) + ((YsDos-getY()) * cos(-angle));
+	}else{
+		Xs1 = XsUno;
+		Ys1 = YsUno;
+		Xs2 = XsDos;
+		Ys2 = YsDos;
+	}
 
 	Segmento* segExterno = new Segmento(Xs1, Ys1, Xs2, Ys2);
 
@@ -129,13 +149,6 @@ bool PoligonoRegular::intersecaCon(double XsUno, double YsUno, double XsDos, dou
 		segPropio = new Segmento(x1,y1,x2,y2);
 
 		interseca = segPropio->intersecaCon(segExterno);
-/*****************************DEBUG********************/
-//		if (interseca){
-//			interseca=true; //esto solo esta para poner un breakpoint
-//		}
-
-//		interseca = segPropio->intersecaCon(segExterno);
-/****************************/
 		delete segPropio;
 		segPropio = NULL;
 
@@ -148,11 +161,32 @@ bool PoligonoRegular::intersecaCon(double XsUno, double YsUno, double XsDos, dou
 }
 
 Dimension* PoligonoRegular::clonar(){
-	return new PoligonoRegular(getX(),getY(),radio,vertices,getAngulo());
+	
+	PoligonoRegular* polADevolver = new PoligonoRegular(getX(),getY(),radio,vertices,getAngulo());
+
+	polADevolver->setAnguloReal( this->getAnguloReal() );
+
+	//y todos los vertices
+	for(int i=0;i<vertices;i++){
+		polADevolver->setVertX( i, this->getVerticeX(i) ); 
+		polADevolver->setVertY( i, this->getVerticeY(i) ) ;
+	}
+
+	return (Dimension*) polADevolver;
 }
 
 
 bool PoligonoRegular::choqueConDimension(Dimension* dim){
+
+	Dimension* dimAChocar;
+
+	//rota al reves mio  la que me pasaron, solo si no estoy rotado de verdad
+	if (this->getAnguloReal() != this->getAngulo()){
+		double angle = -(PI*this->getAngulo())/180.0;
+		dimAChocar = dim->rotarDimension(getX(),getY(),- this->getAngulo());
+	}else{
+		dimAChocar = dim->clonar();
+	}
 
 	//me fijo si alguna de sus aristas corta la otra dimension
 	bool interseca = false;
@@ -167,7 +201,7 @@ bool PoligonoRegular::choqueConDimension(Dimension* dim){
 	x2 = getX() + vectorX[vertices-1];
 	y2 = getY() + vectorY[vertices-1];
 
-	interseca = dim->intersecaCon( x1, y1, x2, y2);
+	interseca = dimAChocar->intersecaCon( x1, y1, x2, y2);
 
 	//el resto
 	while ( (i < vertices-1) && (!interseca) ){
@@ -177,11 +211,54 @@ bool PoligonoRegular::choqueConDimension(Dimension* dim){
 		x2 = getX() + vectorX[i+1];
 		y2 = getY() + vectorY[i+1];
 
-		interseca = dim->intersecaCon( x1, y1, x2, y2);
+		interseca = dimAChocar->intersecaCon( x1, y1, x2, y2);
 
 		i++;
 	}
 
+	delete dimAChocar;
+
 	return interseca;
 
+}
+
+Dimension* PoligonoRegular::rotarDimension(double xRot, double yRot, double angulo){
+
+	double angle = (PI*angulo)/180.0;
+
+	PoligonoRegular* polADevolver = (PoligonoRegular*)this->clonar();
+//roto la posicion y cada vertice
+	polADevolver->setX( xRot + ((this->getX()-xRot) * cos(-angle)) - ((this->getY()-yRot) * sin(-angle)) );
+	polADevolver->setY( yRot + ((this->getX()-xRot) * sin(-angle)) + ((this->getY()-yRot) * cos(-angle)) );
+
+	for(int i=0; i<vertices; i++){
+		polADevolver->setVertX ( i , 0 + ((vectorX[i]-0) * cos(-angle)) - ((vectorY[i]-0) * sin(-angle)) );
+		polADevolver->setVertY ( i , 0 + ((vectorX[i]-0) * sin(-angle)) + ((vectorY[i]-0) * cos(-angle)) );
+	}
+//tengo que hacer esto porque pueden estar desfasdos (antes de la primera rotacion)	
+	polADevolver->setAngulo( polADevolver->getAnguloReal() );
+
+	polADevolver->setAngulo( polADevolver->getAngulo() + angulo );
+	polADevolver->setAnguloReal( polADevolver->getAnguloReal() + angulo );
+
+	return polADevolver;
+}
+
+void PoligonoRegular::setVertX(int i, double x){
+	this->vectorX[i] = x;
+}
+
+
+void PoligonoRegular::setVertY(int i, double y){
+	this->vectorY[i] = y;
+}
+
+double PoligonoRegular::getVerticeX(int i){
+
+	return this->vectorX[i];
+}
+
+double PoligonoRegular::getVerticeY(int i){
+
+	return this->vectorY[i];
 }

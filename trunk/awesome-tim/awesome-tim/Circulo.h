@@ -22,4 +22,6 @@ public:
 	virtual bool choqueConDimension(Dimension* dim);
 
 	virtual Dimension* devolverPoligonEnvolvente();
+//alrededor de que punto lo roto y el angulo
+	virtual Dimension* rotarDimension(double Xrot, double yRot, double angulo);
 };

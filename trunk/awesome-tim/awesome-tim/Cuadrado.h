@@ -41,4 +41,28 @@ public:
 	virtual void setAncho(double nuevoLargo);
 
 	virtual bool choqueConDimension(Dimension* dim);
+
+	virtual Dimension* rotarDimension(double Xrot, double yRot, double angulo);
+
+	void setX1(double x){vertice1.setX(x);};
+	void setX2(double x){vertice2.setX(x);};
+	void setX3(double x){vertice3.setX(x);};
+	void setX4(double x){vertice4.setX(x);};
+	
+	void setY1(double y){vertice1.setY(y);};
+	void setY2(double y){vertice2.setY(y);};
+	void setY3(double y){vertice3.setY(y);};
+	void setY4(double y){vertice4.setY(y);};
+
+
+	double getX1(){return vertice1.getX();};
+	double getX2(){return vertice2.getX();};
+	double getX3(){return vertice3.getX();};
+	double getX4(){return vertice4.getX();};
+
+	double getY1(){return vertice1.getY();};
+	double getY2(){return vertice2.getY();};
+	double getY3(){return vertice3.getY();};
+	double getY4(){return vertice4.getY();};
+		
 };

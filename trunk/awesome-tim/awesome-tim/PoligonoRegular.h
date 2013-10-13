@@ -30,6 +30,14 @@ public:
 
 	virtual bool choqueConDimension(Dimension* dim);
 
+	virtual Dimension* rotarDimension(double Xrot, double yRot, double angulo);
+
+	virtual void setVertX(int i, double x);
+	virtual void setVertY(int i, double y);
+
+	virtual double getVerticeX(int i);
+	virtual double getVerticeY(int i);
+
 private:
 	double enRecta(double x,double y,double x0,double y0,double x1,double y1);
 

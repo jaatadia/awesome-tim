@@ -122,29 +122,34 @@ bool Terreno::setFondo(const char* ruta_img){
 void Terreno::agregarFigura(Figura* fig){
 
 	bool choca = this->posicionOcupada(fig);
+	if (choca){
+	//no la puedo poner
+		delete fig; 
+		fig = NULL;
+	}else{
+		fig->setTraslucido(false);
+		this->setCambio(true);
 
-	fig->setTraslucido(false);
-	this->setCambio(true);
+		//si se fue de rango del terreno lo empujo para dentro
+		Dimension* dim = fig->getDimension();
+		corregirPosicion(fig);
 
-//si se fue de rango del terreno lo empujo para dentro
-	Dimension* dim = fig->getDimension();
-	corregirPosicion(fig);
-
-   	try{
-		bool aux;
-		if(fisicaActiva){
-			aux = this->mundoBox2D->agregarFigura(fig);
-			if(aux){
+   		try{
+			bool aux;
+			if(fisicaActiva){
+				aux = this->mundoBox2D->agregarFigura(fig);
+				if(aux){
+					(this->figuras).push_back(fig);
+				}else{ 
+					delete fig;
+				}
+			}else{
 				(this->figuras).push_back(fig);
-			}else{ 
-				delete fig;
 			}
-		}else{
-			(this->figuras).push_back(fig);
-		}
-	} catch (...) {
-		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
-	};
+		} catch (...) {
+			ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
+		};
+	}
 }
 
 void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
@@ -229,8 +234,14 @@ void Terreno::achicarFigura()
 void Terreno::soltarFigura()
 {
 	if (figuraActiva){
-		agregarFigura(figuraActiva);
-		figuraActiva=NULL;
+		bool choca = this->posicionOcupada(figuraActiva);
+		if (!choca){
+			agregarFigura(figuraActiva);
+			figuraActiva=NULL;
+		}else{
+			delete figuraActiva;
+			figuraActiva = NULL;
+		}
 	}
 }
 
@@ -578,41 +589,6 @@ double Terreno::calcularAngulo(Dimension* dim, double XVector1,double YVector1,d
 		return (dim->getAngulo() + variacionAngulo);
 }
 
-//void Terreno::onClick(){
-//
-///*si hay activa
-//	->es de las que se ponen con dos puntos
-//	porque no puede haber una activa en otro caso si se puede clickear en terreno
-//	interactuar de nuevo para setear la segunda figura o eliminar!
-//	y ver que juntura poner!
-//	para esto poner def de juntura en soga y en correa
-//sino
-//	buscarActiva();
-//*/
-//}
-//
-//int Terreno::interactuar(Figura* fig, double x, double y){
-//
-///*
-//fig a figura activa
-//
-//averiguar si choca con alguna
-//o si se une con alguna
-//para esto iterar todas las figuras e interactuar con ellas
-//esto mientras no halla union o choque
-//
-//devuelve
-//0 para choque
-//1 para posicionar
-//3 para unir
-//
-//
-//si hay union setear en soga o correa figura que se unirá y no sacarla de figura activa
-//si no hay union y chocan no ponerla (soga y correa no pueden generar choque!)
-//si no hay union ni choque ponerla en terreno	
-//*/
-//}
-
 Figura* Terreno::getFiguraAtableCorrea(double x,double y){
 	if(hayFiguras()){	
 		Figura* figuraBuscada = NULL;
@@ -661,17 +637,18 @@ Figura* Terreno::getFiguraAtableSoga(double x,double y){
 
 bool Terreno::posicionOcupada(Figura* figAPosicionar){
 
-	bool choca = false;
+	bool choca1 = false;
+	bool choca2 = false;
 
 	std::list<Figura*>::iterator iteradorLista;
 	iteradorLista = figuras.begin();
 
-	while ( iteradorLista != figuras.end() && !choca ) {
+	while ( iteradorLista != figuras.end() && !choca1 && !choca2 ) {
 		
-		choca = figAPosicionar->choqueConFigura((*iteradorLista));
-		
+		choca1 = figAPosicionar->choqueConFigura((*iteradorLista));
+		choca2 = (*iteradorLista)->choqueConFigura(figAPosicionar);
 		iteradorLista++;
 	}
 
-	return choca;
+	return (choca1 || choca2);
 }

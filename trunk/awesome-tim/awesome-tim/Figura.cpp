@@ -136,7 +136,16 @@ bool Figura::choqueConFigura(Figura* fig){
 
 	//me fijo si fig que me pasaron choca con esta dimension (para cada una que tenga en este caso solo 1)
 	bool choca = false;
-	choca = fig->choqueConDimension(this->dimension);
+
+	Dimension* dimensionRotada = dimension->rotarDimension(dimension->getX(),dimension->getY(),dimension->getAngulo());
+
+	choca = fig->choqueConDimension(dimensionRotada);
+	//caso en que una esta dentro de la otra
+	if ( (!choca) && fig->esMiPosicion(this->getDimension()->getX() , this->getDimension()->getY()) ){
+		choca = true;
+	}
+
+	delete dimensionRotada;
 
 	return choca;
 }

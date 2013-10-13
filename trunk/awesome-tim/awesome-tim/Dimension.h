@@ -6,7 +6,11 @@
 class Dimension: public Posicion
 {
 protected:
+	//el angulo de la figura
 	double angulo; // de 0 a 360 !!
+
+	//el angulo verdadero de los puntos
+	double anguloReal;
 
 public:
 
@@ -14,6 +18,8 @@ public:
 		while(ang<0) ang+=360;
 		while(ang>=360) ang-=360;
 		this->angulo=ang;
+
+		anguloReal = 0;
 	};
 	
 	virtual ~Dimension(){};
@@ -26,11 +32,21 @@ public:
 	virtual double getAngulo(){
 		return angulo;
 	};
+	
+	virtual double getAnguloReal(){
+		return anguloReal;
+	};
 
 	virtual void setAngulo(double ang){
 		while(ang<0) ang+=360;
 		while(ang>=360) ang-=360;
 		this->angulo=ang;
+	};
+
+	virtual void setAnguloReal(double ang){
+		while(ang<0) ang+=360;
+		while(ang>=360) ang-=360;
+		this->anguloReal=ang;
 	};
 
 	virtual void putP1(double x,double y){};
@@ -44,4 +60,6 @@ public:
 	virtual Dimension* devolverPoligonEnvolvente(){return NULL;};
 
 	virtual bool choqueConDimension(Dimension* dim){return false;};
+	//angulo es por cuantos grados lo quiero rotar, NO en que angulo tiene que quedar
+	virtual Dimension* rotarDimension(double Xrot, double yRot, double angulo){return NULL;};
 };
