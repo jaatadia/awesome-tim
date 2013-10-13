@@ -97,7 +97,7 @@ public:
 
 	bool choqueConDimension(Dimension* dim){
 
-		Dimension* dimAux = new Circulo(PORCENTAJE_SUPERPOSICION_ENGRANAJE * getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
+		Dimension* dimAux = new Circulo(getRadio() ,dimension->getX(),dimension->getY(),dimension->getAngulo());
 		
 		bool choca = dimAux->choqueConDimension(dim);
 

@@ -565,23 +565,19 @@ void Box2DWorld::eliminarFigura(Figura * figura)
 		{
 			Figura* figAEliminar = (Figura *)cuerpo->GetUserData();
 
-			//si es un motor borrar el static extra que tiene
-			if ( figAEliminar->getTipoFigura() == ENGRANAJE2 ){
+			//si es un motor o balancin o engranaje borrar el static extra que tiene
+			if ( figAEliminar->getTipoFigura() == ENGRANAJE2 || figAEliminar->getTipoFigura()==BALANCIN || figAEliminar->getTipoFigura()==ENGRANAJE){
 				
 				b2Body* cuerpoARevisar = this->mundo->GetBodyList();
 				
 				while (cuerpoARevisar){
-					Figura* figARevisar = (Figura *)cuerpoARevisar->GetUserData();
-					if ( (figARevisar == NULL) && (cuerpoARevisar->GetPosition().x == figAEliminar->getDimension()->getX()) &&
-						(cuerpoARevisar->GetPosition().y == figAEliminar->getDimension()->getY()) ){	
-						//si es el static body de atras (el eje)
-						if (cuerpoARevisar->GetType() == b2_staticBody){
-							//destruyo la joint
-							b2JointEdge* listaUniones = cuerpo->GetJointList();
-							mundo->DestroyJoint(listaUniones->joint);
-							this->mundo->DestroyBody(cuerpoARevisar);
-							break;
-						}
+					if ( (cuerpoARevisar->GetPosition().x == figAEliminar->getDimension()->getX()) &&
+					(cuerpoARevisar->GetPosition().y == figAEliminar->getDimension()->getY()) ){		
+						//destruyo la joint
+						b2JointEdge* listaUniones = cuerpo->GetJointList();
+						mundo->DestroyJoint(listaUniones->joint);
+						this->mundo->DestroyBody(cuerpoARevisar);
+						break;
 					}	
 					cuerpoARevisar = cuerpoARevisar->GetNext();
 				}
