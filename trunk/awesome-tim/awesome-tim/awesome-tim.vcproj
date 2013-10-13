@@ -232,6 +232,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PlataformaB2ContactListener.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Soga.cpp"
 				>
 			</File>
@@ -447,6 +451,10 @@
 			</File>
 			<File
 				RelativePath=".\Plataforma.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlataformaB2ContactListener.h"
 				>
 			</File>
 			<File
