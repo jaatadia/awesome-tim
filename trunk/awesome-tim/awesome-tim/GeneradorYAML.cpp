@@ -108,6 +108,11 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << (DLinea*) fig->getDimension();
 				break;
 				
+			case LINEA:
+				out << YAML::Value << "LINEA";
+				out << (DLinea*) fig->getDimension();
+				break;
+
 			case PELOTABASQUET:
 				out << YAML::Value << "PELOTA_BASQUET";
 				out << (Circulo*) fig->getDimension();

@@ -2,130 +2,76 @@ juego:
   terreno:
     fondo: ../images/fondo-gris.jpg
     lista_figuras:
+      []
   botonera:
     lista_figuras:
-      # - figura:
-          # ID: ../images/Cuadrado.png
-          # tipo_figura: CUADRADO
-          # ancho: 20
-          # alto: 10
-          # posX: 0
-          # posY: 0
-          # angulo: 0
-        # cantidad_de_instancias: 5
       - figura:
-          # ID: ../images/plataforma_madera.png
           tipo_figura: PLATAFORMA
-          largo: 2
-          posX: 80
-          posY: 80
-          angulo: 0
-        cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/Circulo.png
-          # tipo_figura: CIRCULO
-          # radio: 20
-          # posX: 0
-          # posY: 0
-          # angulo: 0	
-        # cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/Pheptagono.png
-          # tipo_figura: POLIGONOREGULAR
-          # radio: 20
-          # cant_vertices: 7
-          # posX: 0
-          # posY: 0
-          # angulo: 0	
-        # cantidad_de_instancias: 5
-      - figura:
-          tipo_figura: GLOBO_HELIO
+          largo: 1
           posX: 0
           posY: 0
-        cantidad_de_instancias: 5
+          angulo: 0
+        cantidad_de_instancias: 100
       - figura:
           tipo_figura: PELOTA_BASQUET
           posX: 0
           posY: 0
-        cantidad_de_instancias: 5
+        cantidad_de_instancias: 100
       - figura:
           tipo_figura: BOLA_BOWLING
           posX: 0
           posY: 0
-        cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/triangulo.png
-          # tipo_figura: TRIANGULO
-          # posX: 0
-          # posY: 0
-          # angulo: 0
-          # base: 20
-          # alto: 20
-        # cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/Ptriangulo.png
-          # tipo_figura: POLIGONOREGULAR
-          # posX: 0
-          # posY: 0
-          # angulo: 0
-          # cant_vertices: 3
-          # radio: 10
-        # cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/Pcuadrado.png
-          # tipo_figura: POLIGONOREGULAR
-          # posX: 0
-          # posY: 0
-          # angulo: 0
-          # cant_vertices: 4
-          # radio: 10
-        # cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/Ppentagono.png
-          # tipo_figura: POLIGONOREGULAR
-          # posX: 0
-          # posY: 0
-          # angulo: 0
-          # cant_vertices: 5
-          # radio: 10
-        # cantidad_de_instancias: 5
-      # - figura:
-          # ID: ../images/Phexagono.png
-          # tipo_figura: POLIGONOREGULAR
-          # posX: 0
-          # posY: 0
-          # angulo: 0
-          # cant_vertices: 6
-          # radio: 10
-        # cantidad_de_instancias: 5
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: GLOBO_HELIO
+          posX: 0
+          posY: 0
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: PELOTA_TENIS
+          posX: 0
+          posY: 0
+          angulo: 0
+        cantidad_de_instancias: 100
       - figura:
           tipo_figura: ENGRANAJE
           posX: 0
           posY: 0
           angulo: 0
           radio: 10
-        cantidad_de_instancias: 5
+        cantidad_de_instancias: 100
       - figura:
           tipo_figura: ENGRANAJE2
           posX: 0
           posY: 0
           angulo: 0
           radio: 25
-        cantidad_de_instancias: 5
+        cantidad_de_instancias: 100
       - figura:
-          tipo_figura: PLATAFORMA
-          largo: 15
-          posX: 0
-          posY: 0
-          angulo: 45	
-        cantidad_de_instancias: 5
+          tipo_figura: LINEA
+          extremo1:
+            posX: 0
+            posY: 0
+          extremo2:
+            posX: 0
+            posY: 0
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: SOGA
+          extremo1:
+            posX: 0
+            posY: 0
+          extremo2:
+            posX: 0
+            posY: 0
+        cantidad_de_instancias: 100
       - figura:
           tipo_figura: BALANCIN_IZQUIERDA
           posX: 50
           posY: 50
-        cantidad_de_instancias: 5
+        cantidad_de_instancias: 100
       - figura:
           tipo_figura: BALANCIN_DERECHA
           posX: 50
           posY: 50
-        cantidad_de_instancias: 5
+        cantidad_de_instancias: 100

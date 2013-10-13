@@ -193,9 +193,8 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 }
 void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2){
 
-	const YAML::Node& nodoPos = nodoFigura;
 	try{
-		//nodoFigura["extremo1"] >> nodoPos;
+		const YAML::Node& nodoPos = nodoFigura["extremo1"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("No existe extremo1 de figura. No se carga la figura.",e.what());
 		return;
@@ -203,10 +202,11 @@ void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,doubl
 		imprimir_error_excepcion("Dato erroneo de extremo1 de figura. No se carga la figura.",e.what());
 		return;
 	}
+	const YAML::Node& nodoPos = nodoFigura["extremo1"];
 	obtenerPosicion(nodoPos,x1,y1);
 
 	try{
-		//nodoFigura["extremo2"] >> nodoPos;
+		const YAML::Node& nodoPos2 = nodoFigura["extremo2"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("No existe extremo2 de figura. No se carga la figura.",e.what());
 		return;
@@ -214,6 +214,8 @@ void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,doubl
 		imprimir_error_excepcion("Dato erroneo de extremo2 de figura. No se carga la figura.",e.what());
 		return;
 	}
+	const YAML::Node& nodoPos2 = nodoFigura["extremo2"];
+	obtenerPosicion(nodoPos2,x2,y2);
 }
 /**********************************************************
 **                                                       **
@@ -268,11 +270,17 @@ Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
 Figura* CargadorYaml::crearSoga(const YAML::Node& nodoFigura){
 	double x1,y1,x2,y2;
 	
+	obtenerExtremos(nodoFigura,&x1,&y1,&x2,&y2);
+
 	return new Soga(x1,y1,x2,y2);
 }
 
 Figura* CargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
-	return NULL;
+	double x1,y1,x2,y2;
+	
+	obtenerExtremos(nodoFigura,&x1,&y1,&x2,&y2);
+
+	return new Linea(x1,y1,x2,y2);
 }
 
 Figura* CargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
@@ -506,6 +514,12 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 	}
 
 	if (strcmp(tipo_figura,"CORREA") == 0){
+		Figura* figura = crearCorrea(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Correa."); 	
+		return figura;
+	}
+		if (strcmp(tipo_figura,"LINEA") == 0){
 		Figura* figura = crearCorrea(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Correa."); 	
@@ -855,6 +869,7 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
 	bool engranaje = (strcmp(tipo_figura,"ENGRANAJE") == 0);
 	bool engranaje2 = (strcmp(tipo_figura,"ENGRANAJE2") == 0); // FIX
 	bool correa = (strcmp(tipo_figura,"CORREA") == 0);
+	bool linea = (strcmp(tipo_figura,"LINEA") == 0);
 	bool soga = (strcmp(tipo_figura,"SOGA") == 0);
 	bool motor = (strcmp(tipo_figura,"MOTOR") == 0);
 	bool pelotaBask = (strcmp(tipo_figura,"PELOTA_BASQUET") == 0);
@@ -862,7 +877,7 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
 	bool globoHelio = (strcmp(tipo_figura,"GLOBO_HELIO") == 0);
 	bool tenis = (strcmp(tipo_figura,"PELOTA_TENIS") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || engranaje2 || correa || soga || motor || pelotaBask || bowling || globoHelio || tenis);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || engranaje2 || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis);
 
 	return (figuraSimple || figuraCompleja);
 }
