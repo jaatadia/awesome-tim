@@ -25,6 +25,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	shiftPressed = false;
 	estaActiva = false;
 	clickPressed = false;
+	contEventosMov = 0;
 
 }
 
@@ -190,21 +191,30 @@ while(SDL_PollEvent(&evento)){
 				if ((estaActiva)){
 					confirmarPosicionFiguraEnAire();
 					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
+//como esto que sigue tarda demasiado lo hago solo cada 5 movimientos!
+					if (contEventosMov % 5 == 0){
+						//para saber si choca con las de terreno tengo que relativizar su posicion!
+						figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 
-					//para saber si choca con las de terreno tengo que relativizar su posicion!
-					figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+						bool choca = terreno->posicionOcupada(figuraEnAire);
+						//if choca pintar de rojo! o cambiar la vista! o lo que sea!
+						// -> O setear booleano para la vista y tener las imagenes guardadas!
 
-					bool choca = terreno->posicionOcupada(figuraEnAire);
-					//if choca pintar de rojo! o cambiar la vista! o lo que sea!
-					// -> O setear booleano para la vista y tener las imagenes guardadas!
-
-					figuraEnAire->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
-					//y vuelvo para atras
+						figuraEnAire->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
+						//y vuelvo para atras
+						if (choca) std::cout<<"choca"<<std::endl;
+					}
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
 			if (!posEnTerreno(posClickX,posClickY))
 				terreno->soltarFigura();
+
+			contEventosMov++;
+
+			if (contEventosMov > 10000){
+				contEventosMov = 0;
+			}
 
 			break;
 		}
