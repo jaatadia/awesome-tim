@@ -345,10 +345,13 @@ void BotoneraController::ScrollDown(){
 #include "Linea.h"
 #include "Soga.h"
 #include "Balancin.h"
+#include "CintaTransportadora.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
-
+	this->agregarBoton(new CintaTransportadora(1,0,0,0),100); 
+	this->agregarBoton(new Engranaje2(0,0),100);
+	this->agregarBoton(new Linea(0,0,0,0),100);
 	this->agregarBoton(new Plataforma(1,0,0,0),100); 
 	this->agregarBoton(new GloboHelio(0,0),100);
 	this->agregarBoton(new Soga(0,0,0,0),100);

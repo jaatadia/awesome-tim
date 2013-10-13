@@ -13,8 +13,16 @@ Box2DWorld::Box2DWorld(void)
 Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true)
 {
 	this->activo = flag;
-	if(activo)this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
-	else this->mundo = new b2World(b2Vec2(0,0));
+	if(activo){
+		this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
+		list = new PlataformaB2ContactListener();
+		this->mundo->SetContactListener(list);
+	}
+	else{
+		this->mundo = new b2World(b2Vec2(0,0));
+		list = NULL;
+	}
+	
 }
 
 void Box2DWorld::setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion)
@@ -454,6 +462,44 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+		case CINTATRANSPORTADORA:
+			{
+				if(activo){
+					cuerpo->SetType(b2_staticBody);
+					b2PolygonShape forma;
+					forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+					fD.shape = &forma;
+					fD.density = PLATAFORMA_DENSIDAD;
+					fD.friction = PLATAFORMA_FRICCION;
+					cuerpo->CreateFixture(&fD);
+					
+					//creo un rotador
+					b2BodyDef rotador;
+					b2CircleShape vForma;
+					vForma.m_radius = figura->getRadio();
+					b2FixtureDef rotFix;
+					rotFix.shape = &vForma;
+					rotFix.density = 1;
+					rotFix.friction = 100;
+					rotFix.restitution = 0;
+					rotFix.isSensor = true;
+					b2Body* rotAnt = this->mundo->CreateBody(&rotador);
+					rotAnt->CreateFixture(&rotFix);
+					rotAnt->SetType(b2_dynamicBody);
+					
+
+					//lo uno			
+					b2RevoluteJointDef joint;
+					joint.bodyA = cuerpo;
+					joint.bodyB = rotAnt;
+					joint.localAnchorA = b2Vec2(0,0);
+					joint.collideConnected = false;
+					b2Joint* jointAnt = this->mundo->CreateJoint(&joint);
+					
+
+				}
+				break;
+			}
 	}
 	return true;
 }
@@ -493,12 +539,30 @@ void Box2DWorld::actualizar(Figura * figura)
 				cuerpo = cuerpo->GetNext();
 				continue;
 			}
+			
+			if(fig->getTipoFigura()==CINTATRANSPORTADORA){
+				b2JointEdge* edge = cuerpo->GetJointList();
+				if(edge == NULL){
+					cuerpo = cuerpo->GetNext();
+					continue;
+				}
+				while(edge->joint->GetType()!=e_revoluteJoint) {edge = edge->next;}
+				double ang = 0;
+				if (edge->joint->GetBodyA() == cuerpo){
+					ang = edge->joint->GetBodyB()->GetAngle();
+				}else{
+					ang = edge->joint->GetBodyA()->GetAngle();
+				}
+				fig->setAngulo(-(ang)*180/PI);
+				cuerpo = cuerpo->GetNext();
+				continue;
+			}
 
-			fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
-
-			fig->getDimension()->setX(cuerpo->GetPosition().x);
-			fig->getDimension()->setY(cuerpo->GetPosition().y);
-		
+				fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
+			
+				fig->getDimension()->setX(cuerpo->GetPosition().x);
+				fig->getDimension()->setY(cuerpo->GetPosition().y);
+				
 			if(activo){
 				if(fig->getTipoFigura()==GLOBOHELIO){
 					bool cambiar = false;
@@ -595,4 +659,5 @@ void Box2DWorld::eliminarFigura(Figura * figura)
 Box2DWorld::~Box2DWorld(void)
 {
 	delete this->mundo;
+	delete list;
 }

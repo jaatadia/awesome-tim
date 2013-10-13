@@ -9,10 +9,12 @@
 #include "GloboHelio.h"
 #include "Cuadrado.h"
 #include "Triangulo.h"
+#include "PlataformaB2ContactListener.h";
 
 class Box2DWorld
 {
 private:
+	PlataformaB2ContactListener* list;
 	Box2DWorld(void);
 	b2World * mundo;
 	float tiempoStep;
