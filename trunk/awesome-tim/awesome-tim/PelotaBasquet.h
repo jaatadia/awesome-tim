@@ -21,4 +21,8 @@ public:
 //	virtual bool choqueConFigura(Figura* fig);
 
 //	virtual bool choqueConDimension(Dimension* dim);
+
+	virtual int esAtableSoga(double x,double y){
+		return 1;
+	}
 };
