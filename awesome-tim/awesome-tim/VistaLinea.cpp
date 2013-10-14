@@ -12,32 +12,35 @@ VistaLinea::~VistaLinea(void)
 
 void VistaLinea::dibujar(Superficie* canvas){
 	
-	try{
-		int calcX1;
-		int calcY1;
-		int calcX2;
-		int calcY2;
+	
+		int calcX1 = 10;
+		int calcY1 = 10;
+		int calcX2 = 10;
+		int calcY2 = 10;
+		int calcAncho = 10;
 
-		if(linea->getFigura1()){
-			double x,y;
-			linea->posFigura1(&x,&y);
-			linea->setPunto1(x,y);
-		}
+		try{
+			if(linea->getFigura1()){
+				double x,y;
+				linea->posFigura1(&x,&y);
+				linea->setPunto1(x,y);
+			}
+			calcX1 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->x1));
+			calcY1 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(((DLinea*)linea->getDimension())->y1));
+
+			if(linea->getFigura2()){
+				double x,y;
+				linea->posFigura2(&x,&y);
+				linea->setPunto2(x,y);
+			}
+			calcX2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->x2));
+			calcY2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(((DLinea*)linea->getDimension())->y2));
 		
-		calcX1 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->x1));
-		calcY1 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(((DLinea*)linea->getDimension())->y1));
+		
+			calcAncho = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->ancho));
+		}catch(...){
 			
-		if(linea->getFigura2()){
-			double x,y;
-			linea->posFigura2(&x,&y);
-			linea->setPunto2(x,y);
 		}
-		calcX2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->x2));
-		calcY2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(((DLinea*)linea->getDimension())->y2));
-		
-
-		int calcAncho = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->ancho));
-
 		
 		if(simple){
 			canvas->dibujarLinea(calcX1,calcY1,calcX2,calcY2,calcAncho,100,30,30);
@@ -54,8 +57,4 @@ void VistaLinea::dibujar(Superficie* canvas){
 			canvas->dibujarLinea(calcX1+desfasajeX,calcY1+desfasajeY,calcX2+desfasajeX,calcY2+desfasajeY,calcAncho,0,0,0);
 			canvas->dibujarLinea(calcX1-desfasajeX,calcY1-desfasajeY,calcX2-desfasajeX,calcY2-desfasajeY,calcAncho,0,0,0);
 		}
-		
-	}catch(...){
-		//std::cout<<"se produjo una falla\n\a";
-	}
 }

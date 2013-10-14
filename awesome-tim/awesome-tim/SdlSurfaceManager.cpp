@@ -715,3 +715,23 @@ void SdlSurfaceManager::dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int 
 	
 	SDL_UnlockSurface(sup); 
 }
+
+void SdlSurfaceManager::pintar(SDL_Surface* sup,int r,int g,int b,int a){
+	
+	Uint32 color = SDL_MapRGBA(sup->format,r,g,b,a);
+	
+	SDL_Surface* nsup = crearSup(sup->w,sup->h);
+	
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.h = nsup->h;
+	rect.w = nsup->w;
+	SDL_FillRect(nsup,&rect,color);
+
+	blitSurfaces(nsup,sup,NULL,0,0);
+
+	SDL_FreeSurface(nsup);
+
+}
+

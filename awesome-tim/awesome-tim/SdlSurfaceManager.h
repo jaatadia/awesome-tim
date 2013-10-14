@@ -50,6 +50,7 @@ public:
 	static Uint32 blendPixels(SDL_PixelFormat* format,Uint32 pixel1,Uint32 pixel2);//devuelve la mescla de dos pixles
 
 	static void dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int y2,int ancho,int r,int g,int b);
+	static void pintar(SDL_Surface* sup,int r,int g,int b,int a);
 	
 private:
 	static void fallar();//le indica que tiene que fallar(uso interno)

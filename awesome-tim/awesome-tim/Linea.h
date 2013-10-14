@@ -22,6 +22,9 @@ public:
 	//virtual int getTipoDimension(){return DLINEA;};   Y ESTO?? FIX
 	virtual void setPunto1(double x1,double y1);
 	virtual void setPunto2(double x2,double y2);
+	void getPunto1(double* x1,double* y1);
+	void getPunto2(double* x2,double* y2);
+
 	virtual void setFigura1(Figura* fig);
 
 	virtual void posFigura1(double* x, double* y){fig1->posAtableCorrea(x,y);};

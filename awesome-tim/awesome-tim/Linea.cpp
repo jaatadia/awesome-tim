@@ -31,6 +31,16 @@ void Linea::setPunto2(double x2,double y2){
 	dimension->putP2(x2,y2);
 }
 
+void Linea::getPunto1(double* x1,double* y1){
+	*x1 = ((DLinea*)dimension)->x1;
+	*y1 = ((DLinea*)dimension)->y1;
+}
+
+void Linea::getPunto2(double* x2,double* y2){
+	*x2 = ((DLinea*)dimension)->x2;
+	*y2 = ((DLinea*)dimension)->y2;
+}
+
 void Linea::setFigura1(Figura* fig){
 	fig1 = fig;
 	puesto = true;
