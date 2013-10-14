@@ -168,6 +168,11 @@
 #define IZQUIERDA 1
 #define DERECHA 2
 
+//Sentidos del motor
+#define SENT_HORARIO 1
+#define SENT_ANTIHORARIO -1
+
+
 //Para chocar circulos
 
 #define VERTICES_ENVOLVENTE 7

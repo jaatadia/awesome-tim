@@ -31,7 +31,6 @@
 #include "Linea.h"
 #include "Soga.h"
 #include "CintaTransportadora.h"
-
 #include "GeneradorDeFigurasCompuestas.h"
 
 class CargadorYaml{
@@ -60,6 +59,7 @@ private:
 	static bool radio_valido(double radio);
 	static bool cant_vertices_valida(int cant);
 	static bool base_triangulo_valida(double base);
+	static bool sentido_valido(int sentido);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
@@ -95,4 +95,5 @@ private:
 	static void obtenerVertices(const YAML::Node& nodoFigura,int* vertices);
 	static void obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base);
 	static void obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2);
+	static void obtenerSentido(const YAML::Node& nodoFigura,int* sentido);
 };

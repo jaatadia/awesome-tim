@@ -172,6 +172,24 @@ void CargadorYaml::obtenerRadio(const YAML::Node& nodoFigura,double* radio){
 	}
 }
 
+void CargadorYaml::obtenerSentido(const YAML::Node& nodoFigura,int* sentido){
+	try{
+		nodoFigura["sentido"] >> *sentido;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe el sentido de figura. Se carga sentido por defecto.",e.what());
+		*sentido = SENT_HORARIO;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del sentido de figura. Se carga sentido por defecto.",e.what());
+		*sentido = SENT_HORARIO;
+	}
+
+	if(!sentido_valido(*sentido)){
+		int linea = nodoFigura["sentido"].GetMark().line;
+		imprimir_error_linea("Sentido de Figura invalido. Se carga sentido por defecto.", linea);
+		*sentido = SENT_HORARIO;
+	}
+}
+
 void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 	try{
 		nodoFigura["cant_vertices"] >> *vertices;
@@ -263,7 +281,22 @@ Figura* CargadorYaml::crearPelotaTenis(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
-	return NULL;
+	double posX,posY,radio,angulo;
+	int sentido;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerSentido(nodoFigura,&sentido);
+	obtenerRadio(nodoFigura,&radio);
+	obtenerAngulo(nodoFigura,&angulo);
+
+	Figura* figura = new Engranaje2(posX,posY,radio, angulo);
+
+	if(!figura) return NULL;
+
+	if(sentido == SENT_ANTIHORARIO)
+		figura->shift();
+
+	return figura;
 }
 
 Figura* CargadorYaml::crearSoga(const YAML::Node& nodoFigura){
@@ -896,6 +929,10 @@ bool CargadorYaml::posicion_validaY(double posY){
 
 bool CargadorYaml::angulo_valido(double angulo){
 	return ((angulo >=0) && (angulo < 360));
+}
+
+bool CargadorYaml::sentido_valido(int sentido){
+	return ((sentido == SENT_HORARIO) || (sentido == SENT_ANTIHORARIO));
 }
 
 bool CargadorYaml::cant_instancias_valida(int instancias){
