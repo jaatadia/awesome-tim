@@ -36,4 +36,6 @@ void VistaFiguraEstatica::redraw(){
 	
 	if(fig->traslucido) rotada->setTransparency(150);
 	else rotada->setTransparency(255);
+
+//	if(fig->superpuesta) rotada->pintarRojo();
 }

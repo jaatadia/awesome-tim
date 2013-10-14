@@ -1,9 +1,11 @@
 #pragma once
 #define NOMBRE_JUEGO "The Incredible Machine"
 
-//frecuencias de simulacion y dibujo
+//frecuencias de simulacion, dibujo y calculo de cosas
 #define FPS 60
 #define FRAME_FRECUENCY 1000.0/FPS
+
+#define ITER_CHOQUE 4 //cantidad de movimientos a realizar entre verificaciones de choques
 
 //posiciones de las distintas partes del juego
 #define ANCHO_PANTALLA 600 //ancho de la superficie
@@ -104,7 +106,7 @@
 #define DENSIDAD_ENGRANAJE 6.0
 #define FRICCION_ENGRANAJE 5 //1.5
 #define VELOCIDAD_ENGRANAJE2 10
-#define PORCENTAJE_SUPERPOSICION_ENGRANAJE 0.8
+#define PORCENTAJE_SUPERPOSICION_ENGRANAJE 0.7
 
 #define RADIO_PUNTA_BALANCIN 1.5
 #define ANCHO_BALANCIN 30
@@ -140,7 +142,6 @@
 #define PI 3.1415926535897932384626433832795028841971693993751058209749
 
 //id imagenes
-#define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
 #define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
 #define ID_GLOBO "../images/globo2.png"
@@ -166,3 +167,7 @@
 //posiciones de balancin
 #define IZQUIERDA 1
 #define DERECHA 2
+
+//Para chocar circulos
+
+#define VERTICES_ENVOLVENTE 7

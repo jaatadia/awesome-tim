@@ -31,6 +31,7 @@ protected:
 
 public:
 	bool traslucido;
+	bool superpuesta ;
 
 public:
 	
@@ -56,6 +57,8 @@ public:
 	virtual int getTipoFigura(){return -1;};//=0;
 
 	virtual void setTraslucido(bool flag);
+	virtual void setSuperpuesta(bool flag);
+
 	virtual void setAngulo(double angulo);
 
 	virtual void agrandar(){};

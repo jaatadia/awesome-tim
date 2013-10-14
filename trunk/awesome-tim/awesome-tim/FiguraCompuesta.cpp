@@ -144,6 +144,14 @@ void FiguraCompuesta::setTraslucido(bool flag){
 	setCambio(true);
 }
 
+void FiguraCompuesta::setSuperpuesta(bool flag){
+	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
+		(*iterFig)->setSuperpuesta(flag);
+	}
+	this->superpuesta = flag;
+	setCambio(true);
+}
+
 void FiguraCompuesta::setAngulo(double angulo){
 	
 	std::list<double>::iterator iterAngulosLocales;

@@ -63,6 +63,8 @@ public:
 	virtual int getTipoFigura()=0;
 
 	virtual void setTraslucido(bool flag);
+	virtual void setSuperpuesta(bool flag);
+
 	virtual void setAngulo(double angulo);
 
 	virtual Figura* clonar()=0;//copia la figura

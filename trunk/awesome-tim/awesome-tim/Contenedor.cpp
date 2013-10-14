@@ -49,7 +49,6 @@ Contenedor::Contenedor(void){
 
 	////cargo las imagenes de los elementos del juego
 	mapa[ID_PLATAFORMA] = new Imagen(ID_PLATAFORMA); //si el id estuviese en el archivo yaml esto no iria
-	mapa[ImgSegmSoga]= new Imagen(ImgSegmSoga);
 	mapa[ID_GLOBO] = new Imagen(ID_GLOBO);
 	mapa[ID_PELOTATENIS] = new Imagen(ID_PELOTATENIS);
 	mapa[ID_PELOTABASQUET] = new Imagen(ID_PELOTABASQUET);

@@ -9,7 +9,7 @@
 #include "GloboHelio.h"
 #include "Cuadrado.h"
 #include "Triangulo.h"
-#include "PlataformaB2ContactListener.h";
+#include "PlataformaB2ContactListener.h"
 
 class Box2DWorld
 {

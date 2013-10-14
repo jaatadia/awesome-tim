@@ -21,6 +21,8 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
 	this->setCambio(true);
 
+	contEventosMov = 0;
+
 	//Box2D
 	if(this->fisicaActiva){
 		this->mundoBox2D = new Box2DWorld(GRAVEDADX,GRAVEDADY,fisicaActiva);
@@ -168,7 +170,7 @@ void Terreno::agregarFigura(Figura* fig){
 
 
 	bool choca = this->posicionOcupada(fig);
-	if (choca && (figuraActiva == NULL) ){
+	if (fig->superpuesta && (figuraActiva == NULL) ){
 	//no la puedo poner y viene de fuera del terreno
 		delete fig; 
 		fig = NULL;
@@ -235,6 +237,18 @@ void Terreno::arrastrarFigura(double posClickX,double posClickY,double cantMovX,
 		corregirPosicion(figuraActiva);
 		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
 
+		//como ver si se superpone tarda demasiado lo hago solo cada 5 movimientos!
+		if (contEventosMov % ITER_CHOQUE == 0){
+			//si choca va de rojo
+			figuraActiva->setSuperpuesta( this->posicionOcupada(figuraActiva) );						
+		}
+
+		contEventosMov++;
+
+		if (contEventosMov > 10000){
+			contEventosMov = 0;
+		}
+
 		this->setCambio(true);
 	}
 }
@@ -281,11 +295,11 @@ void Terreno::soltarFigura()
 {
 	if (figuraActiva){
 		bool choca = this->posicionOcupada(figuraActiva);
-		if (!choca){
+		if ( !(figuraActiva->superpuesta) ){
 			agregarFigura(figuraActiva);
 			figuraActiva=NULL;
 		}else{
-			//la agrego y la borro asi se desatan las goas y correas
+			//la agrego y la borro asi se desatan las sogas y correas
 			agregarFigura(figuraActiva);
 			borrarFigura(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY());
 			figuraActiva = NULL;
