@@ -112,6 +112,8 @@
 #define ANGULO_BALANCIN_IZQ 45
 #define ANGULO_BALANCIN_DER 315
 
+#define LARGO_CINTA_TRANSPORTADORA 10
+
 #define RADIO_CINTA_TRANSPORTADORA RADIO_MINENGRANAJE/2
 
 //cuadrantes
@@ -140,6 +142,7 @@
 //id imagenes
 #define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
+#define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
 #define ID_GLOBO "../images/globo2.png"
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"

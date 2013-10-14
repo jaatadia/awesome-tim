@@ -75,3 +75,9 @@ juego:
           posX: 50
           posY: 50
         cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: CINTA_TRANSPORTADORA
+          posX: 0
+          posY: 0
+          angulo: 0
+        cantidad_de_instancias: 100

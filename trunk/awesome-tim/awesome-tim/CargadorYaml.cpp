@@ -299,12 +299,16 @@ Figura* CargadorYaml::crearEngranaje2(const YAML::Node& nodoFigura){ //FIX
 	obtenerAngulo(nodoFigura,&angulo);
 	obtenerRadio(nodoFigura,&radio);
 
-	Figura* fig = new Engranaje2(posX,posY,radio,angulo);
-	return fig;
+	return new Engranaje2(posX,posY,radio,angulo);
 }
 
 Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
-	return NULL;
+	double posX,posY,angulo;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+
+	return new CintaTransportadora(LARGO_CINTA_TRANSPORTADORA,posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura, int sentido){

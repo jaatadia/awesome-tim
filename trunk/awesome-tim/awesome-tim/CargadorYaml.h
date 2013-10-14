@@ -30,6 +30,7 @@
 #include "Balancin.h"
 #include "Linea.h"
 #include "Soga.h"
+#include "CintaTransportadora.h"
 
 #include "GeneradorDeFigurasCompuestas.h"
 
