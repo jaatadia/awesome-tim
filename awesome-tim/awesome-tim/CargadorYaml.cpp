@@ -281,15 +281,14 @@ Figura* CargadorYaml::crearPelotaTenis(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
-	double posX,posY,radio,angulo;
+	double posX,posY,radio;
 	int sentido;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	obtenerSentido(nodoFigura,&sentido);
 	obtenerRadio(nodoFigura,&radio);
-	obtenerAngulo(nodoFigura,&angulo);
 
-	Figura* figura = new Engranaje2(posX,posY,radio, angulo);
+	Figura* figura = new Engranaje2(posX,posY,radio, 0);
 
 	if(!figura) return NULL;
 

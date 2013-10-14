@@ -9,7 +9,6 @@ juego:
           tipo_figura: ENGRANAJE2
           posX: 0
           posY: 0
-          angulo: 0
           radio: 25
           sentido: -1
         cantidad_de_instancias: 100
