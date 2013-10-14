@@ -103,8 +103,10 @@ Figura* Figura::clonar(){
 }
 
 void Figura::setTraslucido(bool flag){
-	this->traslucido=flag;
-	setCambio(true);
+	if(this->traslucido != flag){
+		this->traslucido=flag;
+		setCambio(true);
+	}
 }
 
 void Figura::setAngulo(double angulo){ 

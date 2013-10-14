@@ -120,3 +120,7 @@ Imagen* Imagen::rotarZoom(int ancho,int alto,double angulo){
 	}
 	return img;
 }
+
+void Imagen::pintarRojo(){
+	SdlSurfaceManager::pintar(superficie,255,0,0,150);
+}

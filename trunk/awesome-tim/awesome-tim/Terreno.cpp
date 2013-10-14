@@ -119,7 +119,52 @@ bool Terreno::setFondo(const char* ruta_img){
 	return true;
 }
 
+#include "Linea.h"
+#include "Soga.h"
+
 void Terreno::agregarFigura(Figura* fig){
+
+	if(!fisicaActiva){
+		if((fig->getTipoFigura()==LINEA)&&(fig->getFigura1()==NULL)&&(fig->getFigura2()==NULL)){
+			Linea* linea = (Linea*)fig;
+			double x,y;
+			linea->getPunto1(&x,&y);
+			Figura* result1 = getFiguraAtableCorrea(x,y);
+			linea->getPunto2(&x,&y);
+			Figura* result2 = getFiguraAtableCorrea(x,y);
+			if((result1 == NULL) || (result2 == NULL)){
+				delete fig;
+				return;
+			}
+			linea->setFigura1(result1);
+			linea->setFigura2(result2);
+			result1->atarCorrea();
+			result2->atarCorrea();
+		
+		}else if((fig->getTipoFigura()==LINEA)&&(fig->getFigura1()==NULL)&&(fig->getFigura2()==NULL)){
+			Soga* soga = (Soga*)fig;
+			double x1,y1,x2,y2;
+			soga->getPunto1(&x1,&y1);
+			Figura* result1 = getFiguraAtableSoga(x1,y1);
+			soga->getPunto2(&x2,&y2);
+			Figura* result2 = getFiguraAtableSoga(x2,y2);
+			
+			
+			if((result1 == NULL) || (result2 == NULL)){
+				delete fig;
+				return;
+			}
+			double num1 = result1->esAtableSoga(x1,y1);
+			double num2 = result2->esAtableSoga(x2,y2);
+
+			soga->setFigura1(result1);
+			soga->setFigura2(result2);
+			soga->setNumsPosAtable(num1,num2);
+			result1->atarSoga(num1);
+			result2->atarSoga(num2);
+		}
+	}
+
 
 	bool choca = this->posicionOcupada(fig);
 	if (choca && (figuraActiva == NULL) ){

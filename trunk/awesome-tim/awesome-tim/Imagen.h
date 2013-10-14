@@ -52,4 +52,6 @@ public:
 
 	Imagen(int ancho,int alto);//nueva superficie de las dimensiones pasadas
 	void dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,int yDestino);
+
+	void pintarRojo();
 };
