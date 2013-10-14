@@ -14,26 +14,28 @@ VistaFigAgrandable::~VistaFigAgrandable(void){
 }
 void VistaFigAgrandable::redraw(){
 	
-		int tempAncho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(1);
-		if(orig==NULL || tempAncho!= escalaAnterior){
-			delete orig;
-			Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->getID()));
-			orig = temp->scaleImagen(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->getDimension()->getAncho()/fig->getLargo()),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->getDimension()->getAlto()));
-			escalaAnterior = tempAncho;
-			largo_anterior = -1;
+	int tempAncho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(1);
+	if(orig==NULL || tempAncho!= escalaAnterior){
+		delete orig;
+		Imagen* temp = (Imagen*)(Contenedor::getMultimedia(fig->getID()));
+		orig = temp->scaleImagen(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->getDimension()->getAncho()/fig->getLargo()),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->getDimension()->getAlto()));
+		escalaAnterior = tempAncho;
+		largo_anterior = -1;
+	}
+
+	if (largo_anterior != fig->getLargo()){
+		delete imggrande;
+		imggrande = new Imagen(orig->getAncho()*this->fig->getLargo(),orig->getAlto());
+		largo_anterior = fig->getLargo();
+
+		for(int i=0;i<fig->getLargo();i++){
+			imggrande->dibujarImagen(orig,NULL,i*orig->getAncho(),0);
 		}
+	}
 
-		if (largo_anterior != fig->getLargo()){
-			delete imggrande;
-			imggrande = new Imagen(orig->getAncho()*this->fig->getLargo(),orig->getAlto());
-			largo_anterior = fig->getLargo();
+	delete rotada;
+	rotada = imggrande->rotarImagen(fig->getDimension()->getAngulo());
 
-			for(int i=0;i<fig->getLargo();i++){
-				imggrande->dibujarImagen(orig,NULL,i*orig->getAncho(),0);
-			}
-		}
-
-		delete rotada;
-		rotada = imggrande->rotarImagen(fig->getDimension()->getAngulo());
 	if (fig->traslucido) rotada->setTransparency(150);
+	if(fig->superpuesta) rotada->pintarRojo();
 }

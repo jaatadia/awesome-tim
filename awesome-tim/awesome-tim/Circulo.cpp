@@ -38,8 +38,8 @@ bool Circulo::puntoPertenece(double X, double Y){
 
 bool Circulo::intersecaCon(double Xs1, double Ys1, double Xs2, double Ys2){
 
-	//envuelvo en un poligono de 8 vertices
-	PoligonoRegular polEnvolvente(this->getX(),this->getY(),this->getRadio(),8,this->getAngulo());
+	//envuelvo en un poligono
+	PoligonoRegular polEnvolvente(this->getX(),this->getY(),this->getRadio(),VERTICES_ENVOLVENTE,this->getAngulo());
 
 	bool interseca = polEnvolvente.intersecaCon(Xs1, Ys1, Xs2, Ys2);
 
@@ -57,14 +57,14 @@ Dimension* Circulo::clonar(){
 
 Dimension* Circulo::devolverPoligonEnvolvente(){
 
-	return (new PoligonoRegular(this->getX(),this->getY(),this->getRadio(),8,this->getAngulo()));
+	return (new PoligonoRegular(this->getX(),this->getY(),this->getRadio(),VERTICES_ENVOLVENTE,this->getAngulo()));
 }
 
 bool Circulo::choqueConDimension(Dimension* dim){
 
 	//podria rotarlo al reves que el circulo pero no hay necesidad geometrica de hacerlo.
 
-	//envuelvo en un poligono de 8 vertices
+	//envuelvo en un poligono
 	PoligonoRegular* polEnvolvente = (PoligonoRegular*)devolverPoligonEnvolvente();
 	
 	//y lo choco con el que me pasaron

@@ -13,6 +13,7 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 		this->myVista = NULL;
 	}
 	this->traslucido = false;
+	this->superpuesta = false;
 	fig1 = fig2 = NULL;
 }
 
@@ -105,6 +106,13 @@ Figura* Figura::clonar(){
 void Figura::setTraslucido(bool flag){
 	if(this->traslucido != flag){
 		this->traslucido=flag;
+		setCambio(true);
+	}
+}
+
+void Figura::setSuperpuesta(bool flag){
+	if(this->superpuesta != flag){
+		this->superpuesta = flag;
 		setCambio(true);
 	}
 }

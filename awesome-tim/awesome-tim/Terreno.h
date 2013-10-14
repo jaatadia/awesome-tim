@@ -26,6 +26,8 @@ private:
 	Box2DWorld * mundoBox2D;
 	bool fisicaActiva;
 
+	int contEventosMov;
+
 public:
 	Terreno(int ancho,int alto,bool fisicaActiva=true);
 	~Terreno(void);

@@ -79,5 +79,5 @@ void VistaFigura::redraw(){
 		rotada = orig->rotarImagen(fig->dimension->getAngulo());
 	}
 	if(fig->traslucido) rotada->setTransparency(150);
-
+	if(fig->superpuesta) rotada->pintarRojo();
 }
