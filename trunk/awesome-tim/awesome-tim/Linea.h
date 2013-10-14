@@ -18,6 +18,8 @@ public:
 	Linea(double x1,double y1,double x2, double y2,double ancho = 1 );
 	~Linea(void);
 
+	virtual void dibujar(Superficie* super);
+
 	virtual int getTipoFigura(){return LINEA;};
 	//virtual int getTipoDimension(){return DLINEA;};   Y ESTO?? FIX
 	virtual void setPunto1(double x1,double y1);

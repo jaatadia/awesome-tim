@@ -36,7 +36,7 @@ public:
 	//se le pasa un numero de posicion atable y devuelve la posicion x e y de donde se ata por mas que ya este atado
 	virtual void posAtableSoga(int numero,double* x,double* y){
 		*x = this->getDimension()->getX();
-		*y = this->getDimension()->getY() + this->getDimension()->getAlto()/2;
+		*y = this->getDimension()->getY() + this->getDimension()->getAlto()*5/12;
 	}
 	
 	virtual void atarSoga(int numero){

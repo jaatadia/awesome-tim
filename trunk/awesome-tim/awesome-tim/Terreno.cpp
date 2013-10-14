@@ -141,7 +141,7 @@ void Terreno::agregarFigura(Figura* fig){
 			result1->atarCorrea();
 			result2->atarCorrea();
 		
-		}else if((fig->getTipoFigura()==LINEA)&&(fig->getFigura1()==NULL)&&(fig->getFigura2()==NULL)){
+		}else if((fig->getTipoFigura()==SOGA)&&(fig->getFigura1()==NULL)&&(fig->getFigura2()==NULL)){
 			Soga* soga = (Soga*)fig;
 			double x1,y1,x2,y2;
 			soga->getPunto1(&x1,&y1);
@@ -149,11 +149,12 @@ void Terreno::agregarFigura(Figura* fig){
 			soga->getPunto2(&x2,&y2);
 			Figura* result2 = getFiguraAtableSoga(x2,y2);
 			
-			
 			if((result1 == NULL) || (result2 == NULL)){
-				delete fig;
+				std::cout<<"entro";
+				delete soga;
 				return;
 			}
+
 			double num1 = result1->esAtableSoga(x1,y1);
 			double num2 = result2->esAtableSoga(x2,y2);
 
@@ -661,16 +662,18 @@ Figura* Terreno::getFiguraAtableCorrea(double x,double y){
 
 Figura* Terreno::getFiguraAtableSoga(double x,double y){
 	if(hayFiguras()){	
+		
 		Figura* figuraBuscada = NULL;
-
 		bool figuraEncontrada = false;
+		
 		//recorro al reves asi "agarro" la figura dibujada arriba
-		std::list<Figura*>::reverse_iterator iteradorLista;
-		iteradorLista = figuras.rbegin();
+		std::list<Figura*>::iterator iteradorLista;
+		iteradorLista = figuras.begin();
 
-		while (iteradorLista != figuras.rend() && !figuraEncontrada ) {
+		while ((iteradorLista != figuras.end()) && (!figuraEncontrada)) {
 			
-			figuraEncontrada = (((*iteradorLista)->esMiPosicion(x,y))&&((*iteradorLista)->esAtableSoga(x,y)!=-1));
+			figuraEncontrada = (*iteradorLista)->esMiPosicion(x,y);
+			figuraEncontrada &= ((*iteradorLista)->esAtableSoga(x,y)!=-1);
 			figuraBuscada = (*iteradorLista);
 			
 			iteradorLista++;
