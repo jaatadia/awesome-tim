@@ -39,8 +39,8 @@ return out;
 
 YAML::Emitter& operator << (YAML::Emitter& out,Circulo* circ){
 //out << YAML::BeginMap;
-//out << YAML::Key << "radio";
-//out << YAML::Value << circ->getRadio();
+out << YAML::Key << "radio";
+out << YAML::Value << circ->getRadio();
 out << YAML::Key << "posX";
 out << YAML::Value << circ->getX();
 out << YAML::Key << "posY";
@@ -144,9 +144,13 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				break;
 			
 			case BALANCIN:
-				out << YAML::Value << "BALANCIN";
-				out << (Cuadrado*) fig->getDimension();
-				//FALTA SENTIDO
+				if (fig->getDimension()->getAngulo() > 180){
+					out << YAML::Value << "BALANCIN_DERECHA";
+					out << (Cuadrado*) fig->getDimension();
+				} else { 
+					out << YAML::Value << "BALANCIN_IZQUIERDA";
+					out << (Cuadrado*) fig->getDimension();
+				}
 				break;
 
 			case CINTATRANSPORTADORA:

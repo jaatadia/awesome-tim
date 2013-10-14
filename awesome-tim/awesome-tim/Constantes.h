@@ -73,23 +73,23 @@
 
 #define RADIO_PELOTATENIS 0.045 * COEF_MULT //2.0
 #define RESTITUCION_PELOTATENIS 0.76 //0.9
-#define DENSIDAD_PELOTATENIS 0.75
+#define DENSIDAD_PELOTATENIS 6.0
 #define FRICCION_PELOTATENIS 0.3
 
 #define RADIO_PELOTABASQUET 0.11 * COEF_MULT //6.0
 #define RESTITUCION_PELOTABASQUET 0.88 //0.9 //mas de 1 gana velocidad cada vez que rebota
-#define DENSIDAD_PELOTABASQUET 95.0 //2.0
+#define DENSIDAD_PELOTABASQUET 2.0 //2.0
 #define FRICCION_PELOTABASQUET 0.8
 
 #define RADIO_PELOTABOWLING 0.10 * COEF_MULT //5.0
 #define RESTITUCION_PELOTABOWLING 0.65 //0.3
-#define DENSIDAD_PELOTABOWLING 3.80 //6.0
+#define DENSIDAD_PELOTABOWLING 20.0 //6.0
 #define FRICCION_PELOTABOWLING 0.3
 
 #define RADIO_GLOBOHELIO 0.09 * COEF_MULT //8.0
 #define RESTITUCION_GLOBOHELIO 0.7
 #define FRICCION_GLOBOHELIO 0.07 //0.01
-#define DENSIDAD_GLOBOHELIO 0.4 //si se baja verificar que siga moviendo las plataformas
+#define DENSIDAD_GLOBOHELIO 6.1 //si se baja verificar que siga moviendo las plataformas
 #define VELOCIDAD_GLOBOHELIO -20.0
 
 #define ANCHO_PLATAFORMA 11
@@ -110,7 +110,7 @@
 #define ANCHO_BALANCIN 30
 #define ALTO_BALANCIN 4.5
 #define ANGULO_BALANCIN_IZQ 45
-#define ANGULO_BALANCIN_DER -45
+#define ANGULO_BALANCIN_DER 315
 
 #define RADIO_CINTA_TRANSPORTADORA RADIO_MINENGRANAJE
 
@@ -160,3 +160,6 @@
 #define ID_BALANCIN_DER "../images/balancin_der.png"
 #define ID_SOGA "../images/rope.png"
 
+//posiciones de balancin
+#define IZQUIERDA 1
+#define DERECHA 2
