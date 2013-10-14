@@ -5,8 +5,6 @@
 #define RUTA_DEFAULT "../yaml/archivoDefault.yml"
 
 #define CANT_CAR 40
-#define IZQUIERDA 0
-#define DERECHA 1
 
 std::string CargadorYaml::ruta_archivo = "";
 
@@ -203,6 +201,7 @@ void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,doubl
 		return;
 	}
 	const YAML::Node& nodoPos = nodoFigura["extremo1"];
+	//std::cout << x1 << "   " << y1 << "\n";
 	obtenerPosicion(nodoPos,x1,y1);
 
 	try{

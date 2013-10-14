@@ -8,8 +8,8 @@ class Engranaje2 : public Engranaje
 private:
 	VistaFiguraEstatica* myVista2;
 	Engranaje2(const char* id,Dimension* dim,bool flag):Engranaje(id,dim,flag){
-		sentido = 1;
-		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR);
+	sentido = 1;
+	myVista2 = new VistaFiguraEstatica(this,ID_MOTOR);
 	};
 	
 public:
