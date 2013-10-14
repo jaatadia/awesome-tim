@@ -65,7 +65,7 @@ Contenedor::Contenedor(void){
 	mapa[ID_TABLA_BALANCIN] = new Imagen(ID_TABLA_BALANCIN); //tabla balancin
 	mapa[ID_PUNTA_BALANCIN] = new Imagen(ID_PUNTA_BALANCIN); //puntas balancin
 	mapa[ID_SOGA] = new Imagen(ID_SOGA); //puntas balancin
-
+	mapa[ID_CINTA_TRANSPORTADORA] = new Imagen(ID_CINTA_TRANSPORTADORA); //Cinta Transportadora
 }
 
 Contenedor::~Contenedor(void){
