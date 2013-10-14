@@ -50,7 +50,8 @@ void Linea::setFigura1(Figura* fig){
 }
 
 Figura* Linea::clonar(){
-	return new Linea(ID_CORREA,(DLinea *)getDimension()->clonar());
+	//return new Linea(ID_CORREA,(DLinea *)getDimension()->clonar());
+	return new Linea(ID_CORREA,new DLinea(((DLinea*)dimension)->x1,((DLinea*)dimension)->y1,((DLinea*)dimension)->x2,((DLinea*)dimension)->y2,((DLinea*)dimension)->ancho));
 }
 
 Linea::Linea(const char* ID,DLinea* dim):Figura(ID,dim,true)
@@ -69,4 +70,10 @@ bool Linea::choqueConFigura(Figura* fig){
 bool Linea::choqueConDimension(Dimension* dim){
 
 	return false;
+}
+
+void Linea::dibujar(Superficie* super){
+	myVista->dibujar(super);
+	myVista->dibujar(super);
+	myVista->dibujar(super);
 }
