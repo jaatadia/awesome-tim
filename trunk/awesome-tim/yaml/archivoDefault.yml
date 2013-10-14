@@ -80,4 +80,5 @@ juego:
           posX: 0
           posY: 0
           angulo: 0
+          largo: 5
         cantidad_de_instancias: 100
