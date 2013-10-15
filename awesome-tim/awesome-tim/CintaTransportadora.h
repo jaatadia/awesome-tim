@@ -35,8 +35,14 @@ public:
 	virtual Figura* clonar();
 
 	virtual bool esAtableCorrea(){return !(atadoIzquierda || atadoDerecha);};
-	virtual void atarCorrea(){/*atada = true;*/};
-	virtual void desatarCorrea(){/*atada = false;*/};
+	virtual void atarCorrea(){
+		atadoIzquierda = true;
+		atadoDerecha = true;
+	};
+	virtual void desatarCorrea(){
+		atadoIzquierda = false;
+		atadoDerecha = false;
+	};
 
 	double getRadio(){return RADIO_CINTA_TRANSPORTADORA;};
 

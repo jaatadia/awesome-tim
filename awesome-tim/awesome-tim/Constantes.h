@@ -121,9 +121,9 @@
 #define ALTO_CINTA 6
 #define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA) //no me gusta, es corto, deberia cubrir la diagonal
 #define CINTA_TRANSP_MINLARGO 3
-#define RADIO_CTRANSP_CIRC ALTO_CINTA/2
+#define RADIO_CTRANSP_CIRC (ALTO_CINTA-1)/2
 #define ANCHO_CINTA 8
-#define RADIO_CTRANSP_CLAVO 1
+#define RADIO_CTRANSP_CLAVO 0.88
 
 
 
@@ -165,12 +165,12 @@
 #define ID_CINTA "../images/cintamedio2.png"
 #define ID_CTRANSP_CIRC "../images/cintacirculo.png"
 #define ID_CTRANSP_CLAVO "../images/clavo.png"
-#define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
+#define ID_CINTA_TRANSPORTADORA "../images/cintatransport.png"
 
 #define ID_MOTOR "../images/motor.jpg"
 #define ID_CORREA "../images/correa.png"
-#define ID_TABLA_BALANCIN "../images/Rectangulo.png"
-#define ID_PUNTA_BALANCIN "../images/Circulo.png"
+#define ID_TABLA_BALANCIN "../images/rect.png"
+#define ID_PUNTA_BALANCIN "../images/circulopunta.png"
 #define ID_BALANCIN_IZQ "../images/balancin_izq.png"
 #define ID_BALANCIN_DER "../images/balancin_der.png"
 #define ID_SOGA "../images/rope.png"
