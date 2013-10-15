@@ -90,7 +90,7 @@
 
 #define RADIO_GLOBOHELIO 0.09 * COEF_MULT //8.0
 #define RESTITUCION_GLOBOHELIO 0.1
-#define FRICCION_GLOBOHELIO 0.07 //0.01
+#define FRICCION_GLOBOHELIO 0.01 //0.01
 #define DENSIDAD_GLOBOHELIO 3.1 //si se baja verificar que siga moviendo las plataformas
 #define VELOCIDAD_GLOBOHELIO -20.0
 

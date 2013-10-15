@@ -569,12 +569,13 @@ void Juego::set2Click(){
 					terreno->setCambio(true);
 					botonera->setCambio(true);
 					comandos->setCambio(true);
+				}else{
+					linea->setFigura2(result);
+					linea->getFigura1()->atarCorrea();
+					linea->getFigura2()->atarCorrea();
+					terreno->agregarFigura( figuraEnAire );
+					figuraEnAire = NULL;
 				}
-				linea->setFigura2(result);
-				linea->getFigura1()->atarCorrea();
-				linea->getFigura2()->atarCorrea();
-				terreno->agregarFigura( figuraEnAire );
-				figuraEnAire = NULL;
 			}
 		}
 	}else if(figuraEnAire->getTipoFigura()==SOGA){
