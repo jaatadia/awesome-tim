@@ -17,11 +17,11 @@ JuegoPlay::JuegoPlay(Superficie* fondo, Terreno* ter,MaquinaEstados* maq)
 		if((*iteradorLista)->esUnion()){
 			figurasAux.push_back((*iteradorLista));
 		}else{
-			terreno->agregarFigura((*iteradorLista)->clonar());
+			terreno->agregarFigura((*iteradorLista)->clonar(false));
 		}
 	}
 	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
-		terreno->agregarFigura((*iteradorLista)->clonar());
+		terreno->agregarFigura((*iteradorLista)->clonar(false));
 	}
 	terreno->resizear();
 	this->setCambio(true);

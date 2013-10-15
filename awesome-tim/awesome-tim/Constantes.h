@@ -187,3 +187,12 @@
 //Para chocar circulos
 
 #define VERTICES_ENVOLVENTE 7
+
+
+#define CANT_COLORES 6
+#define COLOR_CELESTE "../images/globoceleste.png"
+#define COLOR_ROJO "../images/globorojo.png"
+#define COLOR_VERDE "../images/globoverde.png"
+#define COLOR_AMARILLO "../images/globoamarillo.png"
+#define COLOR_ROSA "../images/globorosa.png"
+#define COLOR_VIOLETA "../images/globovioleta.png"

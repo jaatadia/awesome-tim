@@ -101,7 +101,7 @@ bool Figura::intersecaCon(double X1, double Y1, double X2, double Y2){
 	return dimension->intersecaCon( X1, Y1, X2, Y2);
 }
 
-Figura* Figura::clonar(){
+Figura* Figura::clonar(bool cambiar){
 	return new Figura(ID.c_str(),dimension->clonar());
 }
 

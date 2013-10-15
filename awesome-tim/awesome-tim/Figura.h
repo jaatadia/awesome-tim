@@ -66,7 +66,7 @@ public:
 	virtual void agrandar(){};
 	virtual void achicar(){};
 
-	virtual Figura* clonar();//copia la figura
+	virtual Figura* clonar(bool cambiar=true);//copia la figura
 
 	virtual double getRadio(){return dimension->getAncho()/2.0;}
 	virtual void shift(){};//cambia los modos de la figura

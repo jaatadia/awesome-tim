@@ -5,11 +5,13 @@
 
 class GloboHelio : public Figura
 {
+
 private:
 	GloboHelio(const char* id,Dimension* dim,bool flag):Figura(id,dim){
 		atado = false;
 	};
 	bool atado;
+	static int color;
 
 public:
 	GloboHelio(double pos_X,double pos_Y):Figura(ID_GLOBO,new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0)){
@@ -20,7 +22,16 @@ public:
 	virtual int getTipoFigura(){return GLOBOHELIO;}
 	virtual int getTipoDimension(){return CIRCULO;}
 
-	Figura* clonar(){
+	Figura* clonar(bool cambiar){ //YA SE, ESTA FEO
+		if (cambiar){
+			color = (color+1) % CANT_COLORES;
+			if (color == 0) this->ID = COLOR_CELESTE;
+			else if (color == 1) this->ID = COLOR_ROJO;
+			else if (color == 2) this->ID = COLOR_AMARILLO;
+			else if (color == 3) this->ID = COLOR_ROSA;
+			else if (color == 4) this->ID = COLOR_VERDE;
+			else if (color == 5) this->ID = COLOR_VIOLETA;
+		}
 		return new GloboHelio(ID.c_str(),dimension->clonar(),true);
 	};
 
