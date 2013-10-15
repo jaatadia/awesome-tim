@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GloboHelio.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\JuegoPlay.cpp"
 				>
 			</File>

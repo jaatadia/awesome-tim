@@ -21,6 +21,10 @@ public:
 
 	virtual int getTipoFigura(){return GLOBOHELIO;}
 	virtual int getTipoDimension(){return CIRCULO;}
+	
+	Figura* clonar(){
+		return this->clonar(true);
+	}
 
 	Figura* clonar(bool cambiar){ //YA SE, ESTA FEO
 		if (cambiar){

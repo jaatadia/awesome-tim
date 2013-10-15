@@ -16,7 +16,7 @@ public:
 	int sentido;
 
 public:
-	Engranaje2(double pos_X,double pos_Y,double radio1 = RADIO_MINENGRANAJE, double angulo = 0):Engranaje(ID_ENGRANAJE2_1,pos_X,pos_Y){
+	Engranaje2(double pos_X,double pos_Y,double radio1 = RADIO_MINENGRANAJE, double angulo = 0):Engranaje(ID_ENGRANAJE2_1,pos_X,pos_Y,radio1){
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR);
 	}			

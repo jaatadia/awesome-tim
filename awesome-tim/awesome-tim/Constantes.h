@@ -116,7 +116,7 @@
 #define ANGULO_BALANCIN_DER 315
 
 #define RADIO_CINTA_TRANSPORTADORA RADIO_MAXENGRANAJE //de box2d, para cambiar la velocidad de giro de la vista
-#define VELOCITY_MULTIPLIER 10 //junto con el de arriba para cambiar la velocidad de velocidad impuesta por la cinta
+#define VELOCITY_MULTIPLIER 5 //junto con el de arriba para cambiar la velocidad de velocidad impuesta por la cinta
 
 #define ALTO_CINTA 6
 #define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA) //no me gusta, es corto, deberia cubrir la diagonal
