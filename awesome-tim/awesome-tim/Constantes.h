@@ -153,7 +153,6 @@
 //id imagenes
 //#define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
-#define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
 #define ID_GLOBO "../images/globo2.png"
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
@@ -166,6 +165,7 @@
 #define ID_CINTA "cintamedio2.png"
 #define ID_CTRANSP_CIRC "cintacirculo.png"
 #define ID_CTRANSP_CLAVO "clavo.png"
+#define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
 
 #define ID_MOTOR "../images/motor.jpg"
 #define ID_CORREA "../images/correa.png"

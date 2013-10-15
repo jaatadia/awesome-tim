@@ -290,7 +290,7 @@ Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
 	obtenerSentido(nodoFigura,&sentido);
 	obtenerRadio(nodoFigura,&radio);
 
-	Figura* figura = new Engranaje2(posX,posY,radio, 0);
+	Figura* figura = new Engranaje2(posX,posY,radio,0);
 
 	if(!figura) return NULL;
 
@@ -320,20 +320,36 @@ Figura* CargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
 	double posX,posY,angulo,radio;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerAngulo(nodoFigura,&angulo);
+	//obtenerAngulo(nodoFigura,&angulo);
 	obtenerRadio(nodoFigura,&radio);
 
-	Figura* fig = new Engranaje(posX,posY,radio,angulo);
+	Figura* fig = new Engranaje(posX,posY,radio,/*angulo*/0);
 	return fig;
 }
 Figura* CargadorYaml::crearEngranaje2(const YAML::Node& nodoFigura){ //FIX
-	double posX,posY,angulo,radio;
+	/*double posX,posY,angulo,radio;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	obtenerAngulo(nodoFigura,&angulo);
 	obtenerRadio(nodoFigura,&radio);
 
 	return new Engranaje2(posX,posY,radio,angulo);
+	*/
+	double posX,posY,radio;
+	int sentido;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerSentido(nodoFigura,&sentido);
+	obtenerRadio(nodoFigura,&radio);
+
+	Figura* figura = new Engranaje2(posX,posY,radio,0);
+
+	if(!figura) return NULL;
+
+	if(sentido == SENT_ANTIHORARIO)
+		figura->shift();
+
+	return figura;
 }
 
 Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
