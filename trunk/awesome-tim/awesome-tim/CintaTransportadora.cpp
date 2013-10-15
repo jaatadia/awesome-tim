@@ -11,6 +11,7 @@ CintaTransportadora::CintaTransportadora(double largo,double posX,double posY,do
 	this->cinta = new Figura(ID_CINTA,new Cuadrado(ANCHO_CINTA*largo,ALTO_CINTA,posX,posY,0));
 	(this->cinta)->myVista = new VistaFigAgrandable(this->cinta);
 	this->clavo = new Figura(ID_CTRANSP_CLAVO,new Circulo(RADIO_CTRANSP_CLAVO,posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC,posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO,0));
+	this->clavo2 = new Figura(ID_CTRANSP_CLAVO,new Circulo(RADIO_CTRANSP_CLAVO,posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC,posY+ALTO_CINTA/2-RADIO_CTRANSP_CLAVO,0));
 	this->circizq = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC,posY,0));
 	this->circder = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC,posY,0));
 
@@ -18,6 +19,7 @@ CintaTransportadora::CintaTransportadora(double largo,double posX,double posY,do
 	this->partesFigura.push_back(this->circizq);
 	this->partesFigura.push_back(this->circder);
 	this->partesFigura.push_back(this->clavo);
+	this->partesFigura.push_back(this->clavo2);
 
 	this->cinta->setLargo(largo);
 	
@@ -41,6 +43,9 @@ void CintaTransportadora::agrandar(){
 		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
 		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);
 
+		this->clavo2->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
+		this->clavo2->setY(posY+ALTO_CINTA/2-RADIO_CTRANSP_CLAVO);
+
 		this->circizq->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
 		this->circizq->setY(posY);
 
@@ -63,6 +68,9 @@ void CintaTransportadora::achicar(){
 
 		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
 		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);
+
+		this->clavo2->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
+		this->clavo2->setY(posY+ALTO_CINTA/2-RADIO_CTRANSP_CLAVO);
 
 		this->circizq->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
 		this->circizq->setY(posY);
@@ -123,6 +131,9 @@ void CintaTransportadora::setAngulo(double angulo){
 		calcularPosClavo(angulo,&posX_clavo,&posY_clavo);
 		this->clavo->setX(posX_clavo);
 		this->clavo->setY(posY_clavo);
+		calcularPosClavo(angulo+180,&posX_clavo,&posY_clavo);
+		this->clavo2->setX(posX_clavo);
+		this->clavo2->setY(posY_clavo);
 		setCambio(true);
 	}
 }

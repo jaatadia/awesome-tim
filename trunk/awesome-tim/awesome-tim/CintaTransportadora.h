@@ -16,6 +16,7 @@ private:
 	Figura* circizq;
 	Figura* circder;
 	Figura* clavo;
+	Figura* clavo2;
 
 private:
 		void calcularPosClavo(double angulo,double* posX_clavo,double* posY_clavo);
