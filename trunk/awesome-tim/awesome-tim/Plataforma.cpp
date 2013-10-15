@@ -21,7 +21,7 @@ void Plataforma::achicar(){
 		setCambio(true);
 	}
 }
-double Plataforma::getLargo(){
+int Plataforma::getLargo(){
 	return this->largo;
 }
 Figura* Plataforma::clonar(){

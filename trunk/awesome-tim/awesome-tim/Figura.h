@@ -29,6 +29,8 @@ protected:
 	Figura* fig1;
 	Figura* fig2;
 
+	int largo_fig; //para las agrandables
+
 public:
 	bool traslucido;
 	bool superpuesta ;
@@ -54,7 +56,6 @@ public:
 	virtual const char* getID();
 	virtual int getTipoDimension(){return dimension->getTipoDimension();};
 	virtual Dimension* getDimension();
-	virtual double getLargo();
 	virtual int getTipoFigura(){return -1;};//=0;
 
 	virtual void setTraslucido(bool flag);
@@ -104,4 +105,7 @@ public:
 	//indican si se esta o no chocando con la figura o la dimension en cuestion
 	virtual bool choqueConFigura(Figura* fig);
 	virtual bool choqueConDimension(Dimension* dim);
+
+	virtual void setLargo(int largo);
+	virtual int getLargo();
 };

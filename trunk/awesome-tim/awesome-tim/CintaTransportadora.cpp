@@ -1,23 +1,25 @@
 #include "CintaTransportadora.h"
 #include "VistaFigAgrandable.h"	
 
-CintaTransportadora::CintaTransportadora(double largo,double posX,double posY,double angulo):FiguraCompuesta(ID_CINTA_TRANSPORTADORA,new Cuadrado(ANCHO_CINTA_TRANSP*largo,ALTO_CINTA_TRANSP,posX,posY,0)){
+CintaTransportadora::CintaTransportadora(double largo,double posX,double posY,double angulo):FiguraCompuesta(ID_CINTA_TRANSPORTADORA,new Cuadrado(ANCHO_CINTA*largo,ALTO_CINTA,posX,posY,0)){
 	this->largo = largo;
 	
 	this->atadoDerecha = false;
 	this->atadoIzquierda = false;
 
 	//this->myVista = new VistaFigAgrandable(this);
-	this->cinta = new Figura(ID_CINTA,new Cuadrado(ANCHO_CINTA_TRANSP*largo,ALTO_CINTA_TRANSP,posX,posY,0));
+	this->cinta = new Figura(ID_CINTA,new Cuadrado(ANCHO_CINTA*largo,ALTO_CINTA,posX,posY,0));
 	(this->cinta)->myVista = new VistaFigAgrandable(this->cinta);
-	this->circizq = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX-ANCHO_CINTA/2+RADIO_CTRANSP_CIRC,posY,0));
-	this->circder = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX+ANCHO_CINTA/2-RADIO_CTRANSP_CIRC,posY,0));
-	this->clavo = new Figura(ID_CTRANSP_CLAVO,new Circulo(RADIO_CTRANSP_CLAVO,posX,posY-ALTO_CINTA_TRANSP/2-RADIO_CTRANSP_CLAVO,0));
+	this->clavo = new Figura(ID_CTRANSP_CLAVO,new Circulo(RADIO_CTRANSP_CLAVO,posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC,posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO,0));
+	this->circizq = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC,posY,0));
+	this->circder = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC,posY,0));
 
 	this->partesFigura.push_back(this->cinta);
 	this->partesFigura.push_back(this->circizq);
 	this->partesFigura.push_back(this->circder);
 	this->partesFigura.push_back(this->clavo);
+
+	this->cinta->setLargo(largo);
 	
 	//puede q falte lo de inic angulos
 }
@@ -28,20 +30,50 @@ CintaTransportadora::~CintaTransportadora(void){
 void CintaTransportadora::agrandar(){
 	if (this->largo < CINTA_TRANSP_MAXLARGO){
 		this->largo++;
-		this->getDimension()->setAncho(ANCHO_CINTA_TRANSP*largo);
-		this->cinta->getDimension()->setAncho(ANCHO_CINTA_TRANSP*largo);
+		this->getDimension()->setAncho(ANCHO_CINTA*largo);
+
+		double posX = this->getDimension()->getX();
+		double posY = this->getDimension()->getY();
+
+		this->cinta->getDimension()->setAncho(ANCHO_CINTA*largo);
+		this->cinta->setLargo(largo);
+
+		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
+		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);
+
+		this->circizq->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
+		this->circizq->setY(posY);
+
+		this->circder->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
+		this->circder->setY(posY);
+
 		setCambio(true);
 	}
 }
 void CintaTransportadora::achicar(){
 	if (this->largo > CINTA_TRANSP_MINLARGO){
 		this->largo--;
-		this->getDimension()->setAncho(ANCHO_CINTA_TRANSP*largo);
-		this->cinta->getDimension()->setAncho(ANCHO_CINTA_TRANSP*largo);
+		this->getDimension()->setAncho(ANCHO_CINTA*largo);
+
+		double posX = this->getDimension()->getX();
+		double posY = this->getDimension()->getY();
+
+		this->cinta->getDimension()->setAncho(ANCHO_CINTA*largo);
+		this->cinta->setLargo(largo);
+
+		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
+		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);
+
+		this->circizq->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
+		this->circizq->setY(posY);
+
+		this->circder->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
+		this->circder->setY(posY);
+
 		setCambio(true);
 	}
 }
-double CintaTransportadora::getLargo(){
+int CintaTransportadora::getLargo(){
 	return this->largo;
 }
 Figura* CintaTransportadora::clonar(){
