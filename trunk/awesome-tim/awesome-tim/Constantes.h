@@ -163,9 +163,9 @@
 #define ID_ENGRANAJE2_1 "../images/engranaje2-1.png"
 #define ID_ENGRANAJE2_2 "../images/engranaje2-2.png"
 
-#define ID_CINTA "cintamedio2.png"
-#define ID_CTRANSP_CIRC "cintacirculo.png"
-#define ID_CTRANSP_CLAVO "clavo.png"
+#define ID_CINTA "../images/cintamedio2.png"
+#define ID_CTRANSP_CIRC "../images/cintacirculo.png"
+#define ID_CTRANSP_CLAVO "../images/clavo.png"
 #define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
 
 #define ID_MOTOR "../images/motor.jpg"
