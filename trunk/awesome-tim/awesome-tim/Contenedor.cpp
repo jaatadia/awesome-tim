@@ -49,13 +49,14 @@ Contenedor::Contenedor(void){
 
 	////cargo las imagenes de los elementos del juego
 	mapa[ID_PLATAFORMA] = new Imagen(ID_PLATAFORMA); //si el id estuviese en el archivo yaml esto no iria
+//	mapa[ImgSegmSoga]= new Imagen(ImgSegmSoga);
 	mapa[ID_GLOBO] = new Imagen(ID_GLOBO);
 	mapa[ID_PELOTATENIS] = new Imagen(ID_PELOTATENIS);
 	mapa[ID_PELOTABASQUET] = new Imagen(ID_PELOTABASQUET);
 	mapa[ID_PELOTABOWLING] = new Imagen(ID_PELOTABOWLING);
 	mapa[ID_CINTA] = new Imagen(ID_CINTA); //cinta transportadora
-	mapa[ID_PUNTA_CINTA_IZQ] = new Imagen(ID_PUNTA_CINTA_IZQ); //punta izq de cinta
-	mapa[ID_PUNTA_CINTA_DER] = new Imagen(ID_PUNTA_CINTA_DER); //punta der de cinta
+//	mapa[ID_PUNTA_CINTA_IZQ] = new Imagen(ID_PUNTA_CINTA_IZQ); //punta izq de cinta
+//	mapa[ID_PUNTA_CINTA_DER] = new Imagen(ID_PUNTA_CINTA_DER); //punta der de cinta
 	mapa[ID_MOTOR] = new Imagen(ID_MOTOR); //motor
 	mapa[ID_CORREA] = new Imagen(ID_CORREA); //correa
 	mapa[ID_ENGRANAJE] = new Imagen(ID_ENGRANAJE); //engranaje

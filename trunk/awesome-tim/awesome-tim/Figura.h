@@ -25,13 +25,14 @@ protected:
 	Figura(){};	
 	Dimension* dimension;
 	std::string ID;
-	VistaFigura* myVista;
+	
 	Figura* fig1;
 	Figura* fig2;
 
 public:
 	bool traslucido;
 	bool superpuesta ;
+	VistaFigura* myVista;
 
 public:
 	

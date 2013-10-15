@@ -75,7 +75,7 @@
 
 #define RADIO_PELOTATENIS 0.045 * COEF_MULT //2.0
 #define RESTITUCION_PELOTATENIS 0.76 //0.9
-#define DENSIDAD_PELOTATENIS 6.0
+#define DENSIDAD_PELOTATENIS 3.0
 #define FRICCION_PELOTATENIS 0.3
 
 #define RADIO_PELOTABASQUET 0.11 * COEF_MULT //6.0
@@ -91,14 +91,15 @@
 #define RADIO_GLOBOHELIO 0.09 * COEF_MULT //8.0
 #define RESTITUCION_GLOBOHELIO 0.7
 #define FRICCION_GLOBOHELIO 0.07 //0.01
-#define DENSIDAD_GLOBOHELIO 6.1 //si se baja verificar que siga moviendo las plataformas
+#define DENSIDAD_GLOBOHELIO 3.1 //si se baja verificar que siga moviendo las plataformas
 #define VELOCIDAD_GLOBOHELIO -20.0
 
 #define ANCHO_PLATAFORMA 11
-#define ALTO_PLATAFORMA 5
+#define ALTO_PLATAFORMA 6
 #define PLATAFORMA_DENSIDAD 1
 #define PLATAFORMA_FRICCION 100
 #define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, deberia cubrir la diagonal
+#define PLATAFORMA_MINLARGO 1
 
 #define RADIO_MINENGRANAJE 5.0
 #define RADIO_MAXENGRANAJE 15.0
@@ -114,9 +115,17 @@
 #define ANGULO_BALANCIN_IZQ 45
 #define ANGULO_BALANCIN_DER 315
 
-#define LARGO_CINTA_TRANSPORTADORA 5
+#define RADIO_CINTA_TRANSPORTADORA RADIO_MINENGRANAJE/2 //de box2d
 
-#define RADIO_CINTA_TRANSPORTADORA RADIO_MINENGRANAJE/2
+#define ANCHO_CINTA_TRANSP 10
+#define ALTO_CINTA_TRANSP 5
+#define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA_TRANSP) //no me gusta, es corto, deberia cubrir la diagonal
+#define CINTA_TRANSP_MINLARGO 3
+#define RADIO_CTRANSP_CIRC 4
+#define ANCHO_CINTA 12
+#define RADIO_CTRANSP_CLAVO 1
+
+
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -133,15 +142,16 @@
 #define ANCHO_DEFAULT 5
 #define ALTO_DEFAULT 5
 #define BASE_DEFAULT 7
-#define LARGO_PLATAFORMA_DEFAULT 5
 #define INSTANCIAS_DEFAULT 100
 #define VERTICES_DEFAULT 5
 #define ID_DEFAULT ""
+#define LARGO_PLATAFORMA_DEFAULT 2
 
 //Por si no estuviese claro: PI
 #define PI 3.1415926535897932384626433832795028841971693993751058209749
 
 //id imagenes
+//#define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
 #define ID_CINTA_TRANSPORTADORA "../images/CintaTransportadora.png"
 #define ID_GLOBO "../images/globo2.png"
@@ -153,9 +163,10 @@
 #define ID_ENGRANAJE2_1 "../images/engranaje2-1.png"
 #define ID_ENGRANAJE2_2 "../images/engranaje2-2.png"
 
-#define ID_CINTA ""
-#define ID_PUNTA_CINTA_IZQ ""
-#define ID_PUNTA_CINTA_DER ""
+#define ID_CINTA "cintamedio2.png"
+#define ID_CTRANSP_CIRC "cintacirculo.png"
+#define ID_CTRANSP_CLAVO "clavo.png"
+
 #define ID_MOTOR "../images/motor.jpg"
 #define ID_CORREA "../images/correa.png"
 #define ID_TABLA_BALANCIN "../images/Rectangulo.png"
