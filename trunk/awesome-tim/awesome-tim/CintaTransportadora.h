@@ -8,7 +8,7 @@
 class CintaTransportadora: public FiguraCompuesta
 {
 private:
-	double largo;
+	int largo;
 	//double angulo;
 	bool atadoDerecha;
 	bool atadoIzquierda;
@@ -23,7 +23,7 @@ private:
 public:
 
 	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
-	CintaTransportadora(double largo,double pos_x,double pos_y,double angulo);
+	CintaTransportadora(int largo,double pos_x,double pos_y,double angulo);
 	~CintaTransportadora(void);
 	virtual int getLargo();
 	void agrandar();

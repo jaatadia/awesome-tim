@@ -4,7 +4,7 @@
 class VistaFigAgrandable :	public VistaFigura
 {
 private:
-	double largo_anterior;
+	int largo_anterior;
 	Imagen* imggrande;
 
 public:

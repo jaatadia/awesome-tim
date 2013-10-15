@@ -153,7 +153,6 @@
 //id imagenes
 //#define ImgSegmSoga "../images/Cuadrado.png"
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
-#define ID_GLOBO "../images/globo2.png"
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
 #define ID_PELOTABOWLING "../images/Bowling.png"
@@ -188,7 +187,8 @@
 
 #define VERTICES_ENVOLVENTE 7
 
-
+//colores del globo
+#define ID_GLOBO "../images/globoceleste.png"
 #define CANT_COLORES 6
 #define COLOR_CELESTE "../images/globoceleste.png"
 #define COLOR_ROJO "../images/globorojo.png"

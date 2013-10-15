@@ -317,7 +317,7 @@ Figura* CargadorYaml::crearCorrea(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
-	double posX,posY,angulo,radio;
+	double posX,posY,radio;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	//obtenerAngulo(nodoFigura,&angulo);
@@ -958,7 +958,7 @@ bool CargadorYaml::cant_instancias_valida(int instancias){
 	return (instancias >= 0);
 }
 
-bool CargadorYaml::largo_valido(double largo){
+bool CargadorYaml::largo_valido(int largo){
 	//FIXME: cuando es un largo valido? //checked. -flor
 	return (largo > 0 || largo <= PLATAFORMA_MAXLARGO);
 }
