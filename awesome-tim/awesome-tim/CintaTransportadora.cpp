@@ -14,6 +14,10 @@ CintaTransportadora::CintaTransportadora(double largo,double posX,double posY,do
 	this->circder = new Figura(ID_CTRANSP_CIRC,new Circulo(RADIO_CTRANSP_CIRC,posX+ANCHO_CINTA/2-RADIO_CTRANSP_CIRC,posY,0));
 	this->clavo = new Figura(ID_CTRANSP_CLAVO,new Circulo(RADIO_CTRANSP_CLAVO,posX,posY-ALTO_CINTA_TRANSP/2-RADIO_CTRANSP_CLAVO,0));
 
+	this->partesFigura.push_back(this->cinta);
+	this->partesFigura.push_back(this->circizq);
+	this->partesFigura.push_back(this->circder);
+	
 	//puede q falte lo de inic angulos
 }
 
