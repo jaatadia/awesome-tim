@@ -192,6 +192,16 @@ void Balancin::posAtableSoga(int numero,double* x,double* y){
 	}
 }
 void Balancin::atarSoga(int numero){
+	if (numero == 1){
+		atadoIzquierda = true;
+	}else if (numero == 2){
+		atadoDerecha = true;
+	}
 }
 void Balancin::desatarSoga(int numero){
+	if (numero == 1){
+		atadoIzquierda = false;
+	}else if (numero == 2){
+		atadoDerecha = false;
+	}
 }

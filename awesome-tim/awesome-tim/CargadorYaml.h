@@ -53,7 +53,7 @@ private:
 	static bool posicion_validaX(double posX);
 	static bool posicion_validaY(double posY);
 	static bool angulo_valido(double angulo);
-	static bool largo_valido(double largo);
+	static bool largo_valido(int largo);
 	static bool alto_valido(double alto);
 	static bool ancho_valido(double ancho);
 	static bool radio_valido(double radio);

@@ -263,6 +263,8 @@ void Terreno::agrandarFigura()
 		corregirPosicion(figuraActiva);
 		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
+		bool choca = this->posicionOcupada(figuraActiva);
+		figuraActiva->setSuperpuesta(choca);
 	}
 }
 
@@ -288,6 +290,8 @@ void Terreno::achicarFigura()
 		corregirPosicion(figuraActiva);
 		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
+		bool choca = this->posicionOcupada(figuraActiva);
+		figuraActiva->setSuperpuesta(choca);
 	}
 }
 

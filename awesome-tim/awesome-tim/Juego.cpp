@@ -293,15 +293,27 @@ while(SDL_PollEvent(&evento)){
 			//scroll de botonera SIEMPRE sin importar la posicion
 			if (evento.wheel.y > 0){	
 				if(clickPressed){
-					if(figuraEnAire) figuraEnAire->agrandar();
-					else terreno->agrandarFigura();
+					if(figuraEnAire){
+						figuraEnAire->agrandar();
+						if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
+							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
+						}else{
+							figuraEnAire->setSuperpuesta( false );
+						}
+					}else terreno->agrandarFigura();
 				}else{
 					this->botonera->ScrollUp();
 				}
 			}else if (evento.wheel.y < 0){
 				if(clickPressed){
-					if(figuraEnAire) figuraEnAire->achicar();
-					else terreno->achicarFigura();
+					if(figuraEnAire){
+						figuraEnAire->achicar();
+						if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
+							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
+						}else{
+							figuraEnAire->setSuperpuesta( false );
+						}
+					}else terreno->achicarFigura();
 				}else{
 					this->botonera->ScrollDown();
 				}

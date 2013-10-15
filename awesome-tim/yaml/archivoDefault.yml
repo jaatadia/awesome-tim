@@ -1,38 +1,10 @@
 juego:
   terreno:
-    fondo: ../images/fondo-gris.jpg
+    fondo: ../images/15.jpg
     lista_figuras:
       []
   botonera:
     lista_figuras:
-      - figura:
-          tipo_figura: ENGRANAJE2
-          posX: 0
-          posY: 0
-          radio: 25
-          sentido: -1
-        cantidad_de_instancias: 100
-      - figura:
-          tipo_figura: LINEA
-          extremo1:
-            posX: 0
-            posY: 0
-          extremo2:
-            posX: 0
-            posY: 0
-        cantidad_de_instancias: 100
-      - figura:
-          tipo_figura: CINTA_TRANSPORTADORA
-          posX: 0
-          posY: 0
-          angulo: 0
-          largo: 3
-        cantidad_de_instancias: 100
-      - figura:
-          tipo_figura: GLOBO_HELIO
-          posX: 0
-          posY: 0
-        cantidad_de_instancias: 100
       - figura:
           tipo_figura: PLATAFORMA
           largo: 1
@@ -41,9 +13,10 @@ juego:
           angulo: 0
         cantidad_de_instancias: 100
       - figura:
-          tipo_figura: PELOTA_BASQUET
+          tipo_figura: PELOTA_TENIS
           posX: 0
           posY: 0
+          angulo: 0
         cantidad_de_instancias: 100
       - figura:
           tipo_figura: BOLA_BOWLING
@@ -51,17 +24,9 @@ juego:
           posY: 0
         cantidad_de_instancias: 100
       - figura:
-          tipo_figura: PELOTA_TENIS
+          tipo_figura: PELOTA_BASQUET
           posX: 0
           posY: 0
-          angulo: 0
-        cantidad_de_instancias: 100
-      - figura:
-          tipo_figura: ENGRANAJE
-          posX: 0
-          posY: 0
-          angulo: 0
-          radio: 10
         cantidad_de_instancias: 100
       - figura:
           tipo_figura: SOGA
@@ -73,12 +38,47 @@ juego:
             posY: 0
         cantidad_de_instancias: 100
       - figura:
+          tipo_figura: GLOBO_HELIO
+          posX: 0
+          posY: 0
+        cantidad_de_instancias: 100
+      - figura:
           tipo_figura: BALANCIN_IZQUIERDA
-          posX: 50
-          posY: 50
+          posX: 0
+          posY: 0
         cantidad_de_instancias: 100
       - figura:
           tipo_figura: BALANCIN_DERECHA
-          posX: 50
-          posY: 50
+          posX: 0
+          posY: 0
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: LINEA
+          extremo1:
+            posX: 0
+            posY: 0
+          extremo2:
+            posX: 0
+            posY: 0
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: ENGRANAJE2
+          posX: 0
+          posY: 0
+          radio: 10
+          sentido: -1
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: ENGRANAJE
+          posX: 0
+          posY: 0
+          angulo: 0
+          radio: 10
+        cantidad_de_instancias: 100
+      - figura:
+          tipo_figura: CINTA_TRANSPORTADORA
+          posX: 0
+          posY: 0
+          angulo: 0
+          largo: 3
         cantidad_de_instancias: 100

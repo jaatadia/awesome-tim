@@ -41,7 +41,7 @@ void VistaLinea::dibujar(Superficie* canvas){
 			calcAncho = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->ancho));
 
 			if(simple){
-				canvas->dibujarLinea(calcX1,calcY1,calcX2,calcY2,calcAncho,100,30,30);
+				canvas->dibujarLinea(calcX1,calcY1,calcX2,calcY2,calcAncho,193,154,107);
 			}else{
 				int desfasajeX;
 				int desfasajeY;

@@ -5,9 +5,9 @@
 
 class Plataforma : public Figura{
 private:
-	double largo;
+	int largo;
 public:
-	Plataforma(double largo,double pos_x,double pos_y,double angulo);
+	Plataforma(int largo,double pos_x,double pos_y,double angulo);
 	~Plataforma(void);
 	void agrandar();
 	void achicar();
