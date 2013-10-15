@@ -89,7 +89,7 @@
 #define FRICCION_PELOTABOWLING 0.3
 
 #define RADIO_GLOBOHELIO 0.09 * COEF_MULT //8.0
-#define RESTITUCION_GLOBOHELIO 0.7
+#define RESTITUCION_GLOBOHELIO 0.1
 #define FRICCION_GLOBOHELIO 0.07 //0.01
 #define DENSIDAD_GLOBOHELIO 3.1 //si se baja verificar que siga moviendo las plataformas
 #define VELOCIDAD_GLOBOHELIO -20.0
@@ -115,13 +115,14 @@
 #define ANGULO_BALANCIN_IZQ 45
 #define ANGULO_BALANCIN_DER 315
 
-#define RADIO_CINTA_TRANSPORTADORA RADIO_MINENGRANAJE/2 //de box2d
+#define RADIO_CINTA_TRANSPORTADORA RADIO_MAXENGRANAJE //de box2d, para cambiar la velocidad de giro de la vista
+#define VELOCITY_MULTIPLIER 10 //junto con el de arriba para cambiar la velocidad de velocidad impuesta por la cinta
 
 #define ANCHO_CINTA_TRANSP 10
 #define ALTO_CINTA_TRANSP 5
 #define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA_TRANSP) //no me gusta, es corto, deberia cubrir la diagonal
 #define CINTA_TRANSP_MINLARGO 3
-#define RADIO_CTRANSP_CIRC 4
+#define RADIO_CTRANSP_CIRC ALTO_CINTA_TRANSP/2
 #define ANCHO_CINTA 12
 #define RADIO_CTRANSP_CLAVO 1
 
