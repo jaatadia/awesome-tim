@@ -92,12 +92,13 @@ void CintaTransportadora::calcularPosClavo(double ang,double* posX_clavo,double*
 	Dimension* dim = this->getDimension();
 	double alto_plat = dim->getAlto();
 	double ancho_plat = dim->getAncho();
+	double radio = ((Circulo*)this->clavo->getDimension())->getRadio();
 	
 	double angulo = ang;
 	while (angulo < 0) angulo+=360;
 	while (angulo >= 360) angulo-=360;
 
-	double conversion = (ancho_plat+alto_plat)/180;//si en 360 grados tengo que andar 2alto y 2ancho //por algun motivo con el *5 anda bien
+	double conversion = (ancho_plat+alto_plat)/180;//si en 360 grados tengo que andar 2alto y 2ancho
 	double div1 = (180*ancho_plat/(ancho_plat+alto_plat));
 	double div2 = 180;
 	double div3 = (180*(2*ancho_plat+alto_plat)/(ancho_plat+alto_plat));
@@ -105,15 +106,15 @@ void CintaTransportadora::calcularPosClavo(double ang,double* posX_clavo,double*
 
 	if((angulo>=0)&&(angulo< div1)){
 		*posX_clavo = dim->getX() + ancho_plat/2 - angulo*conversion;
-		*posY_clavo = dim->getY() - alto_plat/2;
+		*posY_clavo = dim->getY() - alto_plat/2 + radio;
 	}else if(angulo<=div2){
-		*posX_clavo = dim->getX() - ancho_plat/2;
+		*posX_clavo = dim->getX() - ancho_plat/2 + radio;
 		*posY_clavo = dim->getY() - alto_plat/2 + (angulo-div1)*conversion;
 	}else if(angulo<div3){
 		*posX_clavo = dim->getX() - ancho_plat/2 + (angulo-div2)*conversion;
-		*posY_clavo = dim->getY() + alto_plat/2;
+		*posY_clavo = dim->getY() + alto_plat/2 - radio;
 	}else if(angulo<div4){
-		*posX_clavo = dim->getX() + ancho_plat/2;
+		*posX_clavo = dim->getX() + ancho_plat/2 - radio;
 		*posY_clavo = dim->getY() + alto_plat/2 - (angulo-div3)*conversion;
 	}
 	

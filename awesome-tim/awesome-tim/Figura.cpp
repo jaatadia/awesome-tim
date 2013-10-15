@@ -175,4 +175,5 @@ bool Figura::choqueConDimension(Dimension* dim){
 }
 void Figura::setLargo(int largo){
 	this->largo_fig = largo;
+	this->setCambio(true);
 }
