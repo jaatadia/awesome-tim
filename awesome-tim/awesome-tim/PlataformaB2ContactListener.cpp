@@ -49,7 +49,7 @@ void PlataformaB2ContactListener::BeginContact(b2Contact* contact){
 	if(velCentro == 0) return;
 
 	//cuerpo->ApplyLinearImpulse(b2Vec2(sentido*cuerpo->GetMass()*velCentro,0),cuerpo->GetPosition());
-	double velX = sentido*velCentro;
+	double velX = sentido*velCentro*VELOCITY_MULTIPLIER;
 	double velY = cuerpo->GetLinearVelocity().y+0;
 	cuerpo->SetLinearVelocity(b2Vec2(velX,velY));
 }
