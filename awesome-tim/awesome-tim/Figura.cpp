@@ -15,6 +15,8 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->traslucido = false;
 	this->superpuesta = false;
 	fig1 = fig2 = NULL;
+
+	this->largo_fig = 1;
 }
 
 
@@ -129,8 +131,8 @@ void Figura::setAngulo(double angulo){
 	}
 }
 
-double Figura::getLargo(){
-	return 1;
+int Figura::getLargo(){
+	return this->largo_fig;
 }
 
 
@@ -166,4 +168,7 @@ bool Figura::choqueConFigura(Figura* fig){
 bool Figura::choqueConDimension(Dimension* dim){
 //como no lo se en la figura delego a la dimension (o dimensiones).
 	return dimension->choqueConDimension(dim);
+}
+void Figura::setLargo(int largo){
+	this->largo_fig = largo;
 }

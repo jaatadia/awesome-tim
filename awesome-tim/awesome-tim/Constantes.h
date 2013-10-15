@@ -118,12 +118,11 @@
 #define RADIO_CINTA_TRANSPORTADORA RADIO_MAXENGRANAJE //de box2d, para cambiar la velocidad de giro de la vista
 #define VELOCITY_MULTIPLIER 10 //junto con el de arriba para cambiar la velocidad de velocidad impuesta por la cinta
 
-#define ANCHO_CINTA_TRANSP 10
-#define ALTO_CINTA_TRANSP 5
-#define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA_TRANSP) //no me gusta, es corto, deberia cubrir la diagonal
+#define ALTO_CINTA 6
+#define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA) //no me gusta, es corto, deberia cubrir la diagonal
 #define CINTA_TRANSP_MINLARGO 3
-#define RADIO_CTRANSP_CIRC ALTO_CINTA_TRANSP/2
-#define ANCHO_CINTA 12
+#define RADIO_CTRANSP_CIRC ALTO_CINTA/2
+#define ANCHO_CINTA 8
 #define RADIO_CTRANSP_CLAVO 1
 
 

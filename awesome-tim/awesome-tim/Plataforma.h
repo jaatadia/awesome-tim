@@ -15,7 +15,7 @@ public:
 	virtual int getTipoDimension();
 	virtual int getTipoFigura();
 
-	virtual double getLargo();
+	virtual int getLargo();
 	virtual Figura* clonar();
 
 	virtual bool rotable(){return true;}

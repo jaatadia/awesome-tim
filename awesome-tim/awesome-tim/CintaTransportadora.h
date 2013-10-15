@@ -24,7 +24,7 @@ public:
 	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
 	CintaTransportadora(double largo,double pos_x,double pos_y,double angulo);
 	~CintaTransportadora(void);
-	virtual double getLargo();
+	virtual int getLargo();
 	void agrandar();
 	void achicar();
 
