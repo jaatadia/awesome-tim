@@ -1,4 +1,6 @@
 #include "GeneradorYaml.h"
+#include "Engranaje2.h"
+
 
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
 //out << YAML::BeginMap;
@@ -141,6 +143,8 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 			case ENGRANAJE2:
 				out << YAML::Value << "ENGRANAJE2";
 				out << (Circulo*) fig->getDimension();
+				out << YAML::Key << "sentido";
+				out << YAML::Value << ((Engranaje2*) fig)->sentido;
 				break;
 			
 			case BALANCIN:
@@ -163,6 +167,8 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 			case MOTOR:
 				out << YAML::Value << "MOTOR";
 				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "sentido";
+				out << YAML::Value << ((Engranaje2*) fig)->sentido;
 				break;
 
 			default:

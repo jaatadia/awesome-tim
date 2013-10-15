@@ -54,7 +54,6 @@ Contenedor::Contenedor(void){
 	mapa[ID_PELOTATENIS] = new Imagen(ID_PELOTATENIS);
 	mapa[ID_PELOTABASQUET] = new Imagen(ID_PELOTABASQUET);
 	mapa[ID_PELOTABOWLING] = new Imagen(ID_PELOTABOWLING);
-	mapa[ID_CINTA] = new Imagen(ID_CINTA); //cinta transportadora
 //	mapa[ID_PUNTA_CINTA_IZQ] = new Imagen(ID_PUNTA_CINTA_IZQ); //punta izq de cinta
 //	mapa[ID_PUNTA_CINTA_DER] = new Imagen(ID_PUNTA_CINTA_DER); //punta der de cinta
 	mapa[ID_MOTOR] = new Imagen(ID_MOTOR); //motor
@@ -64,7 +63,9 @@ Contenedor::Contenedor(void){
 	mapa[ID_ENGRANAJE2_2] = new Imagen(ID_ENGRANAJE2_2); //engranaje
 	mapa[ID_TABLA_BALANCIN] = new Imagen(ID_TABLA_BALANCIN); //tabla balancin
 	mapa[ID_PUNTA_BALANCIN] = new Imagen(ID_PUNTA_BALANCIN); //puntas balancin
-	mapa[ID_SOGA] = new Imagen(ID_SOGA); //puntas balancin
+	mapa[ID_BALANCIN_IZQ] = new Imagen(ID_BALANCIN_IZQ);
+	mapa[ID_BALANCIN_DER] = new Imagen(ID_BALANCIN_DER);
+	mapa[ID_SOGA] = new Imagen(ID_SOGA); //soga
 	mapa[ID_CINTA_TRANSPORTADORA] = new Imagen(ID_CINTA_TRANSPORTADORA); //Cinta Transportadora
 	mapa[ID_CTRANSP_CIRC] = new Imagen(ID_CTRANSP_CIRC);
 	mapa[ID_CTRANSP_CLAVO] = new Imagen(ID_CTRANSP_CLAVO);

@@ -65,7 +65,7 @@ void Balancin::calcularPosPuntas(double& posXizq,double& posXder, double& posYiz
 
 	posXizq = ( posX_Tabla - (ANCHO_BALANCIN / 2) + RADIO_PUNTA_BALANCIN);
 	posXder = ( posX_Tabla + (ANCHO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
-	posYizq = posYder = ( posY_Tabla - (ALTO_BALANCIN / 2) - RADIO_PUNTA_BALANCIN);
+	posYizq = posYder = ( posY_Tabla - (ALTO_BALANCIN / 2) - (0.5)*RADIO_PUNTA_BALANCIN);
 
 //	double centroX = posX_Tabla;
 //	double centroY = posY_Tabla;

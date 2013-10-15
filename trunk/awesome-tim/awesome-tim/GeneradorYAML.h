@@ -8,7 +8,6 @@
 #include "Triangulo.h"
 #include "PoligonoRegular.h"
 #include "DLinea.h"
-
 #include "Plataforma.h"
 
 #include <iostream>
