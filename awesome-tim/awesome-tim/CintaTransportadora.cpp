@@ -17,6 +17,7 @@ CintaTransportadora::CintaTransportadora(double largo,double posX,double posY,do
 	this->partesFigura.push_back(this->cinta);
 	this->partesFigura.push_back(this->circizq);
 	this->partesFigura.push_back(this->circder);
+	this->partesFigura.push_back(this->clavo);
 	
 	//puede q falte lo de inic angulos
 }
@@ -46,36 +47,34 @@ double CintaTransportadora::getLargo(){
 Figura* CintaTransportadora::clonar(){
 	return new CintaTransportadora(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
 }
-void CintaTransportadora::calcularPosClavo(double angulo,double* posX_clavo,double* posY_clavo){
+void CintaTransportadora::calcularPosClavo(double ang,double* posX_clavo,double* posY_clavo){
 	
 	Dimension* dim = this->getDimension();
 	double alto_plat = dim->getAlto();
 	double ancho_plat = dim->getAncho();
-	double alto = dim->getAlto()/2;
-
+	
+	double angulo = ang;
 	while (angulo < 0) angulo+=360;
 	while (angulo >= 360) angulo-=360;
-	angulo *= PI/180;
-	
-	if ( angulo >= 0 && angulo <= atan2(alto_plat,ancho_plat) ){
 
-		*posY_clavo = dim->getY() + tan(angulo)/(ancho_plat/2);
-		*posX_clavo = dim->getX() + (ancho_plat/2);
+	double conversion = (ancho_plat+alto_plat)/180;//si en 360 grados tengo que andar 2alto y 2ancho //por algun motivo con el *5 anda bien
+	double div1 = (180*ancho_plat/(ancho_plat+alto_plat));
+	double div2 = 180;
+	double div3 = (180*(2*ancho_plat+alto_plat)/(ancho_plat+alto_plat));
+	double div4 = 360;
 
-	}else if (angulo <= atan2(alto_plat,-ancho_plat)){
-
-		*posY_clavo = dim->getY() + tan(angulo)/(ancho_plat/2);
-		*posX_clavo = dim->getX() + (ancho_plat/2);
-
-	}else if (angulo <= atan2(-alto_plat,-ancho_plat)){
-
-		*posY_clavo = dim->getY() - tan(angulo)/(ancho_plat/2);
-		*posX_clavo = dim->getX() - (ancho_plat/2);
-
-	}else {
-
-		*posY_clavo = dim->getY() + tan(angulo)/(ancho_plat/2);
-		*posX_clavo = dim->getX() + (ancho_plat/2);
+	if((angulo>=0)&&(angulo< div1)){
+		*posX_clavo = dim->getX() + ancho_plat/2 - angulo*conversion;
+		*posY_clavo = dim->getY() - alto_plat/2;
+	}else if(angulo<=div2){
+		*posX_clavo = dim->getX() - ancho_plat/2;
+		*posY_clavo = dim->getY() - alto_plat/2 + (angulo-div1)*conversion;
+	}else if(angulo<div3){
+		*posX_clavo = dim->getX() - ancho_plat/2 + (angulo-div2)*conversion;
+		*posY_clavo = dim->getY() + alto_plat/2;
+	}else if(angulo<div4){
+		*posX_clavo = dim->getX() + ancho_plat/2;
+		*posY_clavo = dim->getY() + alto_plat/2 - (angulo-div3)*conversion;
 	}
 	
 }
