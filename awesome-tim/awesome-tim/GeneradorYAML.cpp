@@ -156,6 +156,8 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 			case CINTATRANSPORTADORA:
 				out << YAML::Value << "CINTA_TRANSPORTADORA";
 				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "largo";
+				out << YAML::Value << fig->getLargo();
 				break;
 
 			case MOTOR:

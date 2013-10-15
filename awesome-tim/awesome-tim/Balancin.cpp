@@ -3,10 +3,8 @@
 #include "Cuadrado.h"
 
 #define TABLA 0
-#define DERECHA 1
-#define IZQUIERDA 2
 
-//#define PUNTA_NO_GIRADA 0
+/*#define PUNTA_NO_GIRADA 0
 
 //Balancin::Balancin(double posX, double posY, double angulo,std::list<Figura*> listaFiguras):FiguraCompuesta(listaFiguras,angulo){
 //	
@@ -27,6 +25,7 @@
 //	this->atadoDerecha = false;
 //	this->atadoIzquierda = false;
 //}
+*/
 
 Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN+2*RADIO_PUNTA_BALANCIN,posX,posY,0)){
 
@@ -178,7 +177,7 @@ Figura* Balancin::getPuntaDer(){
 }
 
 int Balancin::esAtableSoga(double x,double y){
-	if ((!this->atadoIzquierda) && x < this->getDimension()->getX()) return 1;
+	if ((!this->atadoIzquierda) && x <= this->getDimension()->getX()) return 1;
 	else if ((!this->atadoDerecha) && x > this->getDimension()->getX()) return 2;
 	return -1;
 }

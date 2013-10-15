@@ -83,7 +83,7 @@ void CargadorYaml::obtenerID(const YAML::Node& nodoFigura, std::string* ID){
 
 }
 
-void CargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, double* largo){
+void CargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, int* largo){
 	try{
 		nodoFigura["largo"] >> *largo;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -218,8 +218,8 @@ void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,doubl
 		imprimir_error_excepcion("Dato erroneo de extremo1 de figura. No se carga la figura.",e.what());
 		return;
 	}
+
 	const YAML::Node& nodoPos = nodoFigura["extremo1"];
-	//std::cout << x1 << "   " << y1 << "\n";
 	obtenerPosicion(nodoPos,x1,y1);
 
 	try{
@@ -231,8 +231,10 @@ void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,doubl
 		imprimir_error_excepcion("Dato erroneo de extremo2 de figura. No se carga la figura.",e.what());
 		return;
 	}
+
 	const YAML::Node& nodoPos2 = nodoFigura["extremo2"];
 	obtenerPosicion(nodoPos2,x2,y2);
+
 }
 /**********************************************************
 **                                                       **
@@ -335,11 +337,12 @@ Figura* CargadorYaml::crearEngranaje2(const YAML::Node& nodoFigura){ //FIX
 }
 
 Figura* CargadorYaml::crearCintaTransportadora(const YAML::Node& nodoFigura){
-	double posX,posY,angulo,largo;
+	double posX,posY,angulo;
+	int largo;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	obtenerAngulo(nodoFigura,&angulo);
-	obtenerLargo(nodoFigura, &largo);
+	obtenerLargo(nodoFigura,&largo);
 
 	return new CintaTransportadora(largo,posX,posY,angulo);
 }
@@ -365,7 +368,8 @@ Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura, int sentido){
 }
 
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
-	double posX,posY,angulo,largo;
+	double posX,posY,angulo;
+	int largo;
 
 	obtenerAngulo(nodoFigura,&angulo);
 	obtenerPosicion(nodoFigura,&posX,&posY);
@@ -805,7 +809,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	}catch(YAML::BadDereference &e){
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No hay nodo raiz juego. Se carga archivo default.",e.what());
-			std::cout << e.what();
+			//std::cout << e.what();
 			mi_archivo.close();
 			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
 		} else {

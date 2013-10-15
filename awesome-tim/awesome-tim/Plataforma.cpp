@@ -15,14 +15,11 @@ void Plataforma::agrandar(){
 	}
 }
 void Plataforma::achicar(){
-	if (this->largo > 1){
+	if (this->largo > PLATAFORMA_MINLARGO){
 		this->largo--;
 		this->getDimension()->setAncho(ANCHO_PLATAFORMA*largo);
 		setCambio(true);
 	}
-}
-int Plataforma::getTipoDimension(){
-	return PLATAFORMA;
 }
 double Plataforma::getLargo(){
 	return this->largo;
@@ -32,4 +29,7 @@ Figura* Plataforma::clonar(){
 }
 int Plataforma::getTipoFigura(){
 	return PLATAFORMA;
+}
+int Plataforma::getTipoDimension(){
+	return CUADRADO;
 }

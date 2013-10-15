@@ -1,15 +1,24 @@
 #pragma once
 
-#include "Figura.h"
+//#include "Figura.h"
+#include "FiguraCompuesta.h"
 #include "Cuadrado.h"
 #include "Constantes.h"
 
-class CintaTransportadora: public Figura
+class CintaTransportadora: public FiguraCompuesta
 {
 private:
 	double largo;
-	double angulo;
-	bool atada;
+	//double angulo;
+	bool atadoDerecha;
+	bool atadoIzquierda;
+	Figura* cinta;
+	Figura* circizq;
+	Figura* circder;
+	Figura* clavo;
+
+private:
+		void calcularPosClavo(double angulo,double* posX_clavo,double* posY_clavo);
 public:
 
 	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
@@ -19,14 +28,14 @@ public:
 	void agrandar();
 	void achicar();
 
-	virtual int getTipoFigura(){return CINTATRANSPORTADORA;}
-	virtual int getTipoDimension(){return CUADRADO;}
+	virtual int getTipoFigura();
+	virtual int getTipoDimension();
 
 	virtual Figura* clonar();
 
-	virtual bool esAtableCorrea(){return !atada;};
-	virtual void atarCorrea(){atada = true;};
-	virtual void desatarCorrea(){atada = false;};
+	virtual bool esAtableCorrea(){return !(atadoIzquierda || atadoDerecha);};
+	virtual void atarCorrea(){/*atada = true;*/};
+	virtual void desatarCorrea(){/*atada = false;*/};
 
 	double getRadio(){return RADIO_CINTA_TRANSPORTADORA;};
 

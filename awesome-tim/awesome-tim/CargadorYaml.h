@@ -87,7 +87,7 @@ private:
 
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
-	static void obtenerLargo(const YAML::Node& nodoFigura, double* largo);
+	static void obtenerLargo(const YAML::Node& nodoFigura, int* largo);
 	static void obtenerAncho(const YAML::Node& nodoFigura, double* ancho);
 	static void obtenerAlto(const YAML::Node& nodoFigura, double* alto);
 	static void obtenerID(const YAML::Node& nodoFigura, std::string* ID);
