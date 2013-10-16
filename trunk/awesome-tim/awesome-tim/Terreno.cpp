@@ -168,8 +168,6 @@ void Terreno::agregarFigura(Figura* fig){
 		}
 	}
 
-
-	bool choca = this->posicionOcupada(fig);
 	if (fig->superpuesta && (figuraActiva == NULL) ){
 	//no la puedo poner y viene de fuera del terreno
 		delete fig; 
@@ -210,6 +208,18 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 
 		double ang = calcularAngulo(figuraActiva->getDimension() , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
 		figuraActiva->setAngulo(ang);
+
+		//como ver si se superpone tarda demasiado lo hago solo cada 5 movimientos!
+		if (contEventosMov % ITER_CHOQUE == 0){
+			//si choca va de rojo
+			figuraActiva->setSuperpuesta( this->posicionOcupada(figuraActiva) );						
+		}
+
+		contEventosMov++;
+		if (contEventosMov > 10000){
+			contEventosMov = 0;
+		}
+
 
 		if(fisicaActiva) this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
@@ -298,7 +308,6 @@ void Terreno::achicarFigura()
 void Terreno::soltarFigura()
 {
 	if (figuraActiva){
-		bool choca = this->posicionOcupada(figuraActiva);
 		if ( !(figuraActiva->superpuesta) ){
 			agregarFigura(figuraActiva);
 			figuraActiva=NULL;
