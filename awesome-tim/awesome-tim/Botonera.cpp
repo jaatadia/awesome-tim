@@ -28,11 +28,11 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 		++itFig;
 	}
 	if (encontrada){ 
-		//if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {    //para q funcione lo de la cant de instancias
+		if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {    //para q funcione lo de la cant de instancias
 			retorno = (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first)->clonar();
-			//--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
+			--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
 			retorno->setTraslucido(true);
-		//}
+		}
 	}
 	
 	return retorno;
@@ -50,7 +50,29 @@ void Botonera::restaurarInstanciaActual( int numeroFigActual ){
 		}
 		++itFig;
 	}
+}
 
+void Botonera::restaurarInstancias( std::vector<int> numsFigARestaurar ){
+	
+	int i = 0;
+	int tipoFig = -1;
+	std::list<map<Figura *, int>>::iterator itFig;
+	Figura* figBotonera = NULL;
+
+	while (i < numsFigARestaurar.size()){
+		tipoFig = numsFigARestaurar[i];
+		
+		for (itFig = this->lstFiguras.begin(); itFig != this->lstFiguras.end(); ++itFig)
+		{
+			figBotonera = (*itFig).begin()->first;
+			if (figBotonera->getTipoFigura() == tipoFig){
+				++( (*itFig).begin()->second );
+				break;
+			}
+		}
+
+		++i;
+	}
 }
 
 Botonera::~Botonera() {

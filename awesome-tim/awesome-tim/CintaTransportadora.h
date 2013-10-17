@@ -19,13 +19,14 @@ private:
 	Figura* clavo2;
 
 private:
-		void calcularPosClavo(double angulo,double* posX_clavo,double* posY_clavo);
-public:
+	void calcularPosClavo(double angulo,double* posX_clavo,double* posY_clavo);
 
+public:
 	//cuidado: hardcodeada la dimension de cuadrado que lo contiene!
 	CintaTransportadora(int largo,double pos_x,double pos_y,double angulo);
 	~CintaTransportadora(void);
 	virtual int getLargo();
+	virtual void setLargo(int largoN);
 	void agrandar();
 	void achicar();
 
@@ -48,5 +49,4 @@ public:
 
 	virtual void setAngulo(double angulo);
 
-//	bool choqueConFigura(Figura* fig);
 };

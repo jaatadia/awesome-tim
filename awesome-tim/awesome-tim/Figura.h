@@ -29,8 +29,6 @@ protected:
 	Figura* fig1;
 	Figura* fig2;
 
-	int largo_fig; //para las agrandables
-
 public:
 	bool traslucido;
 	bool superpuesta ;
@@ -107,6 +105,6 @@ public:
 	virtual bool choqueConFigura(Figura* fig);
 	virtual bool choqueConDimension(Dimension* dim);
 
-	virtual void setLargo(int largo);
-	virtual int getLargo();
+	virtual void setLargo(int largo){};
+	virtual int getLargo(){ return 0;};
 };

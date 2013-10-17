@@ -33,3 +33,14 @@ int Plataforma::getTipoFigura(){
 int Plataforma::getTipoDimension(){
 	return CUADRADO;
 }
+
+void Plataforma::setLargo(int largoN){
+	
+	if (largoN <= PLATAFORMA_MAXLARGO && largoN >= PLATAFORMA_MINLARGO){
+		largo = largoN;
+		this->getDimension()->setAncho(ANCHO_PLATAFORMA*largo);
+		setCambio(true);
+	}
+
+}
+

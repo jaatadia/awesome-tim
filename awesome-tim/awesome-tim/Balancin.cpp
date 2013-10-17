@@ -205,3 +205,12 @@ void Balancin::desatarSoga(int numero){
 		atadoDerecha = false;
 	}
 }
+
+void Balancin::shift(){
+
+	if (dimension->getAngulo()==45)
+		this->setAngulo(-45);
+	else
+		this->setAngulo(45);
+
+}

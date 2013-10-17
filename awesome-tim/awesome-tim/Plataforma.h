@@ -16,9 +16,9 @@ public:
 	virtual int getTipoFigura();
 
 	virtual int getLargo();
+	virtual void setLargo(int largoN);
 	virtual Figura* clonar();
 
 	virtual bool rotable(){return true;}
 
-//	bool choqueConFigura(Figura* fig);
 };

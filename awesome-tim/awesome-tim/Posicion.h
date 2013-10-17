@@ -30,4 +30,9 @@ public:
 		//}
 	//std::cout<<" Y en posicion.h"<< y <<std::endl;
 	}
+
+	virtual void putPos(double x, double y){
+		this->x = x;
+		this->y = y;
+	}
 };

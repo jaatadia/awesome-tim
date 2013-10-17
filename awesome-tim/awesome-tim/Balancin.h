@@ -28,6 +28,7 @@ public:
 	//bool atar(double posX, double posY);
 	//bool desatar(double posX, double posY);
 	//bool esAtable(double* posX, double* posY);
+	void shift();
 
 	Figura* clonar();
 	int getTipoDimension();
