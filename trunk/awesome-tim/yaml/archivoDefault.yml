@@ -65,7 +65,7 @@ juego:
           tipo_figura: ENGRANAJE2
           posX: 0
           posY: 0
-          radio: 10
+          radio: 5
           sentido: -1
         cantidad_de_instancias: 100
       - figura:
@@ -73,7 +73,7 @@ juego:
           posX: 0
           posY: 0
           angulo: 0
-          radio: 10
+          radio: 5
         cantidad_de_instancias: 100
       - figura:
           tipo_figura: CINTA_TRANSPORTADORA

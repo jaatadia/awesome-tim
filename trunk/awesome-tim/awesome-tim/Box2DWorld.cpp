@@ -259,7 +259,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						
 						joint2.joint1 = edge1->joint;
 						joint2.joint2 = edge2->joint;
-						joint2.ratio = -(fig2->getRadio()/fig1->getRadio());
+						//joint2.ratio = -(fig2->getRadio()/fig1->getRadio());
+						joint2.ratio = -1;
 						
 						this->mundo->CreateJoint(&joint2);
 					}
