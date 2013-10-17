@@ -228,7 +228,7 @@ Superficie* BotoneraController::getImpresion(){
 
 		}
 	}
-	this->setCambio(false);
+	//this->setCambio(false);
 	return layerPrincipal;
 }
 
