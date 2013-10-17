@@ -61,11 +61,10 @@
 #define PLATAFORMA 10
 #define PELOTATENIS 11
 #define ENGRANAJE 12
-#define MOTOR 13
-#define CINTATRANSPORTADORA 14
-#define MOTOR 15
-#define CORREA 16
-#define LINEA 17
+#define CINTATRANSPORTADORA 13
+#define MOTOR 14
+#define CORREA 15
+#define LINEA 16
 
 //valores fisicos
 

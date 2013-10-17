@@ -29,6 +29,8 @@ protected:
 	Figura* fig1;
 	Figura* fig2;
 
+	int largoF;
+
 public:
 	bool traslucido;
 	bool superpuesta ;
@@ -105,6 +107,6 @@ public:
 	virtual bool choqueConFigura(Figura* fig);
 	virtual bool choqueConDimension(Dimension* dim);
 
-	virtual void setLargo(int largo){};
-	virtual int getLargo(){ return 0;};
+	virtual void setLargo(int largo){this->largoF = largo;};
+	virtual int getLargo(){ return largoF;};
 };
