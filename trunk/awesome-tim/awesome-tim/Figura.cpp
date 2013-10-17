@@ -16,7 +16,6 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->superpuesta = false;
 	fig1 = fig2 = NULL;
 
-	this->largo_fig = 1;
 }
 
 
@@ -135,11 +134,6 @@ void Figura::setAngulo(double angulo){
 	}
 }
 
-int Figura::getLargo(){
-	return this->largo_fig;
-}
-
-
 void Figura::setX( double x ){
 	dimension->setX(x);
 }
@@ -166,14 +160,9 @@ bool Figura::choqueConFigura(Figura* fig){
 	return choca;
 }
 
-
 //de nuevo deberia ser contra todas las dimensiones si es compuesta
 // pero aca solo tengo una
 bool Figura::choqueConDimension(Dimension* dim){
 //como no lo se en la figura delego a la dimension (o dimensiones).
 	return dimension->choqueConDimension(dim);
-}
-void Figura::setLargo(int largo){
-	this->largo_fig = largo;
-	this->setCambio(true);
 }

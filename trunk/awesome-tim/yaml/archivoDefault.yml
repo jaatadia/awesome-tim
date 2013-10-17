@@ -11,23 +11,23 @@ juego:
           posX: 0
           posY: 0
           angulo: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: PELOTA_TENIS
           posX: 0
           posY: 0
           angulo: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: BOLA_BOWLING
           posX: 0
           posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: PELOTA_BASQUET
           posX: 0
           posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: SOGA
           extremo1:
@@ -36,22 +36,22 @@ juego:
           extremo2:
             posX: 0
             posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: GLOBO_HELIO
           posX: 0
           posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: BALANCIN_IZQUIERDA
           posX: 0
           posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: BALANCIN_DERECHA
           posX: 0
           posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: LINEA
           extremo1:
@@ -60,25 +60,25 @@ juego:
           extremo2:
             posX: 0
             posY: 0
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: MOTOR
           posX: 0
           posY: 0
           radio: 5
           sentido: -1
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: ENGRANAJE
           posX: 0
           posY: 0
           angulo: 0
           radio: 5
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10
       - figura:
           tipo_figura: CINTA_TRANSPORTADORA
           posX: 0
           posY: 0
           angulo: 0
           largo: 3
-        cantidad_de_instancias: 100
+        cantidad_de_instancias: 10

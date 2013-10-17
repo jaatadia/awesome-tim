@@ -182,9 +182,7 @@
 #define SENT_HORARIO 1
 #define SENT_ANTIHORARIO -1
 
-
 //Para chocar circulos
-
 #define VERTICES_ENVOLVENTE 7
 
 //colores del globo

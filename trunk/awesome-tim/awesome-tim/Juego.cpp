@@ -5,6 +5,7 @@
 #include "GeneradorYaml.h"
 #include "Figura.h"
 #include "Linea.h"
+#include <vector>
 
 
 
@@ -102,7 +103,7 @@ bool Juego:: onRender(Superficie* superficie){
 }
 	
 void Juego:: onLoop(){
-	terreno->actualizarModelo();
+//	terreno->actualizarModelo();
 }
 
 //manejo de eventos
@@ -153,14 +154,14 @@ while(SDL_PollEvent(&evento)){
 			char charIngresado;
 
 			charIngresado = evento.text.text[0];
-			if(clickPressed){
+//			if(clickPressed){
 				if(charIngresado == '+'){
 					if(figuraEnAire) figuraEnAire->agrandar();
 					else terreno->agrandarFigura();
 				}else if(charIngresado == '-'){
 					if(figuraEnAire) figuraEnAire->achicar();
 					else terreno->achicarFigura();
-				}
+//				}
 			}else comandos->agregarLetra(charIngresado);
 
 			break;
@@ -233,11 +234,12 @@ while(SDL_PollEvent(&evento)){
 
 			if (posEnTerreno(posClickX,posClickY))
 				//es del terreno
-				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed))
-					//click izq y shift
-					terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
+					//al borrar algo restauro su contador de instancias
+					std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+					botonera->restaurarInstancias(tipoFig);
+				}
 				else
-					//aca no buscar activa, sino tener metodo onClick()
 					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				
 
@@ -276,15 +278,12 @@ while(SDL_PollEvent(&evento)){
 
 			if (figuraEnAire){
 				//o es de figura viva
-				if((figuraEnAire->getTipoFigura()==LINEA)||(figuraEnAire->getTipoFigura()==SOGA)){
-
-				}else{
+				if(!(figuraEnAire->getTipoFigura()==LINEA)&& !(figuraEnAire->getTipoFigura()==SOGA)){
 					soltarFiguraEnAire();
 				}
 			}
 
 			comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux,this);
-
 
 			break;
 		}
@@ -535,7 +534,7 @@ void Juego::soltarFiguraEnAire(){
 
 	confirmarPosicionFiguraEnAire();
 
-	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
+	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY()) && !figuraEnAire->superpuesta){
 		//relativizar posiciones al terreno!
 		figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 		terreno->agregarFigura( figuraEnAire );
@@ -563,6 +562,7 @@ void Juego::set2Click(){
 		Figura* result = terreno->getFiguraAtableCorrea(x,y);
 		
 		if(result==NULL){
+			botonera->restaurarInstanciaActual();
 			delete figuraEnAire;
 			figuraEnAire = NULL;
 			this->setCambio(true);
@@ -575,6 +575,7 @@ void Juego::set2Click(){
 				linea->setFigura1(result);
 			}else{
 				if(linea->getFigura1() == result){
+					botonera->restaurarInstanciaActual();
 					delete figuraEnAire;
 					figuraEnAire = NULL;
 					this->setCambio(true);
@@ -601,6 +602,7 @@ void Juego::set2Click(){
 		Figura* result = terreno->getFiguraAtableSoga(x,y);
 		
 		if(result==NULL){
+			botonera->restaurarInstanciaActual();
 			delete figuraEnAire;
 			figuraEnAire = NULL;
 			this->setCambio(true);
@@ -614,6 +616,7 @@ void Juego::set2Click(){
 				((Soga*)linea)->setNumsPosAtable(res,0);
 			}else{
 				if (result == linea->getFigura1()){
+					botonera->restaurarInstanciaActual();			
 					delete figuraEnAire;
 					figuraEnAire = NULL;
 					this->setCambio(true);

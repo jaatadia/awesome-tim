@@ -15,7 +15,13 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	this->alto = alto;
 	sup = new Superficie(ancho,alto);
 	this->figuras = std::list<Figura*>();
+
 	figuraActiva=NULL;
+	posAntFigActiva.setX(0);
+	posAntFigActiva.setY(0);
+	angAntFigActiva = 0;
+	largoAntFigActiva = -1;
+
 	img=NULL;
 	fondo = NULL;
 	fondoID=""; //sin fondo seria asi? (con NULL se rompe)
@@ -121,10 +127,7 @@ bool Terreno::setFondo(const char* ruta_img){
 	return true;
 }
 
-#include "Linea.h"
-#include "Soga.h"
-
-void Terreno::agregarFigura(Figura* fig){
+bool Terreno::agregarFigura(Figura* fig){
 
 	if(!fisicaActiva){
 		if((fig->getTipoFigura()==LINEA)&&(fig->getFigura1()==NULL)&&(fig->getFigura2()==NULL)){
@@ -136,7 +139,7 @@ void Terreno::agregarFigura(Figura* fig){
 			Figura* result2 = getFiguraAtableCorrea(x,y);
 			if((result1 == NULL) || (result2 == NULL)){
 				delete fig;
-				return;
+				return false;
 			}
 			linea->setFigura1(result1);
 			linea->setFigura2(result2);
@@ -154,7 +157,7 @@ void Terreno::agregarFigura(Figura* fig){
 			if((result1 == NULL) || (result2 == NULL)){
 				std::cout<<"entro";
 				delete soga;
-				return;
+				return false;
 			}
 
 			double num1 = result1->esAtableSoga(x1,y1);
@@ -168,34 +171,30 @@ void Terreno::agregarFigura(Figura* fig){
 		}
 	}
 
-	if (fig->superpuesta && (figuraActiva == NULL) ){
-	//no la puedo poner y viene de fuera del terreno
-		delete fig; 
-		fig = NULL;
-	}else{
-		fig->setTraslucido(false);
-		this->setCambio(true);
+	fig->setTraslucido(false);
+	this->setCambio(true);
 
-		//si se fue de rango del terreno lo empujo para dentro
-		Dimension* dim = fig->getDimension();
-		corregirPosicion(fig);
+	//si se fue de rango del terreno lo empujo para dentro
+	Dimension* dim = fig->getDimension();
+	corregirPosicion(fig);
 
-   		try{
-			bool aux;
-			if(fisicaActiva){
-				aux = this->mundoBox2D->agregarFigura(fig);
-				if(aux){
-					(this->figuras).push_back(fig);
-				}else{ 
-					delete fig;
-				}
-			}else{
+	try{
+		bool aux;
+		if(fisicaActiva){
+			aux = this->mundoBox2D->agregarFigura(fig);
+			if(aux){
 				(this->figuras).push_back(fig);
+			}else{ 
+				delete fig;
 			}
-		} catch (...) {
-			ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
-		};
-	}
+		}else{
+			(this->figuras).push_back(fig);
+		}
+	} catch (...) {
+		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
+	};
+
+	return true;
 }
 
 void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY){
@@ -209,8 +208,8 @@ void Terreno::rotarFigura(double posClickX, double posClickY, double cantMovX, d
 		double ang = calcularAngulo(figuraActiva->getDimension() , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
 		figuraActiva->setAngulo(ang);
 
-		//como ver si se superpone tarda demasiado lo hago solo cada 5 movimientos!
-		if (contEventosMov % ITER_CHOQUE == 0){
+		//como ver si se superpone tarda demasiado lo hago solo cada x movimientos!
+		if (contEventosMov % 2 == 0){
 			//si choca va de rojo
 			figuraActiva->setSuperpuesta( this->posicionOcupada(figuraActiva) );						
 		}
@@ -296,10 +295,9 @@ void Terreno::achicarFigura()
 
 		figuraActiva->achicar();
 
-		//si se fue el centro del terreno lo vuelvo a meter
-		corregirPosicion(figuraActiva);
 		if(fisicaActiva)this->mundoBox2D->cambiarParametros(figuraActiva);
 		this->setCambio(true);
+
 		bool choca = this->posicionOcupada(figuraActiva);
 		figuraActiva->setSuperpuesta(choca);
 	}
@@ -312,9 +310,17 @@ void Terreno::soltarFigura()
 			agregarFigura(figuraActiva);
 			figuraActiva=NULL;
 		}else{
-			//la agrego y la borro asi se desatan las sogas y correas
+			//la meto con su posicion / angulo / largo anterior
+			figuraActiva->setX(posAntFigActiva.getX());
+			figuraActiva->setY(posAntFigActiva.getY());
+			figuraActiva->setAngulo(angAntFigActiva);
+			figuraActiva->setLargo(largoAntFigActiva);
+			
 			agregarFigura(figuraActiva);
-			borrarFigura(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY());
+
+			//y ya no esta chocando
+			figuraActiva->setSuperpuesta(false);
+
 			figuraActiva = NULL;
 		}
 	}
@@ -328,8 +334,10 @@ bool Terreno::hayFiguras(){
 	return false;
 }
 
-void Terreno::borrarFigura(double posClickX, double posClickY){
+std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
+
+	std::vector<int> tiposBorradas;
 
 	Figura* figuraABorrar = buscarFigura(posClickX, posClickY);
 
@@ -338,29 +346,37 @@ void Terreno::borrarFigura(double posClickX, double posClickY){
 		eliminarFigura(figuraABorrar);
 		setCambio(true);
 		
-		if(hayFiguras()){	
-			std::list<Figura*>::iterator iteradorLista;
-			std::list<Figura*> listaFigAux;
-			iteradorLista = figuras.begin();
 
+		std::list<Figura*>::iterator iteradorLista;
+		std::list<Figura*> listaFigAux;
+		iteradorLista = figuras.begin();
 
-			while (iteradorLista != figuras.end()) {
-				if((*iteradorLista)->esUnion()){
-					Figura* correa = (*iteradorLista);
-					if ((correa->getFigura1() == figuraABorrar)||(correa->getFigura2() == figuraABorrar)){
-						listaFigAux.push_back(correa);
-					}
+		//se buscan y desatan sogas y correas
+		while (iteradorLista != figuras.end()) {
+			if((*iteradorLista)->esUnion()){
+				Figura* correa = (*iteradorLista);
+				if ((correa->getFigura1() == figuraABorrar)||(correa->getFigura2() == figuraABorrar)){
+					listaFigAux.push_back(correa);
 				}
-				iteradorLista++;
 			}
-			for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
-				eliminarFigura(*iter);
-				(*iter)->desUnir();
-				delete (*iter);
-			}
-			delete figuraABorrar;
+			iteradorLista++;
 		}
+
+		for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
+			eliminarFigura(*iter);
+			(*iter)->desUnir();
+
+			tiposBorradas.push_back((*iter)->getTipoFigura());
+
+			delete (*iter);
+		}
+
+		tiposBorradas.push_back(figuraABorrar->getTipoFigura());
+
+		delete figuraABorrar;
 	}
+
+	return tiposBorradas;
 }
 
 int Terreno::getAncho(){
@@ -416,9 +432,15 @@ void Terreno::buscarActiva(double posClickX ,double posClickY){
 		if (!figuraActiva){
 			figuraActiva=NULL;
 		}else{
+			//la pongo traslucida, cambio el terreno y la saco de la lista
+			
 			figuraActiva->setTraslucido(true);
 			this->setCambio(true);
 			eliminarFigura(figuraActiva);
+			//y me guardo sus parametros por si choca cuando la suelto
+			posAntFigActiva.putPos(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY());
+			angAntFigActiva = figuraActiva->getDimension()->getAngulo();
+			largoAntFigActiva = figuraActiva->getLargo();
 		}
 	}
 }

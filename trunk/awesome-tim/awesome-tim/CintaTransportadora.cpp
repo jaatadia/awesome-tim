@@ -144,3 +144,33 @@ int CintaTransportadora::getTipoFigura(){
 int CintaTransportadora::getTipoDimension(){
 	return CUADRADO;
 	}
+
+void CintaTransportadora::setLargo(int largoN){
+	
+	if (largoN <= CINTA_TRANSP_MAXLARGO && largoN >= CINTA_TRANSP_MINLARGO){
+		largo = largoN;
+		this->getDimension()->setAncho(ANCHO_CINTA*largo);
+		
+		//recalculo todas la sposiciones de las partes
+		double posX = this->getDimension()->getX();
+		double posY = this->getDimension()->getY();
+
+		this->cinta->getDimension()->setAncho(ANCHO_CINTA*largo);
+		this->cinta->setLargo(largo);
+
+		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
+		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);
+
+		this->clavo2->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
+		this->clavo2->setY(posY+ALTO_CINTA/2-RADIO_CTRANSP_CLAVO);
+
+		this->circizq->setX(posX-(ANCHO_CINTA*largo)/2+RADIO_CTRANSP_CIRC);
+		this->circizq->setY(posY);
+
+		this->circder->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
+		this->circder->setY(posY);
+
+		setCambio(true);
+	}
+
+}

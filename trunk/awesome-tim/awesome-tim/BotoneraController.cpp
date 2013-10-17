@@ -1,5 +1,16 @@
 #include "BotoneraController.h"
 #include "Constantes.h"
+#include "PelotaBasquet.h"
+#include "PelotaBowling.h"
+#include "PelotaTenis.h"
+#include "GloboHelio.h"
+#include "Plataforma.h"
+#include "Engranaje.h"
+#include "Motor.h"
+#include "Linea.h"
+#include "Soga.h"
+#include "Balancin.h"
+#include "CintaTransportadora.h"
 
 BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
 	altoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
@@ -286,9 +297,11 @@ Figura * BotoneraController::obtenerFigura(double x, double y){
 }
 
 void BotoneraController::restaurarInstanciaActual(){
-
 	this->botonera->restaurarInstanciaActual( this->numeroFigActual );
+}
 
+void BotoneraController::restaurarInstancias( std::vector<int> numsFigARestaurar ){
+	this->botonera->restaurarInstancias(numsFigARestaurar);
 }
 
 int BotoneraController::getAlto() {
@@ -334,18 +347,6 @@ void BotoneraController::ScrollDown(){
 	this->setScrollDirection(this->SCROLL_OFF);
 	this->setCambio(true);
 }
-
-#include "PelotaBasquet.h"
-#include "PelotaBowling.h"
-#include "PelotaTenis.h"
-#include "GloboHelio.h"
-#include "Plataforma.h"
-#include "Engranaje.h"
-#include "Motor.h"
-#include "Linea.h"
-#include "Soga.h"
-#include "Balancin.h"
-#include "CintaTransportadora.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	

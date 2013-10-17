@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <list>
+#include <vector>
 #include <map>
 #include "Rectangulo.h"
 #include "Figura.h"
@@ -24,6 +25,7 @@ public:
 
 	Figura * obtenerFigura(int numFigura);
 	void restaurarInstanciaActual( int numeroFigActual );
+	void restaurarInstancias( std::vector<int> numsFigARestaurar );
 
 	// Getters
 	int getX(){return this->x;}
