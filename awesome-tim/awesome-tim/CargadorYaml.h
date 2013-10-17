@@ -26,7 +26,7 @@
 #include "GloboHelio.h"
 #include "PelotaTenis.h"
 #include "Engranaje.h"
-#include "Engranaje2.h"
+#include "Motor.h"
 #include "Balancin.h"
 #include "Linea.h"
 #include "Soga.h"
@@ -81,7 +81,6 @@ private:
 	static Figura* crearSoga(const YAML::Node& nodoFigura);
 	static Figura* crearCorrea(const YAML::Node& nodoFigura);
 	static Figura* crearEngranaje(const YAML::Node& nodoFigura);
-	static Figura* crearEngranaje2(const YAML::Node& nodoFigura); //FIX
 	static Figura* crearCintaTransportadora(const YAML::Node& nodoFigura);
 	static Figura* crearPelotaTenis(const YAML::Node& nodoFigura);
 
