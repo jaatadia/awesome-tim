@@ -62,7 +62,7 @@ juego:
             posY: 0
         cantidad_de_instancias: 100
       - figura:
-          tipo_figura: ENGRANAJE2
+          tipo_figura: MOTOR
           posX: 0
           posY: 0
           radio: 5

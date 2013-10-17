@@ -1,6 +1,6 @@
 #include "Box2DWorld.h"
 #include "Engranaje.h"
-#include "Engranaje2.h"
+#include "Motor.h"
 #include "Linea.h"
 #include "Soga.h"
 #include "Balancin.h"
@@ -82,48 +82,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			this->mundo->CreateJoint(&rJD);
 			break;
 		}
-		case MOTOR:{
-			b2BodyDef bDBase;
-			bDBase.position.Set(dim->getX(), dim->getY());
-			bDBase.type = b2_staticBody;
 
-			b2Body * base = this->mundo->CreateBody(&bDBase);
-											
-			b2FixtureDef fDBase;
-			b2PolygonShape polygonShape;
-			polygonShape.SetAsBox(1,0.25);
-			fDBase.shape = &polygonShape;
-			fDBase.isSensor = true;
-
-			base->CreateFixture(&fDBase);
-			
-			b2CircleShape circleShape;
-			circleShape.m_radius = 2;
-			fD.shape = &circleShape;
-			cuerpo->CreateFixture(&fD);
-			
-			b2RevoluteJointDef rJD;
-			rJD.bodyA = base;
-			rJD.bodyB = cuerpo;
-			rJD.localAnchorA.Set(dim->getX(), dim->getY());
-			rJD.localAnchorB.Set(0,0);
-			rJD.enableMotor = true;
-			rJD.motorSpeed = 2;
-			rJD.maxMotorTorque = 1;
-			this->mundo->CreateJoint(&rJD);
-			 
-			// Conexion entre motor y correa
-			// Esta comentado porque se crean por separado y habria que ver donde se deberia ubicar este bloque de codigo
-			/*
-			rJD.bodyA = eslabon;
-			rJD.bodyB = cuerpo;
-			rJD.localAnchorA.Set(0.75,0);
-			rJD.localAnchorB.Set(1.75,0);
-			this->mundo->CreateJoint(&rJD);
-			*/
-			
-			break;
-		}
 		case BALANCIN:{
 				
 				cuerpo->SetTransform(cuerpo->GetPosition(),0); 
@@ -175,6 +134,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(-1);
 				
@@ -391,7 +351,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 						Figura* fig = (Figura*)c->GetUserData();
 						if((fig!=NULL)&&(fig!=figura)){
-							if((fig->getTipoFigura()==ENGRANAJE)/*||(fig->getTipoFigura()==ENGRANAJE2)*/){
+							if((fig->getTipoFigura()==ENGRANAJE)/*||(fig->getTipoFigura()==MOTOR)*/){
 								double margen = ((Engranaje*)figura)->getRadio()+((Engranaje*)fig)->getRadio();						
 								if(
 									sqrt(
@@ -418,7 +378,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				break;
 			}
-		case ENGRANAJE2:
+		case MOTOR:
 			{
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;
@@ -447,10 +407,49 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				if(activo){
 					cuerpo->SetFixedRotation(true);
-					cuerpo->SetAngularVelocity(VELOCIDAD_ENGRANAJE2*((Engranaje2*)figura)->sentido);
+					cuerpo->SetAngularVelocity(VELOCIDAD_MOTOR*((Motor*)figura)->sentido);
 				}
 				break;
 			}
+		/*case MOTOR:{
+			b2BodyDef bDBase;
+			bDBase.position.Set(dim->getX(), dim->getY());
+			bDBase.type = b2_staticBody;
+
+			b2Body * base = this->mundo->CreateBody(&bDBase);
+											
+			b2FixtureDef fDBase;
+			b2PolygonShape polygonShape;
+			polygonShape.SetAsBox(1,0.25);
+			fDBase.shape = &polygonShape;
+			fDBase.isSensor = true;
+
+			base->CreateFixture(&fDBase);
+			
+			b2CircleShape circleShape;
+			circleShape.m_radius = 2;
+			fD.shape = &circleShape;
+			cuerpo->CreateFixture(&fD);
+			
+			b2RevoluteJointDef rJD;
+			rJD.bodyA = base;
+			rJD.bodyB = cuerpo;
+			rJD.localAnchorA.Set(dim->getX(), dim->getY());
+			rJD.localAnchorB.Set(0,0);
+			rJD.enableMotor = true;
+			rJD.motorSpeed = 2;
+			rJD.maxMotorTorque = 1;
+			this->mundo->CreateJoint(&rJD);
+			 
+			// Conexion entre motor y correa
+			// Esta comentado porque se crean por separado y habria que ver donde se deberia ubicar este bloque de codigo
+			//rJD.bodyA = eslabon;
+			//rJD.bodyB = cuerpo;
+			//rJD.localAnchorA.Set(0.75,0);
+			//rJD.localAnchorB.Set(1.75,0);
+			//this->mundo->CreateJoint(&rJD);
+			break;
+		}*/
 		case PELOTATENIS:
 			{
 				b2CircleShape forma;
@@ -631,7 +630,7 @@ void Box2DWorld::eliminarFigura(Figura * figura)
 			Figura* figAEliminar = (Figura *)cuerpo->GetUserData();
 
 			//si es un motor o balancin o engranaje borrar el static extra que tiene
-			if ( figAEliminar->getTipoFigura() == ENGRANAJE2 || figAEliminar->getTipoFigura()==BALANCIN || figAEliminar->getTipoFigura()==ENGRANAJE){
+			if ( figAEliminar->getTipoFigura() == MOTOR || figAEliminar->getTipoFigura()==BALANCIN || figAEliminar->getTipoFigura()==ENGRANAJE){
 				
 				b2Body* cuerpoARevisar = this->mundo->GetBodyList();
 				

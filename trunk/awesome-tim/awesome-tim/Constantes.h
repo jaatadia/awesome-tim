@@ -61,7 +61,7 @@
 #define PLATAFORMA 10
 #define PELOTATENIS 11
 #define ENGRANAJE 12
-#define ENGRANAJE2 13
+#define MOTOR 13
 #define CINTATRANSPORTADORA 14
 #define MOTOR 15
 #define CORREA 16
@@ -106,7 +106,7 @@
 #define RESTITUCION_ENGRANAJE 0.3
 #define DENSIDAD_ENGRANAJE 6.0
 #define FRICCION_ENGRANAJE 5 //1.5
-#define VELOCIDAD_ENGRANAJE2 10
+#define VELOCIDAD_MOTOR 10
 #define PORCENTAJE_SUPERPOSICION_ENGRANAJE 0.7
 
 #define RADIO_PUNTA_BALANCIN 1.5
@@ -158,8 +158,8 @@
 #define ID_PELOTABOWLING "../images/Bowling.png"
 #define ID_ENGRANAJE "../images/Icon-Gear02-Blue.png"
 
-#define ID_ENGRANAJE2_1 "../images/engranaje2-1.png"
-#define ID_ENGRANAJE2_2 "../images/engranaje2-2.png"
+#define ID_MOTOR_1 "../images/engranaje2-1.png"
+#define ID_MOTOR_2 "../images/engranaje2-2.png"
 
 #define ID_CINTA "../images/cintamedio2.png"
 #define ID_CTRANSP_CIRC "../images/cintacirculo.png"
