@@ -563,14 +563,14 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Soga."); 	
 		return figura;
 	}
-
+/*
 	if (strcmp(tipo_figura,"MOTOR") == 0){
 		Figura* figura = crearMotor(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Motor."); 	
 		return figura;
 	}
-
+*/
 	if (strcmp(tipo_figura,"PELOTA_BASQUET") == 0){
 		Figura* figura = crearPelotaBasquet(nodoFigura);
 		if(!figura)
