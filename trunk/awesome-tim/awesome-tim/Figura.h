@@ -29,6 +29,9 @@ protected:
 	Figura* fig1;
 	Figura* fig2;
 
+	bool es_fija;
+	bool interactua_en_play;
+
 	int largoF;
 
 public:
@@ -91,6 +94,10 @@ public:
 	virtual void atarCorrea(){};
 	virtual void desatarCorrea(){};
 
+	bool esFija();
+    void fijarFigura();
+	bool esInteractuableEnPlay();
+	void hacerInteractuableEnPlay();
 	
 	//se le pasa la poicion en la que esta queriendo atar y devuelve el numero de posicion atable mas cercano(-1 es que no habia)
 	virtual int esAtableSoga(double x,double y){return -1;}
