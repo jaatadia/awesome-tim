@@ -1,5 +1,8 @@
 #pragma once
 #define NOMBRE_JUEGO "The Incredible Machine"
+#define CANT_JUG_MAX 4
+
+#define CANT_JUG_DEFAULT 1
 
 //frecuencias de simulacion, dibujo y calculo de cosas
 #define FPS 60

@@ -100,6 +100,25 @@ void CargadorYaml::obtenerLargo(const YAML::Node& nodoFigura, int* largo){
 		*largo = LARGO_PLATAFORMA_DEFAULT;
 	}
 }
+
+void CargadorYaml::obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant){
+	try{
+		nodo["jugadores"] >> *cant;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe la cantidad de jugadores. Se carga cantidad por defecto.",e.what());
+		*cant = CANT_JUG_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de la cantidad de jugadores. Se carga cantidad por defecto.",e.what());
+		*cant = CANT_JUG_DEFAULT;
+	}
+
+	if(!cantidad_jugadores_valida(*cant)){
+		int linea = nodo["jugadores"].GetMark().line;
+		imprimir_error_linea("Cantidad de jugadores invalida. Se carga cantidad por defecto.", linea);
+		*cant = CANT_JUG_DEFAULT;
+	}
+}
+
 void CargadorYaml::obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base){
 	try{
 		nodoFigura["base"] >> *base;
@@ -207,6 +226,57 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 		*vertices = VERTICES_DEFAULT;
 	}
 }
+
+bool CargadorYaml::obtenerPropiedadFiguraInteractuable(const YAML::Node& nodoFigura){
+	std::string interac;
+
+	try{
+		nodoFigura["interactuable"] >> interac;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe propiedad interactuable de figura. Se carga propiedad por defecto.",e.what());
+		interac = "NO";
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de la propiedad de figura. Se carga propiedad por defecto.",e.what());
+		interac = "NO";
+	}
+
+	if(!opcion_valida(interac.c_str())){
+		int linea = nodoFigura["interactuable"].GetMark().line;
+		imprimir_error_linea("Propiedad interactuable de Figura invalida. Se carga propiedad por defecto.", linea);
+		interac = "NO";
+	}
+
+	if(strcmp(interac.c_str(), "NO") == 0)
+		return false;
+
+	return true;
+}
+
+bool CargadorYaml::obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura){
+	std::string fija;
+
+	try{
+		nodoFigura["fija"] >> fija;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe propiedad 'fija' de figura. Se carga propiedad por defecto.",e.what());
+		fija = "NO";
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de la propiedad de figura. Se carga propiedad por defecto.",e.what());
+		fija = "NO";
+	}
+
+	if(!opcion_valida(fija.c_str())){
+		int linea = nodoFigura["interactuable"].GetMark().line;
+		imprimir_error_linea("Propiedad interactuable de Figura invalida. Se carga propiedad por defecto.", linea);
+		fija = "NO";
+	}
+
+	if(strcmp(fija.c_str(), "NO") == 0)
+		return false;
+
+	return true;
+}
+
 void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2){
 
 	try{
@@ -537,13 +607,6 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		return figura;
 	}
 
-	if (strcmp(tipo_figura,"MOTOR") == 0){ //FIX
-		Figura* figura = crearMotor(nodoFigura);
-		if(!figura)
-			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Motor."); 	
-		return figura;
-	}
-
 	if (strcmp(tipo_figura,"CORREA") == 0){
 		Figura* figura = crearCorrea(nodoFigura);
 		if(!figura)
@@ -563,14 +626,14 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Soga."); 	
 		return figura;
 	}
-/*
+
 	if (strcmp(tipo_figura,"MOTOR") == 0){
 		Figura* figura = crearMotor(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Motor."); 	
 		return figura;
 	}
-*/
+
 	if (strcmp(tipo_figura,"PELOTA_BASQUET") == 0){
 		Figura* figura = crearPelotaBasquet(nodoFigura);
 		if(!figura)
@@ -631,6 +694,9 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 		ErrorLogHandler::addError("CargadorYaml","No se pudo crear la figura. La figura no sera cargada.");
 	}
 
+	bool fija = obtenerPropiedadFiguraFija(nodoFig);
+	bool interactuable = obtenerPropiedadFiguraInteractuable(nodoFig);
+
 	return figura;
 }
 
@@ -679,26 +745,13 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	}
 }
 
-void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera){
-
-	try{
-		const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
-	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
-		botonera->agregarBotonesDefault();
-		return;
-	}catch(YAML::BadDereference &e){
-		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
-		botonera->agregarBotonesDefault();
-		return;
-	}
-
-	const YAML::Node& listaFiguras = nodoBotonera["lista_figuras"];
+void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, BotoneraController* botonera){
 	
 	if (listaFiguras.size() == 0) {
 		imprimir_error_linea("La lista de figuras de la botonera se encuentra vacia. Se carga botonera con botones por defecto.",listaFiguras.GetMark().line);
 		botonera->agregarBotonesDefault();
 	};
+
 	int cant_botones = 0;
 	for(unsigned i=0;i<listaFiguras.size();i++) {
 		
@@ -742,6 +795,43 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 		imprimir_error_linea("Las figuras de los botones no fueron cargadas. Se cargan botones por defecto",listaFiguras.GetMark().line);
 		botonera->agregarBotonesDefault();
 	};
+
+}
+
+void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera){
+
+	try{
+		const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
+		botonera->agregarBotonesDefault();
+		return;
+	}catch(YAML::BadDereference &e){
+		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
+		botonera->agregarBotonesDefault();
+		return;
+	}
+
+	const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
+	
+	for(unsigned i=0;i<listaClientes.size();i++) {
+		try{
+			const YAML::Node& listaFiguras = listaClientes[i]["lista_figuras"];
+		}catch(YAML::TypedKeyNotFound<std::string> &e){
+			imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
+			botonera->agregarBotonesDefault();
+			continue;
+		}catch(YAML::BadDereference &e){
+			imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
+			botonera->agregarBotonesDefault();
+			continue;
+		}
+
+		const YAML::Node& listaFiguras = listaClientes[i]["lista_figuras"];
+
+		cargar_botones_de_cliente(listaFiguras,botonera);
+	}
+
 }
 
 
@@ -811,6 +901,12 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 	}
 
 	const YAML::Node& nodoRaiz = doc["juego"];
+
+	int cant_jugadores;
+	obtenerCantidadDeJugadores(nodoRaiz,&cant_jugadores);
+
+	// FIXME: Qué hago con la cantidad de jugadores???
+
 
 	//Busco la botonera
 	try{
@@ -928,6 +1024,10 @@ bool CargadorYaml::sentido_valido(int sentido){
 	return ((sentido == SENT_HORARIO) || (sentido == SENT_ANTIHORARIO));
 }
 
+bool CargadorYaml::cantidad_jugadores_valida(int cantidad){
+	return ((cantidad > 0) && (cantidad <= CANT_JUG_MAX));
+}
+
 bool CargadorYaml::cant_instancias_valida(int instancias){
 	return (instancias >= 0);
 }
@@ -943,6 +1043,12 @@ bool CargadorYaml::alto_valido(double alto){
 
 bool CargadorYaml::ancho_valido(double ancho){
 	return ((ancho > 0) && (ancho < ANCHO_TERRENO_LOGICO));
+}
+
+bool CargadorYaml::opcion_valida(const char* opcion){
+	bool si = (strcmp(opcion,"SI") == 0);
+	bool no = (strcmp(opcion,"NO") == 0);
+	return (si | no);
 }
 
 bool CargadorYaml::base_triangulo_valida(double base){

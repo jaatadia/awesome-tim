@@ -43,6 +43,7 @@ private:
 	static std::string ruta_archivo;
 
 	static void cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera);
+	static void cargar_botones_de_cliente(const YAML::Node& listaFiguras, BotoneraController* botonera);
 	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno);
 	static Figura* cargar_figura(const YAML::Node& nodoFig);
 	static Figura* crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura);
@@ -60,6 +61,8 @@ private:
 	static bool cant_vertices_valida(int cant);
 	static bool base_triangulo_valida(double base);
 	static bool sentido_valido(int sentido);
+	static bool opcion_valida(const char* opcion);
+	static bool cantidad_jugadores_valida(int cantidad);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
@@ -84,6 +87,7 @@ private:
 	static Figura* crearCintaTransportadora(const YAML::Node& nodoFigura);
 	static Figura* crearPelotaTenis(const YAML::Node& nodoFigura);
 
+	static void obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant);
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
 	static void obtenerLargo(const YAML::Node& nodoFigura, int* largo);
@@ -95,4 +99,6 @@ private:
 	static void obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base);
 	static void obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2);
 	static void obtenerSentido(const YAML::Node& nodoFigura,int* sentido);
+	static bool obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura);
+	static bool obtenerPropiedadFiguraInteractuable(const YAML::Node& nodoFigura);
 };
