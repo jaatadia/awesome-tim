@@ -39,6 +39,7 @@ void CintaTransportadora::agrandar(){
 
 		this->cinta->getDimension()->setAncho(ANCHO_CINTA*largo);
 		this->cinta->setLargo(largo);
+		this->cinta->setCambio(true);
 
 		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
 		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);
@@ -65,6 +66,7 @@ void CintaTransportadora::achicar(){
 
 		this->cinta->getDimension()->setAncho(ANCHO_CINTA*largo);
 		this->cinta->setLargo(largo);
+		this->cinta->setCambio(true);
 
 		this->clavo->setX(posX+(ANCHO_CINTA*largo)/2-RADIO_CTRANSP_CIRC);
 		this->clavo->setY(posY-ALTO_CINTA/2+RADIO_CTRANSP_CLAVO);

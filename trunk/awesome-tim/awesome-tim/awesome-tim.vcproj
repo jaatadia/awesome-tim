@@ -224,10 +224,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Motor.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\PelotaBasquet.cpp"
 				>
 			</File>
