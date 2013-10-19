@@ -16,6 +16,8 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->superpuesta = false;
 	fig1 = fig2 = NULL;
 
+	this->es_fija = false;
+	this->interactua_en_play = false;
 }
 
 
@@ -32,6 +34,22 @@ Figura::~Figura(void){
 		delete myVista;
 	if (dimension != NULL)
 		delete dimension;
+}
+
+bool Figura::esFija(){
+	return this->es_fija;
+}
+
+void Figura::fijarFigura(){
+	this->es_fija = true;
+}
+
+bool Figura::esInteractuableEnPlay(){
+	return this->interactua_en_play;
+}
+
+void Figura::hacerInteractuableEnPlay(){
+	this->interactua_en_play = true;
 }
 
 void Figura::cambiarPosicion(double x,double y)
