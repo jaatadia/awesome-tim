@@ -541,12 +541,16 @@ Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 			
 			figuraEncontrada = (*iteradorLista)->esMiPosicion(posClickX,posClickY);
 			figuraBuscada = (*iteradorLista);
-			
+
 			iteradorLista++;
 		}
 
-		if (figuraEncontrada)
+		if (figuraEncontrada){
+			if(figuraBuscada->esFija())
+				return NULL;
+
 			return figuraBuscada;
+		}
 	}
 	return NULL;
 }

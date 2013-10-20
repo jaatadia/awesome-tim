@@ -697,6 +697,10 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 	bool fija = obtenerPropiedadFiguraFija(nodoFig);
 	bool interactuable = obtenerPropiedadFiguraInteractuable(nodoFig);
 
+	if(fija) figura->fijarFigura();
+
+	if(interactuable) figura->hacerInteractuableEnPlay();
+
 	return figura;
 }
 
