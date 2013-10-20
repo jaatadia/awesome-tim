@@ -15,6 +15,13 @@ private:
 	ComandosPlay* comandos;
 	Terreno* terreno;
 	Superficie* fondo;
+	
+	//cosas para dibujar que gano
+	bool gano;
+	int contadorGano;
+	Imagen* imgGano;
+
+
 public:
 	JuegoPlay(Superficie* fondo,Terreno* ter,MaquinaEstados* maq);
 	~JuegoPlay(void);
@@ -27,4 +34,7 @@ public:
 
 private:
 	void actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);
+
+	void actualizarVictoria();
+	void dibujarVictoria(Superficie* sup);
 };
