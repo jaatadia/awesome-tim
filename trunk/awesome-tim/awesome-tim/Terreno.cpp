@@ -7,9 +7,17 @@
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
-	//this->fisicaActiva = fisicaActiva;
 	this->fisicaActiva = fisicaActiva;
+	
+	x1 = 0;
+	y1 = 0;
+	x2 = ancho;
+	y2 = alto;
 
+	ex1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x1);
+	ex2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x2);
+	ey1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y1);
+	ey2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y2);
 
 	this->ancho = ancho;
 	this->alto = alto;
@@ -56,6 +64,20 @@ Terreno::~Terreno(void){
 	delete sup;
 }
 
+
+void Terreno::setMiPorcion(double x1, double y1, double x2, double y2){
+	this->x1 = x1;
+	this->y1 = y1;
+	this->x2 = x2;
+	this->y2 = y2;
+
+	ex1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x1);
+	ex2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x2);
+	ey1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y1);
+	ey2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y2);
+
+}
+
 void Terreno::redraw(){
 
 	//recorro todas las figuras y las voy dibujando
@@ -98,6 +120,49 @@ void Terreno::redraw(){
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
 		figuraActiva->dibujar(this->sup);
+
+	if(!fisicaActiva){
+		
+		Superficie super(sup->getAncho(),sup->getAlto());
+		super.setTransparency(150);
+		Rectangulo rect;
+		
+		//dibujo arriba
+		rect.x =0;
+		rect.y =0;
+		rect.ancho = sup->getAncho();
+		rect.alto = ey1;
+		sup->dibujarSupreficie(&super,&rect,0,0);
+		
+		//dibujo abajo
+		rect.x =0;
+		rect.y =0;
+		rect.ancho = sup->getAncho();
+		rect.alto = sup->getAlto()-ey2;
+		sup->dibujarSupreficie(&super,&rect,0,ey2);
+
+		//dibujo izquierda
+		rect.x =0;
+		rect.y =0;
+		rect.ancho = ex1;
+		rect.alto = ey2-ey1;
+		sup->dibujarSupreficie(&super,&rect,0,ey1);
+		
+		//dibujo derecha
+		rect.x =0;
+		rect.y =0;
+		rect.ancho = sup->getAncho()-ex2;
+		rect.alto = ey2-ey1;
+		sup->dibujarSupreficie(&super,&rect,ex2,ey1);
+		
+		sup->dibujarLinea(ex1,ey1,ex1,ey2,2,30,30,30);	 
+		sup->dibujarLinea(ex1,ey1,ex2,ey1,2,30,30,30);	 
+		sup->dibujarLinea(ex1,ey2,ex2,ey2,2,30,30,30);	 
+		sup->dibujarLinea(ex2,ey1,ex2,ey2,2,30,30,30);	 
+	}
+	
+	
+
 }
 
 Superficie* Terreno::getImpresion(){
@@ -413,6 +478,11 @@ void Terreno::resizear(){
 	//si cambiaron las escalas...consigo una nueva superficie del tamanio correcto
 	ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
 	alto =  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
+	
+	ex1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x1);
+	ex2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x2);
+	ey1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y1);
+	ey2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y2);
 
 	delete sup;
 	sup = new Superficie(ancho,alto);
