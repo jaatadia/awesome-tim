@@ -196,3 +196,26 @@
 #define COLOR_AMARILLO "../images/globoamarillo.png"
 #define COLOR_ROSA "../images/globorosa.png"
 #define COLOR_VIOLETA "../images/globovioleta.png"
+
+
+//constantes para la pantalla de que gano
+#define DURACION_SEGS 1
+#define DURACION_FRAMES DURACION_SEGS*FPS
+#define CANT_IMGS 6 //si se quieren agregar mas hay que tocar juego play actualizarVictoria()
+#define REPEAT true
+
+
+#define INICIO_GANO1 0
+#define GANO_1 "../images/gano1.png"
+#define INICIO_GANO2 1*DURACION_FRAMES/CANT_IMGS
+#define GANO_2 "../images/gano2.png"
+#define INICIO_GANO3 2*DURACION_FRAMES/CANT_IMGS
+#define GANO_3 "../images/gano3.png"
+#define INICIO_GANO4 3*DURACION_FRAMES/CANT_IMGS
+#define GANO_4 "../images/gano4.png"
+#define INICIO_GANO5 4*DURACION_FRAMES/CANT_IMGS
+#define GANO_5 "../images/gano5.png"
+#define INICIO_GANO6 5*DURACION_FRAMES/CANT_IMGS
+#define GANO_6 "../images/gano6.png"
+
+#define REPEAT_FROM INICIO_GANO5
