@@ -13,33 +13,37 @@ std::string CargadorYaml::ruta_archivo = "";
 **                OBTENER PARAMETROS                     **
 **                                                       **
 **********************************************************/
-
-void CargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY){
-
+void CargadorYaml::obtenerPos(const YAML::Node& nodoFigura,double* posX, double* posY, double X_Default, double Y_Default){
 	try{
 		nodoFigura["posX"] >> *posX;
 		nodoFigura["posY"] >> *posY;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("Posicion de figura no esta definida. Se carga posicion por defecto.",e.what());
-		*posX = POSX_DEFAULT;
-		*posY = POSY_DEFAULT;
+		imprimir_error_excepcion("Posicion no esta definida. Se carga posicion por defecto.",e.what());
+		*posX = X_Default;
+		*posY = Y_Default;
 	}catch(YAML::InvalidScalar &e){
-		imprimir_error_excepcion("Dato erroneo en Posicion de figura. Se carga posicion por defecto.",e.what());
-		*posX = POSX_DEFAULT;
-		*posY = POSY_DEFAULT;
+		imprimir_error_excepcion("Dato erroneo en Posicion. Se carga posicion por defecto.",e.what());
+		*posX = X_Default;
+		*posY = Y_Default;
 	}
 
 	if(!posicion_validaX(*posX)){
 		int linea = nodoFigura["posX"].GetMark().line;
-		imprimir_error_linea("Posicion X de Figura invalida. Se carga posicion X por defecto.",linea);
-		*posX = POSX_DEFAULT;
+		imprimir_error_linea("Posicion X invalida. Se carga posicion X por defecto.",linea);
+		*posX = X_Default;
 	}
 
 	if(!posicion_validaY(*posY)){
 		int linea = nodoFigura["posY"].GetMark().line;
-		imprimir_error_linea("Posicion Y de Figura invalida. Se carga posicion Y por defecto.",linea);
-		*posY = POSY_DEFAULT;
+		imprimir_error_linea("Posicion Y invalida. Se carga posicion Y por defecto.",linea);
+		*posY = Y_Default;
 	}
+
+}
+
+void CargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY){
+
+	obtenerPos(nodoFigura,posX,posY,POSX_DEFAULT,POSY_DEFAULT);
 }
 
 void CargadorYaml::obtenerAngulo(const YAML::Node& nodoFigura, double* angulo){
@@ -306,6 +310,78 @@ void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,doubl
 	obtenerPosicion(nodoPos2,x2,y2);
 
 }
+
+void CargadorYaml::establecerZonaPorDefault(double* x1,double* y1,double* x2,double* y2){
+	*x1=0;
+	*y1=0;
+	*x2=ANCHO_TERRENO_LOGICO;
+	*y2=ALTO_TERRENO_LOGICO;
+}
+
+
+void CargadorYaml::obtenerZona(const YAML::Node& nodoZona,double* x1,double* y1,double* x2,double* y2){
+
+	try{
+		const YAML::Node& nodoPos = nodoZona["puntoSupIzq"];
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe punto superior izquierdo de zona. Se carga zona por default.",e.what());
+		establecerZonaPorDefault(x1,y1,x2,y2);
+		return;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del punto superior izquierdo de zona. Se carga zona por default.",e.what());
+		establecerZonaPorDefault(x1,y1,x2,y2);
+		return;
+	}
+
+	const YAML::Node& nodoPosSupIzq = nodoZona["puntoSupIzq"];
+
+	try{
+		const YAML::Node& nodoPos = nodoZona["puntoInfDer"];
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe punto inferior derecho de zona. Se carga zona por default.",e.what());
+		establecerZonaPorDefault(x1,y1,x2,y2);
+		return;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del punto inferior derecho de zona. Se carga zona por default.",e.what());
+		establecerZonaPorDefault(x1,y1,x2,y2);
+		return;
+	}
+
+	const YAML::Node& nodoPosInfDer = nodoZona["puntoInfDer"];
+	
+	//Valores default para la zona
+	double xIzqDef = 0;
+	double yIzqDef = 0;
+	double xDerDef = ANCHO_TERRENO_LOGICO;
+	double yDerDef = ALTO_TERRENO_LOGICO;
+	
+	obtenerPos(nodoPosSupIzq,x1,y1,xIzqDef,yIzqDef);
+	obtenerPos(nodoPosInfDer,x2,y2,xDerDef,yDerDef);
+
+	if(*x1>*x2){
+		imprimir_error_sin_linea("No estan bien definidos los puntos X de la zona. Se usan valores X default");
+		*x1 = xIzqDef;
+		*x2 = xDerDef;
+	}
+
+	if(*y1>*y2){
+		imprimir_error_sin_linea("No estan bien definidos los puntos Y de la zona. Se usan valores Y default");
+		*y1 = yIzqDef;
+		*y2 = yDerDef;
+	}
+}
+
+
+void CargadorYaml::agregarZonasClientes(const YAML::Node& nodoTerrenoCliente,Terreno* terreno){
+
+	double posXIzq, posYIzq, posXDer, posYDer;
+
+	obtenerZona(nodoTerrenoCliente,&posXIzq,&posYIzq,&posXDer,&posYDer);
+
+	terreno->setMiPorcion(posXIzq,posYIzq,posXDer,posYDer);
+	
+}
+
 /**********************************************************
 **                                                       **
 **                    CREAR FIGURAS                      **
@@ -747,6 +823,24 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 		
 		terreno->agregarFigura(fig);	
 	}
+
+	//Cargo las dimensiones de las zonas de terreno de cada cliente
+	try{
+		const YAML::Node& listaClientes = nodoTerreno["lista_clientes"];
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("Error al cargar lista de clientes terreno. No se cargan zonas de juego",e.what());
+		return;
+	}catch(YAML::BadDereference &e){
+		imprimir_error_excepcion("Error al cargar lista de clientes terreno. No se cargan zonas de juego.",e.what());
+		return;
+	}
+
+	const YAML::Node& listaClientes = nodoTerreno["lista_clientes"];
+
+	for(unsigned i=0;i<listaClientes.size();i++) {
+		agregarZonasClientes(listaClientes[i]["terreno_cliente"],terreno);	
+	}
+
 }
 
 void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, BotoneraController* botonera){

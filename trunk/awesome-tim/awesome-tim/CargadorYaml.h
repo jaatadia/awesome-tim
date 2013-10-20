@@ -47,6 +47,7 @@ private:
 	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno);
 	static Figura* cargar_figura(const YAML::Node& nodoFig);
 	static Figura* crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura);
+	static void agregarZonasClientes(const YAML::Node& nodoTerrenoCliente,Terreno* terreno);
 
 	//Funciones de validacion de datos
 	static bool cant_instancias_valida(int instancias);
@@ -101,4 +102,8 @@ private:
 	static void obtenerSentido(const YAML::Node& nodoFigura,int* sentido);
 	static bool obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura);
 	static bool obtenerPropiedadFiguraInteractuable(const YAML::Node& nodoFigura);
+	static void establecerZonaPorDefault(double* x1,double* y1,double* x2,double* y2);
+	static void obtenerZona(const YAML::Node& nodoZona,double* x1,double* y1,double* x2,double* y2);
+	static void obtenerPos(const YAML::Node& nodoFigura,double* posX, double* posY, double X_Default, double Y_Default);
+
 };
