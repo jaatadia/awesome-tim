@@ -19,6 +19,14 @@ juego:
           angulo: 0
           fija: SI
           interactuable: NO
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 5
+            posY: 5
+          puntoInfDer:
+            posX: 40
+            posY: 60
   botonera:
     lista_clientes:
       - lista_figuras:
