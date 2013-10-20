@@ -20,6 +20,8 @@ class Terreno: public Imprimible,public Cambiable
 {
 private:
 	int ancho,alto;
+	double x1,y1,x2,y2;//puntos que definen el rectangulo donde se dibujar
+	int ex1,ey1,ex2,ey2;//puntos que definen como se dibuja dicho rectangulo
 	Imagen* img;
 	std::string fondoID;
 	Imagen* fondo;
@@ -39,6 +41,8 @@ private:
 public:
 	Terreno(int ancho,int alto,bool fisicaActiva=true);
 	~Terreno(void);
+
+	void setMiPorcion(double x1, double y1, double x2, double y2);
 
 	Superficie* getImpresion();
 
