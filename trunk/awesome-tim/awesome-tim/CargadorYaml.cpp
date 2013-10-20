@@ -390,7 +390,6 @@ Figura* CargadorYaml::crearEngranaje(const YAML::Node& nodoFigura){
 	double posX,posY,radio;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
-	//obtenerAngulo(nodoFigura,&angulo);
 	obtenerRadio(nodoFigura,&radio);
 
 	Figura* fig = new Engranaje(posX,posY,radio,/*angulo*/0);
@@ -613,7 +612,8 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Correa."); 	
 		return figura;
 	}
-		if (strcmp(tipo_figura,"LINEA") == 0){
+
+	if (strcmp(tipo_figura,"LINEA") == 0){
 		Figura* figura = crearCorrea(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Correa."); 	

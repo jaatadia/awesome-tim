@@ -17,7 +17,7 @@ juego:
           posX: 73.8
           posY: 41.6
           angulo: 0
-          fija: NO
+          fija: SI
           interactuable: NO
   botonera:
     lista_clientes:
