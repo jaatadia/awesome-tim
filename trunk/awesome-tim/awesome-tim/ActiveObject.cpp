@@ -1,11 +1,11 @@
 #include "ActiveObject.h"
 
-ActiveObject::ActiveObject() : _isDying(0), _thread(threadEntry, this)
+ActiveObject::ActiveObject() : finalizando(0), _thread(threadEntry, this)
 {
 }
 
 void ActiveObject::kill() {
-	_isDying++;
+	finalizando++;
 	flushThread();
 	_thread.waitForDeath();
 }

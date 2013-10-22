@@ -1,7 +1,8 @@
-#include <windows.h>
-
 #ifndef __THREAD_H__
 #define __THREAD_H__
+
+#define _WINSOCKAPI_
+#include <windows.h>
 
 class Thread
 {
