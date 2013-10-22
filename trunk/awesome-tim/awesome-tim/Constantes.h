@@ -68,6 +68,7 @@
 #define MOTOR 14
 #define CORREA 15
 #define LINEA 16
+#define PEDACITOSOGA 17
 
 //valores fisicos
 
@@ -128,6 +129,8 @@
 #define RADIO_CTRANSP_CLAVO 0.88
 
 
+#define DENSIDAD_PEDACITO_SOGA 0.1
+#define LARGO_PEDACITO_SOGA 1
 
 //cuadrantes
 #define CUADRANTE1 1

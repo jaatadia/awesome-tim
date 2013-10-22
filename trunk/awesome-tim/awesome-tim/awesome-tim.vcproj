@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PedacitoSoga.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PelotaBasquet.cpp"
 				>
 			</File>
@@ -249,6 +253,10 @@
 			</File>
 			<File
 				RelativePath=".\VistaLinea.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\VistaPedacitoSoga.cpp"
 				>
 			</File>
 			<Filter
@@ -284,6 +292,38 @@
 				</File>
 				<File
 					RelativePath=".\Triangulo.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Vista"
+				>
+				<File
+					RelativePath=".\Fallable.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Imagen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Rectangulo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\SdlSurfaceManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Superficie.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ventana.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\VistaFigura.cpp"
 					>
 				</File>
 			</Filter>
@@ -328,38 +368,6 @@
 				</File>
 				<File
 					RelativePath=".\ManejadorEventos.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Vista"
-				>
-				<File
-					RelativePath=".\Fallable.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Imagen.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Rectangulo.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\SdlSurfaceManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Superficie.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Ventana.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\VistaFigura.cpp"
 					>
 				</File>
 			</Filter>
@@ -438,6 +446,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PedacitoSoga.h"
+				>
+			</File>
+			<File
 				RelativePath=".\PelotaBasquet.h"
 				>
 			</File>
@@ -471,6 +483,10 @@
 			</File>
 			<File
 				RelativePath=".\VistaLinea.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VistaPedacitoSoga.h"
 				>
 			</File>
 			<Filter

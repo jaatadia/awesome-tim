@@ -34,7 +34,32 @@ public:
 	virtual Dimension* clonar(){return new DLinea(x1,y1,x2,y2,ancho);};
 
 	bool puntoPertenece(double pos_X, double pos_Y){
-		return false;
+		bool pertenece = false;
+		if(y1<=y2){
+			pertenece = ((pos_Y>=y1)&&(pos_Y<=y2));
+		}else{
+			pertenece = ((pos_Y<=y1)&&(pos_Y>=y2));
+		}
+		if(!pertenece) return false;
+
+		double centroX = (x1+x2)/2.0;
+		double centroY = (y1+y2)/2.0;
+			
+		double margen = 1;
+		
+		double signoC = (centroX-(x1+margen))/(x2-x1) - (centroY-y1)/(y2-y1);
+		double signo = (pos_X-(x1+margen))/(x2-x1) - (pos_Y-y1)/(y2-y1);
+		if (!(((signoC<=0)&&(signo<=0))||((signoC>=0)&&(signo>=0)))){
+			return false;
+		}
+
+		signoC = (centroX-(x1-margen))/(x2-x1) - (centroY-y1)/(y2-y1);
+		signo = (pos_X-(x1-margen))/(x2-x1) - (pos_Y-y1)/(y2-y1);
+		if (!(((signoC<=0)&&(signo<=0))||((signoC>=0)&&(signo>=0)))){
+			return false;
+		}
+
+		return true;
 	};
 
 	

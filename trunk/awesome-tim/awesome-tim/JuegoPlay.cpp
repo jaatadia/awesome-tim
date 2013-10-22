@@ -158,7 +158,6 @@ void JuegoPlay::actualizarVictoria(){
 	int alto = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
 	if (contadorGano==INICIO_GANO1){
 		delete imgGano;
-		//Sonidos::play("../images/sound.wav");
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_1);
 		imgGano = imgGano->scaleImagen(ancho,alto);
 	}else if (contadorGano==INICIO_GANO2){
