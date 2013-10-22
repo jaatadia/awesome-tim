@@ -318,11 +318,12 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						//creacion de los segmentos
 						//----------------------------------------
 
-						fig1->posAtableSoga(num1,&x1,&y1);
-						fig2->posAtableSoga(num2,&x2,&y2);
+						//fig1->posAtableSoga(num1,&x1,&y1);
+						//fig2->posAtableSoga(num2,&x2,&y2);
 						double largo = LARGO_PEDACITO_SOGA;
 						double cantSegmentos = sqrt(pow(x1-x2,2)+pow(y1-y2,2))/largo;
 						double angulo = atan2(y2-y1,x2-x1);
+						double dist = largo;
 												
 						Figura* figuraIzq = fig1;
 						b2Body* cuerpoIzq = cuerpo1;
@@ -363,7 +364,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 								joint.localAnchorA = b2Vec2(0,0);
 							}
 							joint.localAnchorB = b2Vec2(0,0);
-							joint.length=largo;
+							joint.length=dist;
 							b2Joint* enlace = this->mundo->CreateJoint(&joint);
 							
 							pedacito->jointIzq = enlace;
@@ -387,7 +388,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						joint.bodyB = cuerpo2;
 						joint.localAnchorA = b2Vec2(0,0);
 						joint.localAnchorB = b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY());
-						joint.length=largo;
+						joint.length=dist;
 						b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
 						//me guardo la joint
