@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -180,6 +180,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ActiveObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Balancin.cpp"
 				>
 			</File>
@@ -189,6 +193,18 @@
 			</File>
 			<File
 				RelativePath=".\CintaTransportadora.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Client.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientSocket.cpp"
 				>
 			</File>
 			<File
@@ -240,7 +256,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Server.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ServerSocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Socket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SocketException.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Soga.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Thread.cpp"
 				>
 			</File>
 			<File
@@ -378,6 +414,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ActiveObject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Balancin.h"
 				>
 			</File>
@@ -387,6 +427,18 @@
 			</File>
 			<File
 				RelativePath=".\CintaTransportadora.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Client.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientHandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientSocket.h"
 				>
 			</File>
 			<File
@@ -470,7 +522,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Server.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ServerSocket.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Socket.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SocketException.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Soga.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Thread.h"
 				>
 			</File>
 			<File

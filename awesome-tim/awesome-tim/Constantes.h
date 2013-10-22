@@ -222,3 +222,7 @@
 #define GANO_6 "../images/gano6.png"
 
 #define REPEAT_FROM INICIO_GANO5
+
+// NET
+#define PUERTO "1111"
+#define TAM_BUFFER 512

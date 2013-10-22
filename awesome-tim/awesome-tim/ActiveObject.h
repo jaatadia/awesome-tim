@@ -1,8 +1,7 @@
-#include <windows.h>
-#include "Thread.h"
-
 #ifndef __ACTIVEOBJECT_H__
 #define __ACTIVEOBJECT_H__
+
+#include "Thread.h"
 
 class ActiveObject
 {
@@ -15,7 +14,7 @@ protected:
 	virtual void run() = 0;
 	virtual void flushThread() = 0;
 	static DWORD WINAPI threadEntry(void * pArg);
-	int _isDying;
+	int finalizando;
 	Thread _thread;
 };
 
