@@ -60,6 +60,7 @@ public:
 
 	void buscarActiva(double posClickX ,double posClickY);
 	void soltarFigura();
+	bool adentroZonaTerreno(double posX,double posY);
 
 	int getAncho();
 	int getAlto();
