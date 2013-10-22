@@ -31,6 +31,7 @@ BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostra
 	this->layerPrincipal = new Superficie(ancho, alto);
 	this->figuraActual = 0;
 	this->layerFiguras = NULL;
+	this->layerADibujar = NULL;
 	this->layerFigurasOrig = NULL;
 	this->setScrollDirection(SCROLL_OFF);
 	this->buttonPressed = false;
@@ -95,7 +96,7 @@ void BotoneraController::resizear(){
 	layerFiguras = layerFigurasTemp;
 
 //	int buttonSide = (this->botonera->getAltoBoton() > this->botonera->getAnchoBoton()) ? this->botonera->getAnchoBoton() : this->botonera->getAltoBoton();
-//olvidate de mantener una relacion cuadrada porque el layer de figuras se deforma segun el resize asique nunca encajarian
+//olvidate de mantener una relacion cuadrada porque el layer de figuras se deforma segun el resize asi que nunca encajarian
 	int botonAncho = this->botonera->getAnchoBoton();
 	int botonAlto = this->botonera->getAltoBoton();
 
@@ -144,7 +145,10 @@ BotoneraController::~BotoneraController() {
 		delete (this->layerFigurasOrig);
 		this->layerFigurasOrig = 0;
 	}
-
+	if (this->layerADibujar) {
+		delete (this->layerADibujar);
+		this->layerADibujar = 0;
+	}
 	if (this->supFiguraActual) {
 		delete (this->supFiguraActual);
 		this->supFiguraActual = 0;
@@ -186,7 +190,6 @@ void BotoneraController::handleEventBotonera(double mouseX, double mouseY, Uint3
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
-			// Borro aca la figura???
 			this->figuraActual = 0;
 			this->setScrollDirection(this->SCROLL_OFF);
 			this->buttonPressed = false;
@@ -197,6 +200,9 @@ void BotoneraController::handleEventBotonera(double mouseX, double mouseY, Uint3
 Superficie* BotoneraController::getImpresion(){
 	//Dibuja en el buffer principal (Double Buffer)
 	if (this->layerFiguras && this->huboCambios()) {
+
+		//Pone los numeritos de cuantas instancias quedan
+		this->dibujarCantInstancias();
 
 		//Actualiza scroll
 		if ((this->scrollBot | this->scrollTop) != 0 && (this->botonera->getAlturaMax() > this->altoAreaFiguras)) {
@@ -215,7 +221,10 @@ Superficie* BotoneraController::getImpresion(){
 		Rectangulo rect(this->botonera->getX(), this->botonera->getY(), this->botonera->getAncho(), this->altoAreaFiguras);
 		this->layerPrincipal->dibujarCuadradoNegro(0,0,this->getAncho(),this->getAlto());
 		this->layerPrincipal->dibujarSupreficie(this->layerScroll, NULL, 0, 0);
-		this->layerPrincipal->dibujarSupreficie(this->layerFiguras, &rect, 0, (this->altoAreaScroll >> 1));
+		this->layerPrincipal->dibujarSupreficie(this->layerADibujar, &rect, 0, (this->altoAreaScroll >> 1));\
+		//ya no es necesario
+		delete this->layerADibujar;
+		layerADibujar = NULL;
 
 		if (this->buttonPressed) 
 		{
@@ -236,7 +245,6 @@ Superficie* BotoneraController::getImpresion(){
 				this->layerPrincipal->dibujarImagen(this->scrollButtonUpPressed, NULL, x, y);
 			else
 				this->layerPrincipal->dibujarImagen(this->scrollButtonDownPressed, NULL, x, y + this->altoAreaFiguras + (this->altoAreaScroll >> 1));
-
 		}
 	}
 	//this->setCambio(false);
@@ -369,4 +377,45 @@ bool BotoneraController::agregarBotonesDefault(){
 bool BotoneraController::estaVacia(){
 	std::list<map<Figura *, int>> lista = this->botonera->getListaFiguras();
 	return (lista.size()==0);
+}
+
+
+void BotoneraController::dibujarCantInstancias(){
+	
+	int altoBoton = botonera->getAltoBoton();
+	int cantDeFig = layerFigurasOrig->getAlto()/altoBoton;
+
+
+	int posBotonX = 0;
+	int posBotonY = 0;
+
+	std::list<map<Figura *, int>> figs = botonera->getListaFiguras();
+	std::list<map<Figura *, int>>::iterator itFig = figs.begin();
+
+	int cantInstancias;
+	Imagen* img;
+	//solo para copiarla y no cambiar la original
+	layerADibujar = layerFiguras->rotarSuperficie(0);
+
+	for(int i = 0; i < cantDeFig; ++i){
+
+		cantInstancias = (*itFig).begin()->second;
+
+		//convertir a c string
+		stringstream ss;
+		ss<<cantInstancias;
+		string digito =ss.str();
+		const char* dig = digito.c_str();
+
+		//dibujar
+		img = new Imagen(dig,altoBoton*0.2,255,255,255);
+		//y un pequeño desplazamiento para que entren bien al boton
+		layerADibujar->dibujarImagen(img, NULL, 7, posBotonY+7);
+
+		posBotonY += altoBoton;
+		++itFig;
+
+		delete img;
+	}
+
 }
