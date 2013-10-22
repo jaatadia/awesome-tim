@@ -317,22 +317,52 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 						//creacion de los segmentos
 						//----------------------------------------
-
-						//fig1->posAtableSoga(num1,&x1,&y1);
-						//fig2->posAtableSoga(num2,&x2,&y2);
+							//----------------------- calculos aux
+							if(fig1->getTipoFigura()==BALANCIN){
+								angf1 = fig1->getDimension()->getAngulo();
+								if(angf1<90){
+									fig1->setAngulo(angf1-45);
+								}else{
+									fig1->setAngulo(angf1+45);
+								}
+								fig1->posAtableSoga(num1,&x1,&y1);
+								fig1->setAngulo(angf1);
+							}else{
+								fig1->posAtableSoga(num1,&x1,&y1);
+							}
+							if(fig2->getTipoFigura()==BALANCIN){
+								angf2 = fig2->getDimension()->getAngulo();
+								if(angf2<90){
+									fig2->setAngulo(angf2-45);
+								}else{
+									fig2->setAngulo(angf2+45);
+								}
+								fig2->posAtableSoga(num2,&x2,&y2);
+								fig2->setAngulo(angf2);
+							}else{
+								fig2->posAtableSoga(num2,&x2,&y2);
+							}
+														
+							//------------------------------------
+						double UNAX = cuerpo1->GetWorldPoint(b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY())).x - cuerpo2->GetWorldPoint(b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY())).x;
+						double UNAY = cuerpo1->GetWorldPoint(b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY())).y - cuerpo2->GetWorldPoint(b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY())).y;
+						b2Vec2 punto(UNAX,UNAY);
 						double largo = LARGO_PEDACITO_SOGA;
-						double cantSegmentos = sqrt(pow(x1-x2,2)+pow(y1-y2,2))/largo;
-						double angulo = atan2(y2-y1,x2-x1);
-						double dist = largo;
+						double cantSegmentos = punto.Length()/largo;
+						double angulo = atan2(-UNAY,-UNAX);
+						double dist = largo/2;
 												
 						Figura* figuraIzq = fig1;
 						b2Body* cuerpoIzq = cuerpo1;
 
+						double tx1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpoIzq->GetPosition().x,y1-cuerpoIzq->GetPosition().y)).x;
+						double ty1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpoIzq->GetPosition().x,y1-cuerpoIzq->GetPosition().y)).y;
+
 						
 						for(int i = 1;i<=cantSegmentos;i++){
 							//calculo el centro de los pedacitos
-							double cx = x1 + (i-1)*largo*cos(angulo);
-							double cy = y1 + (i-1)*largo*sin(angulo);
+							double cx = tx1 + (i-1)*largo*cos(angulo);
+							double cy = ty1 + (i-1)*largo*sin(angulo);
 							
 							//creo el pedacito
 							PedacitoSoga* pedacito = new PedacitoSoga(cx,cy,largo,angulo);
