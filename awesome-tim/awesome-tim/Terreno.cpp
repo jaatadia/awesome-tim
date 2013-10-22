@@ -114,7 +114,7 @@ void Terreno::redraw(){
 		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 		
 		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
-			(*iteradorLista)->dibujar(this->sup);\
+			(*iteradorLista)->dibujar(this->sup);
 		}
 	}
 	//por ultimo dibujo la que estoy manipulando;
@@ -248,7 +248,15 @@ bool Terreno::agregarFigura(Figura* fig){
 		if(fisicaActiva){
 			aux = this->mundoBox2D->agregarFigura(fig);
 			if(aux){
-				(this->figuras).push_back(fig);
+				if(fig->getTipoFigura()==SOGA){
+					std::list<Figura*> segmentos = ((Soga*)fig)->getSegmentos();
+					std::list<Figura*>::iterator iteradorLista;
+					for (iteradorLista = segmentos.begin() ; iteradorLista != segmentos.end(); iteradorLista++){
+						(this->figuras).push_back((*iteradorLista));
+					}
+				}else{
+					(this->figuras).push_back(fig);
+				}
 			}else{ 
 				delete fig;
 			}
@@ -411,33 +419,35 @@ std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY){
 		eliminarFigura(figuraABorrar);
 		setCambio(true);
 		
+		if(figuraABorrar->esUnion()){
+			figuraABorrar->desUnir();
+		}else{
+			std::list<Figura*>::iterator iteradorLista;
+			std::list<Figura*> listaFigAux;
+			iteradorLista = figuras.begin();
 
-		std::list<Figura*>::iterator iteradorLista;
-		std::list<Figura*> listaFigAux;
-		iteradorLista = figuras.begin();
-
-		//se buscan y desatan sogas y correas
-		while (iteradorLista != figuras.end()) {
-			if((*iteradorLista)->esUnion()){
-				Figura* correa = (*iteradorLista);
-				if ((correa->getFigura1() == figuraABorrar)||(correa->getFigura2() == figuraABorrar)){
-					listaFigAux.push_back(correa);
+			//se buscan y desatan sogas y correas
+			while (iteradorLista != figuras.end()) {
+				if((*iteradorLista)->esUnion()){
+					Figura* correa = (*iteradorLista);
+					if ((correa->getFigura1() == figuraABorrar)||(correa->getFigura2() == figuraABorrar)){
+						listaFigAux.push_back(correa);
+					}
 				}
+				iteradorLista++;
 			}
-			iteradorLista++;
+
+			for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
+				eliminarFigura(*iter);
+				(*iter)->desUnir();
+
+				tiposBorradas.push_back((*iter)->getTipoFigura());
+
+				delete (*iter);
+			}
 		}
-
-		for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
-			eliminarFigura(*iter);
-			(*iter)->desUnir();
-
-			tiposBorradas.push_back((*iter)->getTipoFigura());
-
-			delete (*iter);
-		}
-
+		
 		tiposBorradas.push_back(figuraABorrar->getTipoFigura());
-
 		delete figuraABorrar;
 	}
 
@@ -817,9 +827,10 @@ bool Terreno::posicionOcupada(Figura* figAPosicionar){
 	iteradorLista = figuras.begin();
 
 	while ( iteradorLista != figuras.end() && !choca1 && !choca2 ) {
-		
-		choca1 = figAPosicionar->choqueConFigura((*iteradorLista));
-		choca2 = (*iteradorLista)->choqueConFigura(figAPosicionar);
+		if(!(*iteradorLista)->esUnion()){
+			choca1 = figAPosicionar->choqueConFigura((*iteradorLista));
+			choca2 = (*iteradorLista)->choqueConFigura(figAPosicionar);
+		}
 		iteradorLista++;
 	}
 

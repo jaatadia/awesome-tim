@@ -1,10 +1,12 @@
 #pragma once
 #include "Linea.h"
+#include <list>
 
 class Soga :public Linea{
 
 private:
 	Soga(DLinea* dim);
+	std::list<Figura*> segmentos;
 
 public:
 	int num1,num2;
@@ -31,4 +33,7 @@ public:
 	virtual bool choqueConFigura(Figura* fig);
 
 	virtual bool choqueConDimension(Dimension* dim);
+
+	std::list<Figura*> getSegmentos();
+	void putSegmento(Figura* fig);
 };

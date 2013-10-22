@@ -4,6 +4,7 @@
 #include "Linea.h"
 #include "Soga.h"
 #include "Balancin.h"
+#include "PedacitoSoga.h"
 
 
 Box2DWorld::Box2DWorld(void)
@@ -312,7 +313,87 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						
 						unionSoga.maxLength = sqrt(pow(x1-x2,2)+pow(y1-y2,2)); 
 
-						this->mundo->CreateJoint(&unionSoga);
+						b2Joint* jointSoga = this->mundo->CreateJoint(&unionSoga);
+
+						//creacion de los segmentos
+						//----------------------------------------
+
+						fig1->posAtableSoga(num1,&x1,&y1);
+						fig2->posAtableSoga(num2,&x2,&y2);
+						double largo = LARGO_PEDACITO_SOGA;
+						double cantSegmentos = sqrt(pow(x1-x2,2)+pow(y1-y2,2))/largo;
+						double angulo = atan2(y2-y1,x2-x1);
+												
+						Figura* figuraIzq = fig1;
+						b2Body* cuerpoIzq = cuerpo1;
+						Figura* figuraDer = NULL;
+						b2Body* cuerpoDer = NULL;
+
+						
+						for(int i = 1;i<=cantSegmentos;i++){
+							//calculo el centro de los pedacitos
+							double cx = x1 + (2*i-1)*largo*cos(angulo);
+							double cy = y1 + (2*i-1)*largo*sin(angulo);
+							
+							//creo el pedacito
+							PedacitoSoga* pedacito = new PedacitoSoga(cx,cy,largo,angulo);
+							pedacito->jointSoga = jointSoga; //le digo a que soga pertenece
+							((Soga*)figura)->putSegmento(pedacito);
+
+							//crear pedacito en b2world
+
+							b2BodyDef pDef;
+							pDef.type = b2_dynamicBody;
+							pDef.position.Set(cx,cy);
+							b2FixtureDef pFix;
+							b2PolygonShape shape;
+							shape.SetAsBox(largo/2,1);
+							pFix.shape = &shape;
+							pFix.density = DENSIDAD_PEDACITO_SOGA;
+							pFix.isSensor = true;
+							b2Body* pBody = this->mundo->CreateBody(&pDef);
+							pBody->CreateFixture(&pFix);
+							pBody->SetTransform(pBody->GetPosition(),angulo);
+							pBody->SetUserData(pedacito);
+							
+							//lo uno con el izquierdo
+							
+							b2RevoluteJointDef joint;
+							joint.bodyA = cuerpoIzq;
+							joint.bodyB = pBody;
+							if(cuerpoIzq == cuerpo1){
+								joint.localAnchorA = b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY());
+							}else{
+								joint.localAnchorA = b2Vec2(largo*cos(angulo)/2,largo*sin(angulo)/2);
+							}
+							joint.localAnchorB = b2Vec2(-largo*cos(angulo)/2,-largo*sin(angulo)/2);
+							b2Joint* enlace = this->mundo->CreateJoint(&joint);
+							
+							pedacito->jointIzq = enlace;
+							pedacito->pedacitoIzq = figuraIzq;
+
+							
+							//al anterior le digo que soy su derecho
+							if(figuraIzq->getTipoFigura()==PEDACITOSOGA){
+								//agrgar la joint con este pedacito
+								((PedacitoSoga*)figuraIzq)->pedacitoDer = pedacito;
+								((PedacitoSoga*)figuraIzq)->jointDer = enlace;
+							}
+
+							//actualizo los datos anteriores
+							figuraIzq = pedacito;
+							cuerpoIzq = pBody;
+						}
+						//agregar la joint con la fig2, al ultimo pedacito le digo que le toca la fig2 de derecho y creo este joint
+						b2RevoluteJointDef joint;
+						joint.bodyA = cuerpoIzq;
+						joint.bodyB = cuerpo2;
+						joint.localAnchorA = b2Vec2(largo*cos(angulo)/2,largo*sin(angulo)/2);
+						joint.localAnchorB = b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY());
+						b2Joint* enlace = this->mundo->CreateJoint(&joint);
+						
+						//----------------------------------------
+
 					}
 				}else{
 					return false;
@@ -558,10 +639,9 @@ void Box2DWorld::actualizar(Figura * figura)
 				continue;
 			}
 
+				fig->setX(cuerpo->GetPosition().x);
+				fig->setY(cuerpo->GetPosition().y);
 				fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
-			
-				fig->getDimension()->setX(cuerpo->GetPosition().x);
-				fig->getDimension()->setY(cuerpo->GetPosition().y);
 				
 			if(activo){
 				if(fig->getTipoFigura()==GLOBOHELIO){
