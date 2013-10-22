@@ -12,7 +12,10 @@
 #include "Cuadrado.h"
 #include "Circulo.h"
 #include "PoligonoRegular.h"
-#include "PelotaBasquet.h"
+
+#include <string>
+#include <iostream>     
+#include <sstream>
 
 class BotoneraController: public Imprimible, public Cambiable
 {
@@ -23,6 +26,7 @@ private:
 	Botonera * botonera;
 	Superficie * layerPrincipal;
 	Superficie * layerFiguras;
+	Superficie * layerADibujar;
 	Superficie * layerFigurasOrig;
 	Superficie * layerScroll;
 	Superficie * supFiguraActual;
@@ -47,7 +51,9 @@ public:
 	static const int SCROLL_BOT = SCROLL_TOP + 1;
 	BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras = 0.8, double scrollScaleFactor = 0.8, double buttonScaleFactor = 0.5);
 	~BotoneraController(void);
+
 	Superficie* getImpresion();
+
 	void handleEventBotonera(double mouseX, double mouseY, Uint32 type);
 	void agregarBoton(Figura * figura, int cantidadInstancias);
 	void setScrollDirection(int direction);
@@ -71,8 +77,10 @@ public:
 
 	bool agregarBotonesDefault();
 
-
-
 	void resizear();
+
+private:
+	//asumo que en la lista de botonera estan en el mismo orden que como fueron dibujadas (de arriba a abajo)
+	void dibujarCantInstancias();
 };
 #endif //__BOTONERACONTROLLER_H__
