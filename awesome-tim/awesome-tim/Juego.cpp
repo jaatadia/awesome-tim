@@ -179,7 +179,7 @@ while(SDL_PollEvent(&evento)){
 			//averiguar si esta en terreno o figuraViva u otro lado
 				
 			// y verificar que el boton izq este apretado o no deberia pasar arrastre, idem boton derecho
-			if (posEnTerreno(posClickX,posClickY))
+			if (terreno->adentroZonaTerreno(posClickX,posClickY))
 				if (evento.motion.state == SDL_BUTTON_LMASK){				
 					terreno->arrastrarFigura(posClickX - X_TERRENO_LOGICO, posClickY - Y_TERRENO_LOGICO, cantMovX, cantMovY);
 				}else
@@ -200,7 +200,7 @@ while(SDL_PollEvent(&evento)){
 					if (contEventosMov % ITER_CHOQUE == 0){
 						//si choca es superpuesta
 						//para que no choque con las de terreno que sobrepasan el canvas
-						if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
+						if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
 						}else{
 							figuraEnAire->setSuperpuesta( false );
@@ -211,7 +211,7 @@ while(SDL_PollEvent(&evento)){
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
-			if (!posEnTerreno(posClickX,posClickY))
+			if (!terreno->adentroZonaTerreno(posClickX,posClickY))
 				terreno->soltarFigura();
 
 			contEventosMov++;
@@ -232,7 +232,7 @@ while(SDL_PollEvent(&evento)){
 			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
-			if (posEnTerreno(posClickX,posClickY))
+			if (terreno->adentroZonaTerreno(posClickX,posClickY))
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
 					//al borrar algo restauro su contador de instancias
@@ -294,7 +294,7 @@ while(SDL_PollEvent(&evento)){
 				if(clickPressed){
 					if(figuraEnAire){
 						figuraEnAire->agrandar();
-						if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
+						if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
 						}else{
 							figuraEnAire->setSuperpuesta( false );
@@ -307,7 +307,7 @@ while(SDL_PollEvent(&evento)){
 				if(clickPressed){
 					if(figuraEnAire){
 						figuraEnAire->achicar();
-						if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
+						if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
 							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
 						}else{
 							figuraEnAire->setSuperpuesta( false );
@@ -534,7 +534,7 @@ void Juego::soltarFiguraEnAire(){
 
 	confirmarPosicionFiguraEnAire();
 
-	if (posEnTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY()) && !figuraEnAire->superpuesta){
+	if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY()) && !figuraEnAire->superpuesta){
 		//relativizar posiciones al terreno!
 		figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 		terreno->agregarFigura( figuraEnAire );

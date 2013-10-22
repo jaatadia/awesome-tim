@@ -537,8 +537,25 @@ void Terreno::corregirPosicion(Figura* fig){
 
 }
 
+bool Terreno::adentroZonaTerreno(double posX,double posY){
+
+	bool adentro = true;
+
+	if( ! ((posX >= this->x1) && (posX <= this->x2)) )
+		adentro = false;
+
+	if( ! ((posY >= this->y1) && (posY <= this->y2)) )
+		adentro = false;
+
+	return adentro;
+
+}
+
 Figura* Terreno::buscarFigura(double posClickX, double posClickY){
 
+	if(! adentroZonaTerreno(posClickX,posClickY)){
+		return NULL;
+	}
 	if(hayFiguras()){	
 		Figura* figuraBuscada = NULL;
 
