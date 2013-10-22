@@ -116,4 +116,8 @@ public:
 
 	virtual void setLargo(int largo){this->largoF = largo;};
 	virtual int getLargo(){ return largoF;};
+
+	virtual bool cortaSoga(){
+		return false;
+	}
 };

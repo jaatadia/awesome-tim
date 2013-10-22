@@ -13,7 +13,7 @@ PlataformaB2ContactListener::~PlataformaB2ContactListener(void)
 
 void PlataformaB2ContactListener::BeginContact(b2Contact* contact){
 	Figura* fig1 = (Figura*)contact->GetFixtureA()->GetBody()->GetUserData();
-	Figura* fig2 = (Figura*)contact->GetFixtureA()->GetBody()->GetUserData();
+	Figura* fig2 = (Figura*)contact->GetFixtureB()->GetBody()->GetUserData();
 	if((fig1 == NULL)||(fig2 == NULL)) return;
 	
 	CintaTransportadora* cinta = NULL;
@@ -55,22 +55,7 @@ void PlataformaB2ContactListener::BeginContact(b2Contact* contact){
 }
 
 void PlataformaB2ContactListener::EndContact(b2Contact* contact){
-	//Figura* fig1 = (Figura*)contact->GetFixtureA()->GetBody()->GetUserData();
-	//Figura* fig2 = (Figura*)contact->GetFixtureA()->GetBody()->GetUserData();
-	//if((fig1 == NULL)||(fig2 == NULL)) return;
-	//
-	//CintaTransportadora* cinta = NULL;
-	//b2Body* cuerpo;
+}
 
-	//if (fig1->getTipoFigura()==CINTATRANSPORTADORA){
-	//	cinta = (CintaTransportadora*)fig1;
-	//	cuerpo = contact->GetFixtureA()->GetBody();
-	//}else if (fig2->getTipoFigura()==CINTATRANSPORTADORA){
-	//	cinta = (CintaTransportadora*)fig2;
-	//	cuerpo = contact->GetFixtureB()->GetBody();
-	//}
-
-	//if (cinta == NULL) return;
-
-	//std::cout<<"dejo de chocar!!!!\n";
+void PlataformaB2ContactListener::terminar(){
 }
