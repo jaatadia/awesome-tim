@@ -16,7 +16,7 @@ Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true)
 	this->activo = flag;
 	if(activo){
 		this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
-		list = new PlataformaB2ContactListener();
+		list = new B2ContactListener();
 		this->mundo->SetContactListener(list);
 	}
 	else{
@@ -36,6 +36,7 @@ void Box2DWorld::setFrecuenciaActualizacion(float tiempoStep, int velIteracion, 
 void Box2DWorld::actualizar()
 {
 	this->mundo->Step(this->tiempoStep, this->velIteracion, this->posIteracion);
+	this->list->terminar();
 }
 
 bool Box2DWorld::agregarFigura(Figura * figura)
@@ -350,7 +351,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						double largo = LARGO_PEDACITO_SOGA;
 						double cantSegmentos = punto.Length()/largo;
 						double angulo = atan2(-UNAY,-UNAX);
-						double dist = largo/2;
+						double dist = largo/8;
 												
 						Figura* figuraIzq = fig1;
 						b2Body* cuerpoIzq = cuerpo1;

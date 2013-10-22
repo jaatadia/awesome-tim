@@ -105,4 +105,8 @@ public:
 
 		return choca;
 	}
+
+	virtual bool cortaSoga(){
+		return dimension->getAngulo()!=0;
+	}
 };
