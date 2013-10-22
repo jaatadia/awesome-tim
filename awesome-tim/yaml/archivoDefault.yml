@@ -25,8 +25,8 @@ juego:
             posX: 5
             posY: 5
           puntoInfDer:
-            posX: 40
-            posY: 60
+            posX: 95
+            posY: 95
   botonera:
     lista_clientes:
       - lista_figuras:

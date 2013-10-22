@@ -82,4 +82,5 @@ public:
 		return choca;
 	}
 
+	virtual bool cortaSoga(){return false;}
 };
