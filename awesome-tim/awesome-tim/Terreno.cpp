@@ -376,10 +376,11 @@ void Terreno::achicarFigura()
 	}
 }
 
-void Terreno::soltarFigura()
+void Terreno::soltarFigura(bool flag)
 {
 	if (figuraActiva){
-		if ( !(figuraActiva->superpuesta) ){
+		bool poner = ((flag) || (adentroZonaTerreno(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY())));
+		if (!(figuraActiva->superpuesta)&& poner ){
 			agregarFigura(figuraActiva);
 			figuraActiva=NULL;
 		}else{
@@ -539,14 +540,14 @@ void Terreno::corregirPosicion(Figura* fig){
 
 bool Terreno::adentroZonaTerreno(double posX,double posY){
 
-	bool adentro = true;
+	bool adentro = false;
+	double margen = 1;
 
-	if( ! ((posX >= this->x1) && (posX <= this->x2)) )
-		adentro = false;
-
-	if( ! ((posY >= this->y1) && (posY <= this->y2)) )
-		adentro = false;
-
+	if((posX >= (this->x1+margen)) && (posX <= (this->x2-margen))){
+		if((posY >= (this->y1+margen)) && (posY <= (this->y2-margen))){
+			adentro = true;
+		}
+	}
 	return adentro;
 
 }

@@ -288,6 +288,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Vela.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Vela.h"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaFigAgrandable.cpp"
 				>
 			</File>
