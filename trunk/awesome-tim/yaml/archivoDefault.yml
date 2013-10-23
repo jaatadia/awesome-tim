@@ -22,11 +22,11 @@ juego:
     lista_clientes:
       - terreno_cliente:
           puntoSupIzq:
-            posX: 5
-            posY: 5
+            posX: 10
+            posY: 10
           puntoInfDer:
-            posX: 95
-            posY: 95
+            posX: 90
+            posY: 90
   botonera:
     lista_clientes:
       - lista_figuras:

@@ -59,7 +59,7 @@ public:
 	std::vector<int> borrarFigura(double posClickX, double posClickY);
 
 	void buscarActiva(double posClickX ,double posClickY);
-	void soltarFigura();
+	void soltarFigura(bool ponerAunqueEsteAfueraDeLaZona = false);
 	bool adentroZonaTerreno(double posX,double posY);
 
 	int getAncho();

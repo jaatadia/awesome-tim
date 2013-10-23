@@ -360,14 +360,18 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 						b2FixtureDef fd;
 						fd.shape = &shape;
-						fd.density = 20.f;//20
-						fd.friction = 0.2f;//0.2
+						fd.density = 0.0001f;//20
+						fd.friction = 0.2f;//0.2 
+						fd.restitution = 0;
+						fd.isSensor = true;
 
 						b2RevoluteJointDef jd;
 						jd.collideConnected = false;
 
 						const float32 y = 25.0f;
 						b2Body* prevBody = cuerpo1;
+						b2Joint* jointAnt = NULL;
+						Figura* pedacitoAnt = fig1;
 						
 						for (int i = 0; i < cantSegmentos; ++i)
 						{
@@ -379,20 +383,37 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 							b2Body* body = mundo->CreateBody(&bd);
 							body->CreateFixture(&fd);
 
-							PedacitoSoga* pedacito = new PedacitoSoga(mix,miy,largo+0.2,0);
+							PedacitoSoga* pedacito = new PedacitoSoga(mix,miy,largo+0.1,0);
 							body->SetUserData(pedacito);
 							((Soga*)figura)->putSegmento(pedacito);
 
 							b2Vec2 anchor(mix, miy);
 							jd.Initialize(prevBody, body, anchor);
-							mundo->CreateJoint(&jd);
+							b2Joint* joint = mundo->CreateJoint(&jd);
+							
+							pedacito->jointSoga = jointSoga;
+							pedacito->pedacitoIzq = pedacitoAnt;
+							pedacito->jointIzq = joint;
+							
+							if(pedacitoAnt->getTipoFigura()==PEDACITOSOGA){
+								((PedacitoSoga*)pedacitoAnt)->pedacitoDer = pedacito;
+								((PedacitoSoga*)pedacitoAnt)->jointDer = joint;
+							}
 
 							prevBody = body;
+							pedacitoAnt = pedacito;
+							jointAnt = joint;
 						}
 						
 						b2Vec2 anchor(x2, y2);
 						jd.Initialize(prevBody, cuerpo2, anchor);
-						mundo->CreateJoint(&jd);
+						b2Joint* joint = mundo->CreateJoint(&jd);
+						if(pedacitoAnt->getTipoFigura()==PEDACITOSOGA){
+							((PedacitoSoga*)pedacitoAnt)->pedacitoDer = pedacitoAnt;
+							((PedacitoSoga*)pedacitoAnt)->jointDer = joint;
+						}
+
+
 
 						
 						//----------------------------------------
