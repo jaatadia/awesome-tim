@@ -351,7 +351,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						double largo = LARGO_PEDACITO_SOGA;
 						double cantSegmentos = punto.Length()/largo;
 						double angulo = atan2(-UNAY,-UNAX);
-						double dist = largo/8;
+						double dist = largo;
 												
 						Figura* figuraIzq = fig1;
 						b2Body* cuerpoIzq = cuerpo1;
