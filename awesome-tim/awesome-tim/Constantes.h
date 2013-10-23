@@ -69,6 +69,7 @@
 #define CORREA 15
 #define LINEA 16
 #define PEDACITOSOGA 17
+#define VELA 18
 
 //valores fisicos
 
@@ -128,7 +129,7 @@
 #define ANCHO_CINTA 8
 #define RADIO_CTRANSP_CLAVO 0.88
 
-#define ALTO_VELA 3
+#define ALTO_VELA 5
 #define ANCHO_VELA 2
 #define RADIO_LLAMA 2
 
@@ -184,6 +185,8 @@
 
 #define ID_VELA_CERA "../images/vela_cera.png"
 #define ID_LLAMA "../images/llama.png"
+#define ID_VELA "../images/vela.jpg"
+
 //posiciones de balancin
 #define IZQUIERDA 1
 #define DERECHA 2

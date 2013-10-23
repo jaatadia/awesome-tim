@@ -23,10 +23,34 @@ Vela::Vela(const char* id, double posX, double posY, double angulo):FiguraCompue
 
 void Vela::calcularPosLlama(double posX,double posY,double* posLlamaX,double* posLlamaY){
 	*posLlamaX = posX;
-	*posLlamaY = posY + (ALTO_VELA / 2 ) + RADIO_LLAMA;
+	*posLlamaY = posY - (ALTO_VELA / 2 ) - RADIO_LLAMA;
 }
 
+Vela::~Vela(void){}
 
-Vela::~Vela(void){
+Figura* Vela::clonar(){
 
+	Cuadrado* dim = (Cuadrado*) this->getDimension();
+	return new Vela("",dim->getX(),dim->getY(),dim->getAngulo());
+}//copia la figura
+
+
+int Vela::getTipoDimension(){
+	return CUADRADO;
+}
+
+int Vela::getTipoFigura(){
+	return VELA;
+}
+
+Figura* Vela::getVelaCera(){
+	return this->velaCera;
+}
+
+Figura* Vela::getLlama(){
+	return this->llama;
+}
+
+bool Vela::cortaSoga(){
+	return true;
 }

@@ -32,6 +32,7 @@
 #include "Soga.h"
 #include "CintaTransportadora.h"
 #include "GeneradorDeFigurasCompuestas.h"
+#include "Vela.h"
 
 class CargadorYaml{
 public:
@@ -87,6 +88,7 @@ private:
 	static Figura* crearEngranaje(const YAML::Node& nodoFigura);
 	static Figura* crearCintaTransportadora(const YAML::Node& nodoFigura);
 	static Figura* crearPelotaTenis(const YAML::Node& nodoFigura);
+	static Figura* crearVela(const YAML::Node& nodoFigura);
 
 	static void obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant);
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);

@@ -12,5 +12,11 @@ public:
 	~Vela(void);
 
 	void calcularPosLlama(double posX,double posY,double* posLlamaX,double* posLlamaY);
-	
+	Figura* clonar();
+	int getTipoDimension();
+	int getTipoFigura();
+	Figura* getVelaCera();
+	Figura* getLlama();
+	bool cortaSoga();
+
 };
