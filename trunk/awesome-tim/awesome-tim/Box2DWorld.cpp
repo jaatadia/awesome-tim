@@ -319,115 +319,81 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						//creacion de los segmentos
 						//----------------------------------------
 							//----------------------- calculos aux
-							if(fig1->getTipoFigura()==BALANCIN){
-								angf1 = fig1->getDimension()->getAngulo();
-								if(angf1<90){
-									fig1->setAngulo(angf1-45);
-								}else{
-									fig1->setAngulo(angf1+45);
-								}
+							//if(fig1->getTipoFigura()==BALANCIN){
+							//	angf1 = fig1->getDimension()->getAngulo();
+							//	if(angf1<90){
+							//		//fig1->setAngulo(angf1-45);
+							//	}else{
+							//		//fig1->setAngulo(angf1+45);
+							//	}
+							//	fig1->posAtableSoga(num1,&x1,&y1);
+							//	fig1->setAngulo(angf1);
+							//}else{
 								fig1->posAtableSoga(num1,&x1,&y1);
-								fig1->setAngulo(angf1);
-							}else{
-								fig1->posAtableSoga(num1,&x1,&y1);
-							}
-							if(fig2->getTipoFigura()==BALANCIN){
-								angf2 = fig2->getDimension()->getAngulo();
-								if(angf2<90){
-									fig2->setAngulo(angf2-45);
-								}else{
-									fig2->setAngulo(angf2+45);
-								}
+							//}
+							//if(fig2->getTipoFigura()==BALANCIN){
+							//	angf2 = fig2->getDimension()->getAngulo();
+							//	if(angf2<90){
+							//		//fig2->setAngulo(angf2-45);
+							//	}else{
+							//		//fig2->setAngulo(angf2+45);
+							//	}
+							//	fig2->posAtableSoga(num2,&x2,&y2);
+							//	fig2->setAngulo(angf2);
+							//}else{
 								fig2->posAtableSoga(num2,&x2,&y2);
-								fig2->setAngulo(angf2);
-							}else{
-								fig2->posAtableSoga(num2,&x2,&y2);
-							}
+							//}
 														
 							//------------------------------------
 						double UNAX = cuerpo1->GetWorldPoint(b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY())).x - cuerpo2->GetWorldPoint(b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY())).x;
 						double UNAY = cuerpo1->GetWorldPoint(b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY())).y - cuerpo2->GetWorldPoint(b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY())).y;
 						b2Vec2 punto(UNAX,UNAY);
-						double largo = LARGO_PEDACITO_SOGA;
+						double largo = 1;
 						double cantSegmentos = punto.Length()/largo;
 						double angulo = atan2(-UNAY,-UNAX);
-						double dist = largo;
-												
-						Figura* figuraIzq = fig1;
-						b2Body* cuerpoIzq = cuerpo1;
 
-						double tx1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpoIzq->GetPosition().x,y1-cuerpoIzq->GetPosition().y)).x;
-						double ty1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpoIzq->GetPosition().x,y1-cuerpoIzq->GetPosition().y)).y;
+						double tx1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpo1->GetPosition().x,y1-cuerpo1->GetPosition().y)).x;
+						double ty1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpo1->GetPosition().x,y1-cuerpo1->GetPosition().y)).y;
 
+						b2PolygonShape shape;
+						shape.SetAsBox(0.6f, 0.125f);
+
+						b2FixtureDef fd;
+						fd.shape = &shape;
+						fd.density = 20.f;//20
+						fd.friction = 0.2f;//0.2
+
+						b2RevoluteJointDef jd;
+						jd.collideConnected = false;
+
+						const float32 y = 25.0f;
+						b2Body* prevBody = cuerpo1;
 						
-						for(int i = 1;i<=cantSegmentos;i++){
-							//calculo el centro de los pedacitos
-							double cx = tx1 + (i-1)*largo*cos(angulo);
-							double cy = ty1 + (i-1)*largo*sin(angulo);
-							
-							//creo el pedacito
-							PedacitoSoga* pedacito = new PedacitoSoga(cx,cy,largo,angulo);
-							pedacito->jointSoga = jointSoga; //le digo a que soga pertenece
+						for (int i = 0; i < cantSegmentos; ++i)
+						{
+							double mix = x1 + i*cos(angulo);
+							double miy = y1 + i*sin(angulo);
+							b2BodyDef bd;
+							bd.type = b2_dynamicBody;
+							bd.position.Set(mix, miy);
+							b2Body* body = mundo->CreateBody(&bd);
+							body->CreateFixture(&fd);
+
+							PedacitoSoga* pedacito = new PedacitoSoga(mix,miy,largo+0.2,0);
+							body->SetUserData(pedacito);
 							((Soga*)figura)->putSegmento(pedacito);
 
-							//crear pedacito en b2world
+							b2Vec2 anchor(mix, miy);
+							jd.Initialize(prevBody, body, anchor);
+							mundo->CreateJoint(&jd);
 
-							b2BodyDef pDef;
-							pDef.type = b2_dynamicBody;
-							pDef.position.Set(cx,cy);
-							b2FixtureDef pFix;
-							b2PolygonShape shape;
-							shape.SetAsBox(largo/2,largo/2);
-							pFix.shape = &shape;
-							pFix.density = DENSIDAD_PEDACITO_SOGA;
-							pFix.isSensor = true;
-							b2Body* pBody = this->mundo->CreateBody(&pDef);
-							pBody->CreateFixture(&pFix);
-							pBody->SetUserData(pedacito);
-							
-							//lo uno con el izquierdo
-							b2DistanceJointDef joint;
-							joint.bodyA = cuerpoIzq;
-							joint.bodyB = pBody;
-							if(cuerpoIzq == cuerpo1){
-								joint.localAnchorA = b2Vec2((x1-cuerpoIzq->GetPosition().x),y1-cuerpoIzq->GetPosition().y);
-							}else{
-								joint.localAnchorA = b2Vec2(0,0);
-							}
-							joint.localAnchorB = b2Vec2(0,0);
-							joint.length=dist;
-							b2Joint* enlace = this->mundo->CreateJoint(&joint);
-							
-							pedacito->jointIzq = enlace;
-							pedacito->pedacitoIzq = figuraIzq;
-
-							
-							//al anterior le digo que soy su derecho
-							if(figuraIzq->getTipoFigura()==PEDACITOSOGA){
-								//agrgar la joint con este pedacito
-								((PedacitoSoga*)figuraIzq)->pedacitoDer = pedacito;
-								((PedacitoSoga*)figuraIzq)->jointDer = enlace;
-							}
-
-							//actualizo los datos anteriores
-							figuraIzq = pedacito;
-							cuerpoIzq = pBody;
+							prevBody = body;
 						}
-						//agregar la joint con la fig2, al ultimo pedacito le digo que le toca la fig2 de derecho y creo este joint
-						b2DistanceJointDef joint;
-						joint.bodyA = cuerpoIzq;
-						joint.bodyB = cuerpo2;
-						joint.localAnchorA = b2Vec2(0,0);
-						joint.localAnchorB = b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY());
-						joint.length=dist;
-						b2Joint* enlace = this->mundo->CreateJoint(&joint);
+						
+						b2Vec2 anchor(x2, y2);
+						jd.Initialize(prevBody, cuerpo2, anchor);
+						mundo->CreateJoint(&jd);
 
-						//me guardo la joint
-						if(figuraIzq->getTipoFigura()==PEDACITOSOGA){
-								//agrgar la joint con este pedacito
-								((PedacitoSoga*)figuraIzq)->pedacitoDer = fig2;
-								((PedacitoSoga*)figuraIzq)->jointDer = enlace;
-						}
 						
 						//----------------------------------------
 
