@@ -129,13 +129,10 @@
 #define ANCHO_CINTA 8
 #define RADIO_CTRANSP_CLAVO 0.88
 
+
 #define ALTO_VELA 5
 #define ANCHO_VELA 2
 #define RADIO_LLAMA 2
-
-#define DENSIDAD_PEDACITO_SOGA 0.001
-#define LARGO_PEDACITO_SOGA 1
-
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
