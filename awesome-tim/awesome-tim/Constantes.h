@@ -128,6 +128,9 @@
 #define ANCHO_CINTA 8
 #define RADIO_CTRANSP_CLAVO 0.88
 
+#define ALTO_VELA 3
+#define ANCHO_VELA 2
+#define RADIO_LLAMA 2
 
 #define DENSIDAD_PEDACITO_SOGA 0.001
 #define LARGO_PEDACITO_SOGA 1
@@ -179,6 +182,8 @@
 #define ID_BALANCIN_DER "../images/balancin_der.png"
 #define ID_SOGA "../images/rope.png"
 
+#define ID_VELA_CERA "../images/vela_cera.png"
+#define ID_LLAMA "../images/llama.png"
 //posiciones de balancin
 #define IZQUIERDA 1
 #define DERECHA 2
