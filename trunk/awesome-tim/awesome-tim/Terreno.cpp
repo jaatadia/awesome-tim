@@ -40,7 +40,7 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	//Box2D
 	if(this->fisicaActiva){
 		this->mundoBox2D = new Box2DWorld(GRAVEDADX,GRAVEDADY,fisicaActiva);
-		this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 8, 3);
+		this->mundoBox2D->setFrecuenciaActualizacion(1.0/FPS, 10, 10);
 	}else{
 		this->mundoBox2D = NULL;
 	}

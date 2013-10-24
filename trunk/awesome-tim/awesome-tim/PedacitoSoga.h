@@ -31,4 +31,8 @@ public:
 	int getTipoFigura(){
 		return PEDACITOSOGA;
 	}
+
+	bool esUnion(){
+		return true;
+	}
 };
