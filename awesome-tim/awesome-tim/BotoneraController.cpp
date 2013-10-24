@@ -356,20 +356,27 @@ void BotoneraController::ScrollDown(){
 	this->setCambio(true);
 }
 
+#include "Polea.h"
+
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Polea(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);	
+
 	this->agregarBoton(new CintaTransportadora(1,0,0,0),INSTANCIAS_DEFAULT); 
 	this->agregarBoton(new Linea(0,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Motor(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
+	
 	this->agregarBoton(new Plataforma(LARGO_PLATAFORMA_DEFAULT,0,0,0),INSTANCIAS_DEFAULT); 
-	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);
+	
 	this->agregarBoton(new PelotaBowling(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PelotaBasquet(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(ID_BALANCIN_IZQ,0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(ID_BALANCIN_DER,0,0,ANGULO_BALANCIN_DER),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
+	
 
 	return true;
 }

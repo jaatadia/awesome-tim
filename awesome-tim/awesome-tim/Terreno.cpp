@@ -251,9 +251,12 @@ bool Terreno::agregarFigura(Figura* fig){
 				if(fig->getTipoFigura()==SOGA){
 					std::list<Figura*> segmentos = ((Soga*)fig)->getSegmentos();
 					std::list<Figura*>::iterator iteradorLista;
+					bool puestas = false;
 					for (iteradorLista = segmentos.begin() ; iteradorLista != segmentos.end(); iteradorLista++){
 						(this->figuras).push_back((*iteradorLista));
+						puestas = true;
 					}
+					if (!puestas) (this->figuras).push_back(fig);
 				}else{
 					(this->figuras).push_back(fig);
 				}

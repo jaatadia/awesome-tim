@@ -32,4 +32,7 @@ public:
 	void cambiarParametros(Figura * figura);
 	void eliminarFigura(Figura * figura);
 	~Box2DWorld(void);
+
+private:
+	void ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
 };

@@ -70,12 +70,18 @@
 #define LINEA 16
 #define PEDACITOSOGA 17
 #define VELA 18
+#define POLEA 19
 
 //valores fisicos
 
 #define COEF_MULT 52
 #define GRAVEDADY 9.8f * 10
 #define GRAVEDADX 0.0f
+
+#define RADIO_POLEA 0.10 * COEF_MULT
+#define DENSIDAD_POLEA 1
+#define FRICCION_POLEA 0.1
+#define RESTITUCION_POLEA 0
 
 #define RADIO_PELOTATENIS 0.045 * COEF_MULT //2.0
 #define RESTITUCION_PELOTATENIS 0.76 //0.9
@@ -133,6 +139,7 @@
 #define ALTO_VELA 5
 #define ANCHO_VELA 2
 #define RADIO_LLAMA 2
+
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
@@ -183,6 +190,8 @@
 #define ID_VELA_CERA "../images/vela_cera.png"
 #define ID_LLAMA "../images/llama.png"
 #define ID_VELA "../images/vela.jpg"
+
+#define ID_POLEA "../images/circulopunta.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1
