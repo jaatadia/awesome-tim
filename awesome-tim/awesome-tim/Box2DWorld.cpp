@@ -754,7 +754,7 @@ Box2DWorld::~Box2DWorld(void)
 
 
 void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2){
-	Polea* pol;
+	Polea* pol = NULL;
 	int numPol;
 	Figura* fig;
 	int numFig;
@@ -766,40 +766,70 @@ void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuer
 		fig = fig2;
 		numFig = num2;
 		cuerpoFig = cuerpo2;
-	}else if(fig2->getTipoFigura()==POLEA){
+
+		if (numPol==1){
+			pol->setFigura1(fig);
+			pol->numIzq = numFig;
+			pol->cuerpoIzq = cuerpoFig;
+		}else{
+			pol->setFigura2(fig);
+			pol->numDer = numFig;
+			pol->cuerpoDer = cuerpoFig;
+		}
+	}
+	if(fig2->getTipoFigura()==POLEA){
 		pol = (Polea*) fig2;
 		numPol = num2;
 		fig = fig1;
 		numFig = num1;
 		cuerpoFig = cuerpo1;
-	}else{
-		return;
-	}
 
-	if (numPol==1){
-		pol->setFigura1(fig);
-		pol->numIzq = numFig;
-		pol->cuerpoIzq = cuerpoFig;
-	}else{
-		pol->setFigura2(fig);
-		pol->numDer = numFig;
-		pol->cuerpoDer = cuerpoFig;
+		if (numPol==1){
+			pol->setFigura1(fig);
+			pol->numIzq = numFig;
+			pol->cuerpoIzq = cuerpoFig;
+		}else{
+			pol->setFigura2(fig);
+			pol->numDer = numFig;
+			pol->cuerpoDer = cuerpoFig;
+		}
 	}
-	pol->atarSoga(numPol);
-	fig->atarSoga(numFig);
-	
-	if((pol->getFigura1()!=NULL)&&(pol->getFigura2()!=NULL)){
+	if(pol == NULL)	return;
+
+
+	if((pol->getIzq(NULL)!=NULL)&&(pol->getDer(NULL)!=NULL)){
 		
+		int numIzq,numDer;
 		double x1Polea,y1Polea,x2Polea,y2Polea;
 		double xFig1,yFig1,xFig2,yFig2;
+		b2Body* cuerpoA,* cuerpoB;
+		
+		//busco las poleas mas extremas
+ 		Polea* poleaIzq = pol->getPolIzq(NULL,&numIzq);
+		Polea* poleaDer = pol->getPolDer(NULL,&numDer);
+		
+		//busco cuales son los lugares de donde se van a atar las poleas
+		poleaIzq->posAtableSoga(numIzq,&x1Polea,&y1Polea);
+		poleaDer->posAtableSoga(numDer,&x2Polea,&y2Polea);
 
-		pol->posAtableSoga(1,&x1Polea,&y1Polea);
-		pol->posAtableSoga(2,&x2Polea,&y2Polea);
-		pol->getFigura1()->posAtableSoga(pol->numIzq,&xFig1,&yFig1);
-		pol->getFigura2()->posAtableSoga(pol->numDer,&xFig2,&yFig2);
+		//busco los lugares de donde atar los cuerpos
+		if(numIzq == 1){
+			pol->getIzq(NULL)->posAtableSoga(poleaIzq->numIzq,&xFig1,&yFig1);
+			cuerpoA = poleaIzq->cuerpoIzq;
+		}else{
+			pol->getIzq(NULL)->posAtableSoga(poleaDer->numIzq,&xFig1,&yFig1);
+			cuerpoA = poleaIzq->cuerpoDer;
+		}
+		if(numDer == 1){
+			pol->getDer(NULL)->posAtableSoga(poleaDer->numIzq,&xFig2,&yFig2);
+			cuerpoB = poleaDer->cuerpoIzq;
+		}else{
+			pol->getDer(NULL)->posAtableSoga(poleaDer->numDer,&xFig2,&yFig2);
+			cuerpoB = poleaDer->cuerpoDer;
+		}
 
 		b2PulleyJointDef joint;
-		joint.Initialize(pol->cuerpoIzq,pol->cuerpoDer,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
+		joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
 		
 		mundo->CreateJoint(&joint);
 	}

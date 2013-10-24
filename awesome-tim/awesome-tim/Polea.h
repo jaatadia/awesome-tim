@@ -64,4 +64,8 @@ public:
 		}
 	};
 
+	virtual Figura* getIzq(Polea* poleaPadre);
+	virtual Figura* getDer(Polea* poleaPadre);
+	virtual Polea* getPolIzq(Polea* poleaPadre,int* num);
+	virtual Polea* getPolDer(Polea* poleaPadre,int* num);	
 };

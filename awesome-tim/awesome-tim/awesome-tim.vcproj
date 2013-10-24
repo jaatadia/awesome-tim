@@ -260,6 +260,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Polea.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Server.cpp"
 				>
 			</File>
