@@ -7,10 +7,10 @@ Soga::Soga(double x1,double y1,double x2, double y2,double ancho):Linea(ID_SOGA,
 }
 
 Soga::~Soga(void){
-	std::list<Figura*>::iterator iteradorLista;
-	for (iteradorLista = segmentos.begin() ; iteradorLista != segmentos.end(); iteradorLista++){
-			delete(*iteradorLista);
-	}
+	//std::list<Figura*>::iterator iteradorLista;
+	//for (iteradorLista = segmentos.begin() ; iteradorLista != segmentos.end(); iteradorLista++){
+	//		delete(*iteradorLista);
+	//}
 }
 
 /*copia la figura*/

@@ -5,7 +5,7 @@
 #include "Soga.h"
 #include "Balancin.h"
 #include "PedacitoSoga.h"
-
+#include "Polea.h"
 
 Box2DWorld::Box2DWorld(void)
 {
@@ -157,6 +157,19 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				break;
 			}
+		case POLEA:{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				fD.shape = &forma;
+				fD.density = DENSIDAD_POLEA;
+				fD.friction = FRICCION_POLEA;
+				fD.restitution = RESTITUCION_POLEA;
+				cuerpo->CreateFixture(&fD);
+				cuerpo->SetType(b2_staticBody);
+				((Polea*)figura)->miCuerpo = cuerpo;
+				break;
+			}
 		case PELOTABASQUET:{
 				b2CircleShape forma;
 				forma.m_radius = ((Circulo *)dim)->getRadio();
@@ -265,12 +278,16 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					}
 				}
 				if(fig1 && fig2){
-
 					fig1->atarSoga(num1);
 					fig2->atarSoga(num2);
 					figura->setFigura1(fig1);
 					figura->setFigura2(fig2);
 					((Soga*)figura)->setNumsPosAtable(num1,num2);
+					if((fig1->getTipoFigura()==POLEA)||(fig2->getTipoFigura()==POLEA)){
+						ponerEnPolea(cuerpo1,fig1,num1,cuerpo2,fig2,num2);
+						return true;
+					}
+
 					if(activo){
 						double cx1,cy1,cx2,cy2;
 						double x1,y1,x2,y2; x1=x2=y1=y2=0;
@@ -609,7 +626,7 @@ void Box2DWorld::actualizar(Figura * figura)
 		
 		if(fig!=NULL){
 			
-			if(fig->getTipoFigura()==PLATAFORMA){
+			if((fig->getTipoFigura()==PLATAFORMA)||(fig->getTipoFigura()==POLEA)){
 				cuerpo = cuerpo->GetNext();
 				continue;
 			}
@@ -733,4 +750,57 @@ Box2DWorld::~Box2DWorld(void)
 {
 	delete this->mundo;
 	delete list;
+}
+
+
+void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2){
+	Polea* pol;
+	int numPol;
+	Figura* fig;
+	int numFig;
+	b2Body* cuerpoFig;
+
+	if(fig1->getTipoFigura()==POLEA){
+		pol = (Polea*) fig1;
+		numPol = num1;
+		fig = fig2;
+		numFig = num2;
+		cuerpoFig = cuerpo2;
+	}else if(fig2->getTipoFigura()==POLEA){
+		pol = (Polea*) fig2;
+		numPol = num2;
+		fig = fig1;
+		numFig = num1;
+		cuerpoFig = cuerpo1;
+	}else{
+		return;
+	}
+
+	if (numPol==1){
+		pol->setFigura1(fig);
+		pol->numIzq = numFig;
+		pol->cuerpoIzq = cuerpoFig;
+	}else{
+		pol->setFigura2(fig);
+		pol->numDer = numFig;
+		pol->cuerpoDer = cuerpoFig;
+	}
+	pol->atarSoga(numPol);
+	fig->atarSoga(numFig);
+	
+	if((pol->getFigura1()!=NULL)&&(pol->getFigura2()!=NULL)){
+		
+		double x1Polea,y1Polea,x2Polea,y2Polea;
+		double xFig1,yFig1,xFig2,yFig2;
+
+		pol->posAtableSoga(1,&x1Polea,&y1Polea);
+		pol->posAtableSoga(2,&x2Polea,&y2Polea);
+		pol->getFigura1()->posAtableSoga(pol->numIzq,&xFig1,&yFig1);
+		pol->getFigura2()->posAtableSoga(pol->numDer,&xFig2,&yFig2);
+
+		b2PulleyJointDef joint;
+		joint.Initialize(pol->cuerpoIzq,pol->cuerpoDer,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
+		
+		mundo->CreateJoint(&joint);
+	}
 }
