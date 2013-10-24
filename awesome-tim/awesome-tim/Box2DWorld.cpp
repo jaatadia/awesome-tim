@@ -318,49 +318,22 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 						//creacion de los segmentos
 						//----------------------------------------
-							//----------------------- calculos aux
-							//if(fig1->getTipoFigura()==BALANCIN){
-							//	angf1 = fig1->getDimension()->getAngulo();
-							//	if(angf1<90){
-							//		//fig1->setAngulo(angf1-45);
-							//	}else{
-							//		//fig1->setAngulo(angf1+45);
-							//	}
-							//	fig1->posAtableSoga(num1,&x1,&y1);
-							//	fig1->setAngulo(angf1);
-							//}else{
-								fig1->posAtableSoga(num1,&x1,&y1);
-							//}
-							//if(fig2->getTipoFigura()==BALANCIN){
-							//	angf2 = fig2->getDimension()->getAngulo();
-							//	if(angf2<90){
-							//		//fig2->setAngulo(angf2-45);
-							//	}else{
-							//		//fig2->setAngulo(angf2+45);
-							//	}
-							//	fig2->posAtableSoga(num2,&x2,&y2);
-							//	fig2->setAngulo(angf2);
-							//}else{
-								fig2->posAtableSoga(num2,&x2,&y2);
-							//}
-														
-							//------------------------------------
-						double UNAX = cuerpo1->GetWorldPoint(b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY())).x - cuerpo2->GetWorldPoint(b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY())).x;
-						double UNAY = cuerpo1->GetWorldPoint(b2Vec2(x1-fig1->getDimension()->getX(),y1-fig1->getDimension()->getY())).y - cuerpo2->GetWorldPoint(b2Vec2(x2-fig2->getDimension()->getX(),y2-fig2->getDimension()->getY())).y;
+						fig1->posAtableSoga(num1,&x1,&y1);
+						fig2->posAtableSoga(num2,&x2,&y2);
+						double UNAX = x2 - x1;
+						double UNAY = y2 - y1;
 						b2Vec2 punto(UNAX,UNAY);
+						
+							double angulo = atan2(UNAY,UNAX);
 						double largo = 1;
-						double cantSegmentos = punto.Length()/largo;
-						double angulo = atan2(-UNAY,-UNAX);
-
-						double tx1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpo1->GetPosition().x,y1-cuerpo1->GetPosition().y)).x;
-						double ty1 = cuerpo1->GetWorldPoint(b2Vec2(x1-cuerpo1->GetPosition().x,y1-cuerpo1->GetPosition().y)).y;
-
+						double cantSegmentos = punto.Length()/largo -1 ;
+						
 						b2PolygonShape shape;
 						shape.SetAsBox(0.6f, 0.125f);
 
 						b2FixtureDef fd;
 						fd.shape = &shape;
-						fd.density = 0.0001f;//20
+						fd.density = 10.0f;//20
 						fd.friction = 0.2f;//0.2 
 						fd.restitution = 0;
 						fd.isSensor = true;
@@ -368,12 +341,11 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						b2RevoluteJointDef jd;
 						jd.collideConnected = false;
 
-						const float32 y = 25.0f;
 						b2Body* prevBody = cuerpo1;
 						b2Joint* jointAnt = NULL;
 						Figura* pedacitoAnt = fig1;
 						
-						for (int i = 0; i < cantSegmentos; ++i)
+						for (int i = 0; i < (cantSegmentos/*-cantSegmentos*6/100*/); ++i)
 						{
 							double mix = x1 + i*cos(angulo);
 							double miy = y1 + i*sin(angulo);
@@ -412,9 +384,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 							((PedacitoSoga*)pedacitoAnt)->pedacitoDer = pedacitoAnt;
 							((PedacitoSoga*)pedacitoAnt)->jointDer = joint;
 						}
-
-
-
 						
 						//----------------------------------------
 
