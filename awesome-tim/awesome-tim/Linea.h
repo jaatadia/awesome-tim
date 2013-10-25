@@ -48,4 +48,6 @@ public:
 	virtual bool choqueConFigura(Figura* fig);
 	virtual bool choqueConDimension(Dimension* dim);
 
+	virtual void actualizar();
+
 };

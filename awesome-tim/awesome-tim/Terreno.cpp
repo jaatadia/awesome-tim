@@ -4,6 +4,7 @@
 #include <new>
 
 #include "FiguraCompuesta.h"
+#include "Soga.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
@@ -677,6 +678,7 @@ void Terreno::actualizarModelo(){
 
 	if (fisicaActiva){
 		this->mundoBox2D->actualizar();
+
 /*
 	std::list<Figura*>::iterator iteradorLista;
 
@@ -706,6 +708,39 @@ void Terreno::actualizarModelo(){
 //hice que actualize todas las figuras de una sin iterar afuera...
 		this->mundoBox2D->actualizar(NULL);
 		this->setCambio(true);
+
+		std::list<Soga*> figurasAux;
+		std::list<Figura*>::iterator iteradorLista;
+		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+			if((*iteradorLista)->getTipoFigura()==SOGA){
+				((Linea*)(*iteradorLista))->actualizar();
+				figurasAux.push_back((Soga*)(*iteradorLista));
+			}else if((*iteradorLista)->getTipoFigura()==LINEA){
+				((Linea*)(*iteradorLista))->actualizar();
+			}
+		}
+		std::list<Soga*>::iterator iterAux;
+		for (iterAux = figurasAux.begin();iterAux != figurasAux.end();iterAux++){
+			for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+				if((*iteradorLista)->cortaSoga()){
+					if((*iterAux)->meChoca((*iteradorLista)->getDimension())){
+						this->mundoBox2D->eliminarSoga(*iterAux);
+						figuras.remove(*iterAux);
+						delete(*iterAux);
+						break;
+					}
+				}
+			}
+		}
+
+	}else{
+		std::list<Figura*>::iterator iteradorLista;
+		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+			if(((*iteradorLista)->getTipoFigura()==SOGA) ||((*iteradorLista)->getTipoFigura()==LINEA)){
+				((Linea*)(*iteradorLista))->actualizar();
+				this->setCambio(true);
+			}
+		}
 	}
 }
 
