@@ -83,28 +83,4 @@ public:
 		this->y = y;
 		this->y2 = y;
 	};
-
-	bool meChoca(Dimension* dim){
-		double ox1 = dim->getX() - dim->getAncho()/2;
-		double oy1 = dim->getY() - dim->getAlto()/2;
-		double ox2 = dim->getX() + dim->getAncho()/2;
-		double oy2 = dim->getY() + dim->getAlto()/2;
-
-		double tempx1 = (x1<=x2) ? x1:x2;
-		double tempx2 = (x1>x2) ? x1:x2;
-		double tempy1 = (y1<=y2) ? y1:y2;
-		double tempy2 = (y1>y2) ? y1:y2;
-		
-		double result1 = (ox1-x1)/(x2-x1)-(oy1-y1)/(y2-y1);
-		double result2 = (ox2-x1)/(x2-x1)-(oy2-y1)/(y2-y1);
-		if(!(((result1<=0)&&(result2<=0))||((result1>=0)&&(result2>=0)))) return true;
-		
-		result2 = (ox1-x1)/(x2-x1)-(oy2-y1)/(y2-y1);
-		if(!(((result1<=0)&&(result2<=0))||((result1>=0)&&(result2>=0)))) return true;
-
-		result2 = (ox2-x1)/(x2-x1)-(oy1-y1)/(y2-y1);
-		if(!(((result1<=0)&&(result2<=0))||((result1>=0)&&(result2>=0)))) return true;
-
-		return false;
-	}
 };
