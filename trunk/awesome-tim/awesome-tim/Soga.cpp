@@ -58,9 +58,13 @@ bool Soga::meChoca(Dimension* dim){
 
 		double tempy1 = (y1<=y2) ? y1:y2;
 		double tempy2 = (y1>y2) ? y1:y2;
+		double tempx1 = (x1<=x2) ? x1:x2;
+		double tempx2 = (x1>x2) ? x1:x2;
 
 		if(tempy2<oy1) return false; //si el cuerpo esta por debajo de que termina la soga
 		if(tempy1>oy2) return false; //si el cuerpo esta por arriba de que empieza la soga
+		if(tempx2<ox1) return false; //si el cuerpo esta a la derecha de donde termina la soga
+		if(tempx1>ox2) return false; //si el cuerpo esta a la izquierda de donde empieza la soga
 		
 		double result1 = (ox1-x1)/(x2-x1)-(oy1-y1)/(y2-y1);
 		double result2 = (ox2-x1)/(x2-x1)-(oy2-y1)/(y2-y1);
