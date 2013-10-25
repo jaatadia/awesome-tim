@@ -709,27 +709,33 @@ void Terreno::actualizarModelo(){
 		this->mundoBox2D->actualizar(NULL);
 		this->setCambio(true);
 
-		std::list<Soga*> figurasAux;
+		std::list<Soga*> sogas;
 		std::list<Figura*>::iterator iteradorLista;
+		std::list<Figura*> listaCortanSoga;
 		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 			if((*iteradorLista)->getTipoFigura()==SOGA){
 				((Linea*)(*iteradorLista))->actualizar();
-				figurasAux.push_back((Soga*)(*iteradorLista));
+				sogas.push_back((Soga*)(*iteradorLista));
 			}else if((*iteradorLista)->getTipoFigura()==LINEA){
 				((Linea*)(*iteradorLista))->actualizar();
+			}else if((*iteradorLista)->cortaSoga()){
+				listaCortanSoga.push_back((*iteradorLista));
 			}
 		}
-		std::list<Soga*>::iterator iterAux;
-		for (iterAux = figurasAux.begin();iterAux != figurasAux.end();iterAux++){
-			for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-				if((*iteradorLista)->cortaSoga()){
-					if((*iterAux)->meChoca((*iteradorLista)->getDimension())){
-						this->mundoBox2D->eliminarSoga(*iterAux);
-						figuras.remove(*iterAux);
-						delete(*iterAux);
-						break;
-					}
+		std::list<Soga*>::iterator iterSogas;
+		for (iterSogas = sogas.begin();iterSogas != sogas.end();iterSogas++){
+			for (iteradorLista = listaCortanSoga.begin() ; iteradorLista != listaCortanSoga.end(); iteradorLista++){
+				if((!(*iterSogas)->estaMarcada())&&((*iterSogas)->meChoca((*iteradorLista)->getDimension()))){
+					this->mundoBox2D->eliminarSoga(*iterSogas);
+					(*iterSogas)->marcar(true);
 				}
+			}
+		}
+
+		for (iterSogas = sogas.begin();iterSogas != sogas.end();iterSogas++){
+			if((*iterSogas)->estaMarcada()){
+				figuras.remove((*iterSogas));
+				delete(*iterSogas);
 			}
 		}
 

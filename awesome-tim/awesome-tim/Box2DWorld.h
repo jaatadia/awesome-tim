@@ -37,5 +37,5 @@ public:
 	void eliminarSoga(Soga* figura);
 
 private:
-	void ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
+	void ponerEnPolea(Figura* soga, b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
 };

@@ -3,6 +3,7 @@
 
 Soga::Soga(double x1,double y1,double x2, double y2,double ancho):Linea(ID_SOGA,true,x1,y1,x2,y2,ancho)
 {
+	marcada = false;
 	num1=num2=-1;
 }
 
@@ -20,6 +21,7 @@ Figura* Soga::clonar(){
 
 Soga::Soga(DLinea* dim):Linea(ID_SOGA,dim)
 {
+	marcada = false;
 	fig1=fig2=NULL;
 	this->setCambio(true);
 	puesto = false;
