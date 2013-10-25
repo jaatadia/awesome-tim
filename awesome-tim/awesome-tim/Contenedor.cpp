@@ -72,6 +72,9 @@ Contenedor::Contenedor(void){
 	mapa[ID_CINTA] = new Imagen(ID_CINTA);
 	mapa[ID_VELA_CERA] = new Imagen(ID_VELA_CERA);
 	mapa[ID_LLAMA] = new Imagen(ID_LLAMA);
+	mapa[ID_POLEA] = new Imagen(ID_POLEA);
+	mapa[ID_ARO] = new Imagen(ID_ARO);
+	mapa[ID_YUNQUE] = new Imagen(ID_YUNQUE);
 
 	mapa[COLOR_CELESTE] = new Imagen(COLOR_CELESTE);
 	mapa[COLOR_ROJO] = new Imagen(COLOR_ROJO);

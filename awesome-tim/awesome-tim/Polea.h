@@ -12,7 +12,7 @@ public:
 	Soga* sogaDer,* sogaIzq;
 	b2Joint* joint;
 
-private:
+protected:
 	bool atadoIzq,atadoDer;
 	Polea(const char* id,Dimension* dim,bool flag):Figura(id,dim){
 		atadoIzq = atadoDer = false;

@@ -70,14 +70,18 @@
 #define LINEA 16
 #define PEDACITOSOGA 17
 #define VELA 18
-#define POLEA 19
+#define POLEA 19 //el aro es lo mismo que la Polea
+#define YUNQUE 20
 
 //valores fisicos
+
+
 
 #define COEF_MULT 52
 #define GRAVEDADY 9.8f * 10
 #define GRAVEDADX 0.0f
 
+#define RADIO_ARO 0.04 * COEF_MULT
 #define RADIO_POLEA 0.05 * COEF_MULT
 #define DENSIDAD_POLEA 1
 #define FRICCION_POLEA 0.1
@@ -101,7 +105,7 @@
 #define RADIO_GLOBOHELIO 0.09 * COEF_MULT //8.0
 #define RESTITUCION_GLOBOHELIO 0.1
 #define FRICCION_GLOBOHELIO 0.01 //0.01
-#define DENSIDAD_GLOBOHELIO 3.1 //si se baja verificar que siga moviendo las plataformas
+#define DENSIDAD_GLOBOHELIO 1.1 //si se baja verificar que siga moviendo las plataformas
 #define VELOCIDAD_GLOBOHELIO -20.0
 
 #define ANCHO_PLATAFORMA 11
@@ -110,6 +114,12 @@
 #define PLATAFORMA_FRICCION 100
 #define PLATAFORMA_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_PLATAFORMA) //no me gusta, es corto, deberia cubrir la diagonal
 #define PLATAFORMA_MINLARGO 1
+
+#define ANCHO_YUNQUE 10
+#define ALTO_YUNQUE 5
+#define DENSIDAD_YUNQUE 100
+#define RESTITUCION_YUNQUE 0
+#define FRICCION_YUNQUE 0
 
 #define RADIO_MINENGRANAJE 5.0
 #define RADIO_MAXENGRANAJE 15.0
@@ -126,7 +136,7 @@
 #define ANGULO_BALANCIN_DER 315
 
 #define RADIO_CINTA_TRANSPORTADORA RADIO_MAXENGRANAJE //de box2d, para cambiar la velocidad de giro de la vista
-#define VELOCITY_MULTIPLIER 5 //junto con el de arriba para cambiar la velocidad de velocidad impuesta por la cinta
+#define VELOCITY_MULTIPLIER 1 //junto con el de arriba para cambiar la velocidad de velocidad impuesta por la cinta
 
 #define ALTO_CINTA 6
 #define CINTA_TRANSP_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CINTA) //no me gusta, es corto, deberia cubrir la diagonal
@@ -139,6 +149,8 @@
 #define ALTO_VELA 5
 #define ANCHO_VELA 2
 #define RADIO_LLAMA 2
+
+
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -191,7 +203,10 @@
 #define ID_LLAMA "../images/llama.png"
 #define ID_VELA "../images/vela.jpg"
 
-#define ID_POLEA "../images/circulopunta.png"
+#define ID_POLEA "../images/polea.png"
+#define ID_ARO "../images/aro.png"
+
+#define ID_YUNQUE "../images/yunque.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1
