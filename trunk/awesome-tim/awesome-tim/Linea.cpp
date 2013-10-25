@@ -77,3 +77,16 @@ void Linea::dibujar(Superficie* super){
 	myVista->dibujar(super);
 	myVista->dibujar(super);
 }
+
+void Linea::actualizar(){
+	if(getFigura1()!=NULL){
+		double x,y;
+		this->posFigura1(&x,&y);
+		this->setPunto1(x,y);
+	}
+	if(getFigura2()!=NULL){
+		double x,y;
+		this->posFigura2(&x,&y);
+		this->setPunto2(x,y);
+	}
+}

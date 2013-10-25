@@ -10,6 +10,7 @@
 #include "Cuadrado.h"
 #include "Triangulo.h"
 #include "B2ContactListener.h"
+#include "Soga.h"
 
 
 class Box2DWorld
@@ -32,6 +33,8 @@ public:
 	void cambiarParametros(Figura * figura);
 	void eliminarFigura(Figura * figura);
 	~Box2DWorld(void);
+
+	void eliminarSoga(Soga* figura);
 
 private:
 	void ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);

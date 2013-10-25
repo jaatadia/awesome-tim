@@ -7,10 +7,10 @@ Soga::Soga(double x1,double y1,double x2, double y2,double ancho):Linea(ID_SOGA,
 }
 
 Soga::~Soga(void){
-	//std::list<Figura*>::iterator iteradorLista;
-	//for (iteradorLista = segmentos.begin() ; iteradorLista != segmentos.end(); iteradorLista++){
-	//		delete(*iteradorLista);
-	//}
+	std::list<Figura*>::iterator iteradorLista;
+	for (iteradorLista = segmentos.begin() ; iteradorLista != segmentos.end(); iteradorLista++){
+			delete(*iteradorLista);
+	}
 }
 
 /*copia la figura*/
@@ -42,4 +42,8 @@ std::list<Figura*> Soga::getSegmentos(){
 
 void Soga::putSegmento(Figura* fig){
 	segmentos.push_back(fig);
+}
+
+bool Soga::meChoca(Dimension* dim){
+	return ((DLinea*)dim)->meChoca(dim);
 }

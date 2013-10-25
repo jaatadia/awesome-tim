@@ -19,23 +19,15 @@ void VistaLinea::dibujar(Superficie* canvas){
 		int calcAncho = 10;
 
 		try{
-			if(linea->getFigura1()){
-				double x,y;
-				linea->posFigura1(&x,&y);
-				linea->setPunto1(x,y);
-			}
 			double x1,y1;
 			linea->getPunto1(&x1,&y1);
 			calcX1 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x1));
 			calcY1 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y1));
 
-			if(linea->getFigura2()){
-				double x,y;
-				linea->posFigura2(&x,&y);
-				linea->setPunto2(x,y);
-			}
-			calcX2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->x2));
-			calcY2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(((DLinea*)linea->getDimension())->y2));
+			double x2,y2;
+			linea->getPunto2(&x2,&y2);
+			calcX2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x2));
+			calcY2 = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(y2));
 		
 		
 			calcAncho = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(((DLinea*)linea->getDimension())->ancho));
@@ -56,6 +48,6 @@ void VistaLinea::dibujar(Superficie* canvas){
 				canvas->dibujarLinea(calcX1-desfasajeX,calcY1-desfasajeY,calcX2-desfasajeX,calcY2-desfasajeY,calcAncho,0,0,0);
 			}
 		}catch(...){
-			//std::cout<<"\a\n";
+			std::cout<<"\a\n";
 		}
 }

@@ -6,6 +6,7 @@
 #include "Balancin.h"
 #include "PedacitoSoga.h"
 #include "Polea.h"
+#include <iostream>
 
 Box2DWorld::Box2DWorld(void)
 {
@@ -278,6 +279,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					}
 				}
 				if(fig1 && fig2){
+					bool atar = true;
 					fig1->atarSoga(num1);
 					fig2->atarSoga(num2);
 					figura->setFigura1(fig1);
@@ -331,8 +333,11 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						
 						unionSoga.maxLength = sqrt(pow(x1-x2,2)+pow(y1-y2,2)); 
 
-						b2Joint* jointSoga = this->mundo->CreateJoint(&unionSoga);
-
+						b2Joint* jointSoga = NULL;
+						jointSoga = this->mundo->CreateJoint(&unionSoga);
+						jointSoga->SetUserData(figura);
+						return true;
+						
 						//creacion de los segmentos
 						//----------------------------------------
 						fig1->posAtableSoga(num1,&x1,&y1);
@@ -362,7 +367,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						b2Joint* jointAnt = NULL;
 						Figura* pedacitoAnt = fig1;
 						
-						for (int i = 0; i < (cantSegmentos/*-cantSegmentos*6/100*/); ++i)
+						for (int i = 0; i < (cantSegmentos+0.9/*-cantSegmentos*6/100*/); ++i)
 						{
 							double mix = x1 + i*cos(angulo);
 							double miy = y1 + i*sin(angulo);
@@ -393,7 +398,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 							pedacitoAnt = pedacito;
 							jointAnt = joint;
 						}
-						
 						b2Vec2 anchor(x2, y2);
 						jd.Initialize(prevBody, cuerpo2, anchor);
 						b2Joint* joint = mundo->CreateJoint(&jd);
@@ -744,7 +748,7 @@ void Box2DWorld::eliminarFigura(Figura * figura)
 	}
 }
 
-#include <iostream>
+
 
 Box2DWorld::~Box2DWorld(void)
 {
@@ -832,5 +836,17 @@ void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuer
 		joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
 		
 		mundo->CreateJoint(&joint);
+	}
+}
+
+void Box2DWorld::eliminarSoga(Soga *figura){
+	b2Joint* joint = mundo->GetJointList();
+	b2Joint* prox;
+	while(joint){
+		prox = joint->GetNext();
+		if(joint->GetUserData()==figura){
+			mundo->DestroyJoint(joint);
+		}
+		joint = prox;
 	}
 }

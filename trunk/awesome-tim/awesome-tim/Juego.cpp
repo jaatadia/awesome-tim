@@ -103,7 +103,7 @@ bool Juego:: onRender(Superficie* superficie){
 }
 	
 void Juego:: onLoop(){
-//	terreno->actualizarModelo();
+	terreno->actualizarModelo();
 }
 
 //manejo de eventos
@@ -573,6 +573,7 @@ void Juego::set2Click(){
 			result->posAtableCorrea(&x,&y);
 			if(!linea->primerPuntoPuesto()){
 				linea->setFigura1(result);
+				linea->actualizar();
 			}else{
 				if(linea->getFigura1() == result){
 					botonera->restaurarInstanciaActual();
@@ -587,6 +588,7 @@ void Juego::set2Click(){
 					linea->getFigura1()->atarCorrea();
 					linea->getFigura2()->atarCorrea();
 					terreno->agregarFigura( figuraEnAire );
+					linea->actualizar();
 					figuraEnAire = NULL;
 				}
 			}
@@ -614,6 +616,7 @@ void Juego::set2Click(){
 			if(!linea->primerPuntoPuesto()){
 				linea->setFigura1(result);
 				((Soga*)linea)->setNumsPosAtable(res,0);
+				linea->actualizar();
 			}else{
 				if (result == linea->getFigura1()){
 					botonera->restaurarInstanciaActual();			
@@ -626,6 +629,7 @@ void Juego::set2Click(){
 				}else{
 					linea->setFigura2(result);
 					((Soga*)linea)->setNumsPosAtable(((Soga*)linea)->num1,res);
+					linea->actualizar();
 					linea->getFigura1()->atarSoga(((Soga*)linea)->num1);
 					linea->getFigura2()->atarSoga(((Soga*)linea)->num2);
 					terreno->agregarFigura( figuraEnAire );
