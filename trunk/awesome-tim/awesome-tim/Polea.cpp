@@ -87,3 +87,30 @@ Polea* Polea::getPolDer(Polea* poleaPadre,int* num){
 		}
 	}
 }
+
+void Polea::marcarSogas(bool flag,Polea* padre){
+
+	this->sogaIzq->marcar(flag);
+	this->sogaDer->marcar(flag);
+
+	if((this->getFigura1() != padre)&&(getFigura1()->getTipoFigura()==POLEA)){
+		((Polea*)getFigura1())->marcarSogas(flag,this);
+	}
+	if((this->getFigura2() != padre)&&(getFigura2()->getTipoFigura()==POLEA)){
+		((Polea*)getFigura2())->marcarSogas(flag,this);
+	}
+
+}
+
+void Polea::setJoint(b2Joint* joint,Polea* padre){
+	
+	this->joint = joint;
+
+	if((this->getFigura1() != padre)&&(getFigura1()->getTipoFigura()==POLEA)){
+		((Polea*)getFigura1())->setJoint(joint,this);
+	}
+	if((this->getFigura2() != padre)&&(getFigura2()->getTipoFigura()==POLEA)){
+		((Polea*)getFigura2())->setJoint(joint,this);
+	}
+
+}

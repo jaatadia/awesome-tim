@@ -286,7 +286,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					figura->setFigura2(fig2);
 					((Soga*)figura)->setNumsPosAtable(num1,num2);
 					if((fig1->getTipoFigura()==POLEA)||(fig2->getTipoFigura()==POLEA)){
-						ponerEnPolea(cuerpo1,fig1,num1,cuerpo2,fig2,num2);
+						ponerEnPolea(figura,cuerpo1,fig1,num1,cuerpo2,fig2,num2);
 						return true;
 					}
 
@@ -757,7 +757,10 @@ Box2DWorld::~Box2DWorld(void)
 }
 
 
-void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2){
+void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2){
+	
+	((Soga*)soga)->marcar(true);
+	
 	Polea* pol = NULL;
 	int numPol;
 	Figura* fig;
@@ -775,10 +778,12 @@ void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuer
 			pol->setFigura1(fig);
 			pol->numIzq = numFig;
 			pol->cuerpoIzq = cuerpoFig;
+			pol->sogaIzq = (Soga*) soga;
 		}else{
 			pol->setFigura2(fig);
 			pol->numDer = numFig;
 			pol->cuerpoDer = cuerpoFig;
+			pol->sogaDer = (Soga*) soga;
 		}
 	}
 	if(fig2->getTipoFigura()==POLEA){
@@ -792,10 +797,12 @@ void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuer
 			pol->setFigura1(fig);
 			pol->numIzq = numFig;
 			pol->cuerpoIzq = cuerpoFig;
+			pol->sogaIzq = (Soga*) soga;
 		}else{
 			pol->setFigura2(fig);
 			pol->numDer = numFig;
 			pol->cuerpoDer = cuerpoFig;
+			pol->sogaDer = (Soga*) soga;
 		}
 	}
 	if(pol == NULL)	return;
@@ -803,6 +810,8 @@ void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuer
 
 	if((pol->getIzq(NULL)!=NULL)&&(pol->getDer(NULL)!=NULL)){
 		
+		pol->marcarSogas(false);
+
 		int numIzq,numDer;
 		double x1Polea,y1Polea,x2Polea,y2Polea;
 		double xFig1,yFig1,xFig2,yFig2;
@@ -835,18 +844,34 @@ void Box2DWorld::ponerEnPolea(b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuer
 		b2PulleyJointDef joint;
 		joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
 		
-		mundo->CreateJoint(&joint);
+		b2Joint* pulleyJ = mundo->CreateJoint(&joint);
+
+		pol->setJoint(pulleyJ);
 	}
 }
 
 void Box2DWorld::eliminarSoga(Soga *figura){
-	b2Joint* joint = mundo->GetJointList();
-	b2Joint* prox;
-	while(joint){
-		prox = joint->GetNext();
-		if(joint->GetUserData()==figura){
-			mundo->DestroyJoint(joint);
+	
+	if((figura->getFigura1()->getTipoFigura()!=POLEA)&&(figura->getFigura2()->getTipoFigura()!=POLEA)){
+		b2Joint* joint = mundo->GetJointList();
+		b2Joint* prox;
+		while(joint){
+			prox = joint->GetNext();
+			if(joint->GetUserData()==figura){
+				mundo->DestroyJoint(joint);
+			}
+			joint = prox;
 		}
-		joint = prox;
+	}else{
+		Polea* pol;
+		if(figura->getFigura1()->getTipoFigura()==POLEA){
+			pol = (Polea*) figura->getFigura1();
+		}else{
+			pol = (Polea*) figura->getFigura2();
+		}
+		pol->marcarSogas(true);
+
+		mundo->DestroyJoint(pol->joint);
+
 	}
 }

@@ -2,12 +2,15 @@
 
 #include "Figura.h"
 #include "Box2D/Box2D.h"
+#include "Soga.h"
 
 class Polea: public Figura
 {
 public:
 	int numIzq,numDer;
 	b2Body* miCuerpo,* cuerpoIzq,* cuerpoDer;
+	Soga* sogaDer,* sogaIzq;
+	b2Joint* joint;
 
 private:
 	bool atadoIzq,atadoDer;
@@ -67,5 +70,7 @@ public:
 	virtual Figura* getIzq(Polea* poleaPadre);
 	virtual Figura* getDer(Polea* poleaPadre);
 	virtual Polea* getPolIzq(Polea* poleaPadre,int* num);
-	virtual Polea* getPolDer(Polea* poleaPadre,int* num);	
+	virtual Polea* getPolDer(Polea* poleaPadre,int* num);
+	virtual void marcarSogas(bool flag,Polea* padre = NULL);
+	virtual void setJoint(b2Joint* joint,Polea* padre = NULL);
 };
