@@ -137,7 +137,16 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
-
+		case YUNQUE:{
+				b2PolygonShape forma;
+				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+				fD.shape = &forma;
+				fD.density = DENSIDAD_YUNQUE;
+				fD.friction = FRICCION_YUNQUE;
+				fD.restitution = RESTITUCION_YUNQUE;
+				cuerpo->CreateFixture(&fD);
+				break;
+			}
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(-1);
 				
@@ -810,6 +819,8 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 
 	if((pol->getIzq(NULL)!=NULL)&&(pol->getDer(NULL)!=NULL)){
 		
+		if(pol->getIzq(NULL)==pol->getDer(NULL)) return;
+
 		pol->marcarSogas(false);
 
 		int numIzq,numDer;

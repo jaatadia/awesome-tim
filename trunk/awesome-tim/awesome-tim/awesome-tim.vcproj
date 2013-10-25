@@ -438,6 +438,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Aro.h"
+				>
+			</File>
+			<File
 				RelativePath=".\B2ContactListener.h"
 				>
 			</File>
@@ -587,6 +591,10 @@
 			</File>
 			<File
 				RelativePath=".\VistaPedacitoSoga.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Yunque.h"
 				>
 			</File>
 			<Filter
