@@ -462,6 +462,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Clavo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Client.h"
 				>
 			</File>

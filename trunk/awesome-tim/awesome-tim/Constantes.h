@@ -72,6 +72,7 @@
 #define VELA 18
 #define POLEA 19 //el aro es lo mismo que la Polea
 #define YUNQUE 20
+#define CLAVO 21
 
 //valores fisicos
 
@@ -80,6 +81,10 @@
 #define COEF_MULT 52
 #define GRAVEDADY 9.8f * 10
 #define GRAVEDADX 0.0f
+
+
+#define BASE_CLAVO 0.045 * COEF_MULT //2.0
+#define ALTURA_CLAVO 0.045 * COEF_MULT
 
 #define RADIO_ARO 0.04 * COEF_MULT
 #define RADIO_POLEA 0.05 * COEF_MULT
@@ -231,6 +236,8 @@
 #define COLOR_AMARILLO "../images/globoamarillo.png"
 #define COLOR_ROSA "../images/globorosa.png"
 #define COLOR_VIOLETA "../images/globovioleta.png"
+
+#define ID_CLAVO "../images/clavoNinja.png"
 
 
 //constantes para la pantalla de que gano
