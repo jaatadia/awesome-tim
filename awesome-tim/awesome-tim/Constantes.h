@@ -221,6 +221,9 @@
 
 //colores del globo
 #define ID_GLOBO "../images/globoceleste.png"
+#define ID_GLOBO_EXPLOTANDO1 "../images/globoExp1.png"
+#define ID_GLOBO_EXPLOTANDO2 "../images/globoExp2.png"
+#define ID_GLOBO_EXPLOTANDO3 "../images/globoExp3.png"
 #define CANT_COLORES 6
 #define COLOR_CELESTE "../images/globoceleste.png"
 #define COLOR_ROJO "../images/globorojo.png"

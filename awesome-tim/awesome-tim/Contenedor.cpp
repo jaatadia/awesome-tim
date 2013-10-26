@@ -82,6 +82,9 @@ Contenedor::Contenedor(void){
 	mapa[COLOR_AMARILLO] = new Imagen(COLOR_AMARILLO);
 	mapa[COLOR_ROSA] = new Imagen(COLOR_ROSA);
 	mapa[COLOR_VIOLETA] = new Imagen(COLOR_VIOLETA);
+	mapa[ID_GLOBO_EXPLOTANDO1] = new Imagen(ID_GLOBO_EXPLOTANDO1);
+	//mapa[ID_GLOBO_EXPLOTANDO2] = new Imagen(ID_GLOBO_EXPLOTANDO2);
+	//mapa[ID_GLOBO_EXPLOTANDO3] = new Imagen(ID_GLOBO_EXPLOTANDO3);
 
 	mapa[GANO_1] = new Imagen(GANO_1);
 	mapa[GANO_2] = new Imagen(GANO_2);

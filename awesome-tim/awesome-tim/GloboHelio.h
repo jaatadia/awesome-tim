@@ -10,6 +10,7 @@ private:
 	GloboHelio(const char* id,Dimension* dim,bool flag):Figura(id,dim){
 		pinchando = false;
 		atado = false;
+		contador = 0;
 	};
 	bool atado;
 	static int color;
@@ -21,6 +22,7 @@ public:
 	GloboHelio(double pos_X,double pos_Y):Figura(ID_GLOBO,new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0)){
 		pinchando = false;
 		atado = false;
+		contador = 0;
 	};
 	~GloboHelio(void){};
 
@@ -78,7 +80,17 @@ public:
 
 	void actualizar(){
 		if(pinchando){
-			this->marcar(true);
+			contador++;
+
+			if(contador == 1){
+				this->ID = ID_GLOBO_EXPLOTANDO1; 
+				delete (this->myVista);
+				this->myVista = new VistaFigura(this);
+			}
+
+			if(contador == FPS){
+				this->marcar(true);
+			}
 		}
 	}
 };
