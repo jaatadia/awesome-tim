@@ -109,4 +109,8 @@ public:
 	virtual bool cortaSoga(){
 		return dimension->getAngulo()!=0;
 	}
+
+	virtual bool pinchaGlobo(){
+		return dimension->getAngulo()!=0;
+	}
 };

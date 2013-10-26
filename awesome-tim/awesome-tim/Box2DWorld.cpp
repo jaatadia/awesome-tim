@@ -574,7 +574,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 					fD.shape = &forma;
 					fD.density = PLATAFORMA_DENSIDAD;
-					fD.friction = PLATAFORMA_FRICCION;
+					fD.friction = 0;
 					cuerpo->CreateFixture(&fD);
 					
 					//creo un rotador
@@ -863,6 +863,8 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 
 void Box2DWorld::eliminarSoga(Soga *figura){
 	
+	figura->marcar(true);
+
 	if((figura->getFigura1()->getTipoFigura()!=POLEA)&&(figura->getFigura2()->getTipoFigura()!=POLEA)){
 		b2Joint* joint = mundo->GetJointList();
 		b2Joint* prox;

@@ -3,12 +3,14 @@
 #include "Box2D/Box2D.h"
 #include "PlataformaB2ContactListener.h"
 #include "SogaB2ContactListener.h"
+#include "GloboB2ContactListener.h"
 
 class B2ContactListener: public b2ContactListener
 {
 private:
 	PlataformaB2ContactListener* listCinta;
 	SogaB2ContactListener* listSoga;
+	GloboB2ContactListener* listGlobo;
 
 public:
 	B2ContactListener(void);
