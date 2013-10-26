@@ -360,9 +360,11 @@ void BotoneraController::ScrollDown(){
 #include "Vela.h"
 #include "Aro.h"
 #include "Yunque.h"
+#include "Clavo.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Clavo(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Vela(ID_VELA,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Polea(0,0),INSTANCIAS_DEFAULT);

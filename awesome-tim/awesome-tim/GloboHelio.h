@@ -88,7 +88,7 @@ public:
 				this->myVista = new VistaFigura(this);
 			}
 
-			if(contador == FPS){
+			if(contador == FPS/4){
 				this->marcar(true);
 			}
 		}
