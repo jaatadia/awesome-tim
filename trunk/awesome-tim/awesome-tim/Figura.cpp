@@ -4,6 +4,7 @@
 #include <math.h>
 
 Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
+	marcada = false;
 	this->ID = ID;
 	this->dimension = dim;
 	this->setCambio(true);

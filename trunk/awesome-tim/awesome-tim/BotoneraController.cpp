@@ -371,7 +371,7 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);	
 
-	this->agregarBoton(new CintaTransportadora(1,0,0,0),INSTANCIAS_DEFAULT); 
+	this->agregarBoton(new CintaTransportadora(3,0,0,0),INSTANCIAS_DEFAULT); 
 	this->agregarBoton(new Linea(0,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Motor(0,0),INSTANCIAS_DEFAULT);
 	

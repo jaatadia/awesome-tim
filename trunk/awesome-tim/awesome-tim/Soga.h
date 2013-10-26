@@ -7,7 +7,6 @@ class Soga :public Linea{
 private:
 	Soga(DLinea* dim);
 	std::list<Figura*> segmentos;
-	bool marcada;
 
 public:
 	int num1,num2;
@@ -39,14 +38,5 @@ public:
 	void putSegmento(Figura* fig);
 
 	bool meChoca(Dimension* dim);
-
-
-	virtual void marcar(bool flag){
-		marcada = flag;
-	}
-
-	virtual bool estaMarcada(){
-		return marcada;
-	}
 
 };

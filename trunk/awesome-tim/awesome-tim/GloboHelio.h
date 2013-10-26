@@ -8,13 +8,18 @@ class GloboHelio : public Figura
 
 private:
 	GloboHelio(const char* id,Dimension* dim,bool flag):Figura(id,dim){
+		pinchando = false;
 		atado = false;
 	};
 	bool atado;
 	static int color;
+	
+	int contador;
+	bool pinchando;
 
 public:
 	GloboHelio(double pos_X,double pos_Y):Figura(ID_GLOBO,new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0)){
+		pinchando = false;
 		atado = false;
 	};
 	~GloboHelio(void){};
@@ -63,4 +68,17 @@ public:
 	};//le dice que desate una soga de su posicion atable numero
 
 //	bool choqueConFigura(Figura* fig);
+	void pinchar(){
+		pinchando = true;
+	}
+
+	bool estaPinchando(){
+		return pinchando;
+	}
+
+	void actualizar(){
+		if(pinchando){
+			this->marcar(true);
+		}
+	}
 };

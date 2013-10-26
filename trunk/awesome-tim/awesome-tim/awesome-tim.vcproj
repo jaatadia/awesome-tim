@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GloboB2ContactListener.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GloboHelio.cpp"
 				>
 			</File>
@@ -495,6 +499,10 @@
 			</File>
 			<File
 				RelativePath=".\GeneradorDeFigurasCompuestas.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GloboB2ContactListener.h"
 				>
 			</File>
 			<File

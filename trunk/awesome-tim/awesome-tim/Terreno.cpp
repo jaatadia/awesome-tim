@@ -718,10 +718,17 @@ void Terreno::actualizarModelo(){
 				sogas.push_back((Soga*)(*iteradorLista));
 			}else if((*iteradorLista)->getTipoFigura()==LINEA){
 				((Linea*)(*iteradorLista))->actualizar();
+			}else if((*iteradorLista)->getTipoFigura()==GLOBOHELIO){
+				((GloboHelio*)(*iteradorLista))->actualizar();
+				if(((GloboHelio*)(*iteradorLista))->estaPinchando()){
+					borrarAtadura(*iteradorLista);
+					mundoBox2D->eliminarFigura((*iteradorLista));
+				}
 			}else if((*iteradorLista)->cortaSoga()){
 				listaCortanSoga.push_back((*iteradorLista));
 			}
 		}
+		
 		std::list<Soga*>::iterator iterSogas;
 		for (iterSogas = sogas.begin();iterSogas != sogas.end();iterSogas++){
 			for (iteradorLista = listaCortanSoga.begin() ; iteradorLista != listaCortanSoga.end(); iteradorLista++){
@@ -732,12 +739,20 @@ void Terreno::actualizarModelo(){
 			}
 		}
 
-		for (iterSogas = sogas.begin();iterSogas != sogas.end();iterSogas++){
-			if((*iterSogas)->estaMarcada()){
-				figuras.remove((*iterSogas));
-				delete(*iterSogas);
+		
+		std::list<Figura*> listaABorrar;
+		std::list<Figura*>::iterator iterLista;
+		for (iterLista = figuras.begin();iterLista != figuras.end();iterLista++){
+			if((*iterLista)->estaMarcada()){
+				listaABorrar.push_back((*iterLista));
 			}
 		}
+
+		for(iterLista = listaABorrar.begin();iterLista != listaABorrar.end();iterLista++){
+			figuras.remove(*iterLista);
+			delete((*iterLista));
+		}
+
 
 	}else{
 		std::list<Figura*>::iterator iteradorLista;
@@ -897,4 +912,17 @@ bool Terreno::posicionOcupada(Figura* figAPosicionar){
 	}
 
 	return (choca1 || choca2);
+}
+
+void Terreno::borrarAtadura(Figura* fig){
+	std::list<Figura*>::iterator iter;
+	for(iter = figuras.begin();iter!=figuras.end();iter++){
+		if((*iter)->getTipoFigura()==SOGA){
+			if((*iter)->getFigura1()==fig){
+				this->mundoBox2D->eliminarSoga((Soga*)(*iter));
+			}else if((*iter)->getFigura2()==fig){
+				this->mundoBox2D->eliminarSoga((Soga*)(*iter));
+			}
+		}
+	}
 }

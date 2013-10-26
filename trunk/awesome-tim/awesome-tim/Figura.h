@@ -34,6 +34,8 @@ protected:
 
 	int largoF;
 
+	bool marcada;
+
 public:
 	bool traslucido;
 	bool superpuesta ;
@@ -119,5 +121,17 @@ public:
 
 	virtual bool cortaSoga(){
 		return false;
+	}
+
+	virtual bool pinchaGlobo(){
+		return false;
+	}
+
+	virtual void marcar(bool flag){
+		marcada = flag;
+	}
+
+	virtual bool estaMarcada(){
+		return marcada;
 	}
 };
