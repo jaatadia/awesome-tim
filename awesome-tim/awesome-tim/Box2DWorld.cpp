@@ -55,6 +55,24 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
+		case CLAVO:{
+
+			b2PolygonShape forma;
+
+			b2Vec2 vertices[3];
+			vertices[0] = b2Vec2(0,-dim->getAlto()/2);
+			vertices[1] = b2Vec2(+dim->getAncho()/2,dim->getAlto()/2);
+			vertices[2] = b2Vec2(-dim->getAncho()/2,dim->getAlto()/2);
+			forma.Set(vertices,3);
+
+			fD.shape = &forma;
+			fD.density = DENSIDAD_CLAVO;
+			fD.restitution = RESTITUCION_CLAVO;
+			fD.friction = FRICCION_CLAVO;
+			cuerpo->CreateFixture(&fD);
+			
+			break;
+		}
 		case CORREA:{
 			b2Body * inicio = cuerpo;
 			fD.density = 1;
