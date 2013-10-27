@@ -17,6 +17,11 @@ public:
 	virtual int getTipoDimension(){return TRIANGULO;}
 	Dimension* clonar();
 
+	virtual bool intersecaCon(double X1, double Y1, double X2, double Y2);
+
+	virtual bool choqueConDimension(Dimension* dim);
+	virtual Dimension* rotarDimension(double Xrot, double yRot, double angulo);
+
 private:
 	double enRecta(double x,double y,double x0,double y0,double x1,double y1);
 };

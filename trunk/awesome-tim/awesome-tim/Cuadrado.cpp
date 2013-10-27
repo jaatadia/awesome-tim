@@ -200,7 +200,7 @@ Dimension* Cuadrado::rotarDimension(double xRot, double yRot, double angulo){
 
 	cuadADevolver->setX4( 0 + ((vertice4.getX()-0) * cos(-angle)) - ((vertice4.getY()-0) * sin(-angle)) );
 	cuadADevolver->setY4( 0 + ((vertice4.getX()-0) * sin(-angle)) + ((vertice4.getY()-0) * cos(-angle)) );
-//tengo que hacer esto porque pueden estar desfasdos (antes de la primera rotacion)		
+//tengo que hacer esto porque pueden estar desfasados (antes de la primera rotacion)		
 	cuadADevolver->setAngulo( cuadADevolver->getAnguloReal() );
 
 	cuadADevolver->setAngulo( cuadADevolver->getAngulo() + angulo );
