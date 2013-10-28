@@ -590,6 +590,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tijera.h"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaFigAgrandable.h"
 				>
 			</File>
