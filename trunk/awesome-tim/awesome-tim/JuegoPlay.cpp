@@ -61,6 +61,8 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 				if (evento.button.state == SDL_BUTTON_LMASK){
 					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
+
+				terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				break;
 			}
 			case SDL_MOUSEBUTTONUP:

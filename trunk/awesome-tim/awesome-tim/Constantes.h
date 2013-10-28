@@ -4,6 +4,8 @@
 
 #define CANT_JUG_DEFAULT 1
 
+//#define ES_SERVIDOR 1
+
 //frecuencias de simulacion, dibujo y calculo de cosas
 #define FPS 60
 #define FRAME_FRECUENCY 1000.0/FPS

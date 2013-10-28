@@ -83,6 +83,8 @@ public:
 
 	bool posicionOcupada(Figura* figAPosicionar);
 
+	void interactuar(double posClickX, double posClickY);
+
 private:
 	bool hayFiguras();
 	Figura* buscarFigura(double posClickX, double posClickY);

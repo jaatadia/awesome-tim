@@ -8,6 +8,8 @@
 
 #include "Contenedor.h"
 #include "GeneradorYaml.h"
+#include "ClientTIM.h"
+#include "Server.h"
 
 #define RUTA_DEFAULT_IN "../yaml/archivoDefault.yml"
 #define RUTA_DEFAULT_OUT "../yaml/nuevoJuego.yml"
@@ -128,8 +130,19 @@ void test(void){
 	GeneradorYaml::pruebayaml();
 	Contenedor::pruebaContenedor();
 }
+/*
+void iniciarClienteOServer(){
 
-
+#ifdef ES_SERVIDOR
+Server server();
+server.run();
+#else
+//lo creo y dentro hace toda la inicializacion necesaria
+//y se pone a correr el programa.
+ClientTIM cliente;
+#endif
+}
+*/
 #include<sys/timeb.h>
 
 //Corre el programa del juego
@@ -215,7 +228,10 @@ int main (int argc, char** argv){
 
 	switch (opcion){
 		case OPC_JUEGO:
+			//compilo como cliente o como servidor
+			//en sus initThread va el jugar()
 			jugar(rutaIn, rutaOut);
+			//iniciarClienteOServer();
 			break;
 		case OPC_IMPRIMIR_AYUDA:
 			imprimir_ayuda();

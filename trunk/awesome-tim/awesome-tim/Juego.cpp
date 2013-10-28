@@ -45,7 +45,6 @@ bool Juego::guardar(){
 	
 	if (!seGuardo){
 		ErrorLogHandler::addError("GeneradorYaml", "Error al abrir o cerrar los archivos al guardar la partida.");
-	
 	}
 
 	return true;
