@@ -941,7 +941,9 @@ void Terreno::interactuar(double posClickX, double posClickY){
 	
 	if (this->adentroZonaTerreno(posClickX,posClickY)){
 		figAInteract = this->buscarFigura(posClickX,posClickY);
-		figAInteract->interactuar();
+		if(figAInteract != NULL){
+			figAInteract->interactuar();
+		}
 	}
 
 }
