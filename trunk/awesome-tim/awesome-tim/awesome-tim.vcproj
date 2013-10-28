@@ -300,10 +300,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Vela.h"
-				>
-			</File>
-			<File
 				RelativePath=".\VistaFigAgrandable.cpp"
 				>
 			</File>
@@ -591,6 +587,10 @@
 			</File>
 			<File
 				RelativePath=".\Tijera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Vela.h"
 				>
 			</File>
 			<File
