@@ -512,6 +512,39 @@ Figura* CargadorYaml::crearVela(const YAML::Node& nodoFigura){
 	return new Vela(ID_VELA,posX,posY,angulo);
 }
 
+Figura* CargadorYaml::crearClavo(const YAML::Node& nodoFigura){
+	double posX,posY;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+
+	return new Clavo(posX,posY);
+}
+
+Figura* CargadorYaml::crearAro(const YAML::Node& nodoFigura){
+	double posX,posY;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+
+	return new Aro(posX,posY);
+}
+
+Figura* CargadorYaml::crearPolea(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+
+	return new Polea(posX,posY,angulo);
+}
+
+Figura* CargadorYaml::crearYunque(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);
+
+	return new Yunque(posX,posY,angulo);
+}
 Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
 	double posX,posY,angulo;
 	int largo;
@@ -751,6 +784,34 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		Figura* figura = crearVela(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Vela."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"CLAVO") == 0){
+		Figura* figura = crearClavo(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Clavo."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"ARO") == 0){
+		Figura* figura = crearAro(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Aro."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"POLEA") == 0){
+		Figura* figura = crearPolea(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Polea."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"YUNQUE") == 0){
+		Figura* figura = crearYunque(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Yunque."); 	
 		return figura;
 	}
 
@@ -1116,9 +1177,14 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
 	bool bowling = (strcmp(tipo_figura,"BOLA_BOWLING") == 0);
 	bool globoHelio = (strcmp(tipo_figura,"GLOBO_HELIO") == 0);
 	bool tenis = (strcmp(tipo_figura,"PELOTA_TENIS") == 0);
-	bool vela = (strcmp(tipo_figura,"VELA") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela);
+	bool vela = (strcmp(tipo_figura,"VELA") == 0);
+	bool clavo = (strcmp(tipo_figura,"CLAVO") == 0);
+	bool aro = (strcmp(tipo_figura,"ARO") == 0);
+	bool polea = (strcmp(tipo_figura,"POLEA") == 0);
+	bool yunque = (strcmp(tipo_figura,"YUNQUE") == 0);
+
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque);
 
 	return (figuraSimple || figuraCompleja);
 }
