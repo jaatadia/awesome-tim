@@ -5,6 +5,7 @@
 
 #include "FiguraCompuesta.h"
 #include "Soga.h"
+#include "Tijera.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
@@ -713,6 +714,11 @@ void Terreno::actualizarModelo(){
 		std::list<Figura*>::iterator iteradorLista;
 		std::list<Figura*> listaCortanSoga;
 		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+			
+			if((*iteradorLista)->getTipoFigura()==TIJERA){
+				((Tijera*)(*iteradorLista))->actualizar();
+			}
+			
 			if((*iteradorLista)->getTipoFigura()==SOGA){
 				((Linea*)(*iteradorLista))->actualizar();
 				sogas.push_back((Soga*)(*iteradorLista));
@@ -732,9 +738,11 @@ void Terreno::actualizarModelo(){
 		std::list<Soga*>::iterator iterSogas;
 		for (iterSogas = sogas.begin();iterSogas != sogas.end();iterSogas++){
 			for (iteradorLista = listaCortanSoga.begin() ; iteradorLista != listaCortanSoga.end(); iteradorLista++){
-				if((!(*iterSogas)->estaMarcada())&&((*iterSogas)->meChoca((*iteradorLista)->getDimension()))){
-					this->mundoBox2D->eliminarSoga(*iterSogas);
-					(*iterSogas)->marcar(true);
+				if( (!(*iterSogas)->estaMarcada())&&
+					(((*iterSogas)->getFigura1()!=(*iteradorLista))&&((*iterSogas)->getFigura2()!=(*iteradorLista)))&&
+					((*iterSogas)->meChoca((*iteradorLista)->getDimension()))){
+						this->mundoBox2D->eliminarSoga(*iterSogas);
+						(*iterSogas)->marcar(true);
 				}
 			}
 		}

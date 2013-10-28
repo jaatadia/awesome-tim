@@ -73,6 +73,7 @@
 #define POLEA 19 //el aro es lo mismo que la Polea
 #define YUNQUE 20
 #define CLAVO 21
+#define TIJERA 22
 
 //valores fisicos
 
@@ -82,6 +83,11 @@
 #define GRAVEDADY 9.8f * 10
 #define GRAVEDADX 0.0f
 
+#define ANCHO_TIJERA 10
+#define ALTO_TIJERA 5
+#define DENSIDAD_TIJERA 1
+#define FRICCION_TIJERA 1
+#define RESTITUCION_TIJERA 0.1
 
 #define BASE_CLAVO 0.045 * COEF_MULT //2.0
 #define ALTURA_CLAVO 0.045 * COEF_MULT
@@ -162,7 +168,6 @@
 #define FRICCION_VELA 0.1
 
 
-
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
@@ -218,6 +223,9 @@
 #define ID_ARO "../images/aro.png"
 
 #define ID_YUNQUE "../images/yunque.png"
+#define ID_CLAVO "../images/clavoNinja.png"
+#define ID_TIJERA "../images/tijeraAbierta.png"
+#define ID_TIJERA_CERRADA "../images/tijeraCerrada.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1
@@ -242,9 +250,6 @@
 #define COLOR_AMARILLO "../images/globoamarillo.png"
 #define COLOR_ROSA "../images/globorosa.png"
 #define COLOR_VIOLETA "../images/globovioleta.png"
-
-#define ID_CLAVO "../images/clavoNinja.png"
-
 
 //constantes para la pantalla de que gano
 #define DURACION_SEGS 1

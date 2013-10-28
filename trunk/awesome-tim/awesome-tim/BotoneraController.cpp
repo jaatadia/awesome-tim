@@ -361,9 +361,11 @@ void BotoneraController::ScrollDown(){
 #include "Aro.h"
 #include "Yunque.h"
 #include "Clavo.h"
+#include "Tijera.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Clavo(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Vela(ID_VELA,0,0,0),INSTANCIAS_DEFAULT);

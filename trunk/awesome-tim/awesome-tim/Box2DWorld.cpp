@@ -6,6 +6,7 @@
 #include "Balancin.h"
 #include "PedacitoSoga.h"
 #include "Polea.h"
+#include "Tijera.h"
 #include <iostream>
 
 Box2DWorld::Box2DWorld(void)
@@ -55,6 +56,21 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
+		case TIJERA:{
+
+			cuerpo->SetType(b2_staticBody);
+
+			b2PolygonShape forma;
+			forma.SetAsBox(dim->getAncho()/2,dim->getAlto()/2);
+
+			fD.shape = &forma;
+			fD.density = DENSIDAD_TIJERA;
+			fD.restitution = RESTITUCION_TIJERA;
+			fD.friction = FRICCION_TIJERA;
+			cuerpo->CreateFixture(&fD);
+
+			break;
+		}
 		case CLAVO:{
 
 			b2PolygonShape forma;
@@ -676,6 +692,90 @@ void Box2DWorld::actualizar(Figura * figura)
 				continue;
 			}
 			
+
+			if(fig->getTipoFigura()==TIJERA){
+				b2JointEdge* joint = cuerpo->GetJointList();
+				bool cerrar = false;
+				int mult = 1;
+				double fuerzaLimite = 1;
+				while(joint){
+					
+					b2Joint* una_joint = joint->joint;
+
+					if(una_joint->GetType()!=e_pulleyJoint){
+						if(una_joint->GetBodyA()==cuerpo){//la tijera es el cuerpo a
+							if(cuerpo->GetLocalPoint(una_joint->GetAnchorA()).y<0){ //es la union de abajo
+								//el cuerpo b tiene que sentir una fuerza hacia abajo para que la tijera sienta una fuerza para arriba
+								if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
+									cerrar = true;
+								}
+							}else{ //entonces es la union de arriba
+								if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
+									cerrar = true;
+								}
+							}
+						}else{//la tijera es el cuerpo B
+							if(cuerpo->GetLocalPoint(una_joint->GetAnchorB()).y<0){ //es la union de abajo
+								if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
+									cerrar = true;
+								}
+							}else{ //entonces es la union de arriba
+								if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
+									cerrar = true;
+								}
+							}
+						}
+					}else{
+						b2PulleyJoint* pulley = (b2PulleyJoint*) una_joint;
+						
+						if(una_joint->GetBodyA()==cuerpo){//la tijera es el cuerpo a
+
+							//me fijo si el cuerpo esta por encima del anchor
+							if (pulley->GetGroundAnchorA().y-pulley->GetAnchorA().y > 0){
+								if(cuerpo->GetLocalPoint(una_joint->GetAnchorA()).y<0){ //es la union de abajo
+									if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
+										cerrar = true;
+									}
+								}else{ //entonces es la union de arriba
+									if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
+										cerrar = true;
+									}
+								}
+							}else{ //el cuerpo esta por encima del anchor
+								if(cuerpo->GetLocalPoint(una_joint->GetAnchorA()).y<0){ //es la union de abajo
+									if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
+										cerrar = true;
+									}
+								}else{ //entonces es la union de arriba
+									if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
+										cerrar = true;
+									}
+								}
+							}
+						}else{//la tijera es el cuerpo B no hay ningun problema
+							if(cuerpo->GetLocalPoint(una_joint->GetAnchorB()).y<0){ //es la union de abajo
+								if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
+									cerrar = true;
+								}
+							}else{ //entonces es la union de arriba
+								if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
+									cerrar = true;
+								}
+							}
+						}
+									
+					}
+
+					std::cout << una_joint->GetReactionForce(tiempoStep).y <<"\n";
+					
+					joint = joint->next;
+				}
+				
+				if (cerrar){
+					((Tijera*)fig)->cerrar();
+				}
+			}
+
 			if(fig->getTipoFigura()==CINTATRANSPORTADORA){
 				b2JointEdge* edge = cuerpo->GetJointList();
 				if(edge == NULL){
