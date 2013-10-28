@@ -7,8 +7,8 @@ Vela::Vela(const char* id, double posX, double posY, double angulo):FiguraCompue
 	
 	double posLlamaX, posLlamaY;
 	calcularPosLlama(posX,posY,&posLlamaX,&posLlamaY);
-	this->velaCera = new Figura(ID_VELA_CERA, new Cuadrado(ANCHO_VELA,ALTO_VELA,posX,posY,0));
-	this->llama = new Figura(ID_LLAMA, new Circulo(RADIO_LLAMA,posLlamaX,posLlamaY,0));
+	this->velaCera = new Figura(ID_VELA_CERA, new Cuadrado(ANCHO_VELA,ALTO_VELA,posX,posY+RADIO_LLAMA,0));
+	this->llama = new Figura(ID_LLAMA, new Circulo(RADIO_LLAMA,posLlamaX,posLlamaY+RADIO_LLAMA,0));
 
 	this->partesFigura.push_back(this->velaCera);
 	this->partesFigura.push_back(this->llama);

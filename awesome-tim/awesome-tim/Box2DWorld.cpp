@@ -184,7 +184,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 		case VELA:{
 				b2PolygonShape forma;
 				double ancho = (dim)->getAncho()/2;
-				double alto = ((dim)->getAlto()/2)-(RADIO_LLAMA);
+				double alto = (dim)->getAlto()/2;
 				forma.SetAsBox(ancho,alto);
 
 				fD.shape = &forma;
@@ -986,6 +986,7 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 
 		b2PulleyJointDef joint;
 		joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
+		joint.collideConnected = true;
 		
 		b2Joint* pulleyJ = mundo->CreateJoint(&joint);
 
