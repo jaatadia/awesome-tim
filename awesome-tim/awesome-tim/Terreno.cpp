@@ -934,3 +934,14 @@ void Terreno::borrarAtadura(Figura* fig){
 		}
 	}
 }
+
+void Terreno::interactuar(double posClickX, double posClickY){
+
+	Figura* figAInteract;
+	
+	if (this->adentroZonaTerreno(posClickX,posClickY)){
+		figAInteract = this->buscarFigura(posClickX,posClickY);
+		figAInteract->interactuar();
+	}
+
+}

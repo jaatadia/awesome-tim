@@ -9,13 +9,14 @@ class ClientHandler : public ActiveObject
 public:
 	ClientHandler(void);
 	ClientHandler(Socket * s);
-	~ClientHandler(void);
+	virtual ~ClientHandler(void);
 
 private:
 	Socket * _socket;
-	void initThread();
-	void run();
-	void flushThread();
+protected:
+	virtual void initThread();
+	virtual void run();
+	virtual void flushThread();
 };
 
 #endif // __CLIENTHANDLER_H__

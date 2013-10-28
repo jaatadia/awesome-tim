@@ -71,6 +71,8 @@ public:
 	virtual void agrandar(){};
 	virtual void achicar(){};
 
+	virtual void interactuar(){};
+
 	virtual Figura* clonar(bool cambiar);//copia la figura
 	virtual Figura* clonar();//copia la figura
 

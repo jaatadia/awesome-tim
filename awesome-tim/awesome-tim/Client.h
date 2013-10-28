@@ -8,13 +8,14 @@ class Client : public ActiveObject
 {
 public:
 	Client(void);
-	~Client(void);
+	virtual ~Client(void);
 
 private:
 	ClientSocket * socket;
-	void initThread();
-	void run();
-	void flushThread();
+protected:	
+	virtual void initThread();
+	virtual void run();
+	virtual void flushThread();
 };
 
 #endif // __CLIENT_H__
