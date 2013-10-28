@@ -18,5 +18,6 @@ public:
 	Figura* getVelaCera();
 	Figura* getLlama();
 	bool cortaSoga();
+	bool pinchaGlobo();
 
 };

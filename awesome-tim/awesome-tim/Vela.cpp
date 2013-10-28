@@ -54,3 +54,8 @@ Figura* Vela::getLlama(){
 bool Vela::cortaSoga(){
 	return true;
 }
+
+
+bool Vela::pinchaGlobo(){
+	return true;
+}
