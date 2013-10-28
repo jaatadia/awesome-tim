@@ -157,6 +157,9 @@
 #define ALTO_VELA 5
 #define ANCHO_VELA 2
 #define RADIO_LLAMA 2
+#define RESTITUCION_VELA 0.2
+#define DENSIDAD_VELA 5.0
+#define FRICCION_VELA 0.1
 
 
 

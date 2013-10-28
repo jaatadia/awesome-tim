@@ -165,6 +165,20 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+		case VELA:{
+				b2PolygonShape forma;
+				double ancho = (dim)->getAncho()/2;
+				double alto = ((dim)->getAlto()/2)-(RADIO_LLAMA);
+				forma.SetAsBox(ancho,alto);
+
+				fD.shape = &forma;
+				fD.density = DENSIDAD_VELA;
+				fD.friction = FRICCION_VELA;
+				fD.restitution = RESTITUCION_VELA;
+				cuerpo->CreateFixture(&fD);
+
+				break;
+			}
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(-1);
 				
