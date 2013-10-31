@@ -195,6 +195,20 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				break;
 			}
+		case DOMINO:{
+				b2PolygonShape forma;
+				double ancho = (dim)->getAncho()/2;
+				double alto = (dim)->getAlto()/2;
+				forma.SetAsBox(ancho,alto);
+
+				fD.shape = &forma;
+				fD.density = DENSIDAD_DOMINO;
+				fD.friction = FRICCION_DOMINO;
+				fD.restitution = RESTITUCION_DOMINO;
+				cuerpo->CreateFixture(&fD);
+
+				break;
+			}
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(-1);
 				

@@ -77,6 +77,7 @@
 #define CLAVO 21
 #define TIJERA 22
 #define HUEVO 23
+#define DOMINO 24
 
 //valores fisicos
 
@@ -170,9 +171,16 @@
 #define FRICCION_VELA 0.1
 
 #define RADIO_HUEVO 3
-#define RESTITUCION_HUEVO 0.4 //0.3
+#define RESTITUCION_HUEVO 0.4
 #define DENSIDAD_HUEVO 6.0
 #define FRICCION_HUEVO 0.3
+
+#define ANCHO_DOMINO 2
+#define ALTO_DOMINO 4
+#define RESTITUCION_DOMINO 0.5
+#define DENSIDAD_DOMINO 5.0
+#define FRICCION_DOMINO 0.3
+
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -235,6 +243,9 @@
 
 #define ID_HUEVO "../images/huevo.jpg"
 #define ID_HUEVO_ROMPIENDO "../images/huevoPartido.jpg"
+
+#define ID_DOMINO "../images/domino.png"
+#define ID_FICHA_DOMINO "../images/fichaDomino.jpg"
 
 //posiciones de balancin
 #define IZQUIERDA 1
