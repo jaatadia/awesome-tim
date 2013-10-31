@@ -78,6 +78,8 @@ Contenedor::Contenedor(void){
 	mapa[ID_CLAVO] = new Imagen(ID_CLAVO);
 	mapa[ID_TIJERA] = new Imagen(ID_TIJERA);
 	mapa[ID_TIJERA_CERRADA] = new Imagen(ID_TIJERA_CERRADA);
+	mapa[ID_HUEVO] = new Imagen(ID_HUEVO);
+	mapa[ID_HUEVO_ROMPIENDO] = new Imagen(ID_HUEVO_ROMPIENDO);
 
 	mapa[COLOR_CELESTE] = new Imagen(COLOR_CELESTE);
 	mapa[COLOR_ROJO] = new Imagen(COLOR_ROJO);

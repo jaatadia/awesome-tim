@@ -397,6 +397,16 @@ Figura* CargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
 	return figura;
 }
 
+Figura* CargadorYaml::crearHuevo(const YAML::Node& nodoFigura){
+	double posX,posY;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+
+	Figura* figura = new Huevo(posX,posY);
+
+	return figura;
+}
+
 Figura* CargadorYaml::crearBolaBowling(const YAML::Node& nodoFigura){
 	double posX,posY;
 
@@ -815,6 +825,13 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		return figura;
 	}
 
+	if (strcmp(tipo_figura,"HUEVO") == 0){
+		Figura* figura = crearHuevo(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Huevo."); 	
+		return figura;
+	}
+
 	//No deberia llegar a este caso porque el error deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
 	return NULL;
@@ -1155,7 +1172,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 **                    VALIDACIONES                       **
 **                                                       **
 **********************************************************/
-bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
+bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool cuadrado = (strcmp(tipo_figura,"CUADRADO") == 0);
 	bool circulo = (strcmp(tipo_figura,"CIRCULO") == 0);
 	bool triangulo = (strcmp(tipo_figura,"TRIANGULO") == 0);
@@ -1183,8 +1200,9 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){ //FIXXXXXXXXXX
 	bool aro = (strcmp(tipo_figura,"ARO") == 0);
 	bool polea = (strcmp(tipo_figura,"POLEA") == 0);
 	bool yunque = (strcmp(tipo_figura,"YUNQUE") == 0);
+	bool huevo = (strcmp(tipo_figura,"HUEVO") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo);
 
 	return (figuraSimple || figuraCompleja);
 }
