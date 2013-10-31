@@ -251,6 +251,17 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 			break;
 			}
+		case HUEVO:{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				fD.shape = &forma;
+				fD.density = DENSIDAD_HUEVO;
+				fD.friction = FRICCION_HUEVO;
+				fD.restitution = RESTITUCION_HUEVO;
+				cuerpo->CreateFixture(&fD);
+			break;
+			}
 		case LINEA:
 			{
 				this->mundo->DestroyBody(cuerpo);

@@ -76,6 +76,7 @@
 #define YUNQUE 20
 #define CLAVO 21
 #define TIJERA 22
+#define HUEVO 23
 
 //valores fisicos
 
@@ -161,7 +162,6 @@
 #define ANCHO_CINTA 8
 #define RADIO_CTRANSP_CLAVO 0.88
 
-
 #define ALTO_VELA 5
 #define ANCHO_VELA 2
 #define RADIO_LLAMA 2
@@ -169,6 +169,10 @@
 #define DENSIDAD_VELA 5.0
 #define FRICCION_VELA 0.1
 
+#define RADIO_HUEVO 3
+#define RESTITUCION_HUEVO 0.4 //0.3
+#define DENSIDAD_HUEVO 20.0 //6.0
+#define FRICCION_HUEVO 0.3
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -228,6 +232,9 @@
 #define ID_CLAVO "../images/clavoNinja.png"
 #define ID_TIJERA "../images/tijeraAbierta.png"
 #define ID_TIJERA_CERRADA "../images/tijeraCerrada.png"
+
+#define ID_HUEVO "../images/huevo.jpg"
+#define ID_HUEVO_ROMPIENDO "../images/huevoPartido.jpg"
 
 //posiciones de balancin
 #define IZQUIERDA 1
