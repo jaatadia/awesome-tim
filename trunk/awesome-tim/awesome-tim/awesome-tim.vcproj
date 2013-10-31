@@ -486,6 +486,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Domino.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Engranaje.h"
 				>
 			</File>
