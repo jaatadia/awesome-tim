@@ -171,7 +171,7 @@
 
 #define RADIO_HUEVO 3
 #define RESTITUCION_HUEVO 0.4 //0.3
-#define DENSIDAD_HUEVO 20.0 //6.0
+#define DENSIDAD_HUEVO 6.0
 #define FRICCION_HUEVO 0.3
 
 //cuadrantes

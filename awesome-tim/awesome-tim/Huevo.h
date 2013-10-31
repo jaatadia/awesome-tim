@@ -29,13 +29,11 @@ public:
 		return new Huevo(ID.c_str(),dimension->clonar(),true);
 	}
 
-
-//	bool choqueConFigura(Figura* fig);
-	void pinchar(){
+	void romper(){
 		rompiendose = true;
 	}
 
-	bool estaPinchando(){
+	bool estaRompiendo(){
 		return rompiendose;
 	}
 
@@ -56,6 +54,6 @@ public:
 	}
 
 	void interactuar(){
-		this->pinchar();
+		this->romper();
 	}
 };
