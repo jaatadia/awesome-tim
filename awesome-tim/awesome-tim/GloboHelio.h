@@ -93,4 +93,8 @@ public:
 			}
 		}
 	}
+
+	void interactuar(){
+		this->pinchar();
+	}
 };
