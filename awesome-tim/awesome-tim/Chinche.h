@@ -8,7 +8,7 @@ private:
 	Chinche(const char* ID, Dimension* dim,bool flag):Figura(ID,dim){}
 
 public:
-	Chinche(double posX,double posY ,double angulo = 0):Figura(ID_CHINCHE,new Triangulo(posX,posY,angulo,BASE_CHINCHE,ALTURA_CHINCHE)){
+	Chinche(double posX,double posY ,double angulo = 0):Figura(ID_CHINCHE,new Cuadrado(BASE_CHINCHE,ALTURA_CHINCHE,posX,posY,angulo)){
 	}
 	
 	~Chinche(void){
@@ -22,8 +22,24 @@ public:
 		return TRIANGULO;
 	}
 
-	virtual bool pinchaGlobo(){
-		return true;
+	virtual bool pinchaGlobo(Dimension* dim){
+		
+		//busco el centro mio
+		double cx = dimension->getX();
+		double cy = dimension->getY();
+
+		//busco el punto que pincha
+		double px = cx + 0;
+		double py = cy + dimension->getAlto()/2 + 1;
+		
+		//busco donde esta el punto que pincha segun mi angulo
+		double coseno = cos( -dimension->getAngulo() * PI / 180);
+		double seno = sin( -dimension->getAngulo() * PI / 180);
+
+		double puntaRealX = cx + (px - cx) * coseno - (py - cy) * seno;
+		double puntaRealY = cy + (px - cx) * seno + (py - cy) * coseno;
+
+		return dim->puntoPertenece(puntaRealX,puntaRealY);
 	}
 
 	virtual Figura* clonar(){

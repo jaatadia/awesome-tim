@@ -83,5 +83,5 @@ public:
 	}
 
 	virtual bool cortaSoga(){return false;}
-	virtual bool pinchaGlobo(){return false;}
+	virtual bool pinchaGlobo(Dimension* dim){return false;}
 };

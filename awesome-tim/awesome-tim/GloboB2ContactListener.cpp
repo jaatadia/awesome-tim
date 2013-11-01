@@ -31,7 +31,7 @@ void GloboB2ContactListener::BeginContact(b2Contact* contact){
 		return;
 	}
 
-	if(fig->pinchaGlobo()){
+	if(fig->pinchaGlobo(globo->getDimension())){
 		globo->pinchar();
 	}
 }

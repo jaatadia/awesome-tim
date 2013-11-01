@@ -56,6 +56,6 @@ bool Vela::cortaSoga(){
 }
 
 
-bool Vela::pinchaGlobo(){
+bool Vela::pinchaGlobo(Dimension* dim){
 	return true;
 }
