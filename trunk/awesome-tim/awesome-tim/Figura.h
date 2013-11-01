@@ -125,7 +125,7 @@ public:
 		return false;
 	}
 
-	virtual bool pinchaGlobo(){
+	virtual bool pinchaGlobo(Dimension* dim){
 		return false;
 	}
 

@@ -24,7 +24,7 @@ public:
 		return TRIANGULO;
 	}
 
-	virtual bool pinchaGlobo(){
+	virtual bool pinchaGlobo(Dimension* dim){
 		return true;
 	}
 

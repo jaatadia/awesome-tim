@@ -110,7 +110,7 @@ public:
 		return dimension->getAngulo()!=0;
 	}
 
-	virtual bool pinchaGlobo(){
+	virtual bool pinchaGlobo(Dimension* dim){
 		return dimension->getAngulo()!=0;
 	}
 };

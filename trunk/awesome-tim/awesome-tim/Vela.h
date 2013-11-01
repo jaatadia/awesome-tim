@@ -18,6 +18,6 @@ public:
 	Figura* getVelaCera();
 	Figura* getLlama();
 	bool cortaSoga();
-	bool pinchaGlobo();
+	bool pinchaGlobo(Dimension* dim);
 
 };

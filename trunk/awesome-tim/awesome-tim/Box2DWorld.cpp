@@ -90,15 +90,15 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			break;
 		}
 		case CHINCHE:{
+			
+			cuerpo->SetType(b2_staticBody);
 
 			b2PolygonShape forma;
 
-			cuerpo->SetType(b2_staticBody);
-
 			b2Vec2 vertices[3];
-			vertices[0] = b2Vec2(0,-dim->getAlto()/2);
-			vertices[1] = b2Vec2(+dim->getAncho()/2,dim->getAlto()/2);
-			vertices[2] = b2Vec2(-dim->getAncho()/2,dim->getAlto()/2);
+			vertices[0] = b2Vec2(-dim->getAncho()/2,-dim->getAlto()/2);
+			vertices[1] = b2Vec2(+dim->getAncho()/2,-dim->getAlto()/2);
+			vertices[2] = b2Vec2(0,+dim->getAlto()/2);
 			forma.Set(vertices,3);
 
 			fD.shape = &forma;
@@ -744,7 +744,7 @@ void Box2DWorld::actualizar(Figura * figura)
 		
 		if(fig!=NULL){
 			
-			if((fig->getTipoFigura()==PLATAFORMA)||(fig->getTipoFigura()==POLEA)){
+			if((fig->getTipoFigura()==PLATAFORMA)||(fig->getTipoFigura()==POLEA)||(fig->getTipoFigura()==CHINCHE)){
 				cuerpo = cuerpo->GetNext();
 				continue;
 			}
