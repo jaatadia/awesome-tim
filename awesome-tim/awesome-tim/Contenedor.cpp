@@ -76,6 +76,7 @@ Contenedor::Contenedor(void){
 	mapa[ID_ARO] = new Imagen(ID_ARO);
 	mapa[ID_YUNQUE] = new Imagen(ID_YUNQUE);
 	mapa[ID_CLAVO] = new Imagen(ID_CLAVO);
+	mapa[ID_CHINCHE] = new Imagen(ID_CHINCHE);
 	mapa[ID_TIJERA] = new Imagen(ID_TIJERA);
 	mapa[ID_TIJERA_CERRADA] = new Imagen(ID_TIJERA_CERRADA);
 	mapa[ID_HUEVO] = new Imagen(ID_HUEVO);

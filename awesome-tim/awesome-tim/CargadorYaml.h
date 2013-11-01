@@ -39,7 +39,7 @@
 #include "Yunque.h"
 #include "Huevo.h"
 #include "Tijera.h"
-#include "Domino.h"
+//#include "Domino.h"
 
 class CargadorYaml{
 public:

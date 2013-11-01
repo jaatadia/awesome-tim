@@ -72,12 +72,14 @@
 #define LINEA 16
 #define PEDACITOSOGA 17
 #define VELA 18
-#define POLEA 19 //el aro es lo mismo que la Polea
+#define POLEA 19
 #define YUNQUE 20
 #define CLAVO 21
 #define TIJERA 22
 #define HUEVO 23
 #define DOMINO 24
+#define CHINCHE 25
+#define ARO 26
 
 //valores fisicos
 
@@ -99,7 +101,17 @@
 #define FRICCION_CLAVO 1
 #define RESTITUCION_CLAVO 0.1
 
+#define BASE_CHINCHE 0.07 * COEF_MULT //2.0
+#define ALTURA_CHINCHE 0.14 * COEF_MULT
+#define DENSIDAD_CHINCHE 1
+#define FRICCION_CHINCHE 1
+#define RESTITUCION_CHINCHE 0.1
+
 #define RADIO_ARO 0.04 * COEF_MULT
+#define DENSIDAD_ARO 1
+#define FRICCION_ARO 0.1
+#define RESTITUCION_ARO 0
+
 #define RADIO_POLEA 0.05 * COEF_MULT
 #define DENSIDAD_POLEA 1
 #define FRICCION_POLEA 0.1
@@ -238,6 +250,7 @@
 
 #define ID_YUNQUE "../images/yunque.png"
 #define ID_CLAVO "../images/clavoNinja.png"
+#define ID_CHINCHE "../images/pin.png"
 #define ID_TIJERA "../images/tijeraAbierta.png"
 #define ID_TIJERA_CERRADA "../images/tijeraCerrada.png"
 
