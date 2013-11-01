@@ -89,6 +89,26 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			
 			break;
 		}
+		case CHINCHE:{
+
+			b2PolygonShape forma;
+
+			cuerpo->SetType(b2_staticBody);
+
+			b2Vec2 vertices[3];
+			vertices[0] = b2Vec2(0,-dim->getAlto()/2);
+			vertices[1] = b2Vec2(+dim->getAncho()/2,dim->getAlto()/2);
+			vertices[2] = b2Vec2(-dim->getAncho()/2,dim->getAlto()/2);
+			forma.Set(vertices,3);
+
+			fD.shape = &forma;
+			fD.density = DENSIDAD_CHINCHE;
+			fD.restitution = RESTITUCION_CHINCHE;
+			fD.friction = FRICCION_CHINCHE;
+			cuerpo->CreateFixture(&fD);
+			
+			break;
+		}
 		case CORREA:{
 			b2Body * inicio = cuerpo;
 			fD.density = 1;
@@ -240,6 +260,18 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				cuerpo->SetType(b2_staticBody);
 				((Polea*)figura)->miCuerpo = cuerpo;
+				break;
+			}
+	   	case ARO:{
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				
+				fD.shape = &forma;
+				fD.density = DENSIDAD_ARO;
+				fD.friction = FRICCION_ARO;
+				fD.restitution = RESTITUCION_ARO;
+				cuerpo->CreateFixture(&fD);
+				cuerpo->SetType(b2_staticBody);
 				break;
 			}
 		case PELOTABASQUET:{

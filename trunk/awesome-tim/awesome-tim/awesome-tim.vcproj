@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -208,7 +208,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ClientHandlerTim.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientHandlerTim.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ClientSocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientTIM.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientTIM.h"
 				>
 			</File>
 			<File
@@ -451,6 +467,10 @@
 			</File>
 			<File
 				RelativePath=".\Box2DWorld.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Chinche.h"
 				>
 			</File>
 			<File

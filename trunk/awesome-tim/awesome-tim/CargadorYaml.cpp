@@ -552,7 +552,7 @@ Figura* CargadorYaml::crearDomino(const YAML::Node& nodoFigura){
 	
 	obtenerPosicion(nodoFigura,&posX,&posY);
 
-	return new Domino(posX,posY);
+	return NULL;//new Domino(posX,posY);
 }
 
 Figura* CargadorYaml::crearYunque(const YAML::Node& nodoFigura){

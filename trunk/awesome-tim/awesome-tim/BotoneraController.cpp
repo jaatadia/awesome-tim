@@ -362,9 +362,12 @@ void BotoneraController::ScrollDown(){
 #include "Yunque.h"
 #include "Clavo.h"
 #include "Tijera.h"
+#include "Chinche.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Chinche(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Clavo(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
@@ -372,7 +375,7 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new Polea(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
+	
 	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);	
 
 	this->agregarBoton(new CintaTransportadora(3,0,0,0),INSTANCIAS_DEFAULT); 
