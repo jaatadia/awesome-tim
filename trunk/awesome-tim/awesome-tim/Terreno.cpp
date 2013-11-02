@@ -157,11 +157,13 @@ void Terreno::redraw(){
 		rect.alto = ey2-ey1;
 		sup->dibujarSupreficie(&super,&rect,ex2,ey1);
 		
-		sup->dibujarLinea(ex1,ey1,ex1,ey2,2,30,30,30);	 
-		sup->dibujarLinea(ex1,ey1,ex2,ey1,2,30,30,30);	 
-		sup->dibujarLinea(ex1,ey2,ex2,ey2,2,30,30,30);	 
-		sup->dibujarLinea(ex2,ey1,ex2,ey2,2,30,30,30);	 
 	}
+	
+	//dibujo el recuadro
+	sup->dibujarLinea(ex1,ey1,ex1,ey2,2,30,30,30);	 
+	sup->dibujarLinea(ex1,ey1,ex2,ey1,2,30,30,30);	 
+	sup->dibujarLinea(ex1,ey2,ex2,ey2,2,30,30,30);	 
+	sup->dibujarLinea(ex2,ey1,ex2,ey2,2,30,30,30);	 
 	
 	
 
@@ -261,12 +263,18 @@ bool Terreno::agregarFigura(Figura* fig){
 					if (!puestas) (this->figuras).push_back(fig);
 				}else{
 					(this->figuras).push_back(fig);
+					if(fig->esObjetivo()){
+						this->objetivos.push_back(fig);
+					}
 				}
 			}else{ 
 				delete fig;
 			}
 		}else{
 			(this->figuras).push_back(fig);
+			if(fig->esObjetivo()){
+						this->objetivos.push_back(fig);
+			}
 		}
 	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
@@ -308,6 +316,9 @@ void Terreno::eliminarFigura(Figura* fig){
 
 	try{
 		(this->figuras).remove(fig);
+		if(fig->esObjetivo()){
+			this->objetivos.remove(fig);
+		}
 		if(fisicaActiva) this->mundoBox2D->eliminarFigura(fig);
 	} catch (...) {
 		ErrorLogHandler::addError("eliminarFigura","excepcion al eliminar una figura de la lista (figuras.remove)");
@@ -758,7 +769,7 @@ void Terreno::actualizarModelo(){
 
 		for(iterLista = listaABorrar.begin();iterLista != listaABorrar.end();iterLista++){
 			figuras.remove(*iterLista);
-			delete((*iterLista));
+			if(!(*iterLista)->esObjetivo())	delete((*iterLista));
 		}
 
 
@@ -782,10 +793,10 @@ bool Terreno::posEnTerrenoExtendido(double posX,double posY){
 	ppioLogicoY = Y_TERRENO_LOGICO - ALTO_TERRENO_LOGICO;
 	finalLogicoY = ALTO_TERRENO_LOGICO + Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO;
 
-//	std::cout<<posY<<std::endl; //a ver porque no se va por arriba...
+	//std::cout<<posY<<std::endl; //a ver porque no se va por arriba...
 
-	return ((posX > ppioLogicoX) || (posX < finalLogicoX) || (posY > ppioLogicoY) || (posY < finalLogicoY)) ;
-	//return true;
+	//return ((posX > ppioLogicoX) || (posX < finalLogicoX) || (posY > ppioLogicoY) || (posY < finalLogicoY)) ;
+	return true;
 }
 
 void Terreno::dibujate(Superficie* sup,int xIni,int yIni){
@@ -946,4 +957,14 @@ void Terreno::interactuar(double posClickX, double posClickY){
 		}
 	}
 
+}
+
+bool Terreno::objetivosCumplidos(){
+	if (this->objetivos.size() == 0) return false;
+
+	std::list<Figura*>::iterator iter;
+	for(iter = objetivos.begin();iter != objetivos.end();iter++){
+		if(!(*iter)->cumplioObjetivo()) return false;
+	}
+	return true;
 }

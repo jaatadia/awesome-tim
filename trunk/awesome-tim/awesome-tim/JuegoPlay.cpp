@@ -30,6 +30,8 @@ JuegoPlay::JuegoPlay(Superficie* fondo, Terreno* ter,MaquinaEstados* maq)
 	this->gano = false; //si quieren ver la animacion hay que ponerlo en true
 	this->contadorGano = -1;
 	imgGano = NULL;
+
+	terreno->setMiPorcion(ter->x1,ter->y1,ter->x2,ter->y2);
 }
 
 JuegoPlay::~JuegoPlay(void)
@@ -79,6 +81,9 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 }
 
 void JuegoPlay::onLoop(){
+	
+	gano = terreno->objetivosCumplidos();
+
 	if(!gano){
 		terreno->actualizarModelo();
 	}else{
