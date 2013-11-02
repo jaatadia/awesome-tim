@@ -129,11 +129,20 @@ public:
 		return false;
 	}
 
+	//las cosas marcadas son scheduleadas para ser borradas
 	virtual void marcar(bool flag){
 		marcada = flag;
 	}
 
 	virtual bool estaMarcada(){
 		return marcada;
+	}
+
+	virtual bool esObjetivo(){
+		return false;
+	}
+
+	virtual bool cumplioObjetivo(){
+		return true;
 	}
 };

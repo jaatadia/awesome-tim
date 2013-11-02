@@ -97,4 +97,12 @@ public:
 	void interactuar(){
 		this->pinchar();
 	}
+
+	virtual bool esObjetivo(){
+		return true;
+	}
+
+	virtual bool cumplioObjetivo(){
+		return this->estaMarcada();
+	}
 };

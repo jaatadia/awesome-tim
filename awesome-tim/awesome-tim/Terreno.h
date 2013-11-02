@@ -18,15 +18,17 @@ y tiene las funciones necesarias para que le roten algun objeto le eliminen y di
 
 class Terreno: public Imprimible,public Cambiable
 {
-private:
-	int ancho,alto;
+public:
 	double x1,y1,x2,y2;//puntos que definen el rectangulo donde se dibujar
+private:
 	int ex1,ey1,ex2,ey2;//puntos que definen como se dibuja dicho rectangulo
+	int ancho,alto;
 	Imagen* img;
 	std::string fondoID;
 	Imagen* fondo;
 	Superficie* sup;
 	std::list<Figura*> figuras;
+	std::list<Figura*> objetivos;//copias de los punteros a las figuras que son objetivos
 
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
 	Posicion posAntFigActiva; 
@@ -84,6 +86,8 @@ public:
 	bool posicionOcupada(Figura* figAPosicionar);
 
 	void interactuar(double posClickX, double posClickY);
+
+	bool objetivosCumplidos();
 
 private:
 	bool hayFiguras();
