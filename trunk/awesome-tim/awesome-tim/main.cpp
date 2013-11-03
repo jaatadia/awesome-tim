@@ -201,7 +201,7 @@ void jugar(char* rutaIn, char* rutaOut){
 
 				tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
 				tiempo += tiempoTardado;
-				tiempoExtra += (FRAME_FRECUENCY -tiempoTardado);
+				tiempoExtra += (FRAME_FRECUENCY /*-tiempoTardado*/);
 
 			}
 			//std::cout<<"Ciclios salteados: "<< cant << "\n";

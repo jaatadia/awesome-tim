@@ -155,6 +155,7 @@ void JuegoPlay::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana
 }
 
 void JuegoPlay::quit(){
+	Sonidos::stopMusic();
 	maq->editor();
 }
 
@@ -164,6 +165,7 @@ void JuegoPlay::actualizarVictoria(){
 	int ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
 	int alto = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
 	if (contadorGano==INICIO_GANO1){
+		Sonidos::playMusic(VICTORY_MUS);
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_1);
 		imgGano = imgGano->scaleImagen(ancho,alto);

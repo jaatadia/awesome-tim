@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="false"
-				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib Box2D.lib"
+				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib Box2D.lib  SDL2_mixer.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib Box2D.lib"
+				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib Box2D.lib SDL2_mixer.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -309,6 +309,10 @@
 			</File>
 			<File
 				RelativePath=".\SogaB2ContactListener.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Sonidos.cpp"
 				>
 			</File>
 			<File
@@ -615,6 +619,10 @@
 			</File>
 			<File
 				RelativePath=".\SogaB2ContactListener.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sonidos.h"
 				>
 			</File>
 			<File
