@@ -255,7 +255,9 @@
 #define ID_TIJERA_CERRADA "../images/tijeraCerrada.png"
 
 #define ID_HUEVO "../images/huevo.jpg"
-#define ID_HUEVO_ROMPIENDO "../images/huevoPartido.jpg"
+#define ID_HUEVO_ROMPIENDO1 "../images/huevoSeParte.png"
+#define ID_HUEVO_ROMPIENDO2 "../images/huevoPartido.jpg"
+#define ID_HUEVO_ROMPIENDO3 "../images/huevoPartidoClarito.jpg"
 
 #define ID_DOMINO "../images/domino.png"
 #define ID_FICHA_DOMINO "../images/fichaDomino.jpg"

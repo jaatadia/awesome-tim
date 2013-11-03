@@ -6,6 +6,7 @@
 #include "FiguraCompuesta.h"
 #include "Soga.h"
 #include "Tijera.h"
+#include "Huevo.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
@@ -735,6 +736,11 @@ void Terreno::actualizarModelo(){
 				sogas.push_back((Soga*)(*iteradorLista));
 			}else if((*iteradorLista)->getTipoFigura()==LINEA){
 				((Linea*)(*iteradorLista))->actualizar();
+			}else if((*iteradorLista)->getTipoFigura()==HUEVO){
+				((Huevo*)(*iteradorLista))->actualizar();
+				if(((Huevo*)(*iteradorLista))->estaRompiendo()){
+					mundoBox2D->eliminarFigura((*iteradorLista));
+				}
 			}else if((*iteradorLista)->getTipoFigura()==GLOBOHELIO){
 				((GloboHelio*)(*iteradorLista))->actualizar();
 				if(((GloboHelio*)(*iteradorLista))->estaPinchando()){

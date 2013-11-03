@@ -129,6 +129,10 @@ public:
 		return false;
 	}
 
+	virtual bool rompeHuevo(Dimension* dim){
+		return true;
+	}
+
 	//las cosas marcadas son scheduleadas para ser borradas
 	virtual void marcar(bool flag){
 		marcada = flag;
