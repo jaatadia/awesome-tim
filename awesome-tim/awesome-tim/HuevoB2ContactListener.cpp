@@ -11,7 +11,7 @@ void HuevoB2ContactListener::BeginContact(b2Contact* contact){
 	Figura* fig2 = (Figura*)contact->GetFixtureB()->GetBody()->GetUserData();
 	
 	if((fig1 == NULL)||(fig2 == NULL)) return;
-	
+
 	Huevo* huevo = NULL;
 	Figura* fig = NULL;
 	b2Body* body = NULL;
@@ -27,9 +27,13 @@ void HuevoB2ContactListener::BeginContact(b2Contact* contact){
 		return;
 	}
 
-	if(fig->rompeHuevo(huevo->getDimension())){
-		huevo->romper();
+	int tipoFig = fig->getTipoFigura(); 
+
+	if(!fig->rompeHuevo(huevo->getDimension())){
+		return;
 	}
+
+	huevo->romper();
 }
 
 void HuevoB2ContactListener::EndContact(b2Contact* contact){
