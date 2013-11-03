@@ -4,9 +4,9 @@
 #include <string>
 #include "Constantes.h"
 
-#define POP_BALLOON "../images/pop.wav"
-#define MUSIC "../images/music.wav"
-#define VICTORY_MUS "../images/victory.ogg"
+#define POP_BALLOON "../music/pop.wav"
+#define MUSIC "../music/modoEstatico.wav"
+#define VICTORY_MUS "../music/victory.ogg"
 
 class Sonidos{
 private:
