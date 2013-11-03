@@ -42,12 +42,24 @@ public:
 			contador++;
 
 			if(contador == 1){
-				this->ID = ID_HUEVO_ROMPIENDO; 
+				this->ID = ID_HUEVO_ROMPIENDO1; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);
 			}
 
-			if(contador == FPS/4){
+			if(contador == (FPS)){
+				this->ID = ID_HUEVO_ROMPIENDO2; 
+				delete (this->myVista);
+				this->myVista = new VistaFigura(this);			
+			}
+
+			if(contador == (4*FPS)){
+				this->ID = ID_HUEVO_ROMPIENDO3; 
+				delete (this->myVista);
+				this->myVista = new VistaFigura(this);			
+			}
+
+			if(contador == (8*FPS)){
 				this->marcar(true);
 			}
 		}
