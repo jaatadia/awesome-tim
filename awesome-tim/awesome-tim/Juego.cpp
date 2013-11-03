@@ -28,6 +28,8 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	clickPressed = false;
 	contEventosMov = 0;
 
+	Sonidos::playMusic(MUSIC);
+
 }
 
 bool Juego::cargar(){
@@ -335,6 +337,7 @@ void Juego::quit(){
 }
 
 void Juego::play(){
+	Sonidos::stopMusic();
 	maq->play(this->terreno);
 }
 
@@ -394,6 +397,7 @@ void Juego::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL
 }
 
 void Juego::resume(){
+	Sonidos::playMusic(MUSIC);
 	this->setCambio(true);
 	resizear();
 }

@@ -2,6 +2,7 @@
 #include "Circulo.h"
 #include "Constantes.h"
 #include "Figura.h"
+#include "Sonidos.h"
 
 class GloboHelio : public Figura
 {
@@ -72,6 +73,7 @@ public:
 //	bool choqueConFigura(Figura* fig);
 	void pinchar(){
 		pinchando = true;
+		Sonidos::playSound(POP_BALLOON);
 	}
 
 	bool estaPinchando(){

@@ -8,6 +8,7 @@ class Contenedor
 {
 private:
 	static Contenedor* cont;
+
 public:
 	static void putMultimedia(const char* ID,void* medio);
 	static void* getMultimedia(const char* ID);
