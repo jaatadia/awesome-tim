@@ -1,22 +1,23 @@
 #ifndef __CLIENTHANDLER_H__
 #define __CLIENTHANDLER_H__
 
-#include "Socket.h"
-#include "ActiveObject.h"
+#include "ConnectionHandler.h"
+#include "Message.h"
+#include "Constantes.h"
+#include <iostream>
+#include <fstream>
 
-class ClientHandler : public ActiveObject
+using namespace std;
+
+class ClientHandler : public ConnectionHandler
 {
 public:
 	ClientHandler(void);
-	ClientHandler(Socket * s);
+	ClientHandler(Socket * s, int mode);
 	virtual ~ClientHandler(void);
 
-private:
-	Socket * _socket;
 protected:
-	virtual void initThread();
-	virtual void run();
-	virtual void flushThread();
+	virtual void update();
 };
 
 #endif // __CLIENTHANDLER_H__

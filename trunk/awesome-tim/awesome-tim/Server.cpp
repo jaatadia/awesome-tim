@@ -17,7 +17,8 @@ void Server::run()
 		while(!this->finalizando)
 		{
 			Socket * socketCliente = this->socket->acceptConnection();
-			this->clientLst.push_back(new ClientHandler(socketCliente));
+			this->clientRdrLst.push_back(new ClientHandler(socketCliente, READ_MODE));
+			this->clientWrtLst.push_back(new ClientHandler(socketCliente, WRITE_MODE));
 		}
 	} catch (SocketException &ex)
 	{
@@ -32,5 +33,10 @@ void Server::flushThread()
 
 Server::~Server(void)
 {
+	this->_thread.waitForDeath();
+}
 
+void Server::init()
+{
+	this->_thread.resume();
 }
