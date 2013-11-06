@@ -107,4 +107,9 @@ public:
 	virtual bool cumplioObjetivo(){
 		return this->estaMarcada();
 	}
+
+	virtual bool rompeHuevo(Dimension* dim){
+		return false;
+	}
+
 };

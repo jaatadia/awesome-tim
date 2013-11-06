@@ -31,4 +31,9 @@ public:
 	virtual Figura* clonar(){
 		return new Clavo(ID.c_str(),dimension->clonar(),true);
 	}
+
+	virtual bool rompeHuevo(Dimension* dim){
+		return false;
+	}
+
 };

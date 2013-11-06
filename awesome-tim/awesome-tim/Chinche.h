@@ -49,4 +49,9 @@ public:
 	virtual void shift(){
 		this->setAngulo(dimension->getAngulo()+90);
 	}
+
+	virtual bool rompeHuevo(Dimension* dim){
+		return false;
+	}
+
 };
