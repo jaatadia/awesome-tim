@@ -1,10 +1,10 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 
-#include "ActiveObject.h"
 #include "ClientSocket.h"
+#include "ServerHandler.h"
 
-class Client : public ActiveObject
+class Client
 {
 public:
 	Client(void);
@@ -12,10 +12,8 @@ public:
 
 private:
 	ClientSocket * socket;
-protected:	
-	virtual void initThread();
-	virtual void run();
-	virtual void flushThread();
+	ServerHandler * rdrServer;
+	ServerHandler * wrtServer;
 };
 
 #endif // __CLIENT_H__

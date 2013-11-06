@@ -15,9 +15,12 @@ class Server : public ActiveObject
 public:
 	Server();
 	~Server(void);
+	void init();
+	void stop();
 
 private:
-	std::list<ClientHandler * > clientLst;
+	std::list<ClientHandler * > clientRdrLst;
+	std::list<ClientHandler * > clientWrtLst;
 	ServerSocket * socket;
 	void initThread();
 	void run();

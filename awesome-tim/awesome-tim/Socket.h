@@ -17,10 +17,13 @@ class Socket {
 public:
 	Socket();
 	Socket(SOCKET s);
+	void write(std::string message);
+	std::string read();
 	~Socket();
 
 private:
 	void start();
+	char buffer[TAM_BUFFER];
 
 protected:
 	SOCKET _socket;
