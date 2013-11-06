@@ -310,6 +310,10 @@
 
 #define VELOCIDAD_MIN_RUPTURA 10
 
+// Acciones posibles en play:
+
+#define CLICK_MOUSE 0
+#define PRESS_M 1
 
 // NET
 #define PUERTO "1111"

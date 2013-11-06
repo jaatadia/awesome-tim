@@ -85,7 +85,7 @@ public:
 
 	bool posicionOcupada(Figura* figAPosicionar);
 
-	void interactuar(double posClickX, double posClickY);
+	void interactuar(double posClickX, double posClickY, int accion);
 
 	bool objetivosCumplidos();
 

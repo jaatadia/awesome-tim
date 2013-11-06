@@ -96,8 +96,9 @@ public:
 		}
 	}
 
-	void interactuar(){
-		this->pinchar();
+	void interactuar(int accion){
+		if (accion == CLICK_MOUSE)
+			this->pinchar();
 	}
 
 	virtual bool esObjetivo(){
