@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -193,6 +193,10 @@
 			</File>
 			<File
 				RelativePath=".\Box2DWorld.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Carrito.cpp"
 				>
 			</File>
 			<File
@@ -539,6 +543,10 @@
 			</File>
 			<File
 				RelativePath=".\Box2DWorld.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Carrito.h"
 				>
 			</File>
 			<File
