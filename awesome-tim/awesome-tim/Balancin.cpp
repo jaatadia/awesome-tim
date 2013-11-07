@@ -206,11 +206,13 @@ void Balancin::desatarSoga(int numero){
 	}
 }
 
+//#define ANGULO_BALANCIN_IZQ 45
+//#define ANGULO_BALANCIN_DER 315
 void Balancin::shift(){
 
-	if (dimension->getAngulo()==45)
+	if (dimension->getAngulo()==ANGULO_BALANCIN_IZQ)
 		this->setAngulo(-45);
 	else
-		this->setAngulo(45);
+		this->setAngulo(ANGULO_BALANCIN_IZQ);
 
 }

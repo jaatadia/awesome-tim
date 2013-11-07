@@ -300,6 +300,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PaletaFlipper.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PedacitoSoga.cpp"
 				>
 			</File>
@@ -675,6 +679,10 @@
 			</File>
 			<File
 				RelativePath=".\Mutex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PaletaFlipper.h"
 				>
 			</File>
 			<File
