@@ -4,7 +4,7 @@
 
 #define TABLA 0
 
-Carrito::Carrito(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO+RADIO_RUEDA_CARRITO,posX,posY,0)){
+Carrito::Carrito(double posX, double posY, double angulo):FiguraCompuesta(ID_CARRITO,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO+RADIO_RUEDA_CARRITO,posX,posY,0)){
 
 	this->partesFigura = std::list<Figura*>();
 	double posXRuedaIzq,posXRuedaDer,posYRuedaIzq,posYRuedaDer,posXCarro,posYCarro;
@@ -37,9 +37,9 @@ void Carrito::calcularPosiciones(double& posXizq,double& posXder, double& posYiz
 	posX_Carro = posX;
 	posY_Carro = posY;
 
-	posXizq = ( posX_Carro - (ANCHO_CARRITO / 2) + RADIO_RUEDA_CARRITO);
-	posXder = ( posX_Carro + (ANCHO_CARRITO / 2) - RADIO_RUEDA_CARRITO);
-	posYizq = posYder = ( posY_Carro - (ALTO_CARRITO / 2) - (0.5)*RADIO_RUEDA_CARRITO);
+	posXizq = ( posX_Carro - (ANCHO_CARRITO / 2) + RADIO_RUEDA_CARRITO + 1.5);
+	posXder = ( posX_Carro + (ANCHO_CARRITO / 2) - RADIO_RUEDA_CARRITO - 1.5);
+	posYizq = posYder = ( posY_Carro + (ALTO_CARRITO / 2) - 0.5*RADIO_RUEDA_CARRITO + 1.5);
 
 }
 
@@ -47,7 +47,7 @@ Figura* Carrito::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
 
-	return new Carrito("",dim->getX(),dim->getY(),dim->getAngulo());
+	return new Carrito(dim->getX(),dim->getY(),dim->getAngulo());
 }
 
 

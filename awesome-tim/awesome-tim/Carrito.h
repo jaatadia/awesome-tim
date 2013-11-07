@@ -16,7 +16,7 @@ private:
 
 public:
 
-	Carrito(const char* id,double posX, double posY, double angulo);
+	Carrito(double posX, double posY, double angulo);
 	~Carrito(void);
 	void calcularPosiciones(double& posXizq,double& posXder, double& posYizq,double& posYder, double& posX_Carro, double& posY_Carro, double posX, double posY);
 	Figura* clonar();
