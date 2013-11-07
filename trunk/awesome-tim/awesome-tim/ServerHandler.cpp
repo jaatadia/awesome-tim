@@ -20,6 +20,7 @@ void ServerHandler::update()
 			break;
 		case READ_MODE:
 			Message * mensaje = (Message *)this->inputMsgLst.front();
+			this->inputMsgLst.pop_front();
 			switch(mensaje->getType())
 			{
 				case MSG_TYPE_GREETING:

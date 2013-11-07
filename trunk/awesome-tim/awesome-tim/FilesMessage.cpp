@@ -31,7 +31,9 @@ FilesMessage::~FilesMessage()
 
 string FilesMessage::serialize()
 {
-	string retorno = this->type + "";
+	stringstream ss;
+	ss << this->type;
+	string retorno = ss.str();
 	retorno.append("|").append(this->nombre).append("|").append(this->stream).append("$");
 	return retorno;
 }
