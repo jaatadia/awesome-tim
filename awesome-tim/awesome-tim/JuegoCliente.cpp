@@ -114,7 +114,7 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 }
 	
 void JuegoCliente:: onLoop(){
-	terreno->actualizarModelo();
+	terreno->actualizarModelo(vector);
 }
 
 //manejo de eventos
