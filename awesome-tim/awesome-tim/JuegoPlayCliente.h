@@ -1,19 +1,22 @@
 #pragma once
+
+#pragma once
 #include "Superficie.h"
 #include "Ventana.h"
-#include "Terreno.h"
 #include "Estado.h"
 #include "MaquinaEstados.h"
-#include "ComandosPlay.h"
 
-class ComandosPlay;
+#include "ComandosPlayCliente.h"
+#include "TerrenoCliente.h"
 
-class JuegoPlay: public Estado, public Cambiable
+class ComandosPlayCliente;
+
+class JuegoPlayCliente: public Estado, public Cambiable
 {
 private:
 	MaquinaEstados* maq;
-	ComandosPlay* comandos;
-	Terreno* terreno;
+	ComandosPlayCliente* comandos;
+	TerrenoCliente* terreno;
 	Superficie* fondo;
 	
 	//cosas para dibujar que gano
@@ -22,9 +25,13 @@ private:
 	Imagen* imgGano;
 
 
+	Figura* vector[LARGO];
+	int posVector;
+	int numCliente;
+
 public:
-	JuegoPlay(Superficie* fondo,void* ter,MaquinaEstados* maq);
-	~JuegoPlay(void);
+	JuegoPlayCliente(Superficie* fondo,void* ter,MaquinaEstados* maq);
+	~JuegoPlayCliente(void);
 
 	virtual bool onEvent(Ventana* ventana,Superficie** sup);
 	virtual void onLoop();

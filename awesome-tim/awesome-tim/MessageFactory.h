@@ -17,6 +17,7 @@ public:
 	static Message * deserialize(string msg);
 	static string serialize(Message * msg);
 	~MessageFactory(void);
+
 private:
 	MessageFactory(void);
 };

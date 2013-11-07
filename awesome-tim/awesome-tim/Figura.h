@@ -20,6 +20,7 @@ class Figura: public Dibujable,public Cambiable
 {
 public:
 	friend class VistaFigura;
+	unsigned int numero;
 
 protected:
 	Figura(){};	
@@ -33,10 +34,11 @@ protected:
 	bool interactua_en_play;
 
 	int largoF;
-
+	
 	bool marcada;
 
 public:
+	
 	bool traslucido;
 	bool superpuesta ;
 	VistaFigura* myVista;
@@ -71,7 +73,7 @@ public:
 	virtual void agrandar(){};
 	virtual void achicar(){};
 
-	virtual void interactuar(int accion){};
+	virtual void interactuar(int accion = -1){};
 
 	virtual Figura* clonar(bool cambiar);//copia la figura
 	virtual Figura* clonar();//copia la figura

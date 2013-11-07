@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -192,10 +192,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\BotoneraController.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Box2DWorld.cpp"
 				>
 			</File>
@@ -209,6 +205,10 @@
 			</File>
 			<File
 				RelativePath=".\ClientHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientHandlerTim.h"
 				>
 			</File>
 			<File
@@ -276,7 +276,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MaquinaEstados.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Message.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MessageFactory.cpp"
 				>
 			</File>
 			<File
@@ -439,6 +447,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\BotoneraController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\CargadorYaml.cpp"
 					>
 				</File>
@@ -468,6 +480,38 @@
 				</File>
 				<File
 					RelativePath=".\ManejadorEventos.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Cliente"
+				>
+				<File
+					RelativePath=".\BotoneraControllerCliente.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ComandosCliente.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ComandosPlayCliente.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\JuegoCliente.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\JuegoPlayCliente.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\MEstadosCliente.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TerrenoCliente.cpp"
 					>
 				</File>
 			</Filter>
@@ -607,6 +651,10 @@
 			</File>
 			<File
 				RelativePath=".\Message.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MessageFactory.h"
 				>
 			</File>
 			<File
@@ -842,6 +890,38 @@
 				</File>
 				<File
 					RelativePath=".\ManejadorEventos.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Cliente"
+				>
+				<File
+					RelativePath=".\BotoneraControllerCliente.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ComandosCliente.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ComandosPlayCliente.h"
+					>
+				</File>
+				<File
+					RelativePath=".\JuegoCliente.h"
+					>
+				</File>
+				<File
+					RelativePath=".\JuegoPlayCliente.h"
+					>
+				</File>
+				<File
+					RelativePath=".\MEstadosCliente.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TerrenoCliente.h"
 					>
 				</File>
 			</Filter>

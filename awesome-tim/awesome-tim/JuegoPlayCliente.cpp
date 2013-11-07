@@ -1,13 +1,14 @@
-#include "JuegoPlay.h"
+#include "JuegoPlayCliente.h"
+#include "Sonidos.h"
 
-JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
+JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
-	Terreno* ter = (Terreno*) tere;
+	TerrenoCliente* ter = (TerrenoCliente*) tere;
 	this->fondo = fondo;
 	this->maq = maq;
 		
-	comandos = new ComandosPlay(ANCHO_COMANDOS,ALTO_COMANDOS);
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
+	comandos = new ComandosPlayCliente(ANCHO_COMANDOS,ALTO_COMANDOS);
+	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,true);
 
 	terreno->setFondo(ter->getFondo().c_str());
 	
@@ -18,11 +19,17 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 		if((*iteradorLista)->esUnion()){
 			figurasAux.push_back((*iteradorLista));
 		}else{
-			terreno->agregarFigura((*iteradorLista)->clonar(false));
+			Figura* fig = (*iteradorLista)->clonar(false);
+			fig->numero = (*iteradorLista)->numero;
+			this->vector[fig->numero] = fig;
+			terreno->agregarFigura(fig);
 		}
 	}
 	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
-		terreno->agregarFigura((*iteradorLista)->clonar(false));
+		Figura* fig = (*iteradorLista)->clonar(false);
+		fig->numero = (*iteradorLista)->numero;
+		this->vector[fig->numero] = fig;
+		terreno->agregarFigura(fig);
 	}
 	terreno->resizear();
 	this->setCambio(true);
@@ -35,7 +42,7 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 	terreno->setMiPorcion(ter->x1,ter->y1,ter->x2,ter->y2);
 }
 
-JuegoPlay::~JuegoPlay(void)
+JuegoPlayCliente::~JuegoPlayCliente(void)
 {
 	delete terreno;
 	delete comandos;
@@ -43,7 +50,7 @@ JuegoPlay::~JuegoPlay(void)
 	delete imgGano;
 }
 
-bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
+bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 
 	SDL_Event evento;
 	double posClickX, posClickY;
@@ -65,7 +72,7 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 
-				terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO, CLICK_MOUSE);
+				terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				break;
 			}
 			case SDL_MOUSEBUTTONUP:
@@ -81,10 +88,7 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 	return aux;
 }
 
-void JuegoPlay::onLoop(){
-	
-	gano = terreno->objetivosCumplidos();
-
+void JuegoPlayCliente::onLoop(){
 	if(!gano){
 		terreno->actualizarModelo();
 	}else{
@@ -92,7 +96,7 @@ void JuegoPlay::onLoop(){
 	}
 }
 
-bool JuegoPlay::onRender(Superficie* sup){
+bool JuegoPlayCliente::onRender(Superficie* sup){
 	if(this->huboCambios()){
 		Superficie* temp = fondo->scaleSurface(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_PANTALLA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_PANTALLA_LOGICO));
 		temp->setTransparency(100);
@@ -112,7 +116,7 @@ bool JuegoPlay::onRender(Superficie* sup){
 	return true;
 }
 
-void JuegoPlay::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
+void JuegoPlayCliente::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
 
 	switch (evento.event){
 		case SDL_WINDOWEVENT_CLOSE:
@@ -155,13 +159,13 @@ void JuegoPlay::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana
 	}
 }
 
-void JuegoPlay::quit(){
+void JuegoPlayCliente::quit(){
 	Sonidos::stopMusic();
 	maq->editor();
 }
 
 
-void JuegoPlay::actualizarVictoria(){
+void JuegoPlayCliente::actualizarVictoria(){
 	contadorGano++;
 	int ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
 	int alto = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
@@ -197,6 +201,6 @@ void JuegoPlay::actualizarVictoria(){
 	}
 }
 
-void JuegoPlay::dibujarVictoria(Superficie* sup){
+void JuegoPlayCliente::dibujarVictoria(Superficie* sup){
 	sup->dibujarImagen(imgGano,NULL,0,0);
 }

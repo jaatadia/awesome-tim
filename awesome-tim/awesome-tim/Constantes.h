@@ -209,7 +209,7 @@
 #define ANCHO_DEFAULT 5
 #define ALTO_DEFAULT 5
 #define BASE_DEFAULT 7
-#define INSTANCIAS_DEFAULT 100
+#define INSTANCIAS_DEFAULT 10
 #define VERTICES_DEFAULT 5
 #define ID_DEFAULT ""
 #define LARGO_PLATAFORMA_DEFAULT 2
@@ -315,9 +315,13 @@
 #define CLICK_MOUSE 0
 #define PRESS_M 1
 
+//Javier
+#define LARGO 1024
+
 // NET
-#define PUERTO		"10000"
-#define TAM_BUFFER	512
+#define TAM_BUFFER 512
+#define PUERTO "27015"
+
 #define READ_MODE	0
 #define WRITE_MODE	READ_MODE + 1
 #define MSG_INVALID			0
