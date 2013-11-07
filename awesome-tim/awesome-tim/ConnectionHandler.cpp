@@ -45,9 +45,9 @@ void ConnectionHandler::run()
 						if (pos > 0 && pos < cadena.size())
 						{
 							this->msgRemainder = cadena.substr(pos + 1);
-							cadena = cadena.substr(0, pos);
+							cadena = cadena.substr(0, pos + 1);
 						}
-						while(pos = cadena.find("$"))
+						while((pos = cadena.find("$")) > 0)
 						{
 							Message * msg;
 							int type = std::atoi(cadena.substr(0,1).c_str());

@@ -19,7 +19,7 @@ void ClientHandler::update()
 		case WRITE_MODE:
 			if (getState() == 0)
 			{
-				string nombreArchivo = "C:\\fondo-agua.jpg";
+				string nombreArchivo = "C:\\15.jpg";
 				char buffer[TAM_BUFFER];
 				ifstream archivoPrueba(nombreArchivo.c_str(), ios::in | ios::binary);
 				if(!archivoPrueba.fail())

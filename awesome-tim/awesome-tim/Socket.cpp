@@ -42,6 +42,7 @@ std::string Socket::read()
 	if (cantidadLeida > 0)
 	{
 		salida = this->buffer;
+		salida = salida.substr(0,cantidadLeida);
 	}
 	else if (cantidadLeida == 0)
 		printf("Fin mensaje\n");
