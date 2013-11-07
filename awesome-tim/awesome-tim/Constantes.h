@@ -80,6 +80,7 @@
 #define DOMINO 24
 #define CHINCHE 25
 #define ARO 26
+#define CARRITO 27
 
 //valores fisicos
 
@@ -193,6 +194,12 @@
 #define DENSIDAD_DOMINO 5.0
 #define FRICCION_DOMINO 0.3
 
+#define ANCHO_CARRITO 10
+#define ALTO_CARRITO 6
+#define RADIO_RUEDA_CARRITO 3
+#define RESTITUCION_CARRITO 0.4
+#define DENSIDAD_CARRITO 7.0
+#define FRICCION_CARRITO 0.4
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -261,6 +268,10 @@
 
 #define ID_DOMINO "../images/domino.png"
 #define ID_FICHA_DOMINO "../images/fichaDomino.jpg"
+
+#define ID_BASE_CARRITO ""
+#define ID_RUEDA_CARRITO ""
+#define ID_CARRITO ""
 
 //posiciones de balancin
 #define IZQUIERDA 1
