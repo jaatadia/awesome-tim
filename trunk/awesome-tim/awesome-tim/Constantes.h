@@ -324,7 +324,7 @@
 // Acciones posibles en play:
 
 #define CLICK_MOUSE 0
-#define PRESS_M 1
+#define PRESS_SPACE 1
 
 //Javier
 #define LARGO 1024
