@@ -255,18 +255,12 @@ bool TerrenoCliente::agregarFigura(Figura* fig){
 					if (!puestas) (this->figuras).push_back(fig);
 				}else{
 					(this->figuras).push_back(fig);
-					if(fig->esObjetivo()){
-						this->objetivos.push_back(fig);
-					}
 				}
 			}else{ 
 				delete fig;
 			}
 		}else{
 			(this->figuras).push_back(fig);
-			if(fig->esObjetivo()){
-						this->objetivos.push_back(fig);
-			}
 		}
 	} catch (...) {
 		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
@@ -308,9 +302,6 @@ void TerrenoCliente::eliminarFigura(Figura* fig){
 
 	try{
 		(this->figuras).remove(fig);
-		if(fig->esObjetivo()){
-			this->objetivos.remove(fig);
-		}
 	} catch (...) {
 		ErrorLogHandler::addError("eliminarFigura","excepcion al eliminar una figura de la lista (figuras.remove)");
 	};
@@ -683,7 +674,7 @@ bool TerrenoCliente::anguloEsPositivo(double X1, double Y1, double X2, double Y2
 	return true;
 }
 
-void TerrenoCliente::actualizarModelo(){
+void TerrenoCliente::actualizarModelo(Figura* vector[]){
 
 	if (fisicaActiva){
 		
@@ -714,7 +705,9 @@ void TerrenoCliente::actualizarModelo(){
 
 		for(iterLista = listaABorrar.begin();iterLista != listaABorrar.end();iterLista++){
 			figuras.remove(*iterLista);
-			if(!(*iterLista)->esObjetivo())	delete((*iterLista));
+			vector[(*iterLista)->numero] = NULL;
+			MaquinaEstados::putMensaje(-1,(*iterLista)->numero,0,0);
+			delete((*iterLista));
 		}
 
 	}else{
@@ -895,11 +888,5 @@ void TerrenoCliente::interactuar(double posClickX, double posClickY){
 }
 
 bool TerrenoCliente::objetivosCumplidos(){
-	if (this->objetivos.size() == 0) return false;
-
-	std::list<Figura*>::iterator iter;
-	for(iter = objetivos.begin();iter != objetivos.end();iter++){
-		if(!(*iter)->cumplioObjetivo()) return false;
-	}
-	return true;
+	return false;
 }

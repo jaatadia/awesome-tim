@@ -27,7 +27,6 @@ private:
 	Imagen* fondo;
 	Superficie* sup;
 	std::list<Figura*> figuras;
-	std::list<Figura*> objetivos;//copias de los punteros a las figuras que son objetivos
 
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
 	Posicion posAntFigActiva; 
@@ -70,7 +69,7 @@ public:
 
 	void resizear();
 
-	void actualizarModelo(); 
+	void actualizarModelo(Figura* vector[]); 
 
 	void dibujate(Superficie* sup,int xIni,int yIni);
 
