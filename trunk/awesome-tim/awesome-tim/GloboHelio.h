@@ -72,8 +72,10 @@ public:
 
 //	bool choqueConFigura(Figura* fig);
 	void pinchar(){
-		pinchando = true;
-		Sonidos::playSound(POP_BALLOON);
+		if(!pinchando){
+			pinchando = true;
+			Sonidos::playSound(POP_BALLOON);
+		}
 	}
 
 	bool estaPinchando(){

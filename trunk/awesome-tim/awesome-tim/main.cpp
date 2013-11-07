@@ -1,4 +1,5 @@
 #include "MEstados.h"
+#include "MEstadosCliente.h"
 #include "ErrorLogHandler.h"
 
 #include <stdio.h>
@@ -8,7 +9,6 @@
 
 #include "Contenedor.h"
 #include "GeneradorYaml.h"
-#include "ClientTIM.h"
 #include "Server.h"
 
 #define RUTA_DEFAULT_IN "../yaml/archivoDefault.yml"
@@ -148,6 +148,7 @@ ClientTIM cliente;
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
 	MEstados juego = MEstados(rutaIn,rutaOut);
+	//MEstadosCliente juego = MEstadosCliente(1);
 
 	double tiempoTardado = 0;
 	double tiempoExtra = 0;

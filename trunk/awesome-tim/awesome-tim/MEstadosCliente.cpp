@@ -1,10 +1,13 @@
-#include "MEstados.h"
+#include "MEstadosCliente.h"
 #include "ErrorLogHandler.h"
 #include "Constantes.h"
-#include "Juego.h"
-#include "JuegoPlay.h"
+#include "JuegoPlayCliente.h"
+#include "JuegoCliente.h"
 
-MEstados::MEstados(const char *fileIn,const char *fileOut){
+
+MEstadosCliente::MEstadosCliente(int cliente){
+
+	MaquinaEstados::nroCliente = cliente;
 	
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
 		ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
@@ -25,11 +28,11 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 	this->fileOut = fileOut;
 	running = true;
 
-	Eactivo = Eeditor = new Juego(fileIn,fileOut,this);
+	Eactivo = Eeditor = new JuegoCliente(cliente,this);
 	Eanterior = Eplay = NULL;
 }
 
-MEstados::~MEstados(void){
+MEstadosCliente::~MEstadosCliente(void){
 	
 	delete ventana;
 	delete superficie;
@@ -42,15 +45,15 @@ MEstados::~MEstados(void){
 	ErrorLogHandler::closeLog();
 }
 
-bool MEstados::isRunning(){
+bool MEstadosCliente::isRunning(){
 	return running;
 }
 
-bool MEstados::onEvent(){
+bool MEstadosCliente::onEvent(){
 	return getEstadoActivo()->onEvent(ventana,&superficie);
 }
 
-void MEstados::onLoop(){
+void MEstadosCliente::onLoop(){
 	if(Eanterior){
 		delete Eanterior;
 		Eanterior = NULL;
@@ -58,31 +61,31 @@ void MEstados::onLoop(){
 	getEstadoActivo()->onLoop();
 }
 
-void MEstados::onRender(){
+void MEstadosCliente::onRender(){
 	bool dibujar = getEstadoActivo()->onRender(superficie);
 	if (dibujar) ventana->dibujar(superficie);
 }
 	
-void MEstados::esperar(double miliseconds){
+void MEstadosCliente::esperar(double miliseconds){
 	SDL_Delay(miliseconds);
 }
 
-void MEstados::salir(){
+void MEstadosCliente::salir(){
 	running = false;
 }
 
-void MEstados::editor(){
+void MEstadosCliente::editor(){
 	Eanterior = Eplay;
 	Eplay = NULL;
 	Eactivo = Eeditor;
 	Eactivo->resume();
 }
 
-void MEstados::play(void* ter){
+void MEstadosCliente::play(void* ter){
 	
 	Superficie* aux = superficie->scaleSurface(superficie->getAncho(),superficie->getAlto());
 	superficie->restore();
 	
-	Eplay = new JuegoPlay(aux,ter,this);
+	Eplay = new JuegoPlayCliente(aux,(void*) ter,this);
 	Eactivo = Eplay;
 }

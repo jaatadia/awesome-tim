@@ -1,15 +1,17 @@
+
 #pragma once
 #include "Fallable.h"
 #include "Estado.h"
 #include "Ventana.h"
 #include "MaquinaEstados.h"
 
+
 #define M_ESTADOS "Maquina de Estados"
 
-class MEstados: public MaquinaEstados,public Fallable
+class MEstadosCliente: public MaquinaEstados,public Fallable
 {
-private:
 
+private:
 	Estado* Eactivo;
 	Estado* Eanterior;
 
@@ -24,8 +26,8 @@ private:
 	Superficie* superficie;
 
 public:
-	MEstados(const char *fileIn,const char *fileOut);
-	~MEstados(void);
+	MEstadosCliente(int cliente);
+	~MEstadosCliente(void);
 
 	bool isRunning();
 	bool onEvent();
