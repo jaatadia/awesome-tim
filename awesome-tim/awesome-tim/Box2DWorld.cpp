@@ -229,6 +229,20 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				break;
 			}
+		case CARRITO:{
+				b2PolygonShape forma;
+				double ancho = (dim)->getAncho()/2;
+				double alto = (dim)->getAlto()/2;
+				forma.SetAsBox(ancho,alto);
+
+				fD.shape = &forma;
+				fD.density = DENSIDAD_DOMINO;
+				fD.friction = FRICCION_DOMINO;
+				fD.restitution = RESTITUCION_DOMINO;
+				cuerpo->CreateFixture(&fD);
+
+				break;
+			}
 		case GLOBOHELIO:{
 				cuerpo->SetGravityScale(-1);
 				
@@ -620,45 +634,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				}
 				break;
 			}
-		/*case MOTOR:{
-			b2BodyDef bDBase;
-			bDBase.position.Set(dim->getX(), dim->getY());
-			bDBase.type = b2_staticBody;
-
-			b2Body * base = this->mundo->CreateBody(&bDBase);
-											
-			b2FixtureDef fDBase;
-			b2PolygonShape polygonShape;
-			polygonShape.SetAsBox(1,0.25);
-			fDBase.shape = &polygonShape;
-			fDBase.isSensor = true;
-
-			base->CreateFixture(&fDBase);
-			
-			b2CircleShape circleShape;
-			circleShape.m_radius = 2;
-			fD.shape = &circleShape;
-			cuerpo->CreateFixture(&fD);
-			
-			b2RevoluteJointDef rJD;
-			rJD.bodyA = base;
-			rJD.bodyB = cuerpo;
-			rJD.localAnchorA.Set(dim->getX(), dim->getY());
-			rJD.localAnchorB.Set(0,0);
-			rJD.enableMotor = true;
-			rJD.motorSpeed = 2;
-			rJD.maxMotorTorque = 1;
-			this->mundo->CreateJoint(&rJD);
-			 
-			// Conexion entre motor y correa
-			// Esta comentado porque se crean por separado y habria que ver donde se deberia ubicar este bloque de codigo
-			//rJD.bodyA = eslabon;
-			//rJD.bodyB = cuerpo;
-			//rJD.localAnchorA.Set(0.75,0);
-			//rJD.localAnchorB.Set(1.75,0);
-			//this->mundo->CreateJoint(&rJD);
-			break;
-		}*/
 		case PELOTATENIS:
 			{
 				b2CircleShape forma;
@@ -713,27 +688,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 	return true;
 }
 
-void Box2DWorld::actualizar(Figura * figura)
-{
-/*
-	b2Body * cuerpo = this->mundo->GetBodyList();
-
-	while(cuerpo)
-	{
-		if (((Figura *)cuerpo->GetUserData()) == figura)
-		{
-			Dimension * dim = figura->getDimension();
-			if(cuerpo->GetAngle() < 0)
-				figura->setAngulo(-(cuerpo->GetAngle())*180/PI);
-			else
-				figura->setAngulo((cuerpo->GetAngle())*180/PI);
-			dim->setX(cuerpo->GetPosition().x);
-			dim->setY(cuerpo->GetPosition().y);
-			break;
-		}
-		cuerpo = cuerpo->GetNext();
-	}
-*/
+void Box2DWorld::actualizar(Figura * figura){
 
 	//Hago que actualize tooodas las que tenga  << Juan	
 	b2Body* cuerpo = this->mundo->GetBodyList();
