@@ -8,12 +8,15 @@ FilesMessage::FilesMessage(string msg)
 	{
 		this->nombre = msg.substr(0, pos);
 		msg = msg.substr(pos + 1);
-		pos = msg.find("|");
+		pos = msg.find("$");
 		if (pos != std::string::npos)
 		{
 			this->stream = msg.substr(0, pos);
 		}
-		else this->stream = msg;
+		else
+		{
+			this->valid = MSG_INVALID;
+		}
 	}
 	else
 	{
@@ -29,7 +32,7 @@ FilesMessage::~FilesMessage()
 string FilesMessage::serialize()
 {
 	string retorno = this->type + "";
-	retorno.append(this->nombre).append(this->stream);
+	retorno.append("|").append(this->nombre).append("|").append(this->stream).append("$");
 	return retorno;
 }
 
