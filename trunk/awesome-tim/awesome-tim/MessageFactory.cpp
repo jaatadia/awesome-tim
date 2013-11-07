@@ -1,12 +1,13 @@
 #include "MessageFactory.h"
 
 #include <stdlib.h>
+#include <string>
 
 Message * MessageFactory::deserialize(string msg)
 {
 	if (msg.size())
 	{
-		int type = msg.c_str()[0];//std::stoi(msg.substr(0,1));no existe esta funcion en nuestro entonrno!!!!
+		int type = std::atoi(msg.substr(0,1).c_str());
 		if (type)
 		{
 			switch(type)
