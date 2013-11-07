@@ -24,6 +24,7 @@ public:
 
 private:
 	Socket * _socket;
+	string msgRemainder;
 
 protected:
 	std::list<Message * > outputMsgLst;

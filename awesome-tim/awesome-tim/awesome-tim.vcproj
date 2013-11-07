@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BotoneraController.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Box2DWorld.cpp"
 				>
 			</File>
@@ -208,23 +212,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ClientHandlerTim.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ClientHandlerTim.h"
-				>
-			</File>
-			<File
 				RelativePath=".\ClientSocket.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ClientTIM.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ClientTIM.h"
 				>
 			</File>
 			<File
@@ -232,7 +220,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ConnectionHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EventMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FiguraCompuesta.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FilesMessage.cpp"
 				>
 			</File>
 			<File
@@ -248,6 +248,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GoodbyeMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GreetingMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\HuevoB2ContactListener.cpp"
 				>
 			</File>
@@ -260,11 +268,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Lock.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\Message.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MEstados.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mutex.cpp"
 				>
 			</File>
 			<File
@@ -289,6 +309,10 @@
 			</File>
 			<File
 				RelativePath=".\Server.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ServerHandler.cpp"
 				>
 			</File>
 			<File
@@ -415,10 +439,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\BotoneraController.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\CargadorYaml.cpp"
 					>
 				</File>
@@ -506,6 +526,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ConnectionHandler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Constantes.h"
 				>
 			</File>
@@ -526,7 +550,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\EventMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FiguraCompuesta.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FilesMessage.h"
 				>
 			</File>
 			<File
@@ -539,6 +571,14 @@
 			</File>
 			<File
 				RelativePath=".\GloboHelio.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GoodbyeMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GreetingMessage.h"
 				>
 			</File>
 			<File
@@ -558,7 +598,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Lock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MaquinaEstados.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Message.h"
 				>
 			</File>
 			<File
@@ -567,6 +615,10 @@
 			</File>
 			<File
 				RelativePath=".\Motor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mutex.h"
 				>
 			</File>
 			<File
@@ -599,6 +651,10 @@
 			</File>
 			<File
 				RelativePath=".\Server.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ServerHandler.h"
 				>
 			</File>
 			<File

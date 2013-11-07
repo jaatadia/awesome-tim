@@ -316,7 +316,7 @@
 #define PRESS_M 1
 
 // NET
-#define PUERTO		"1111"
+#define PUERTO		"10000"
 #define TAM_BUFFER	512
 #define READ_MODE	0
 #define WRITE_MODE	READ_MODE + 1

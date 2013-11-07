@@ -19,21 +19,20 @@ void ClientHandler::update()
 		case WRITE_MODE:
 			if (getState() == 0)
 			{
-				string nombreArchivo = "C:\\LOGO4.bmp";
+				string nombreArchivo = "C:\\fondo-agua.jpg";
 				char buffer[TAM_BUFFER];
 				ifstream archivoPrueba(nombreArchivo.c_str(), ios::in | ios::binary);
 				if(!archivoPrueba.fail())
 				{
 					while (!archivoPrueba.eof() && archivoPrueba.good())
 					{
-						archivoPrueba.read(buffer, TAM_BUFFER - 2 - nombreArchivo.size());
+						archivoPrueba.read(buffer, TAM_BUFFER - 5 - nombreArchivo.size());
 						int numBytes = archivoPrueba.gcount();
-						string msg = MSG_TYPE_FILES + "|";
-						msg.append(nombreArchivo).append("|").append(buffer);
-						if (numBytes < TAM_BUFFER - 2 - nombreArchivo.size())
-						{
-							msg.append("|");
-						}
+						string aux = buffer;
+						aux = aux.substr(0,numBytes);
+						string msg = "";
+						msg.append(nombreArchivo).append("|").append(aux).append("$");
+
 						Message * fM = new FilesMessage(msg);
 						if (fM->validate())
 						{

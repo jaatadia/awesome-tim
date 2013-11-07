@@ -6,7 +6,7 @@
 //TAM_BUFFER = 512
 //0-1		ID Mensaje
 //2-|		Nombre Archivo
-//|-|		Stream
+//|-$		Stream
 
 class FilesMessage : public Message
 {

@@ -38,17 +38,14 @@ std::string Socket::read()
 {
 	int cantidadLeida = 0;
 	std::string salida = "";
-	do {
-		cantidadLeida = recv(this->_socket, this->buffer, TAM_BUFFER, 0);
-		if (cantidadLeida > 0)
-		{
-			salida.append(this->buffer);
-			printf(this->buffer);
-		}
-		else if (cantidadLeida == 0)
-			printf("Fin mensaje\n");
-		else
-			throw SocketException("Error al recibir datos desde el socket: " + WSAGetLastError());
-	} while (cantidadLeida > 0);
+	cantidadLeida = recv(this->_socket, this->buffer, TAM_BUFFER, 0);
+	if (cantidadLeida > 0)
+	{
+		salida = this->buffer;
+	}
+	else if (cantidadLeida == 0)
+		printf("Fin mensaje\n");
+	else
+		throw SocketException("Error al recibir datos desde el socket: " + WSAGetLastError());
 	return salida;
 }
