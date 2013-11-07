@@ -552,7 +552,7 @@ Figura* CargadorYaml::crearDomino(const YAML::Node& nodoFigura){
 	
 	obtenerPosicion(nodoFigura,&posX,&posY);
 
-	return NULL;//new Domino(posX,posY);
+	return new Domino(posX,posY);
 }
 
 Figura* CargadorYaml::crearYunque(const YAML::Node& nodoFigura){
@@ -582,6 +582,16 @@ Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
 	obtenerLargo(nodoFigura, &largo);
 
 	return new Plataforma(largo,posX,posY,angulo);
+}
+
+Figura* CargadorYaml::crearCarrito(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+	int largo;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+
+	return new Carrito(posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearTriangulo(const YAML::Node& nodoFigura){
@@ -861,6 +871,13 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		Figura* figura = crearDomino(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Domino."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"CARRITO") == 0){
+		Figura* figura = crearCarrito(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Carrito."); 	
 		return figura;
 	}
 
@@ -1235,8 +1252,9 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool huevo = (strcmp(tipo_figura,"HUEVO") == 0);
 	bool tijera = (strcmp(tipo_figura,"TIJERA") == 0);
 	bool domino = (strcmp(tipo_figura,"DOMINO") == 0);
+	bool carrito = (strcmp(tipo_figura,"CARRITO") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito);
 
 	return (figuraSimple || figuraCompleja);
 }
@@ -1281,7 +1299,7 @@ bool CargadorYaml::ancho_valido(double ancho){
 bool CargadorYaml::opcion_valida(const char* opcion){
 	bool si = (strcmp(opcion,"SI") == 0);
 	bool no = (strcmp(opcion,"NO") == 0);
-	return (si | no);
+	return (si || no);
 }
 
 bool CargadorYaml::base_triangulo_valida(double base){
