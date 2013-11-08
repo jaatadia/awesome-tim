@@ -6,7 +6,6 @@
 #include "Balancin.h"
 #include "PedacitoSoga.h"
 #include "Polea.h"
-#include "Tijera.h"
 #include <iostream>
 
 Box2DWorld::Box2DWorld(void)
@@ -642,44 +641,9 @@ void Box2DWorld::actualizar(Figura * figura){
 			
 
 			if(fig->getTipoFigura()==TIJERA){
-				b2JointEdge* joint = cuerpo->GetJointList();
-				bool cerrar = false;
-				int mult = 1;
-				double fuerzaLimite = 0.5;
-				while(joint){
-					b2Joint* una_joint = joint->joint;
-
-					int anchorY = una_joint->GetBodyB()->GetLocalPoint(una_joint->GetAnchorB()).y;
-					int fuerzaY = una_joint->GetReactionForce(tiempoStep).y;
-
-					if(una_joint->GetType() == e_ropeJoint){
-						if(anchorY>0){//si esta atado abajo
-							if(fuerzaY < -fuerzaLimite){
-								cerrar = true;
-							}
-						}else{ //si esta atadoArriba
-							if(fuerzaY > fuerzaLimite){
-								cerrar = true;
-							}
-						}
-					}else{
-						//si es una pulley joint
-						if(anchorY>0){//si esta atado abajo
-							if(fuerzaY > fuerzaLimite){
-								cerrar = true;
-							}
-						}else{ //si esta atadoArriba
-							if(fuerzaY < -fuerzaLimite){
-								cerrar = true;
-							}
-						}
-					}
-					joint = joint->next;
-				}
-				
-				if (cerrar){
-					((Tijera*)fig)->cerrar();
-				}
+				actuarTijera(cuerpo,(Tijera*)fig);
+				cuerpo = cuerpo->GetNext();
+				continue;
 			}
 
 			if(fig->getTipoFigura()==CINTATRANSPORTADORA){
@@ -930,4 +894,45 @@ void Box2DWorld::eliminarSoga(Soga *figura){
 		mundo->DestroyJoint(pol->joint);
 
 	}
+}
+
+void Box2DWorld::actuarTijera(b2Body* cuerpo, Tijera* fig){
+				b2JointEdge* joint = cuerpo->GetJointList();
+				bool cerrar = false;
+				int mult = 1;
+				double fuerzaLimite = 0.5;
+				while(joint){
+					b2Joint* una_joint = joint->joint;
+
+					int anchorY = una_joint->GetBodyB()->GetLocalPoint(una_joint->GetAnchorB()).y;
+					int fuerzaY = una_joint->GetReactionForce(tiempoStep).y;
+
+					if(una_joint->GetType() == e_ropeJoint){
+						if(anchorY>0){//si esta atado abajo
+							if(fuerzaY < -fuerzaLimite){
+								cerrar = true;
+							}
+						}else{ //si esta atadoArriba
+							if(fuerzaY > fuerzaLimite){
+								cerrar = true;
+							}
+						}
+					}else{
+						//si es una pulley joint
+						if(anchorY>0){//si esta atado abajo
+							if(fuerzaY > fuerzaLimite){
+								cerrar = true;
+							}
+						}else{ //si esta atadoArriba
+							if(fuerzaY < -fuerzaLimite){
+								cerrar = true;
+							}
+						}
+					}
+					joint = joint->next;
+				}
+				
+				if (cerrar){
+					((Tijera*)fig)->cerrar();
+				}
 }

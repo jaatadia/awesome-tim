@@ -11,6 +11,7 @@
 #include "Triangulo.h"
 #include "B2ContactListener.h"
 #include "Soga.h"
+#include "Tijera.h"
 
 
 class Box2DWorld
@@ -38,4 +39,5 @@ public:
 
 private:
 	void ponerEnPolea(Figura* soga, b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
+	void actuarTijera(b2Body* cuerpo, Tijera* fig);
 };
