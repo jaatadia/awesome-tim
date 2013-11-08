@@ -14,6 +14,17 @@ void Sonidos::initialize(){
 	(*mapa)[MUSIC] = (void*)Mix_LoadMUS(MUSIC);
 }
 
+void Sonidos::end(){
+	if(!initialized) return;
+
+	Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
+	Mix_FreeMusic((Mix_Music*)(*mapa)[VICTORY_MUS]);
+	Mix_FreeMusic((Mix_Music*)(*mapa)[MUSIC]);
+	delete(mapa);
+
+    Mix_CloseAudio();
+}
+
 void Sonidos::playSound(const char *file){
 	if(!initialized) initialize();
 	Mix_PlayChannel(-1,(Mix_Chunk*)(*mapa)[file],0);

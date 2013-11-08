@@ -38,6 +38,7 @@ MEstados::~MEstados(void){
 	delete Eeditor;
 	delete Eplay;
 	
+	Sonidos::end();
 	SDL_Quit();
 	ErrorLogHandler::closeLog();
 }
