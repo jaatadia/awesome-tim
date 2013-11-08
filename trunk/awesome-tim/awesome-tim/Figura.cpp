@@ -24,13 +24,6 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 
 Figura::~Figura(void){
 	
-	/*if(correa){
-		if ((correa->getFigura1()==this)&&(correa->getFigura2()!=NULL)){
-			correa->getFigura2()->setCorrea(NULL);
-		}else if ((correa->getFigura2()==this)&&(correa->getFigura1()!=NULL)){
-			correa->getFigura1()->setCorrea(NULL);
-		}
-	}*/
 	if (myVista != NULL)
 		delete myVista;
 	if (dimension != NULL)

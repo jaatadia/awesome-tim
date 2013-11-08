@@ -127,6 +127,7 @@ bool Cuadrado::intersecaCon(double XsUno, double YsUno, double XsDos, double YsD
 
 	if	 (segPropio1.intersecaCon(segExterno) || segPropio2.intersecaCon(segExterno) ||
 		segPropio3.intersecaCon(segExterno) || segPropio4.intersecaCon(segExterno)){
+		delete segExterno;
 		return true;
 	}
 
