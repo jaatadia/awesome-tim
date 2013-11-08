@@ -37,6 +37,6 @@ public:
 	std::list<Figura*> getSegmentos();
 	void putSegmento(Figura* fig);
 
-	bool meChoca(Dimension* dim);
+	bool meChoca(Figura* dim);
 
 };

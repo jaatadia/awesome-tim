@@ -756,8 +756,9 @@ void Terreno::actualizarModelo(){
 		for (iterSogas = sogas.begin();iterSogas != sogas.end();iterSogas++){
 			for (iteradorLista = listaCortanSoga.begin() ; iteradorLista != listaCortanSoga.end(); iteradorLista++){
 				if( (!(*iterSogas)->estaMarcada())&&
-					(((*iterSogas)->getFigura1()!=(*iteradorLista))&&((*iterSogas)->getFigura2()!=(*iteradorLista)))&&
-					((*iterSogas)->meChoca((*iteradorLista)->getDimension()))){
+					//(((*iterSogas)->getFigura1()!=(*iteradorLista))&&((*iterSogas)->getFigura2()!=(*iteradorLista)))&&
+					//((*iterSogas)->meChoca((*iteradorLista)))){
+					((*iterSogas)->meChoca((*iteradorLista)))){
 						this->mundoBox2D->eliminarSoga(*iterSogas);
 						(*iterSogas)->marcar(true);
 				}

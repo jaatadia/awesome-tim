@@ -444,14 +444,19 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 						b2Vec2 anchor1((x1-cx1),(y1-cy1));//los y en box2d son positivos para arriba aca (? creo(?
 						b2Vec2 anchor2((x2-cx2),(y2-cy2));
-				
-						
 						b2RopeJointDef unionSoga;
 						unionSoga.collideConnected = true;
-						unionSoga.bodyA=cuerpo1;
-						unionSoga.bodyB=cuerpo2;
-						unionSoga.localAnchorA = anchor1;
-						unionSoga.localAnchorB = anchor2;
+						if(fig1->getTipoFigura()!=TIJERA){
+							unionSoga.bodyA=cuerpo1;
+							unionSoga.bodyB=cuerpo2;
+							unionSoga.localAnchorA = anchor1;
+							unionSoga.localAnchorB = anchor2;
+						}else{
+							unionSoga.bodyA=cuerpo2;
+							unionSoga.bodyB=cuerpo1;
+							unionSoga.localAnchorA = anchor2;
+							unionSoga.localAnchorB = anchor1;
+						}
 						
 						x1 = cuerpo1->GetWorldPoint(anchor1).x;
 						x2 = cuerpo2->GetWorldPoint(anchor2).x;
@@ -466,76 +471,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						jointSoga->SetUserData(figura);
 						return true;
 						
-						//creacion de los segmentos
-						//----------------------------------------
-						fig1->posAtableSoga(num1,&x1,&y1);
-						fig2->posAtableSoga(num2,&x2,&y2);
-						double UNAX = x2 - x1;
-						double UNAY = y2 - y1;
-						b2Vec2 punto(UNAX,UNAY);
 						
-							double angulo = atan2(UNAY,UNAX);
-						double largo = 1;
-						double cantSegmentos = punto.Length()/largo -1 ;
-						
-						b2PolygonShape shape;
-						shape.SetAsBox(0.6f, 0.125f);
-
-						b2FixtureDef fd;
-						fd.shape = &shape;
-						fd.density = 10.0f;//20
-						fd.friction = 0.2f;//0.2 
-						fd.restitution = 0;
-						fd.isSensor = true;
-
-						b2RevoluteJointDef jd;
-						jd.collideConnected = false;
-
-						b2Body* prevBody = cuerpo1;
-						b2Joint* jointAnt = NULL;
-						Figura* pedacitoAnt = fig1;
-						
-						for (int i = 0; i < (cantSegmentos+0.9/*-cantSegmentos*6/100*/); ++i)
-						{
-							double mix = x1 + i*cos(angulo);
-							double miy = y1 + i*sin(angulo);
-							b2BodyDef bd;
-							bd.type = b2_dynamicBody;
-							bd.position.Set(mix, miy);
-							b2Body* body = mundo->CreateBody(&bd);
-							body->CreateFixture(&fd);
-
-							PedacitoSoga* pedacito = new PedacitoSoga(mix,miy,largo+0.1,0);
-							body->SetUserData(pedacito);
-							((Soga*)figura)->putSegmento(pedacito);
-
-							b2Vec2 anchor(mix, miy);
-							jd.Initialize(prevBody, body, anchor);
-							b2Joint* joint = mundo->CreateJoint(&jd);
-							
-							pedacito->jointSoga = jointSoga;
-							pedacito->pedacitoIzq = pedacitoAnt;
-							pedacito->jointIzq = joint;
-							
-							if(pedacitoAnt->getTipoFigura()==PEDACITOSOGA){
-								((PedacitoSoga*)pedacitoAnt)->pedacitoDer = pedacito;
-								((PedacitoSoga*)pedacitoAnt)->jointDer = joint;
-							}
-
-							prevBody = body;
-							pedacitoAnt = pedacito;
-							jointAnt = joint;
-						}
-						b2Vec2 anchor(x2, y2);
-						jd.Initialize(prevBody, cuerpo2, anchor);
-						b2Joint* joint = mundo->CreateJoint(&jd);
-						if(pedacitoAnt->getTipoFigura()==PEDACITOSOGA){
-							((PedacitoSoga*)pedacitoAnt)->pedacitoDer = pedacitoAnt;
-							((PedacitoSoga*)pedacitoAnt)->jointDer = joint;
-						}
-						
-						//----------------------------------------
-
 					}
 				}else{
 					return false;
@@ -709,77 +645,35 @@ void Box2DWorld::actualizar(Figura * figura){
 				b2JointEdge* joint = cuerpo->GetJointList();
 				bool cerrar = false;
 				int mult = 1;
-				double fuerzaLimite = 1;
+				double fuerzaLimite = 0.5;
 				while(joint){
-					
 					b2Joint* una_joint = joint->joint;
 
-					if(una_joint->GetType()!=e_pulleyJoint){
-						if(una_joint->GetBodyA()==cuerpo){//la tijera es el cuerpo a
-							if(cuerpo->GetLocalPoint(una_joint->GetAnchorA()).y<0){ //es la union de abajo
-								//el cuerpo b tiene que sentir una fuerza hacia abajo para que la tijera sienta una fuerza para arriba
-								if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
-									cerrar = true;
-								}
-							}else{ //entonces es la union de arriba
-								if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
-									cerrar = true;
-								}
+					int anchorY = una_joint->GetBodyB()->GetLocalPoint(una_joint->GetAnchorB()).y;
+					int fuerzaY = una_joint->GetReactionForce(tiempoStep).y;
+
+					if(una_joint->GetType() == e_ropeJoint){
+						if(anchorY>0){//si esta atado abajo
+							if(fuerzaY < -fuerzaLimite){
+								cerrar = true;
 							}
-						}else{//la tijera es el cuerpo B
-							if(cuerpo->GetLocalPoint(una_joint->GetAnchorB()).y<0){ //es la union de abajo
-								if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
-									cerrar = true;
-								}
-							}else{ //entonces es la union de arriba
-								if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
-									cerrar = true;
-								}
+						}else{ //si esta atadoArriba
+							if(fuerzaY > fuerzaLimite){
+								cerrar = true;
 							}
 						}
 					}else{
-						b2PulleyJoint* pulley = (b2PulleyJoint*) una_joint;
-						
-						if(una_joint->GetBodyA()==cuerpo){//la tijera es el cuerpo a
-
-							//me fijo si el cuerpo esta por encima del anchor
-							if (pulley->GetGroundAnchorA().y-pulley->GetAnchorA().y > 0){
-								if(cuerpo->GetLocalPoint(una_joint->GetAnchorA()).y<0){ //es la union de abajo
-									if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
-										cerrar = true;
-									}
-								}else{ //entonces es la union de arriba
-									if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
-										cerrar = true;
-									}
-								}
-							}else{ //el cuerpo esta por encima del anchor
-								if(cuerpo->GetLocalPoint(una_joint->GetAnchorA()).y<0){ //es la union de abajo
-									if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
-										cerrar = true;
-									}
-								}else{ //entonces es la union de arriba
-									if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
-										cerrar = true;
-									}
-								}
+						//si es una pulley joint
+						if(anchorY>0){//si esta atado abajo
+							if(fuerzaY > fuerzaLimite){
+								cerrar = true;
 							}
-						}else{//la tijera es el cuerpo B no hay ningun problema
-							if(cuerpo->GetLocalPoint(una_joint->GetAnchorB()).y<0){ //es la union de abajo
-								if(una_joint->GetReactionForce(tiempoStep).y < -fuerzaLimite){ 
-									cerrar = true;
-								}
-							}else{ //entonces es la union de arriba
-								if(una_joint->GetReactionForce(tiempoStep).y > fuerzaLimite){ 
-									cerrar = true;
-								}
+						}else{ //si esta atadoArriba
+							if(fuerzaY < -fuerzaLimite){
+								cerrar = true;
 							}
 						}
-									
 					}
-
-					std::cout << una_joint->GetReactionForce(tiempoStep).y <<"\n";
-					
 					joint = joint->next;
 				}
 				
@@ -997,7 +891,11 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 		}
 
 		b2PulleyJointDef joint;
-		joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
+		if(pol->getIzq(NULL)->getTipoFigura()!=TIJERA){
+			joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
+		}else{
+			joint.Initialize(cuerpoB,cuerpoA,b2Vec2(x2Polea,y2Polea),b2Vec2(x1Polea,y1Polea),b2Vec2(xFig2,yFig2),b2Vec2(xFig1,yFig1),1);
+		}
 		joint.collideConnected = true;
 		
 		b2Joint* pulleyJ = mundo->CreateJoint(&joint);
