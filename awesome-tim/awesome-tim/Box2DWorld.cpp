@@ -949,42 +949,33 @@ void Box2DWorld::eliminarSoga(Soga *figura){
 }
 
 void Box2DWorld::actuarTijera(b2Body* cuerpo, Tijera* fig){
-				b2JointEdge* joint = cuerpo->GetJointList();
-				bool cerrar = false;
-				int mult = 1;
-				double fuerzaLimite = 0.5;
-				while(joint){
-					b2Joint* una_joint = joint->joint;
+	
+	b2JointEdge* joint = cuerpo->GetJointList();
+	bool cerrar = false;
+	int mult = 1;
+	double fuerzaLimite = 1;
+	
+	
+	while(joint){
+		b2Joint* una_joint = joint->joint;
 
-					int anchorY = una_joint->GetBodyB()->GetLocalPoint(una_joint->GetAnchorB()).y;
-					int fuerzaY = una_joint->GetReactionForce(tiempoStep).y;
+		double anchor = una_joint->GetBodyB()->GetLocalPoint(una_joint->GetAnchorB()).y;
+		double fuerzaY = una_joint->GetReactionForce(tiempoStep).y;
+		double fuerzaX = una_joint->GetReactionForce(tiempoStep).x;
+		double fuerza = ((fig->pos == 0)||(fig->pos==2)) ? fuerzaY:fuerzaX;
 
-					if(una_joint->GetType() == e_ropeJoint){
-						if(anchorY>0){//si esta atado abajo
-							if(fuerzaY < -fuerzaLimite){
-								cerrar = true;
-							}
-						}else{ //si esta atadoArriba
-							if(fuerzaY > fuerzaLimite){
-								cerrar = true;
-							}
-						}
-					}else{
-						//si es una pulley joint
-						if(anchorY>0){//si esta atado abajo
-							if(fuerzaY > fuerzaLimite){
-								cerrar = true;
-							}
-						}else{ //si esta atadoArriba
-							if(fuerzaY < -fuerzaLimite){
-								cerrar = true;
-							}
-						}
-					}
-					joint = joint->next;
-				}
+		int esSoga = (una_joint->GetType()==e_ropeJoint) ? 1:-1;
+		int condicion = (anchor>0) ? 1:-1;
+		int esPrimero = ((fig->pos==0)||(fig->pos==1)) ? 1:-1;
+		
+		
+		if(fuerza*esSoga*condicion*esPrimero < -fuerzaLimite){
+			cerrar = true;
+		}
+		joint = joint->next;
+	}
 				
-				if (cerrar){
-					((Tijera*)fig)->cerrar();
-				}
+	if (cerrar){
+		((Tijera*)fig)->cerrar();
+	}
 }
