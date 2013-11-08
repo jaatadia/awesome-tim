@@ -190,6 +190,58 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+		case PALETA:{
+				cuerpo->SetType(b2_dynamicBody);
+				b2PolygonShape forma;
+				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+				fD.shape = &forma;
+				fD.density = 1.0f; //PALETA_DENSIDAD;
+				//fD.friction = PLATAFORMA_FRICCION;
+				cuerpo->CreateFixture(&fD);
+			/*
+			b2Vec2 p1(-2.0f, 0.0f), p2(2.0f, 0.0f);
+
+			b2BodyDef bd;
+			bd.type = b2_dynamicBody;
+
+			bd.position = p1;
+			b2Body* leftFlipper = m_world->CreateBody(&bd);
+
+			bd.position = p2;
+			b2Body* rightFlipper = m_world->CreateBody(&bd);
+
+			b2PolygonShape box;
+			box.SetAsBox(1.75f, 0.1f);
+
+			b2FixtureDef fd;
+			fd.shape = &box;
+			fd.density = 1.0f;
+
+			leftFlipper->CreateFixture(&fd);
+			rightFlipper->CreateFixture(&fd);
+
+			b2RevoluteJointDef jd;
+			jd.bodyA = ground;
+			jd.localAnchorB.SetZero();
+			jd.enableMotor = true;
+			jd.maxMotorTorque = 1000.0f;
+			jd.enableLimit = true;
+
+			jd.motorSpeed = 0.0f;
+			jd.localAnchorA = p1;
+			jd.bodyB = leftFlipper;
+			jd.lowerAngle = -30.0f * b2_pi / 180.0f;
+			jd.upperAngle = 5.0f * b2_pi / 180.0f;
+			m_leftJoint = (b2RevoluteJoint*)m_world->CreateJoint(&jd);
+
+			jd.motorSpeed = 0.0f;
+			jd.localAnchorA = p2;
+			jd.bodyB = rightFlipper;
+			jd.lowerAngle = -5.0f * b2_pi / 180.0f;
+			jd.upperAngle = 30.0f * b2_pi / 180.0f;
+			m_rightJoint = (b2RevoluteJoint*)m_world->CreateJoint(&jd);
+			*/
+			}
 		case YUNQUE:{
 				b2PolygonShape forma;
 				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);

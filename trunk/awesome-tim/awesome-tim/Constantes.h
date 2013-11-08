@@ -81,6 +81,7 @@
 #define CHINCHE 25
 #define ARO 26
 #define CARRITO 27
+#define PALETA 28
 
 //valores fisicos
 
@@ -201,6 +202,17 @@
 #define DENSIDAD_CARRITO 2.0
 #define FRICCION_CARRITO 0.001
 
+#define ANCHO_PALETA 5
+#define ALTO_PALETA 2
+//#define RESTITUCION_PALETA 0.4
+#define DENSIDAD_PALETA 1.0f
+//#define FRICCION_PALETA 0.001
+#define PALETA_IZQ_MAXANG 5
+#define PALETA_IZQ_MINANG -30
+#define PALETA_DER_MAXANG 30
+#define PALETA_DER_MINANG -5
+
+
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
@@ -272,6 +284,8 @@
 #define ID_BASE_CARRITO "../images/carro.png"
 #define ID_RUEDA_CARRITO "../images/rueda.jpg"
 #define ID_CARRITO "../images/carroBoton.jpg"
+
+#define ID_PALETA "../images/cuadrado.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1
