@@ -17,6 +17,7 @@ public:
 	static void playSound(const char *file);
 	static void playMusic(const char *file);
 	static void stopMusic();
+	static void end();
 
 private:
 	static void initialize();
