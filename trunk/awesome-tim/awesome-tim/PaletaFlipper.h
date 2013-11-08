@@ -7,7 +7,7 @@ private:
 	bool push;
 	int sentido; //IZQUIERDA (la q va del lado izq) o DERECHA
 public:
-	PaletaFlipper(double posX,double posY,double angulo,int sentido);
+	PaletaFlipper(double posX,double posY,int sentido);
 	~PaletaFlipper(void);
 
 	Figura* clonar();
@@ -15,7 +15,7 @@ public:
 	int getTipoDimension();
 	double getXdeRotacion();
 	double getYdeRotacion();
-
+	void shift();
 
 	virtual void interactuar(int accion);
 };
