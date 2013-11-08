@@ -46,15 +46,17 @@ void Soga::putSegmento(Figura* fig){
 	segmentos.push_back(fig);
 }
 
-bool Soga::meChoca(Dimension* dim){
+bool Soga::meChoca(Figura* fig){
 		double x1,y1,x2,y2;
 		getPunto1(&x1,&y1);
 		getPunto2(&x2,&y2);
 
-		double ox1 = dim->getX() - dim->getAncho()/2;
-		double oy1 = dim->getY() - dim->getAlto()/2;
-		double ox2 = dim->getX() + dim->getAncho()/2;
-		double oy2 = dim->getY() + dim->getAlto()/2;
+		double ox1,oy1,ox2,oy2;
+		fig->getCuadradoCortante(&ox1,&oy1,&ox2,&oy2);
+		//double ox1 = dim->getX() - dim->getAncho()/2;
+		//double oy1 = dim->getY() - dim->getAlto()/2;
+		//double ox2 = dim->getX() + dim->getAncho()/2;
+		//double oy2 = dim->getY() + dim->getAlto()/2;
 
 		double tempy1 = (y1<=y2) ? y1:y2;
 		double tempy2 = (y1>y2) ? y1:y2;

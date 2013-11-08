@@ -127,6 +127,13 @@ public:
 		return false;
 	}
 
+	virtual void getCuadradoCortante(double* x1,double* y1,double* x2,double* y2){
+		*x1 = dimension->getX() - dimension->getAncho()/2;
+		*y1 = dimension->getY() - dimension->getAlto()/2;
+		*x2 = dimension->getX() + dimension->getAncho()/2;
+		*y2 = dimension->getY() + dimension->getAlto()/2;
+	}
+
 	virtual bool pinchaGlobo(Dimension* dim){
 		return false;
 	}
