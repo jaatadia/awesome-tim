@@ -264,8 +264,8 @@
 #define ID_SOGA "../images/rope.png"
 
 #define ID_VELA_CERA "../images/vela_cera.png"
-#define ID_LLAMA "../images/llama.png"
-#define ID_VELA "../images/vela.jpg"
+#define ID_LLAMA "../images/flame.png"
+#define ID_VELA "../images/vela.png"
 
 #define ID_POLEA "../images/polea.png"
 #define ID_ARO "../images/aro.png"
@@ -276,21 +276,21 @@
 #define ID_TIJERA "../images/tijeraAbierta.png"
 #define ID_TIJERA_CERRADA "../images/tijeraCerrada.png"
 
-#define ID_HUEVO "../images/huevo.jpg"
-#define ID_HUEVO_ROMPIENDO1 "../images/huevoSeParte.png"
-#define ID_HUEVO_ROMPIENDO2 "../images/huevoPartido.jpg"
-#define ID_HUEVO_ROMPIENDO3 "../images/huevoPartidoClarito.jpg"
+#define ID_HUEVO "../images/egg.png"
+#define ID_HUEVO_ROMPIENDO1 "../images/crackedegg.png"
+#define ID_HUEVO_ROMPIENDO2 "../images/brokenegg.png"
+#define ID_HUEVO_ROMPIENDO3 "../images/brokeneggtransparente.png"
 
 #define ID_DOMINO "../images/domino.png"
-#define ID_FICHA_DOMINO "../images/fichaDomino.jpg"
+#define ID_FICHA_DOMINO "../images/fichaDomino.png"
 
 #define ID_BASE_CARRITO "../images/carro.png"
-#define ID_RUEDA_CARRITO "../images/rueda.jpg"
-#define ID_CARRITO "../images/carroBoton.jpg"
+#define ID_RUEDA_CARRITO "../images/rueda.png"
+#define ID_CARRITO "../images/carroBoton.png"
 
 #define ID_PALETA "../images/cuadrado.png"
 
-#define ID_QUESO "../images/queso.jpg"
+#define ID_QUESO "../images/queso.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1
