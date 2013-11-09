@@ -86,6 +86,7 @@ Contenedor::Contenedor(void){
 	mapa[ID_DOMINO] = new Imagen(ID_DOMINO);
 	mapa[ID_BASE_CARRITO] = new Imagen(ID_BASE_CARRITO);
 	mapa[ID_RUEDA_CARRITO] = new Imagen(ID_RUEDA_CARRITO);
+	mapa[ID_QUESO] = new Imagen(ID_QUESO);
 
 	mapa[COLOR_CELESTE] = new Imagen(COLOR_CELESTE);
 	mapa[COLOR_ROJO] = new Imagen(COLOR_ROJO);

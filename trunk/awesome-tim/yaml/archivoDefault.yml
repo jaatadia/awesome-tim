@@ -8,7 +8,14 @@ juego:
           posX: 25
           posY: 42.3
           angulo: 0
-          largo: 1
+          largo: 5
+          fija: NO
+          interactuable: NO
+      - figura:
+          tipo_figura: CARRITO
+          posX: 25
+          posY: 20
+          angulo: 0
           fija: NO
           interactuable: NO
       - figura:
@@ -187,6 +194,21 @@ juego:
               posX: 0
               posY: 0
               angulo: 0
+              fija: NO
+              interactuable: NO
+            cantidad_de_instancias: 10
+          - figura:
+              tipo_figura: QUESO
+              posX: 0
+              posY: 0
+              fija: NO
+              interactuable: NO
+            cantidad_de_instancias: 10
+          - figura:
+              tipo_figura: PALETA-FLIPPER
+              posX: 0
+              posY: 0
+              sentido: 0
               fija: NO
               interactuable: NO
             cantidad_de_instancias: 10
