@@ -83,9 +83,13 @@
 #define CARRITO 27
 #define PALETA 28
 #define QUESO 29
+#define ARCO 30
+#define FLECHA 31
 
 //valores fisicos
 
+#define ANCHO_ARCO 10
+#define ALTO_ARCO 10
 
 
 #define COEF_MULT 52
@@ -291,6 +295,8 @@
 #define ID_PALETA "../images/cuadrado.png"
 
 #define ID_QUESO "../images/queso.png"
+
+#define ID_ARCO "../images/ArcoFlecha_Ambos.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1

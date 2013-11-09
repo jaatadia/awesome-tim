@@ -11,6 +11,7 @@
 #include "Soga.h"
 #include "Balancin.h"
 #include "CintaTransportadora.h"
+#include "Arco.h"
 
 BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
 	altoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
@@ -367,6 +368,9 @@ void BotoneraController::ScrollDown(){
 
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Chinche(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
@@ -374,23 +378,16 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Vela(ID_VELA,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Polea(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
-	
 	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);	
-
 	this->agregarBoton(new CintaTransportadora(3,0,0,0),INSTANCIAS_DEFAULT); 
 	this->agregarBoton(new Linea(0,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Motor(0,0),INSTANCIAS_DEFAULT);
-	
 	this->agregarBoton(new Plataforma(LARGO_PLATAFORMA_DEFAULT,0,0,0),INSTANCIAS_DEFAULT); 
-	
 	this->agregarBoton(new PelotaBowling(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PelotaBasquet(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(ID_BALANCIN_IZQ,0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(ID_BALANCIN_DER,0,0,ANGULO_BALANCIN_DER),INSTANCIAS_DEFAULT);
-
 	this->agregarBoton(new PaletaFlipper(0,0,IZQUIERDA),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PaletaFlipper(0,0,DERECHA),INSTANCIAS_DEFAULT);
 	
