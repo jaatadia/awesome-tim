@@ -406,8 +406,8 @@ bool BotoneraController::estaVacia(){
 
 void BotoneraController::dibujarCantInstancias(){
 	
+	int anchoBoton = botonera->getAnchoBoton();
 	int altoBoton = botonera->getAltoBoton();
-	int cantDeFig = layerFigurasOrig->getAlto()/altoBoton;
 
 
 	int posBotonX = 0;
@@ -420,6 +420,8 @@ void BotoneraController::dibujarCantInstancias(){
 	Imagen* img;
 	//solo para copiarla y no cambiar la original
 	layerADibujar = layerFiguras->rotarSuperficie(0);
+
+	int cantDeFig = figs.size();
 
 	for(int i = 0; i < cantDeFig; ++i){
 
@@ -434,7 +436,7 @@ void BotoneraController::dibujarCantInstancias(){
 		//dibujar
 		img = new Imagen(dig,altoBoton*0.2,255,255,255);
 		//y un pequeño desplazamiento para que entren bien al boton
-		layerADibujar->dibujarImagen(img, NULL, 7, posBotonY+7);
+		layerADibujar->dibujarImagen(img, NULL, anchoBoton*1/10, posBotonY+altoBoton*1/10);
 
 		posBotonY += altoBoton;
 		++itFig;
