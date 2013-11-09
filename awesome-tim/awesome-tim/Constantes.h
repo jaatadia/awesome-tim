@@ -82,6 +82,7 @@
 #define ARO 26
 #define CARRITO 27
 #define PALETA 28
+#define QUESO 29
 
 //valores fisicos
 
@@ -212,6 +213,8 @@
 #define PALETA_DER_MAXANG 315
 #define PALETA_DER_MINANG 45
 
+#define BASE_QUESO 4
+#define ALTO_QUESO 5
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -286,6 +289,8 @@
 #define ID_CARRITO "../images/carroBoton.jpg"
 
 #define ID_PALETA "../images/cuadrado.png"
+
+#define ID_QUESO "../images/queso.jpg"
 
 //posiciones de balancin
 #define IZQUIERDA 1

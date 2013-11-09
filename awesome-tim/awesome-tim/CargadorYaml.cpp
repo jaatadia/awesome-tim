@@ -513,6 +513,16 @@ Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura, int sentido){
 	return new Balancin(IDBotonera.c_str(),posX,posY,angulo);
 }
 
+Figura* CargadorYaml::crearPaleta(const YAML::Node& nodoFigura){
+	double posX,posY;
+	int sentido;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerSentido(nodoFigura,&sentido);
+	
+	return new PaletaFlipper(posX,posY,sentido);
+}
+
 Figura* CargadorYaml::crearVela(const YAML::Node& nodoFigura){
 	double posX,posY,angulo;
 	
@@ -553,6 +563,14 @@ Figura* CargadorYaml::crearDomino(const YAML::Node& nodoFigura){
 	obtenerPosicion(nodoFigura,&posX,&posY);
 
 	return new Domino(posX,posY);
+}
+
+Figura* CargadorYaml::crearQueso(const YAML::Node& nodoFigura){
+	double posX,posY;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+
+	return new Queso(posX,posY);
 }
 
 Figura* CargadorYaml::crearYunque(const YAML::Node& nodoFigura){
@@ -878,6 +896,20 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		Figura* figura = crearCarrito(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Carrito."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"QUESO") == 0){
+		Figura* figura = crearQueso(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Queso."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"PALETA-FLIPPER") == 0){
+		Figura* figura = crearPaleta(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Paleta Flipper."); 	
 		return figura;
 	}
 
@@ -1253,8 +1285,10 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool tijera = (strcmp(tipo_figura,"TIJERA") == 0);
 	bool domino = (strcmp(tipo_figura,"DOMINO") == 0);
 	bool carrito = (strcmp(tipo_figura,"CARRITO") == 0);
+	bool queso = (strcmp(tipo_figura,"QUESO") == 0);
+	bool flipper = (strcmp(tipo_figura,"PALETA-FLIPPER") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper);
 
 	return (figuraSimple || figuraCompleja);
 }

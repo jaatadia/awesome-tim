@@ -714,6 +714,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Queso.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Server.h"
 				>
 			</File>
