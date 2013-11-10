@@ -4,6 +4,7 @@
 #include "ClientSocket.h"
 #include "CommunicationManager.h"
 #include "SocketException.h"
+#include "MaquinaEstados.h"
 #include <iostream>
 
 using namespace std;
@@ -11,7 +12,7 @@ using namespace std;
 class Client
 {
 public:
-	Client(void);
+	Client(MaquinaEstados * juego);
 	virtual ~Client(void);
 
 private:

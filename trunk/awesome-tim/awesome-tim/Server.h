@@ -5,6 +5,7 @@
 #include "ServerSocket.h"
 #include "SocketException.h"
 #include "CommunicationManager.h"
+#include "MaquinaEstados.h"
 #include <iostream>
 #include <list>
 
@@ -13,14 +14,14 @@ using namespace std;
 class Server : public ActiveObject
 {
 public:
-	Server();
+	Server(MaquinaEstados * juego);
 	~Server(void);
-	void init();
 	void stop();
 
 private:
 	ServerSocket * _socket;
 	std::list<CommunicationManager *> commMgrLst;
+	MaquinaEstados * juego;
 	void initThread();
 	void run();
 	void flushThread();

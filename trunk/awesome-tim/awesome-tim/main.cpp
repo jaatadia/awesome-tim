@@ -9,7 +9,12 @@
 
 #include "Contenedor.h"
 #include "GeneradorYaml.h"
-#include "Server.h"
+
+#ifdef SERVER_MODE
+	#include "Server.h"
+#else
+	#include "Client.h"
+#endif // SERVER_MODE
 
 #define RUTA_DEFAULT_IN "../yaml/archivoDefault.yml"
 #define RUTA_DEFAULT_OUT "../yaml/nuevoJuego.yml"
@@ -148,6 +153,15 @@ ClientTIM cliente;
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
 	MEstados juego = MEstados(rutaIn,rutaOut);
+
+#ifdef SERVER_MODE
+	std::cout << "Initializing game in: SERVER MODE" << std::endl;
+	Server * server = new Server(&juego);
+#else
+	std::cout << "Initializing game in: CLIENT MODE" << std::endl;
+	Client * client = new Client(&juego);
+#endif // SERVER_MODE
+
 	//MEstadosCliente juego = MEstadosCliente(1);
 
 	double tiempoTardado = 0;

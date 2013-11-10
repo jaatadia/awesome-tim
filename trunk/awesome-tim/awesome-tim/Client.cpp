@@ -1,10 +1,10 @@
 #include "Client.h"
 
-Client::Client(void)
+Client::Client(MaquinaEstados * juego)
 {
 	try
 	{
-		this->commMgr = new CommunicationManager(new ClientSocket("127.0.0.1"), CLIENT_TYPE);
+		this->commMgr = new CommunicationManager(new ClientSocket("127.0.0.1"), juego);
 
 	} catch (SocketException & sE)
 	{
