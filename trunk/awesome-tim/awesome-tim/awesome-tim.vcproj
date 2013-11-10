@@ -244,6 +244,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Flecha.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GeneradorDeFigurasCompuestas.cpp"
 				>
 			</File>
@@ -623,6 +627,10 @@
 			</File>
 			<File
 				RelativePath=".\FilesMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Flecha.h"
 				>
 			</File>
 			<File

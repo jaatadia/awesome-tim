@@ -55,6 +55,50 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
+		case FLECHA:{
+
+			Flecha* flecha = (Flecha*) figura;
+			
+			b2PolygonShape forma;
+			
+			b2Vec2 vertices[4];
+			vertices[0] = b2Vec2(-dim->getAncho()/2,0);
+			vertices[1] = b2Vec2(dim->getAncho()/4,-dim->getAlto());
+			vertices[2] = b2Vec2(+dim->getAncho()/2,0);
+			vertices[3] = b2Vec2(dim->getAncho()/4,dim->getAlto());
+
+			forma.Set(vertices,4);
+
+			fD.shape = &forma;
+			fD.density = 0;
+			fD.restitution = RESTITUCION_FLECHA;
+			fD.friction = FRICCION_FLECHA;
+			cuerpo->CreateFixture(&fD);
+			
+			b2Vec2 fuerza = b2Vec2(flecha->fuerzaX,flecha->fuerzaY);
+			cuerpo->SetLinearVelocity(fuerza);
+
+			break;
+		}
+		case ARCO:{
+
+			cuerpo->SetType(b2_staticBody);
+
+			b2PolygonShape forma;
+			b2Vec2 vertices[3];
+			vertices[0] = b2Vec2(0,-dim->getAlto()/2);
+			vertices[1] = b2Vec2(+dim->getAncho()/2,0);
+			vertices[2] = b2Vec2(0,+dim->getAlto()/2);
+			forma.Set(vertices,3);
+
+			fD.shape = &forma;
+			fD.density = DENSIDAD_ARCO;
+			fD.restitution = RESTITUCION_ARCO;
+			fD.friction = FRICCION_ARCO;
+			cuerpo->CreateFixture(&fD);
+
+			break;
+		}
 		case TIJERA:{
 
 			cuerpo->SetType(b2_staticBody);
@@ -686,7 +730,7 @@ void Box2DWorld::actualizar(Figura * figura){
 		
 		if(fig!=NULL){
 			
-			if((fig->getTipoFigura()==PLATAFORMA)||(fig->getTipoFigura()==POLEA)||(fig->getTipoFigura()==CHINCHE)){
+			if((fig->getTipoFigura()==PLATAFORMA)||(fig->getTipoFigura()==POLEA)||(fig->getTipoFigura()==CHINCHE)||(fig->getTipoFigura()==ARCO)){
 				cuerpo = cuerpo->GetNext();
 				continue;
 			}
@@ -716,33 +760,35 @@ void Box2DWorld::actualizar(Figura * figura){
 				continue;
 			}
 
-				fig->setX(cuerpo->GetPosition().x);
-				fig->setY(cuerpo->GetPosition().y);
-				fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
+			fig->setX(cuerpo->GetPosition().x);
+			fig->setY(cuerpo->GetPosition().y);
+			fig->setAngulo(-(cuerpo->GetAngle())*180/PI);
 				
-			if(activo){
-				if(fig->getTipoFigura()==GLOBOHELIO){
-					bool cambiar = false;
-					double margen = 5;
-					double velX = 0;
-					double velY = 0;
-					
-					if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
-						velX = int( cuerpo->GetLinearVelocity().x  + (( 0 - cuerpo->GetLinearVelocity().x)/FPS));
-						cambiar = true;
-					}else{
-						velX = cuerpo->GetLinearVelocity().x;
-					}
-					if(abs(cuerpo->GetLinearVelocity().y) > abs(VELOCIDAD_GLOBOHELIO)){
-						velY = VELOCIDAD_GLOBOHELIO;
-						cambiar = true;
-					}else{
-						velY = cuerpo->GetLinearVelocity().y;
-					}
-					if(cambiar){
-						cuerpo->SetLinearVelocity(b2Vec2(velX,velY));
-					}
+			if(fig->getTipoFigura()==GLOBOHELIO){
+				bool cambiar = false;
+				double margen = 5;
+				double velX = 0;
+				double velY = 0;
+				
+				if((cuerpo->GetLinearVelocity().x < 0 - margen)||(cuerpo->GetLinearVelocity().x > 0 + margen)){
+					velX = int( cuerpo->GetLinearVelocity().x  + (( 0 - cuerpo->GetLinearVelocity().x)/FPS));
+					cambiar = true;
+				}else{
+					velX = cuerpo->GetLinearVelocity().x;
 				}
+				if(abs(cuerpo->GetLinearVelocity().y) > abs(VELOCIDAD_GLOBOHELIO)){
+					velY = VELOCIDAD_GLOBOHELIO;
+					cambiar = true;
+				}else{
+					velY = cuerpo->GetLinearVelocity().y;
+				}
+				if(cambiar){
+					cuerpo->SetLinearVelocity(b2Vec2(velX,velY));
+				}
+			}else if(fig->getTipoFigura()==FLECHA){
+				b2Vec2 vel = cuerpo->GetLinearVelocity();
+				double ang = atan2(vel.y,vel.x);
+				cuerpo->SetTransform(cuerpo->GetPosition(),ang);
 			}
 		}
 		cuerpo = cuerpo->GetNext();
@@ -920,11 +966,17 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 	}
 }
 
-void Box2DWorld::eliminarSoga(Soga *figura){
+void Box2DWorld::eliminarSoga(Soga *figura,std::list<Figura*>* lista){
 	
 	figura->marcar(true);
+	Figura* figura1;
+	Figura* figura2;
 
 	if((figura->getFigura1()->getTipoFigura()!=POLEA)&&(figura->getFigura2()->getTipoFigura()!=POLEA)){
+		
+		figura1 = figura->getFigura1();
+		figura2 = figura->getFigura2();
+
 		b2Joint* joint = mundo->GetJointList();
 		b2Joint* prox;
 		while(joint){
@@ -941,10 +993,26 @@ void Box2DWorld::eliminarSoga(Soga *figura){
 		}else{
 			pol = (Polea*) figura->getFigura2();
 		}
+		
+		figura1 = pol->getIzq(NULL);
+		figura2 = pol->getDer(NULL);
 		pol->marcarSogas(true);
 
 		mundo->DestroyJoint(pol->joint);
 
+	}
+	
+	if(lista == NULL) return;
+
+	if(figura1->getTipoFigura()==ARCO){
+		Figura* fig =((Arco*)figura1)->disparar();
+		this->agregarFigura(fig);
+		lista->push_back(fig);
+	}
+	if(figura2->getTipoFigura()==ARCO){
+		Figura* fig =((Arco*)figura2)->disparar();
+		this->agregarFigura(fig);
+		lista->push_back(fig);
 	}
 }
 

@@ -54,4 +54,5 @@ public:
 		return false;
 	}
 
+	virtual bool rotable(){return true;}
 };
