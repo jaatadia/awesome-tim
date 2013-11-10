@@ -2,14 +2,20 @@
 
 #include "Figura.h"
 #include "Cuadrado.h"
+#include "Flecha.h"
+#include "Sonidos.h"
 
 class Arco: public Figura
 {
 private:
-	Arco(const char* ID, Dimension* dim,bool flag):Figura(ID,dim){}
+	bool atado;
+	Arco(const char* ID, Dimension* dim,bool flag):Figura(ID,dim){
+		atado = false;
+	}
 
 public:
 	Arco(double posX,double posY ,double angulo = 0):Figura(ID_ARCO,new Cuadrado(ANCHO_ARCO,ALTO_ARCO,posX,posY,angulo)){
+		atado = false;
 	}
 	
 	~Arco(void){
@@ -36,6 +42,46 @@ public:
 	}
 
 	virtual bool rotable(){return true;}
+
+	
+	virtual int esAtableSoga(double x,double y){
+		if(!atado) return 1;
+		return -1;
+	}
+	
+	virtual void posAtableSoga(int numero,double* x,double* y){
+		double cx = dimension->getX();
+		double cy = dimension->getY();
+		double coseno = cos(-dimension->getAngulo()*PI/180);
+		double seno = sin(-dimension->getAngulo()*PI/180);
+
+		*x = cx + (-dimension->getAncho()/2+1)*coseno;
+		*y = cy + (-dimension->getAncho()/2+1)*seno;
+	}
+	
+	virtual void atarSoga(int numero){
+		atado = true;
+	}
+	virtual void desatarSoga(int numero){
+		atado = false;
+	}
+
+	Flecha* disparar(){
+		delete myVista;
+		this->ID = ID_ARCO2;
+		Sonidos::playSound(SHOT_ARROW);
+		this->myVista = new VistaFigura(this);
+		
+		double cx = dimension->getX();
+		double cy = dimension->getY();
+		double coseno = cos(-dimension->getAngulo()*PI/180);
+		double seno = sin(-dimension->getAngulo()*PI/180);
+
+		double x = cx + (dimension->getAncho()/2+ANCHO_FLECHA/2)*coseno;
+		double y = cy + (dimension->getAncho()/2+ANCHO_FLECHA/2)*seno;
+
+		return new Flecha(x,y,dimension->getAngulo(),FUERZA_FLECHA*coseno,FUERZA_FLECHA*seno);
+	}
 
 };
 

@@ -5,6 +5,7 @@
 #include "Constantes.h"
 
 #define POP_BALLOON "../music/pop.wav"
+#define SHOT_ARROW POP_BALLOON
 #define MUSIC "../music/modoEstatico.wav"
 #define VICTORY_MUS "../music/victory.ogg"
 

@@ -87,10 +87,20 @@
 #define FLECHA 31
 
 //valores fisicos
+#define FUERZA_FLECHA 100
+#define ANCHO_FLECHA 10
+#define ALTO_FLECHA 2.5
+#define ANCHO_PUNTA 2.5
+#define ALTO_PUNTA 2.5
+#define DENSIDAD_FLECHA 1
+#define FRICCION_FLECHA 1
+#define RESTITUCION_FLECHA 0.1
 
 #define ANCHO_ARCO 10
 #define ALTO_ARCO 10
-
+#define DENSIDAD_ARCO 1
+#define FRICCION_ARCO 1
+#define RESTITUCION_ARCO 0.1
 
 #define COEF_MULT 52
 #define GRAVEDADY 9.8f * 10
@@ -297,6 +307,8 @@
 #define ID_QUESO "../images/queso.png"
 
 #define ID_ARCO "../images/ArcoFlecha_Ambos.png"
+#define ID_ARCO2 "../images/ArcoFlecha_Arco.png"
+#define ID_FLECHA "../images/ArcoFlecha_Flecha.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1
