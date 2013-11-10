@@ -21,7 +21,11 @@ ServerSocket::ServerSocket(void)
 	{
 		freeaddrinfo(resultado);
 		WSACleanup();
-		throw SocketException("Error al crear socket de lectura: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al crear socket de lectura: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 
 	if(bind(this->_socket, resultado->ai_addr, (int)resultado->ai_addrlen) == SOCKET_ERROR)
@@ -29,7 +33,11 @@ ServerSocket::ServerSocket(void)
 		freeaddrinfo(resultado);
 		closesocket(this->_socket);
 		WSACleanup();
-		throw SocketException("Error al hacer bind del socket: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al hacer bind del socket: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 
 	freeaddrinfo(resultado);
@@ -38,7 +46,11 @@ ServerSocket::ServerSocket(void)
 	{
 		closesocket(this->_socket);
 		WSACleanup();
-		throw SocketException("Error al intentar escuchar con el socket: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al intentar escuchar con el socket: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 }
 
@@ -49,7 +61,11 @@ Socket * ServerSocket::acceptConnection()
 	{
 		closesocket(this->_socket);
 		WSACleanup();
-		throw SocketException("Error al aceptar socket entrante: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al aceptar socket entrante: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 	Socket * aux = new Socket(incommingConnectionSocket);
 	return aux;

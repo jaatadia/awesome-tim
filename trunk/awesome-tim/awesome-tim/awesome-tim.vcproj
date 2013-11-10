@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -232,7 +232,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CommunicationManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ConnectionHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ConnectionManager.cpp"
 				>
 			</File>
 			<File
@@ -308,6 +316,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MessageHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MEstados.cpp"
 				>
 			</File>
@@ -357,6 +369,10 @@
 			</File>
 			<File
 				RelativePath=".\SocketException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SocketHandler.cpp"
 				>
 			</File>
 			<File
@@ -606,7 +622,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CommunicationManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ConnectionHandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ConnectionManager.h"
 				>
 			</File>
 			<File
@@ -702,6 +726,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MessageHandler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MEstados.h"
 				>
 			</File>
@@ -767,6 +795,10 @@
 			</File>
 			<File
 				RelativePath=".\SocketException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SocketHandler.h"
 				>
 			</File>
 			<File
