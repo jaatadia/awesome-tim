@@ -1,10 +1,12 @@
 #include "Server.h"
 
-Server::Server()
+Server::Server(MaquinaEstados * juego)
 {
 	try
 	{
 		this->_socket = new ServerSocket();
+		this->juego = juego;
+		this->_thread.resume();
 	} catch (SocketException &sE)
 	{
 		cout << sE.what() << endl;
@@ -22,7 +24,7 @@ void Server::run()
 	{
 		while(!this->finalizando)
 		{
-			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), SERVER_TYPE));
+			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), this->juego));
 		}
 	} catch (SocketException &ex)
 	{
@@ -38,9 +40,4 @@ void Server::flushThread()
 Server::~Server(void)
 {
 	this->_thread.waitForDeath();
-}
-
-void Server::init()
-{
-	this->_thread.resume();
 }
