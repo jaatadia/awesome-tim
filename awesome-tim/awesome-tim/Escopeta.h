@@ -2,27 +2,33 @@
 
 #include "Figura.h"
 #include "Cuadrado.h"
-#include "Flecha.h"
+#include "Bala.h"
 #include "Sonidos.h"
+#include "Box2D/Box2D.h"
 
-class Arco: public Figura
+class Escopeta: public Figura
 {
+public:
+	b2Body* cuerpo;
+	bool disparada;
 private:
 	bool atado;
-	Arco(const char* ID, Dimension* dim,bool flag):Figura(ID,dim){
+	Escopeta(const char* ID, Dimension* dim,bool flag):Figura(ID,dim){
 		atado = false;
+		disparada = false;
 	}
 
 public:
-	Arco(double posX,double posY ,double angulo = 0):Figura(ID_ARCO2,new Cuadrado(ANCHO_ARCO,ALTO_ARCO,posX,posY,angulo)){
+	Escopeta(double posX,double posY ,double angulo = 0):Figura(ID_ESCOPETA,new Cuadrado(ANCHO_ESCOPETA,ALTO_ESCOPETA,posX,posY,angulo)){
 		atado = false;
+		disparada = false;
 	}
 	
-	~Arco(void){
+	~Escopeta(void){
 	}
 
 	virtual int getTipoFigura(){
-		return ARCO;
+		return ESCOPETA;
 	}
 
 	virtual int getTipoDimension(){
@@ -34,7 +40,7 @@ public:
 	}
 
 	virtual Figura* clonar(){
-		return new Arco(ID.c_str(),dimension->clonar(),true);
+		return new Escopeta(ID.c_str(),dimension->clonar(),true);
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){
@@ -56,45 +62,33 @@ public:
 		double coseno = cos(-dimension->getAngulo()*PI/180);
 		double seno = sin(-dimension->getAngulo()*PI/180);
 		
-		if(!atado){
-			*x = cx;
-			*y = cy;
-		}else{
-			*x = cx + (-dimension->getAncho()/2+1)*coseno;
-			*y = cy + (-dimension->getAncho()/2+1)*seno;
-		}
+		*x = cx + (-dimension->getAncho()*1/8)*coseno;
+		*y = cy + (-dimension->getAncho()*1/8)*seno;
 	}
 	
 	virtual void atarSoga(int numero){
 		atado = true;
-		delete myVista;
-		this->ID = ID_ARCO;
-		this->myVista = new VistaFigura(this);
 	}
 
 	virtual void desatarSoga(int numero){
 		atado = false;
-		delete myVista;
-		this->ID = ID_ARCO2;
-		this->myVista = new VistaFigura(this);
 	}
 
-	Flecha* disparar(){
-		delete myVista;
-		this->ID = ID_ARCO2;
-		Sonidos::playSound(SHOT_ARROW);
-		this->myVista = new VistaFigura(this);
+	Bala* disparar(){
+		if (disparada) return NULL;
+
+		disparada = true;
+		Sonidos::playSound(FIRE_GUN);
 		
 		double cx = dimension->getX();
 		double cy = dimension->getY();
 		double coseno = cos(-dimension->getAngulo()*PI/180);
 		double seno = sin(-dimension->getAngulo()*PI/180);
 
-		double x = cx + (dimension->getAncho()/2+ANCHO_FLECHA/2)*coseno;
-		double y = cy + (dimension->getAncho()/2+ANCHO_FLECHA/2)*seno;
+		double x = cx + (dimension->getAncho()/2+ANCHO_BALA/2)*coseno - (-dimension->getAlto()/2+1)*seno;
+		double y = cy + (dimension->getAncho()/2+ANCHO_BALA/2)*seno + (-dimension->getAlto()/2+1)*coseno;
 
-		return new Flecha(x,y,dimension->getAngulo(),FUERZA_FLECHA*coseno,FUERZA_FLECHA*seno);
+		return new Bala(x,y,dimension->getAngulo(),FUERZA_BALA*coseno,FUERZA_BALA*seno);
 	}
 
 };
-

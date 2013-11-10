@@ -100,6 +100,8 @@ Contenedor::Contenedor(void){
 	mapa[ID_ARCO] = new Imagen(ID_ARCO);
 	mapa[ID_ARCO2] = new Imagen(ID_ARCO2);
 	mapa[ID_FLECHA] = new Imagen(ID_FLECHA);
+	mapa[ID_ESCOPETA] = new Imagen(ID_ESCOPETA);
+	mapa[ID_BALA] = new Imagen(ID_BALA);
 
 	mapa[GANO_1] = new Imagen(GANO_1);
 	mapa[GANO_2] = new Imagen(GANO_2);

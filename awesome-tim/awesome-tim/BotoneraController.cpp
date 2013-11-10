@@ -12,6 +12,7 @@
 #include "Balancin.h"
 #include "CintaTransportadora.h"
 #include "Arco.h"
+#include "Escopeta.h"
 
 BotoneraController::BotoneraController(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
 	altoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
@@ -368,6 +369,7 @@ void BotoneraController::ScrollDown(){
 
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Escopeta(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);

@@ -14,6 +14,8 @@
 #include "Tijera.h"
 #include "Arco.h"
 #include "Flecha.h"
+#include "Bala.h"
+#include "Escopeta.h"
 
 class Box2DWorld
 {
@@ -37,7 +39,7 @@ public:
 	~Box2DWorld(void);
 
 	void eliminarSoga(Soga* figura,std::list<Figura*>* lista);
-
+	void dispararEscopeta(Escopeta* escopeta,std::list<Figura*>* lista);
 private:
 	void ponerEnPolea(Figura* soga, b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
 	void actuarTijera(b2Body* cuerpo, Tijera* fig);

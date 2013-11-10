@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Bala.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Balancin.cpp"
 				>
 			</File>
@@ -229,6 +233,10 @@
 			</File>
 			<File
 				RelativePath=".\ConnectionHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Escopeta.cpp"
 				>
 			</File>
 			<File
@@ -554,6 +562,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Bala.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Balancin.h"
 				>
 			</File>
@@ -611,6 +623,10 @@
 			</File>
 			<File
 				RelativePath=".\Engranaje.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Escopeta.h"
 				>
 			</File>
 			<File
