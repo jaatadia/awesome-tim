@@ -3,8 +3,8 @@
 
 #include "ActiveObject.h"
 #include "ServerSocket.h"
-#include "ClientHandler.h"
 #include "SocketException.h"
+#include "CommunicationManager.h"
 #include <iostream>
 #include <list>
 
@@ -19,9 +19,8 @@ public:
 	void stop();
 
 private:
-	std::list<ClientHandler * > clientRdrLst;
-	std::list<ClientHandler * > clientWrtLst;
-	ServerSocket * socket;
+	ServerSocket * _socket;
+	std::list<CommunicationManager *> commMgrLst;
 	void initThread();
 	void run();
 	void flushThread();

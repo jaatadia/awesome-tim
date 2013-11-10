@@ -19,3 +19,8 @@ void Thread::waitForDeath()
 {
 	WaitForSingleObject(_handle, 2000);
 }
+
+void Thread::sleep(int milliseconds)
+{
+	Sleep(milliseconds);
+}

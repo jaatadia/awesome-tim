@@ -1,10 +1,6 @@
 #include "ClientHandler.h"
 
-ClientHandler::ClientHandler(void)
-{
-}
-
-ClientHandler::ClientHandler(Socket * s, int mode) : ConnectionHandler(s, mode)
+ClientHandler::ClientHandler(int mode) : MessageHandler(mode)
 {
 }
 
@@ -12,54 +8,68 @@ ClientHandler::~ClientHandler(void)
 {
 }
 
-void ClientHandler::update()
+void ClientHandler::initThread()
 {
-	switch(this->mode)
-	{
-		case WRITE_MODE:
-			if (getState() == 0)
-			{
-				string nombreArchivo = "C:\\15.jpg";
-				char buffer[TAM_BUFFER];
-				ifstream archivoPrueba(nombreArchivo.c_str(), ios::in | ios::binary);
-				if(!archivoPrueba.fail())
-				{
-					while (!archivoPrueba.eof() && archivoPrueba.good())
-					{
-						archivoPrueba.read(buffer, TAM_BUFFER - 5 - nombreArchivo.size());
-						int numBytes = archivoPrueba.gcount();
-						string aux = buffer;
-						aux = aux.substr(0,numBytes);
-						string msg = "";
-						msg.append(nombreArchivo).append("|").append(aux).append("$");
+}
 
-						Message * fM = new FilesMessage(msg);
-						if (fM->validate())
-						{
-							this->outputMsgLst.push_back(fM);
-						}
-					}
-					archivoPrueba.close();
-				}
-				setState(1);
-			}
-			break;
-		case READ_MODE:
-			if (!this->inputMsgLst.empty())
-			{
-				std::list<Message *>::iterator itLst = this->inputMsgLst.begin();
-				switch((*itLst)->getType())
+void ClientHandler::flushThread()
+{
+}
+
+void ClientHandler::run()
+{
+	while(!this->finalizando)
+	{
+		switch(this->getMode())
+		{
+			case WRITE_MODE:
+				if (getState() == 0)
 				{
-					case MSG_TYPE_GREETING:
-						break;
-					case MSG_TYPE_FILES:
-						break;
-					case MSG_TYPE_EVENT:
-						break;
-					case MSG_TYPE_GOODBYE:
-						break;
+					string nombreArchivo = "C:\\archivoDefault.txt";
+					char buffer[TAM_BUFFER];
+					ifstream archivoPrueba(nombreArchivo.c_str(), ios::in | ios::binary);
+					if(!archivoPrueba.fail())
+					{
+						while (!archivoPrueba.eof() && archivoPrueba.good())
+						{
+							archivoPrueba.read(buffer, TAM_BUFFER - 5 - nombreArchivo.size());
+							int numBytes = archivoPrueba.gcount();
+							string aux;
+							for(int i = 0; i < numBytes; i++)
+							{
+								aux += buffer[i];
+							}
+							string msg = "";
+							msg.append(nombreArchivo).append("|").append(aux).append("$");
+
+							Message * fM = new FilesMessage(msg);
+							if (fM->validate())
+							{
+								this->pushOutputMessage(fM);
+							}
+						}
+						archivoPrueba.close();
+					}
+					setState(1);
 				}
-			}
-			break;
+				break;
+			case READ_MODE:
+				Message * msg = this->getInputMessage();
+				if(msg)
+				{
+					switch(msg->getType())
+					{
+						case MSG_TYPE_GREETING:
+							break;
+						case MSG_TYPE_FILES:
+							break;
+						case MSG_TYPE_EVENT:
+							break;
+						case MSG_TYPE_GOODBYE:
+							break;
+					}
+				}
+		}
+		this->_thread.sleep(100);
 	}
 }

@@ -11,6 +11,7 @@ public:
 	~Thread();
 	void resume();
 	void waitForDeath();
+	void sleep(int milliseconds);
 private:
 	HANDLE _handle;
 	DWORD _tid;

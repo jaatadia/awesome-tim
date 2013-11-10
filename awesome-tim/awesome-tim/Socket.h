@@ -5,10 +5,11 @@
 #include <Ws2tcpip.h>
 #include <windows.h>
 #include <stdio.h>
+#include <sstream>
 #include "Constantes.h"
 #include "SocketException.h"
-
-using namespace std;
+#include "Mutex.h"
+#include "Lock.h"
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -24,6 +25,7 @@ public:
 private:
 	void start();
 	char buffer[TAM_BUFFER];
+	Mutex _mutex;
 
 protected:
 	SOCKET _socket;

@@ -30,7 +30,11 @@ void Socket::write(std::string message)
 	if (resultado == SOCKET_ERROR) {
 		closesocket(this->_socket);
 		WSACleanup();
-		throw SocketException("Error al enviar datos desde el socket: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al enviar datos desde el socket: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 }
 
@@ -41,12 +45,22 @@ std::string Socket::read()
 	cantidadLeida = recv(this->_socket, this->buffer, TAM_BUFFER, 0);
 	if (cantidadLeida > 0)
 	{
-		salida = this->buffer;
+		for(int i = 0; i < cantidadLeida; i++)
+		{
+			salida += buffer[i];
+		}
+		salida = salida.substr(0,cantidadLeida);
 		salida = salida.substr(0,cantidadLeida);
 	}
 	else if (cantidadLeida == 0)
 		printf("Fin mensaje\n");
 	else
-		throw SocketException("Error al recibir datos desde el socket: " + WSAGetLastError());
+	{
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al recibir datos desde el socket: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
+	}
 	return salida;
 }

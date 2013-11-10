@@ -2,7 +2,13 @@
 
 Server::Server()
 {
-	this->socket = new ServerSocket();
+	try
+	{
+		this->_socket = new ServerSocket();
+	} catch (SocketException &sE)
+	{
+		cout << sE.what() << endl;
+	}
 }
 
 void Server::initThread()
@@ -16,9 +22,7 @@ void Server::run()
 	{
 		while(!this->finalizando)
 		{
-			Socket * socketCliente = this->socket->acceptConnection();
-			this->clientRdrLst.push_back(new ClientHandler(socketCliente, READ_MODE));
-			this->clientWrtLst.push_back(new ClientHandler(socketCliente, WRITE_MODE));
+			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), SERVER_TYPE));
 		}
 	} catch (SocketException &ex)
 	{

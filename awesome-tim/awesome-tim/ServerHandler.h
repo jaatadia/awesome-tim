@@ -1,21 +1,26 @@
 #ifndef __SERVERHANDLER_H__
 #define __SERVERHANDLER_H__
 
-#include "ConnectionHandler.h"
+#include "MessageHandler.h"
 #include "Message.h"
+#include "FilesMessage.h"
 #include "Constantes.h"
 #include <iostream>
 #include <fstream>
 
-class ServerHandler : public ConnectionHandler
+class ServerHandler : public MessageHandler
 {
 public:
-	ServerHandler(void);
-	ServerHandler(Socket * s, int mode);
+	ServerHandler(int mode);
 	virtual ~ServerHandler(void);
 
+private:
+	ServerHandler(void);
+
 protected:
-	virtual void update();
+	virtual void initThread();
+	virtual void run();
+	virtual void flushThread();
 };
 
 #endif // __SERVERHANDLER_H__

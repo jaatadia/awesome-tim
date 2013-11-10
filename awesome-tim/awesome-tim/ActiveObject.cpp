@@ -17,3 +17,13 @@ DWORD WINAPI ActiveObject::threadEntry(void * pArg)
 	pActive->run();
 	return 0;
 }
+
+int ActiveObject::getActiveState()
+{
+	return this->finalizando;
+}
+
+void ActiveObject::sleep(int milliseconds)
+{
+	this->_thread.sleep(milliseconds);
+}

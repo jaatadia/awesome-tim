@@ -2,7 +2,11 @@
 #define __CLIENT_H__
 
 #include "ClientSocket.h"
-#include "ServerHandler.h"
+#include "CommunicationManager.h"
+#include "SocketException.h"
+#include <iostream>
+
+using namespace std;
 
 class Client
 {
@@ -11,9 +15,7 @@ public:
 	virtual ~Client(void);
 
 private:
-	ClientSocket * socket;
-	ServerHandler * rdrServer;
-	ServerHandler * wrtServer;
+	CommunicationManager * commMgr;
 };
 
 #endif // __CLIENT_H__

@@ -20,7 +20,11 @@ ClientSocket::ClientSocket(char * ip)
 	{
 		freeaddrinfo(resultado);
 		WSACleanup();
-		throw SocketException("Error al crear socket de cliente: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al crear socket de cliente: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 
 	if(connect(this->_socket, resultado->ai_addr, (int)resultado->ai_addrlen) == SOCKET_ERROR)
@@ -28,7 +32,11 @@ ClientSocket::ClientSocket(char * ip)
 		freeaddrinfo(resultado);
 		closesocket(this->_socket);
 		WSACleanup();
-		throw SocketException("Error al hacer connect del socket: " + WSAGetLastError());
+		std::stringstream id;
+		id << WSAGetLastError();
+		string mensaje = "Error al hacer connect del socket: ";
+		mensaje.append(id.str());
+		throw SocketException(mensaje);
 	}
 
 	freeaddrinfo(resultado);
