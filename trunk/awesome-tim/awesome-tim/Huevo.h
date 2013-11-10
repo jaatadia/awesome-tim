@@ -47,19 +47,19 @@ public:
 				this->myVista = new VistaFigura(this);
 			}
 
-			if(contador == (FPS)){
+			if(contador == (FPS/4)){
 				this->ID = ID_HUEVO_ROMPIENDO2; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
 
-			if(contador == (4*FPS)){
+			if(contador == (FPS/2)){
 				this->ID = ID_HUEVO_ROMPIENDO3; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
 
-			if(contador == (8*FPS)){
+			if(contador == (FPS*3/4)){
 				this->marcar(true);
 			}
 		}

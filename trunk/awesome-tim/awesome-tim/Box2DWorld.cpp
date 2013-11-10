@@ -55,6 +55,49 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
+		case BALA:{
+
+			Bala* bala = (Bala*) figura;
+			
+			b2PolygonShape forma;
+			
+			b2Vec2 vertices[3];
+			vertices[0] = b2Vec2(-dim->getAncho()/2,-dim->getAlto());
+			vertices[1] = b2Vec2(dim->getAncho()/2,0);
+			vertices[2] = b2Vec2(-dim->getAncho()/2,+dim->getAlto());
+			forma.Set(vertices,3);
+
+			fD.shape = &forma;
+			fD.density = DENSIDAD_BALA;
+			fD.restitution = RESTITUCION_BALA;
+			fD.friction = FRICCION_BALA;
+			cuerpo->CreateFixture(&fD);
+			
+			b2Vec2 fuerza = b2Vec2(bala->fuerzaX,bala->fuerzaY);
+			cuerpo->SetLinearVelocity(fuerza);
+
+			break;
+		}
+		case ESCOPETA:{
+
+			cuerpo->SetType(b2_staticBody);
+
+			b2PolygonShape forma;
+			b2Vec2 vertices[3];
+			vertices[0] = b2Vec2(-dim->getAncho()/2,-dim->getAlto());
+			vertices[1] = b2Vec2(dim->getAncho()/2,-dim->getAlto());
+			vertices[2] = b2Vec2(-dim->getAncho()/2,+dim->getAlto());
+			forma.Set(vertices,3);
+
+			fD.shape = &forma;
+			fD.density = DENSIDAD_ARCO;
+			fD.restitution = RESTITUCION_ARCO;
+			fD.friction = FRICCION_ARCO;
+			cuerpo->CreateFixture(&fD);
+			((Escopeta*)figura)->cuerpo = cuerpo;
+
+			break;
+		}
 		case FLECHA:{
 
 			Flecha* flecha = (Flecha*) figura;
@@ -541,7 +584,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						b2Vec2 anchor2((x2-cx2),(y2-cy2));
 						b2RopeJointDef unionSoga;
 						unionSoga.collideConnected = true;
-						if(fig1->getTipoFigura()!=TIJERA){
+						if((fig1->getTipoFigura()!=TIJERA)&&(fig1->getTipoFigura()!=ESCOPETA)){
 							unionSoga.bodyA=cuerpo1;
 							unionSoga.bodyB=cuerpo2;
 							unionSoga.localAnchorA = anchor1;
@@ -953,7 +996,7 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 		}
 
 		b2PulleyJointDef joint;
-		if(pol->getIzq(NULL)->getTipoFigura()!=TIJERA){
+		if((pol->getIzq(NULL)->getTipoFigura()!=TIJERA)&&(pol->getIzq(NULL)->getTipoFigura()!=ESCOPETA)){
 			joint.Initialize(cuerpoA,cuerpoB,b2Vec2(x1Polea,y1Polea),b2Vec2(x2Polea,y2Polea),b2Vec2(xFig1,yFig1),b2Vec2(xFig2,yFig2),1);
 		}else{
 			joint.Initialize(cuerpoB,cuerpoA,b2Vec2(x2Polea,y2Polea),b2Vec2(x1Polea,y1Polea),b2Vec2(xFig2,yFig2),b2Vec2(xFig1,yFig1),1);
@@ -1006,12 +1049,10 @@ void Box2DWorld::eliminarSoga(Soga *figura,std::list<Figura*>* lista){
 
 	if(figura1->getTipoFigura()==ARCO){
 		Figura* fig =((Arco*)figura1)->disparar();
-		this->agregarFigura(fig);
 		lista->push_back(fig);
 	}
 	if(figura2->getTipoFigura()==ARCO){
 		Figura* fig =((Arco*)figura2)->disparar();
-		this->agregarFigura(fig);
 		lista->push_back(fig);
 	}
 }
@@ -1045,5 +1086,29 @@ void Box2DWorld::actuarTijera(b2Body* cuerpo, Tijera* fig){
 				
 	if (cerrar){
 		((Tijera*)fig)->cerrar();
+	}
+}
+
+void Box2DWorld::dispararEscopeta(Escopeta* escopeta,std::list<Figura*>* lista){
+	if(escopeta->disparada)return;
+	
+	double angulo = -escopeta->getDimension()->getAngulo()*PI/180;
+	b2Body* cuerpo = escopeta->cuerpo;
+	double fuerzaLimite = 1;
+	bool disparar = false;
+
+	b2JointEdge* joint = cuerpo->GetJointList();
+
+	while(joint){
+		b2Joint* una_joint = joint->joint;
+		b2Vec2 fuerza = una_joint->GetReactionForce(this->tiempoStep);
+
+		if (fuerza.x*cos(angulo)+fuerza.y*sin(angulo)<-fuerzaLimite){
+			disparar=true;
+		}
+		joint = joint->next;
+	}
+	if(disparar){
+		lista->push_back(escopeta->disparar());
 	}
 }

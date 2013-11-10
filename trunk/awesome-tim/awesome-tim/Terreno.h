@@ -101,5 +101,5 @@ private:
 
 	bool posEnTerrenoExtendido(double posX,double posY);
 
-	void borrarAtadura(Figura* fig);
+	void borrarAtadura(Figura* fig,std::list<Figura*>* lista);
 };

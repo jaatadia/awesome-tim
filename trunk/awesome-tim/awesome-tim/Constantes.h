@@ -85,8 +85,24 @@
 #define QUESO 29
 #define ARCO 30
 #define FLECHA 31
+#define ESCOPETA 32
+#define BALA 33
 
 //valores fisicos
+
+#define FUERZA_BALA 100000
+#define ANCHO_BALA 2
+#define ALTO_BALA 1
+#define DENSIDAD_BALA 10000
+#define FRICCION_BALA 1
+#define RESTITUCION_BALA 0
+
+#define ANCHO_ESCOPETA 20
+#define ALTO_ESCOPETA 5
+#define DENSIDAD_ESCOPETA 1
+#define FRICCION_ESCOPETA 1
+#define RESTITUCION_ESCOPETA 0.1
+
 #define FUERZA_FLECHA 100
 #define ANCHO_FLECHA 10
 #define ALTO_FLECHA 2.5
@@ -199,7 +215,7 @@
 #define DENSIDAD_VELA 5.0
 #define FRICCION_VELA 0.1
 
-#define RADIO_HUEVO 3
+#define RADIO_HUEVO 2
 #define RESTITUCION_HUEVO 0.4
 #define DENSIDAD_HUEVO 6.0
 #define FRICCION_HUEVO 0.3
@@ -309,6 +325,9 @@
 #define ID_ARCO "../images/ArcoFlecha_Ambos.png"
 #define ID_ARCO2 "../images/ArcoFlecha_Arco.png"
 #define ID_FLECHA "../images/ArcoFlecha_Flecha.png"
+
+#define ID_ESCOPETA "../images/shotgun.png"
+#define ID_BALA "../images/shotgun_bullet.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1

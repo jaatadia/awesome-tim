@@ -59,22 +59,6 @@ public:
 	}
 
 	virtual bool pinchaGlobo(Dimension* dim){
-		
-		//busco el centro mio
-		double cx = dimension->getX();
-		double cy = dimension->getY();
-
-		//busco el punto que pincha
-		double px = cx + dimension->getAncho()/2 + 1;
-		double py = cy ;
-		
-		//busco donde esta el punto que pincha segun mi angulo
-		double coseno = cos( -dimension->getAngulo() * PI / 180);
-		double seno = sin( -dimension->getAngulo() * PI / 180);
-
-		double puntaRealX = cx + (px - cx) * coseno - (py - cy) * seno;
-		double puntaRealY = cy + (px - cx) * seno + (py - cy) * coseno;
-
-		return dim->puntoPertenece(puntaRealX,puntaRealY);
+		return true;
 	}
 };

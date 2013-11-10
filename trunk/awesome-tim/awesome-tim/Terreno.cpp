@@ -731,6 +731,9 @@ void Terreno::actualizarModelo(){
 			if((*iteradorLista)->getTipoFigura()==TIJERA){
 				((Tijera*)(*iteradorLista))->actualizar();
 			}
+			if((*iteradorLista)->getTipoFigura()==ESCOPETA){
+				mundoBox2D->dispararEscopeta((Escopeta*)(*iteradorLista),&nuevasFiguras);
+			}
 			
 			if((*iteradorLista)->getTipoFigura()==SOGA){
 				((Linea*)(*iteradorLista))->actualizar();
@@ -745,7 +748,7 @@ void Terreno::actualizarModelo(){
 			}else if((*iteradorLista)->getTipoFigura()==GLOBOHELIO){
 				((GloboHelio*)(*iteradorLista))->actualizar();
 				if(((GloboHelio*)(*iteradorLista))->estaPinchando()){
-					borrarAtadura(*iteradorLista);
+					borrarAtadura(*iteradorLista,&nuevasFiguras);
 					mundoBox2D->eliminarFigura((*iteradorLista));
 				}
 			}else if((*iteradorLista)->cortaSoga()){
@@ -781,6 +784,7 @@ void Terreno::actualizarModelo(){
 		}
 
 		for(iterLista = nuevasFiguras.begin();iterLista != nuevasFiguras.end();iterLista++){
+			mundoBox2D->agregarFigura(*iterLista);
 			figuras.push_back(*iterLista);
 		}
 
@@ -945,14 +949,14 @@ bool Terreno::posicionOcupada(Figura* figAPosicionar){
 	return (choca1 || choca2);
 }
 
-void Terreno::borrarAtadura(Figura* fig){
+void Terreno::borrarAtadura(Figura* fig,std::list<Figura*>* lista){
 	std::list<Figura*>::iterator iter;
 	for(iter = figuras.begin();iter!=figuras.end();iter++){
 		if((*iter)->getTipoFigura()==SOGA){
 			if((*iter)->getFigura1()==fig){
-				this->mundoBox2D->eliminarSoga((Soga*)(*iter),NULL);
+				this->mundoBox2D->eliminarSoga((Soga*)(*iter),lista);
 			}else if((*iter)->getFigura2()==fig){
-				this->mundoBox2D->eliminarSoga((Soga*)(*iter),NULL);
+				this->mundoBox2D->eliminarSoga((Soga*)(*iter),lista);
 			}
 		}
 	}
