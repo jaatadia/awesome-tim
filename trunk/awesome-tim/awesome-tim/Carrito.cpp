@@ -4,7 +4,7 @@
 
 #define TABLA 0
 
-Carrito::Carrito(double posX, double posY, double angulo):FiguraCompuesta(ID_CARRITO,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO+RADIO_RUEDA_CARRITO,posX,posY,0)){
+Carrito::Carrito(double posX, double posY, double angulo):FiguraCompuesta(ID_CARRITO,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO+RADIO_RUEDA_CARRITO,(ANCHO_CARRITO/2)+posX,(ALTO_CARRITO+RADIO_RUEDA_CARRITO)/2+posY,0)){
 
 	this->partesFigura = std::list<Figura*>();
 	double posXRuedaIzq,posXRuedaDer,posYRuedaIzq,posYRuedaDer,posXCarro,posYCarro;
@@ -34,8 +34,8 @@ Carrito::~Carrito(void){
 
 void Carrito::calcularPosiciones(double& posXizq,double& posXder, double& posYizq,double& posYder, double& posX_Carro, double& posY_Carro, double posX, double posY){
 
-	posX_Carro = posX;
-	posY_Carro = posY;
+	posX_Carro = (ANCHO_CARRITO / 2) + posX;
+	posY_Carro = (ALTO_CARRITO / 2) + posY;
 
 	posXizq = ( posX_Carro - (ANCHO_CARRITO / 2) + RADIO_RUEDA_CARRITO + 1.5);
 	posXder = ( posX_Carro + (ANCHO_CARRITO / 2) - RADIO_RUEDA_CARRITO - 1.5);
