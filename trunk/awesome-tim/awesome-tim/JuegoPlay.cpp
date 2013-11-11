@@ -29,8 +29,11 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 
 	//cosas para informar que se gano
 	this->gano = false; //si quieren ver la animacion hay que ponerlo en true
+	this->dibujar = false;
 	this->contadorGano = -1;
 	imgGano = NULL;
+
+	this->contador = 0;
 
 	terreno->setMiPorcion(ter->x1,ter->y1,ter->x2,ter->y2);
 }
@@ -65,7 +68,9 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 
-				terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO, CLICK_MOUSE);
+				if((!gano)&&(contador>=FPS)){
+					terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO, CLICK_MOUSE);
+				}
 				break;
 			}
 			case SDL_MOUSEBUTTONUP:
@@ -79,14 +84,18 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 			case SDL_KEYDOWN:
 			{
 				if (evento.key.keysym.sym == SDLK_SPACE){
-					terreno->interactuar(PRESS_SPACE);
+					if((!gano)&&(contador>=FPS)){
+						terreno->interactuar(PRESS_SPACE);
+					}
 				}
 				break;
 			}
 			case SDL_KEYUP:
 			{
 				if (evento.key.keysym.sym == SDLK_SPACE){
-					terreno->interactuar(RELEASE_SPACE);
+					if((!gano)&&(contador>=FPS)){
+						terreno->interactuar(RELEASE_SPACE);
+					}
 				}
 				break;
 			}
@@ -97,6 +106,11 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 
 void JuegoPlay::onLoop(){
 	
+	if(contador<FPS){
+		contador++;
+		return;
+	}
+
 	gano = terreno->objetivosCumplidos();
 
 	if(!gano){
@@ -114,15 +128,21 @@ bool JuegoPlay::onRender(Superficie* sup){
 		delete temp;
 		this->setCambio(false);
 	}
-	
-	sup->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+
+	if(gano){
+		if(dibujar){
+			sup->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+			dibujarVictoria(sup);
+			this->dibujar = false;
+		}
+	}else{
+		sup->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
+	}
 	if(comandos->huboCambios()){
 		//sup->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
 		comandos->dibujate(sup,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
 	}
-	if(gano){
-		dibujarVictoria(sup);
-	}
+
 	return true;
 }
 
@@ -184,26 +204,32 @@ void JuegoPlay::actualizarVictoria(){
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_1);
 		imgGano = imgGano->scaleImagen(ancho,alto);
+		this->dibujar = true;
 	}else if (contadorGano==INICIO_GANO2){
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_2);
 		imgGano = imgGano->scaleImagen(ancho,alto);
+		this->dibujar = true;
 	}else if (contadorGano==INICIO_GANO3){
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_3);
 		imgGano = imgGano->scaleImagen(ancho,alto);
+		this->dibujar = true;
 	}else if (contadorGano==INICIO_GANO4){
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_4);
 		imgGano = imgGano->scaleImagen(ancho,alto);
+		this->dibujar = true;
 	}else if (contadorGano==INICIO_GANO5){
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_5);
 		imgGano = imgGano->scaleImagen(ancho,alto);
+		this->dibujar = true;
 	}else if (contadorGano==INICIO_GANO6){
 		delete imgGano;
 		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_6);
 		imgGano = imgGano->scaleImagen(ancho,alto);
+		this->dibujar = true;
 	}else if (contadorGano==DURACION_FRAMES){
 		if(REPEAT){
 			contadorGano = REPEAT_FROM -1;
@@ -212,5 +238,5 @@ void JuegoPlay::actualizarVictoria(){
 }
 
 void JuegoPlay::dibujarVictoria(Superficie* sup){
-	sup->dibujarImagen(imgGano,NULL,0,0);
+		sup->dibujarImagen(imgGano,NULL,0,0);
 }

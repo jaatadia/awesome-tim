@@ -15,6 +15,8 @@ private:
 	ComandosPlay* comandos;
 	Terreno* terreno;
 	Superficie* fondo;
+	bool dibujar;
+	int contador;
 	
 	//cosas para dibujar que gano
 	bool gano;
