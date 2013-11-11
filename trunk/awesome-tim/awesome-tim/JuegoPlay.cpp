@@ -76,6 +76,20 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 				comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux ,this);
 				break;
 			}
+			case SDL_KEYDOWN:
+			{
+				if (evento.key.keysym.sym == SDLK_SPACE){
+					terreno->interactuar(PRESS_SPACE);
+				}
+				break;
+			}
+			case SDL_KEYUP:
+			{
+				if (evento.key.keysym.sym == SDLK_SPACE){
+					terreno->interactuar(RELEASE_SPACE);
+				}
+				break;
+			}
 		}
 	}
 	return aux;

@@ -6,6 +6,7 @@
 #include "Balancin.h"
 #include "PedacitoSoga.h"
 #include "Polea.h"
+#include "PaletaFlipper.h"
 #include <iostream>
 
 Box2DWorld::Box2DWorld(void)
@@ -278,56 +279,59 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case PALETA:{
-				cuerpo->SetType(b2_dynamicBody);
+
 				b2PolygonShape forma;
 				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 				fD.shape = &forma;
-				fD.density = 1.0f; //PALETA_DENSIDAD;
+				fD.density = 1; //PALETA_DENSIDAD;
 				//fD.friction = PLATAFORMA_FRICCION;
 				cuerpo->CreateFixture(&fD);
-			/*
-			b2Vec2 p1(-2.0f, 0.0f), p2(2.0f, 0.0f);
 
-			b2BodyDef bd;
-			bd.type = b2_dynamicBody;
+				b2BodyDef ejeDef;
+				ejeDef.type = b2_staticBody;
+				ejeDef.position.Set(((PaletaFlipper*)figura)->getXdeRotacion(),((PaletaFlipper*)figura)->getYdeRotacion());
+				//ejeDef.position.Set(((PaletaFlipper*)figura)->getDimension()->getX()-3*((PaletaFlipper*)figura)->getDimension()->getAncho()/8,((PaletaFlipper*)figura)->getDimension()->getY());
+												
+				b2FixtureDef ejeFix;
+				b2CircleShape ejeCirculo;
+				ejeCirculo.m_radius = 0.0001;
+				ejeFix.density = 9999999;
+				ejeFix.shape = &ejeCirculo;
+				ejeFix.isSensor = true;
+				
+				b2Body* eje = this->mundo->CreateBody(&ejeDef);
+				eje->CreateFixture(&ejeFix);
 
-			bd.position = p1;
-			b2Body* leftFlipper = m_world->CreateBody(&bd);
+				b2RevoluteJointDef joint;
+				joint.Initialize(eje,cuerpo,eje->GetPosition());
+				joint.enableLimit = true;
+				
+				if (((PaletaFlipper*)figura)->getSentido() == IZQUIERDA){
+					joint.lowerAngle = -PI/2;
+					joint.upperAngle = 0;
+				}else{
+					joint.lowerAngle = 0;
+					joint.upperAngle = PI/2;
+				}
+				joint.enableMotor = true;
+				joint.maxMotorTorque = 1000.0f;
+				joint.motorSpeed = 0.0f;
+						
+				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
-			bd.position = p2;
-			b2Body* rightFlipper = m_world->CreateBody(&bd);
+				//if (((PaletaFlipper*)figura)->estaApretada()){
+				//	if (((PaletaFlipper*)figura)->getSentido() == IZQUIERDA){
+				//		((b2RevoluteJoint*)enlace)->SetMotorSpeed(20.0f);
+				//		//cuerpo->ApplyTorque(150);
+				//	} else {
+				//		((b2RevoluteJoint*)enlace)->SetMotorSpeed(-20.0f);
+				//		//cuerpo->ApplyTorque(-150);
+				//	}
+				//} else {
+				//	//deberia caer sola
+				//}
+				((PaletaFlipper*)figura)->setBox2dData(cuerpo,(b2RevoluteJoint*)enlace);
 
-			b2PolygonShape box;
-			box.SetAsBox(1.75f, 0.1f);
-
-			b2FixtureDef fd;
-			fd.shape = &box;
-			fd.density = 1.0f;
-
-			leftFlipper->CreateFixture(&fd);
-			rightFlipper->CreateFixture(&fd);
-
-			b2RevoluteJointDef jd;
-			jd.bodyA = ground;
-			jd.localAnchorB.SetZero();
-			jd.enableMotor = true;
-			jd.maxMotorTorque = 1000.0f;
-			jd.enableLimit = true;
-
-			jd.motorSpeed = 0.0f;
-			jd.localAnchorA = p1;
-			jd.bodyB = leftFlipper;
-			jd.lowerAngle = -30.0f * b2_pi / 180.0f;
-			jd.upperAngle = 5.0f * b2_pi / 180.0f;
-			m_leftJoint = (b2RevoluteJoint*)m_world->CreateJoint(&jd);
-
-			jd.motorSpeed = 0.0f;
-			jd.localAnchorA = p2;
-			jd.bodyB = rightFlipper;
-			jd.lowerAngle = -5.0f * b2_pi / 180.0f;
-			jd.upperAngle = 30.0f * b2_pi / 180.0f;
-			m_rightJoint = (b2RevoluteJoint*)m_world->CreateJoint(&jd);
-			*/
 			}
 		case YUNQUE:{
 				b2PolygonShape forma;
@@ -374,9 +378,9 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma.SetAsBox(ancho,alto);
 
 				fD.shape = &forma;
-				fD.density = DENSIDAD_DOMINO;
-				fD.friction = FRICCION_DOMINO;
-				fD.restitution = RESTITUCION_DOMINO;
+				fD.density = DENSIDAD_CARRITO;
+				fD.friction = FRICCION_CARRITO;
+				fD.restitution = RESTITUCION_CARRITO;
 				cuerpo->CreateFixture(&fD);
 
 				break;
@@ -392,13 +396,11 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = FRICCION_GLOBOHELIO;
 				fD.restitution = RESTITUCION_GLOBOHELIO;
 				cuerpo->CreateFixture(&fD);
+			
+				//cuerpo->SetLinearVelocity(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO));
+				cuerpo->SetFixedRotation(true);
+				cuerpo->SetAngularVelocity(0);
 				
-				if(activo){
-					//cuerpo->SetLinearVelocity(b2Vec2(0.0, VELOCIDAD_GLOBOHELIO));
-					cuerpo->SetFixedRotation(true);
-					cuerpo->SetAngularVelocity(0);
-				}
-
 				break;
 			}
 		case POLEA:{

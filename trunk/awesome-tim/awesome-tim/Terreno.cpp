@@ -7,6 +7,7 @@
 #include "Soga.h"
 #include "Tijera.h"
 #include "Huevo.h"
+#include "PaletaFlipper.h"
 
 Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
@@ -690,35 +691,8 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 void Terreno::actualizarModelo(){
 
 	if (fisicaActiva){
+
 		this->mundoBox2D->actualizar();
-
-/*
-	std::list<Figura*>::iterator iteradorLista;
-
-	iteradorLista = figuras.begin();
-
-	Figura* figuraABorrar = NULL;
-	if (fisicaActiva){
-		this->setCambio(true);
-		this->mundoBox2D->actualizar();
-		std::list<Figura*>::iterator iteradorLista;
-		iteradorLista = figuras.begin();
-		while ( (iteradorLista != figuras.end()) && (!figuras.empty()) ){
-			this->mundoBox2D->actualizar((*iteradorLista));
-			//reviso cuales se fueron para borrarlas
-			if (!posEnTerrenoExtendido((*iteradorLista)->getDimension()->getX(), (*iteradorLista)->getDimension()->getY())){
-				figuraABorrar = (*iteradorLista);
-			}
-			iteradorLista++;
-			if (figuraABorrar){
-				this->eliminarFigura(figuraABorrar);
-				figuraABorrar = NULL;
-			}
-		}
-	}
-}
-*/
-//hice que actualize todas las figuras de una sin iterar afuera...
 		this->mundoBox2D->actualizar(NULL);
 		this->setCambio(true);
 
@@ -973,6 +947,12 @@ void Terreno::interactuar(double posClickX, double posClickY, int accion){
 		}
 	}
 
+}
+void Terreno::interactuar(int accion){
+
+	for (std::list<Figura*>::iterator iter = figuras.begin();iter != figuras.end();iter++){
+				(*iter)->interactuar(accion);
+	}
 }
 
 bool Terreno::objetivosCumplidos(){
