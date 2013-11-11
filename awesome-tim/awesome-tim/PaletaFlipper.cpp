@@ -1,4 +1,5 @@
 #include "PaletaFlipper.h"
+#include "Sonidos.h"
 
 PaletaFlipper::PaletaFlipper(double posX,double posY,int sentido):Figura(ID_PALETA,new Cuadrado(ANCHO_PALETA,ALTO_PALETA,posX,posY,0),true){
 
@@ -84,7 +85,6 @@ void PaletaFlipper::accionar(){
 	}
 }
 void PaletaFlipper::desaccionar(){
-		//sound
 		if (this->sentido == IZQUIERDA){
 			this->b2dCuerpo->SetAngularVelocity(800);
 		} else {
@@ -94,11 +94,11 @@ void PaletaFlipper::desaccionar(){
 void PaletaFlipper::interactuar(int accion){
 
 	if (accion == PRESS_SPACE){
-		if (!this->is_pushed) //sound
+		if (!this->is_pushed) Sonidos::playSound(FLIPPER_UP);
 		this->is_pushed = true;
 		accionar();
 	} else if (accion == RELEASE_SPACE){
-		if (this->is_pushed) //sound
+		if (this->is_pushed) Sonidos::playSound(FLIPPER_DOWN);
 		this->is_pushed = false;
 		desaccionar();
 	}
