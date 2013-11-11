@@ -67,40 +67,38 @@ void PaletaFlipper::shift(){
 bool PaletaFlipper::estaApretada(){
 	return is_pushed;
 }
-void PaletaFlipper::accionar(){
-	if (this->sentido == IZQUIERDA){
-		//this->b2dJoint->SetMotorSpeed(-200);
-		//this->b2dCuerpo->ApplyTorque(150000);
-		//b2dCuerpo->ApplyForce(b2Vec2(0,50),b2dCuerpo->GetPosition());
-		if (this->b2dCuerpo->GetAngle() > -7.45)
-			this->b2dCuerpo->SetAngularVelocity(-150);
-		
-		//this->b2dCuerpo->ApplyAngularImpulse(-150);
-	} else {
-		//std::cout << this->b2dCuerpo->GetAngle() << "\n";
-		//this->b2dJoint->SetMotorSpeed(-20.0f);
-		//this->b2dCuerpo->ApplyTorque(-150);
-		if (this->b2dCuerpo->GetAngle() < -2.34)
-			this->b2dCuerpo->SetAngularVelocity(150);
-	}
-}
-void PaletaFlipper::desaccionar(){
+void PaletaFlipper::corregirEstado(){
+
+	if (this->is_pushed){
 		if (this->sentido == IZQUIERDA){
+			//this->b2dJoint->SetMotorSpeed(-200);
+			//this->b2dCuerpo->ApplyTorque(150000);
+			//b2dCuerpo->ApplyForce(b2Vec2(0,50),b2dCuerpo->GetPosition());
+			//if (this->b2dCuerpo->GetAngle() > -7.45)
+				this->b2dCuerpo->SetAngularVelocity(-150);
+			
+			//this->b2dCuerpo->ApplyAngularImpulse(-150);
+		} else {
+			//std::cout << this->b2dCuerpo->GetAngle() << "\n";
+			//this->b2dJoint->SetMotorSpeed(-20.0f);
+			//this->b2dCuerpo->ApplyTorque(-150);
+			//if (this->b2dCuerpo->GetAngle() < -2.34)
+				this->b2dCuerpo->SetAngularVelocity(150);
+		}
+	} else if (this->sentido == IZQUIERDA){
 			this->b2dCuerpo->SetAngularVelocity(800);
 		} else {
 			this->b2dCuerpo->SetAngularVelocity(-800);
-		}
+	}
 }
 void PaletaFlipper::interactuar(int accion){
-
+	
 	if (accion == PRESS_SPACE){
 		if (!this->is_pushed) Sonidos::playSound(FLIPPER_UP);
 		this->is_pushed = true;
-		accionar();
 	} else if (accion == RELEASE_SPACE){
 		if (this->is_pushed) Sonidos::playSound(FLIPPER_DOWN);
 		this->is_pushed = false;
-		desaccionar();
 	}
 		//if (((PaletaFlipper*)figura)->estaApretada()){
 		//	if (((PaletaFlipper*)figura)->getSentido() == IZQUIERDA){

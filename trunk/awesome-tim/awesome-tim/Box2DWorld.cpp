@@ -319,17 +319,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
-				//if (((PaletaFlipper*)figura)->estaApretada()){
-				//	if (((PaletaFlipper*)figura)->getSentido() == IZQUIERDA){
-				//		((b2RevoluteJoint*)enlace)->SetMotorSpeed(20.0f);
-				//		//cuerpo->ApplyTorque(150);
-				//	} else {
-				//		((b2RevoluteJoint*)enlace)->SetMotorSpeed(-20.0f);
-				//		//cuerpo->ApplyTorque(-150);
-				//	}
-				//} else {
-				//	//deberia caer sola
-				//}
 				((PaletaFlipper*)figura)->setBox2dData(cuerpo,(b2RevoluteJoint*)enlace);
 
 			}

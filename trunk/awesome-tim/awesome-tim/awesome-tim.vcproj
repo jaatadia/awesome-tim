@@ -236,10 +236,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ConnectionHandler.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\ConnectionManager.cpp"
 				>
 			</File>
@@ -312,15 +308,27 @@
 				>
 			</File>
 			<File
-				RelativePath=".\MessageFactory.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\MessageHandler.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\MEstados.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseDownMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseEventMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseMotionMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseUpMessage.cpp"
 				>
 			</File>
 			<File
@@ -626,10 +634,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ConnectionHandler.h"
-				>
-			</File>
-			<File
 				RelativePath=".\ConnectionManager.h"
 				>
 			</File>
@@ -722,10 +726,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\MessageFactory.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MessageHandler.h"
 				>
 			</File>
@@ -735,6 +735,22 @@
 			</File>
 			<File
 				RelativePath=".\Motor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseDownMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseEventMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseMotionMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MouseUpMessage.h"
 				>
 			</File>
 			<File
@@ -775,6 +791,10 @@
 			</File>
 			<File
 				RelativePath=".\Queso.h"
+				>
+			</File>
+			<File
+				RelativePath=".\resource.h"
 				>
 			</File>
 			<File

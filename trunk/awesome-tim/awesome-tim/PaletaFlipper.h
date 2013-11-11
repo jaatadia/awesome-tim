@@ -25,8 +25,7 @@ public:
 	bool estaApretada();
 	int getSentido();
 	void setBox2dData(b2Body* cuerpo,b2RevoluteJoint* enlace);
-	void accionar();
-	void desaccionar();
+	void corregirEstado();
 
 	virtual void interactuar(int accion);
 };

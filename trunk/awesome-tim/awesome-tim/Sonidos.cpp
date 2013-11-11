@@ -10,6 +10,9 @@ void Sonidos::initialize(){
 	initialized = true;
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
 	(*mapa)[POP_BALLOON] = (void*)Mix_LoadWAV(POP_BALLOON);
+	(*mapa)[FLIPPER_UP] = (void*)Mix_LoadWAV(FLIPPER_UP);
+	(*mapa)[FLIPPER_DOWN] = (void*)Mix_LoadWAV(FLIPPER_DOWN);
+
 	(*mapa)[VICTORY_MUS] = (void*)Mix_LoadMUS(VICTORY_MUS);
 	(*mapa)[MUSIC] = (void*)Mix_LoadMUS(MUSIC);
 }
@@ -18,6 +21,9 @@ void Sonidos::end(){
 	if(!initialized) return;
 
 	Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
+	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_UP]);
+	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_DOWN]);
+
 	Mix_FreeMusic((Mix_Music*)(*mapa)[VICTORY_MUS]);
 	Mix_FreeMusic((Mix_Music*)(*mapa)[MUSIC]);
 	delete(mapa);
