@@ -59,3 +59,14 @@ bool Vela::cortaSoga(){
 bool Vela::pinchaGlobo(Dimension* dim){
 	return true;
 }
+void Vela::getCuadradoCortante(double* x1,double* y1,double* x2,double* y2){
+
+	float X = this->llama->getDimension()->getX();
+	float Y = this->llama->getDimension()->getY();
+	float ancho = this->llama->getDimension()->getAncho();
+	float alto = this->llama->getDimension()->getAlto();
+	*x1 = X - (ancho/2);
+	*y1 = Y - (alto/2);
+	*x2 = X + (ancho/2);
+	*y2 = Y + (alto/2);
+}
