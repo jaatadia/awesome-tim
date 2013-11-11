@@ -233,15 +233,15 @@
 #define DENSIDAD_CARRITO 2.0
 #define FRICCION_CARRITO 0.001
 
-#define ANCHO_PALETA 20
-#define ALTO_PALETA 10
+#define ANCHO_PALETA 12
+#define ALTO_PALETA 4
 //#define RESTITUCION_PALETA 0.4
 #define DENSIDAD_PALETA 1.0f
 //#define FRICCION_PALETA 0.001
-#define PALETA_IZQ_MAXANG 45
-#define PALETA_IZQ_MINANG 315
-#define PALETA_DER_MAXANG 315
-#define PALETA_DER_MINANG 45
+#define PALETA_IZQ_MAXANG PI/4
+#define PALETA_IZQ_MINANG -PI/4
+#define PALETA_DER_MAXANG 3*PI/4
+#define PALETA_DER_MINANG -3*PI/4
 
 #define BASE_QUESO 4
 #define ALTO_QUESO 5
@@ -270,7 +270,8 @@
 #define PI 3.1415926535897932384626433832795028841971693993751058209749
 
 //id imagenes
-//#define ImgSegmSoga "../images/Cuadrado.png"
+#define ID_CUADRADO "../images/Rectangulo.png" //para pruebas
+
 #define ID_PLATAFORMA "../images/plataforma_madera.png"
 #define ID_PELOTATENIS "../images/Pelota-Tenis.png"
 #define ID_PELOTABASQUET "../images/Pelota-Basket.png"
@@ -318,7 +319,7 @@
 #define ID_RUEDA_CARRITO "../images/rueda.png"
 #define ID_CARRITO "../images/carroBoton.png"
 
-#define ID_PALETA "../images/cuadrado.png"
+#define ID_PALETA "../images/Rectangulo.png"
 
 #define ID_QUESO "../images/queso.png"
 
@@ -331,7 +332,7 @@
 
 //posiciones de balancin
 #define IZQUIERDA 1
-#define DERECHA 2
+#define DERECHA -1
 
 //Sentidos del motor
 #define SENT_HORARIO 1
@@ -381,6 +382,7 @@
 
 #define CLICK_MOUSE 0
 #define PRESS_SPACE 1
+#define RELEASE_SPACE 2
 
 //Javier
 #define LARGO 1024

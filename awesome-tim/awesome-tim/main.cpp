@@ -211,6 +211,7 @@ void jugar(char* rutaIn, char* rutaOut){
 				cant++;
 				
 				ftime(&tInicial);
+				juego.onEvent();
 				juego.onLoop();
 				ftime(&tFinal);
 
