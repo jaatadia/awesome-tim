@@ -9,6 +9,8 @@
 #define FIRE_GUN POP_BALLOON
 #define MUSIC "../music/modoEstatico.wav"
 #define VICTORY_MUS "../music/victory.ogg"
+#define FLIPPER_UP "../music/flipperup.wav"
+#define FLIPPER_DOWN "../music/flipperdown.wav"
 
 class Sonidos{
 private:
