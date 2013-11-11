@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -63,12 +62,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="false"
-				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib libyaml-cppmdd.lib Box2D.lib  SDL2_mixer.lib"
+				AdditionalDependencies="SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib yaml-cpp.lib Box2D.lib  SDL2_mixer.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -88,6 +85,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -143,8 +143,6 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -164,6 +162,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -320,22 +321,6 @@
 			</File>
 			<File
 				RelativePath=".\MEstados.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseDownMessage.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseEventMessage.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseMotionMessage.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseUpMessage.cpp"
 				>
 			</File>
 			<File
@@ -750,22 +735,6 @@
 			</File>
 			<File
 				RelativePath=".\Motor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseDownMessage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseEventMessage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseMotionMessage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MouseUpMessage.h"
 				>
 			</File>
 			<File
