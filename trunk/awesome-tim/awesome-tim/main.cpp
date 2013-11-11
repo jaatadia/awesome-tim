@@ -182,7 +182,6 @@ void jugar(char* rutaIn, char* rutaOut){
 		
 		frames++;
 
-		//clock_t tInicial = clock();
    		ftime(&tInicial);
 
 		bool aux = juego.onEvent();
@@ -193,7 +192,6 @@ void jugar(char* rutaIn, char* rutaOut){
 			continue;
 		}
 
-		//clock_t tFinal = clock();
 		ftime(&tFinal);
 		
 		tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
@@ -224,7 +222,6 @@ void jugar(char* rutaIn, char* rutaOut){
 
 				if (ciclos>5) break;
 			}
-			//std::cout<<"Ciclios salteados: "<< cant << "\n";
 
 		}
 		

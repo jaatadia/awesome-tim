@@ -56,27 +56,7 @@ void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int anch
 
 //carga una imagen de direccion cadena
 SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){
-	
-	
-	/*char cadena[256];
-	
-	int i=0;
-	bool termino = false;
-	while((i<255)&&(!termino)){
-		char c = cad[i];
-		cadena[i] = '\0';
-		if (((c>='a')&&(c<='z'))||((c>='A')&&(c<='Z'))||((c>='0')&&(c<='9'))||(c==' ')||(c=='.')||(c=='-')||(c=='_')||(c=='/')){
-			cadena[i] = c;
-		}else{
-			termino = true;
-		}
-		i++;
-	}
-	std::cout<<cadena<<"\n";
-	*/
-	
-	
-		
+
 	SDL_Surface* temp = NULL; 
 	SDL_Surface* superficie = NULL; 
 	temp = IMG_Load(cadena);

@@ -249,7 +249,7 @@ Superficie* BotoneraController::getImpresion(){
 				this->layerPrincipal->dibujarImagen(this->scrollButtonDownPressed, NULL, x, y + this->altoAreaFiguras + (this->altoAreaScroll >> 1));
 		}
 	}
-	//this->setCambio(false);
+	this->setCambio((this->scrollTop) || (this->scrollBot));
 	return layerPrincipal;
 }
 

@@ -260,6 +260,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Fuente.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GeneradorDeFigurasCompuestas.cpp"
 				>
 			</File>
@@ -675,6 +679,10 @@
 			</File>
 			<File
 				RelativePath=".\Flecha.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Fuente.h"
 				>
 			</File>
 			<File

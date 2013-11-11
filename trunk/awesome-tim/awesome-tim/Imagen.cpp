@@ -38,12 +38,13 @@ Imagen::Imagen(const char* file)
 	}
 }
 
+#include "Fuente.h"
+
 //crea una imagen a partir del texto pasado
 Imagen::Imagen(const char* texto,int alto,int r,int g,int b){
 	
 	try{
-		TTF_Init();
-		TTF_Font* font = TTF_OpenFont("../images/font.ttf", alto);
+		TTF_Font* font = Fuente::openFont("../images/font.ttf", alto);
 		if(font ==NULL){
 			ErrorLogHandler::addError(IMAGEN_TAG,TTF_GetError());
 			superficie = SdlSurfaceManager::crearSup();
@@ -51,9 +52,8 @@ Imagen::Imagen(const char* texto,int alto,int r,int g,int b){
 		}else{
 			SDL_Color text_color = {r,g,b};
 			this->superficie =  TTF_RenderText_Solid(font, texto,text_color);
-			TTF_CloseFont(font);
+			Fuente::closeFont(font);
 		}
-		TTF_Quit();
 	}catch(...){
 	}
 }

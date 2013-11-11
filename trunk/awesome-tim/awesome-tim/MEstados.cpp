@@ -3,6 +3,7 @@
 #include "Constantes.h"
 #include "Juego.h"
 #include "JuegoPlay.h"
+#include "Fuente.h"
 
 MEstados::MEstados(const char *fileIn,const char *fileOut){
 	
@@ -38,6 +39,7 @@ MEstados::~MEstados(void){
 	delete Eeditor;
 	delete Eplay;
 	
+	Fuente::end();
 	Sonidos::end();
 	SDL_Quit();
 	ErrorLogHandler::closeLog();
