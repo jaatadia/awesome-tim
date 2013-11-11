@@ -90,6 +90,10 @@
 
 //valores fisicos
 
+#define PALETA_DENSIDAD 10
+#define PALETA_RESTITUTION 0.8
+#define PALETA_FRICCION  1
+
 #define FUERZA_BALA 100000
 #define ANCHO_BALA 2
 #define ALTO_BALA 1
@@ -389,7 +393,7 @@
 #define RELEASE_SPACE 2
 
 //Javier
-#define LARGO 1024
+#define LARGO 2048
 
 // NET
 #define PUERTO							"10000"

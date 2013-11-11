@@ -97,32 +97,40 @@ SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){
 
 //crea una sdl surface de anchoxalto
 SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
-	
-	Uint32 rmask, gmask, bmask, amask;
-	rmask = 0x000000ff;
-    gmask = 0x0000ff00;
-    bmask = 0x00ff0000;
-    amask = 0xff000000;
-	SDL_Surface* sur = NULL;
-	SDL_Surface* temp = NULL;
-	
-	temp = SDL_CreateRGBSurface(0,ancho,alto,32,rmask,gmask,bmask,amask);
-	if(temp == NULL){
-		ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
-		fallar();
-	}else{
-		sur = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_RGBA8888,0);
-		SDL_FreeSurface(temp);
-		if(sur == NULL){
+	try{
+		if((ancho==0)||(alto==0)){
+			ErrorLogHandler::addError(SSM_TAG,"Se quiere crear una imagen donde ancho o alto es 0");
+			return NULL;
+		}
+
+		Uint32 rmask, gmask, bmask, amask;
+		rmask = 0x000000ff;
+		gmask = 0x0000ff00;
+		bmask = 0x00ff0000;
+		amask = 0xff000000;
+		SDL_Surface* sur = NULL;
+		SDL_Surface* temp = NULL;
+		
+		temp = SDL_CreateRGBSurface(0,ancho,alto,32,rmask,gmask,bmask,amask);
+		if(temp == NULL){
 			ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
 			fallar();
 		}else{
-			SDL_SetSurfaceBlendMode(sur,SDL_BLENDMODE_BLEND);
-			Uint32 alpha = SDL_MapRGBA(sur->format,0,0,0,0);
-			pintarSup(sur,alpha);
+			sur = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_RGBA8888,0);
+			SDL_FreeSurface(temp);
+			if(sur == NULL){
+				ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
+				fallar();
+			}else{
+				SDL_SetSurfaceBlendMode(sur,SDL_BLENDMODE_BLEND);
+				Uint32 alpha = SDL_MapRGBA(sur->format,0,0,0,0);
+				pintarSup(sur,alpha);
+			}
 		}
+		return sur;
+	}catch(...){
+		return NULL;
 	}
-	return sur;
 }
 
 //crea una sdl surface de anchoxalto

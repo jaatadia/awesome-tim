@@ -84,11 +84,12 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			cuerpo->SetType(b2_staticBody);
 
 			b2PolygonShape forma;
-			b2Vec2 vertices[3];
-			vertices[0] = b2Vec2(-dim->getAncho()/2,-dim->getAlto());
-			vertices[1] = b2Vec2(dim->getAncho()/2,-dim->getAlto());
-			vertices[2] = b2Vec2(-dim->getAncho()/2,+dim->getAlto());
-			forma.Set(vertices,3);
+			b2Vec2 vertices[4];
+			vertices[0] = b2Vec2(-dim->getAncho()/2,-dim->getAlto()/2);
+			vertices[1] = b2Vec2(dim->getAncho()/2,-dim->getAlto()/2);
+			vertices[2] = b2Vec2(dim->getAncho()/2,-dim->getAlto()/4);
+			vertices[3] = b2Vec2(-dim->getAncho()/2,+dim->getAlto()/2);
+			forma.Set(vertices,4);
 
 			fD.shape = &forma;
 			fD.density = DENSIDAD_ARCO;
@@ -283,9 +284,11 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				b2PolygonShape forma;
 				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
 				fD.shape = &forma;
-				fD.density = 1; //PALETA_DENSIDAD;
-				//fD.friction = PLATAFORMA_FRICCION;
+				fD.density = PALETA_DENSIDAD;
+				fD.restitution = PALETA_RESTITUTION;
+				fD.friction = PALETA_FRICCION;
 				cuerpo->CreateFixture(&fD);
+				cuerpo->SetBullet(true);
 
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;

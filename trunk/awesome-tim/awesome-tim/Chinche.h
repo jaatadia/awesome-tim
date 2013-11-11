@@ -30,7 +30,7 @@ public:
 
 		//busco el punto que pincha
 		double px = cx + 0;
-		double py = cy + dimension->getAlto()/2 + 1;
+		double py = cy + dimension->getAlto()/2 + 0.1;
 		
 		//busco donde esta el punto que pincha segun mi angulo
 		double coseno = cos( -dimension->getAngulo() * PI / 180);

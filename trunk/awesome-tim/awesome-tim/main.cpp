@@ -153,6 +153,7 @@ ClientTIM cliente;
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut){
 	MEstados juego = MEstados(rutaIn,rutaOut);
+	//MEstadosCliente juego = MEstadosCliente(1);
 
 #ifdef SERVER_MODE
 	std::cout << "Initializing game in: SERVER MODE" << std::endl;
@@ -161,8 +162,6 @@ void jugar(char* rutaIn, char* rutaOut){
 	std::cout << "Initializing game in: CLIENT MODE" << std::endl;
 	Client * client = new Client(&juego);
 #endif // SERVER_MODE
-
-	//MEstadosCliente juego = MEstadosCliente(1);
 
 	double tiempoTardado = 0;
 	double tiempoExtra = 0;
@@ -190,7 +189,9 @@ void jugar(char* rutaIn, char* rutaOut){
 		juego.onLoop();
 		juego.onRender();
 		
-		if (aux) continue;
+		if (aux){
+			continue;
+		}
 
 		//clock_t tFinal = clock();
 		ftime(&tFinal);
@@ -207,7 +208,9 @@ void jugar(char* rutaIn, char* rutaOut){
 			tiempo+=tiempoExtra;;
 			tiempoExtra=0;
 		}else{
+			int ciclos = 0;
 			while(tiempoExtra<0){
+				ciclos ++;
 				cant++;
 				
 				ftime(&tInicial);
@@ -219,6 +222,7 @@ void jugar(char* rutaIn, char* rutaOut){
 				tiempo += tiempoTardado;
 				tiempoExtra += (FRAME_FRECUENCY /*-tiempoTardado*/);
 
+				if (ciclos>5) break;
 			}
 			//std::cout<<"Ciclios salteados: "<< cant << "\n";
 

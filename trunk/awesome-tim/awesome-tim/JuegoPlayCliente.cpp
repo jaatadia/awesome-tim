@@ -89,11 +89,6 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 }
 
 void JuegoPlayCliente::onLoop(){
-	if(!gano){
-		terreno->actualizarModelo(vector);
-	}else{
-		actualizarVictoria();
-	}
 }
 
 bool JuegoPlayCliente::onRender(Superficie* sup){

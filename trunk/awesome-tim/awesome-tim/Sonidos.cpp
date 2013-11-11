@@ -8,7 +8,7 @@ std::map<std::string,void*>* Sonidos::mapa = new std::map<std::string,void*>;
 
 void Sonidos::initialize(){
 	initialized = true;
-	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 );
 	(*mapa)[POP_BALLOON] = (void*)Mix_LoadWAV(POP_BALLOON);
 	(*mapa)[FLIPPER_UP] = (void*)Mix_LoadWAV(FLIPPER_UP);
 	(*mapa)[FLIPPER_DOWN] = (void*)Mix_LoadWAV(FLIPPER_DOWN);
@@ -18,31 +18,43 @@ void Sonidos::initialize(){
 }
 
 void Sonidos::end(){
-	if(!initialized) return;
+	try{
+		if(!initialized) return;
 
-	Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
-	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_UP]);
-	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_DOWN]);
+		Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
+		Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_UP]);
+		Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_DOWN]);
 
-	Mix_FreeMusic((Mix_Music*)(*mapa)[VICTORY_MUS]);
-	Mix_FreeMusic((Mix_Music*)(*mapa)[MUSIC]);
-	delete(mapa);
+		Mix_FreeMusic((Mix_Music*)(*mapa)[VICTORY_MUS]);
+		Mix_FreeMusic((Mix_Music*)(*mapa)[MUSIC]);
+		delete(mapa);
 
-    Mix_CloseAudio();
+		Mix_CloseAudio();
+	}catch(...){
+	}
 }
 
 void Sonidos::playSound(const char *file){
-	if(!initialized) initialize();
-	Mix_PlayChannel(-1,(Mix_Chunk*)(*mapa)[file],0);
+	try{
+		if(!initialized) initialize();
+		Mix_PlayChannel(-1,(Mix_Chunk*)(*mapa)[file],0);
+	}catch(...){
+	}
 }
 
 void Sonidos::playMusic(const char* file){
-	if(!initialized) initialize();
-	stopMusic();
-	Mix_PlayMusic((Mix_Music*)(*mapa)[file],-1);
+	try{
+		if(!initialized) initialize();
+		stopMusic();
+		Mix_PlayMusic((Mix_Music*)(*mapa)[file],-1);
+	}catch(...){
+	}
 }
 
 void Sonidos::stopMusic(){
-	if(!initialized) initialize();
-	Mix_HaltMusic();
+	try{
+		if(!initialized) initialize();
+		Mix_HaltMusic();
+	}catch(...){
+	}
 }

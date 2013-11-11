@@ -71,8 +71,6 @@ public:
 
 	void actualizarModelo(Figura* vector[]); 
 
-	void dibujate(Superficie* sup,int xIni,int yIni);
-
 	void agrandarFigura();
 	void achicarFigura();
 	void shiftFigura();
@@ -82,8 +80,6 @@ public:
 	bool posicionOcupada(Figura* figAPosicionar);
 
 	void interactuar(double posClickX, double posClickY);
-
-	bool objetivosCumplidos();
 
 private:
 	bool hayFiguras();

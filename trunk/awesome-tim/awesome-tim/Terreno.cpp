@@ -226,7 +226,6 @@ bool Terreno::agregarFigura(Figura* fig){
 			Figura* result2 = getFiguraAtableSoga(x2,y2);
 			
 			if((result1 == NULL) || (result2 == NULL)){
-				std::cout<<"entro";
 				delete soga;
 				return false;
 			}

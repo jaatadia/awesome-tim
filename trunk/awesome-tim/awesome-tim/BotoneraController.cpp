@@ -404,43 +404,47 @@ bool BotoneraController::estaVacia(){
 
 
 void BotoneraController::dibujarCantInstancias(){
-	
-	int anchoBoton = botonera->getAnchoBoton();
-	int altoBoton = botonera->getAltoBoton();
+	try{
+		int anchoBoton = botonera->getAnchoBoton();
+		int altoBoton = botonera->getAltoBoton();
 
 
-	int posBotonX = 0;
-	int posBotonY = 0;
+		int posBotonX = 0;
+		int posBotonY = 0;
 
-	std::list<map<Figura *, int>> figs = botonera->getListaFiguras();
-	std::list<map<Figura *, int>>::iterator itFig = figs.begin();
+		std::list<map<Figura *, int>> figs = botonera->getListaFiguras();
+		std::list<map<Figura *, int>>::iterator itFig = figs.begin();
 
-	int cantInstancias;
-	Imagen* img;
-	//solo para copiarla y no cambiar la original
-	layerADibujar = layerFiguras->rotarSuperficie(0);
+		int cantInstancias;
+		Imagen* img;
+		//solo para copiarla y no cambiar la original
+		layerADibujar = layerFiguras->rotarSuperficie(0);
 
-	int cantDeFig = figs.size();
+		int cantDeFig = figs.size();
 
-	for(int i = 0; i < cantDeFig; ++i){
+		for(int i = 0; i < cantDeFig; ++i){
 
-		cantInstancias = (*itFig).begin()->second;
+			cantInstancias = (*itFig).begin()->second;
 
-		//convertir a c string
-		stringstream ss;
-		ss<<cantInstancias;
-		string digito =ss.str();
-		const char* dig = digito.c_str();
+			//convertir a c string
+			stringstream ss;
+			ss<<cantInstancias;
+			string digito =ss.str();
+			const char* dig = digito.c_str();
 
-		//dibujar
-		img = new Imagen(dig,altoBoton*0.2,255,255,255);
-		//y un pequeño desplazamiento para que entren bien al boton
-		layerADibujar->dibujarImagen(img, NULL, anchoBoton*1/10, posBotonY+altoBoton*1/10);
+			//dibujar
+			img = new Imagen(dig,altoBoton*0.2,255,255,255);
+			//y un pequeño desplazamiento para que entren bien al boton
+			layerADibujar->dibujarImagen(img, NULL, anchoBoton*1/10, posBotonY+altoBoton*1/10);
 
-		posBotonY += altoBoton;
-		++itFig;
+			posBotonY += altoBoton;
+			++itFig;
 
-		delete img;
+			if(img!=NULL){
+				delete img;
+			}
+		}
+	}catch(...){
 	}
 
 }
