@@ -46,7 +46,7 @@ void ServerHandler::run()
 								}
 								break;
 							}
-						case MSG_TYPE_EVENT:
+						case MSG_TYPE_EVENT_MOUSEBUTTONDOWN:
 							break;
 						case MSG_TYPE_GOODBYE:
 							break;
