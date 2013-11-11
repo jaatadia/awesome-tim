@@ -158,4 +158,6 @@ public:
 	virtual bool cumplioObjetivo(){
 		return true;
 	}
+
+	virtual void corregirEstado(){};
 };

@@ -692,12 +692,16 @@ void Terreno::actualizarModelo(){
 
 	if (fisicaActiva){
 
+		std::list<Figura*>::iterator iteradorLista;
+		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+			(*iteradorLista)->corregirEstado();
+		}
+
 		this->mundoBox2D->actualizar();
 		this->mundoBox2D->actualizar(NULL);
 		this->setCambio(true);
 
 		std::list<Soga*> sogas;
-		std::list<Figura*>::iterator iteradorLista;
 		std::list<Figura*> listaCortanSoga;
 		std::list<Figura*> nuevasFiguras;
 		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
