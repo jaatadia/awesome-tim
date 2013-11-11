@@ -1,5 +1,3 @@
-#include "MouseEvent.h"
-
 #include "MouseEventMessage.h"
 
 MouseEventMessage::MouseEventMessage(string msg)
@@ -39,7 +37,7 @@ string MouseEventMessage::serialize()
 	ss << this->x;
 	ss << "|";
 	ss << this->y;
-	ss << "$" 
+	ss << "$";
 	return ss.str();
 }
 

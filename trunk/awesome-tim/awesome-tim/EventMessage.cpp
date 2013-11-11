@@ -2,7 +2,6 @@
 
 EventMessage::EventMessage(string msg)
 {
-	this->type = MSG_TYPE_EVENT;
 	//TODO Convertir msg
 }
 
