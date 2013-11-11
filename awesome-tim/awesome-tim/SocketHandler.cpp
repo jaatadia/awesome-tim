@@ -63,8 +63,8 @@ void SocketHandler::run()
 									case MSG_TYPE_FILES:
 										msg = new FilesMessage(cadena.substr(2));
 										break;
-									case MSG_TYPE_EVENT:
-										msg = new EventMessage(cadena.substr(2));
+									case MSG_TYPE_EVENT_MOUSEBUTTONDOWN:
+										msg = new MouseDownMessage(cadena.substr(2));
 										break;
 									case MSG_TYPE_GOODBYE:
 										msg = new GoodbyeMessage(cadena.substr(2));

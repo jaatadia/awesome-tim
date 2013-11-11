@@ -2,6 +2,7 @@
 
 FilesMessage::FilesMessage(string msg)
 {
+	this->valid = MSG_VALID;
 	this->type = MSG_TYPE_FILES;
 	size_t pos = msg.find("|");
 	if (pos != std::string::npos)
