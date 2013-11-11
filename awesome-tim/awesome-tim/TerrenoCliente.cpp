@@ -675,88 +675,12 @@ bool TerrenoCliente::anguloEsPositivo(double X1, double Y1, double X2, double Y2
 }
 
 void TerrenoCliente::actualizarModelo(Figura* vector[]){
-
-	if (fisicaActiva){
-		
-		std::list<Soga*> sogas;
-		std::list<Figura*>::iterator iteradorLista;
-		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-			
-			if((*iteradorLista)->getTipoFigura()==TIJERA){
-				((Tijera*)(*iteradorLista))->actualizar();
-			}else if((*iteradorLista)->getTipoFigura()==SOGA){
-				((Linea*)(*iteradorLista))->actualizar();
-			}else if((*iteradorLista)->getTipoFigura()==LINEA){
-				((Linea*)(*iteradorLista))->actualizar();
-			}else if((*iteradorLista)->getTipoFigura()==HUEVO){
-				((Huevo*)(*iteradorLista))->actualizar();
-			}else if((*iteradorLista)->getTipoFigura()==GLOBOHELIO){
-				((GloboHelio*)(*iteradorLista))->actualizar();
-			}
-		}
-		
-		std::list<Figura*> listaABorrar;
-		std::list<Figura*>::iterator iterLista;
-		for (iterLista = figuras.begin();iterLista != figuras.end();iterLista++){
-			if((*iterLista)->estaMarcada()){
-				listaABorrar.push_back((*iterLista));
-			}
-		}
-
-		for(iterLista = listaABorrar.begin();iterLista != listaABorrar.end();iterLista++){
-			figuras.remove(*iterLista);
-			vector[(*iterLista)->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,(*iterLista)->numero,0,0);
-			delete((*iterLista));
-		}
-
-	}else{
-		std::list<Figura*>::iterator iteradorLista;
-		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-			if(((*iteradorLista)->getTipoFigura()==SOGA) ||((*iteradorLista)->getTipoFigura()==LINEA)){
-				((Linea*)(*iteradorLista))->actualizar();
-				this->setCambio(true);
-			}
-		}
-	}
 }
 
 bool TerrenoCliente::posEnTerrenoExtendido(double posX,double posY){
-
-	double ppioLogicoX, finalLogicoX, ppioLogicoY, finalLogicoY;
-
-	ppioLogicoX =  X_TERRENO_LOGICO - ANCHO_TERRENO_LOGICO ;
-	finalLogicoX = ANCHO_TERRENO_LOGICO + X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO;
-	ppioLogicoY = Y_TERRENO_LOGICO - ALTO_TERRENO_LOGICO;
-	finalLogicoY = ALTO_TERRENO_LOGICO + Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO;
-
-	//std::cout<<posY<<std::endl; //a ver porque no se va por arriba...
-
-	//return ((posX > ppioLogicoX) || (posX < finalLogicoX) || (posY > ppioLogicoY) || (posY < finalLogicoY)) ;
 	return true;
 }
 
-void TerrenoCliente::dibujate(Superficie* sup,int xIni,int yIni){
-	
-	sup->dibujarImagen(this->img,NULL,xIni,yIni);
-	
-	std::list<Figura*>::iterator iteradorLista;
-
-	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
-		double x = (*iteradorLista)->getDimension()->getX();
-		double y = (*iteradorLista)->getDimension()->getY();
-		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
-		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
-		
-		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&
-			((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
-				(*iteradorLista)->dibujar(sup,xIni,yIni);
-	}
-	//por ultimo dibujo la que estoy manipulando;
-	if (figuraActiva)
-		figuraActiva->dibujar(sup,xIni,yIni);
-
-}
 
 
 double TerrenoCliente::calcularAngulo(Dimension* dim, double XVector1,double YVector1,double XVector2,double YVector2){
@@ -803,6 +727,7 @@ double TerrenoCliente::calcularAngulo(Dimension* dim, double XVector1,double YVe
 		return (dim->getAngulo() + variacionAngulo);
 }
 
+
 Figura* TerrenoCliente::getFiguraAtableCorrea(double x,double y){
 	if(hayFiguras()){	
 		Figura* figuraBuscada = NULL;
@@ -825,6 +750,7 @@ Figura* TerrenoCliente::getFiguraAtableCorrea(double x,double y){
 	}
 	return NULL;
 }
+
 
 Figura* TerrenoCliente::getFiguraAtableSoga(double x,double y){
 	if(hayFiguras()){	
@@ -851,6 +777,7 @@ Figura* TerrenoCliente::getFiguraAtableSoga(double x,double y){
 	return NULL;
 }
 
+
 bool TerrenoCliente::posicionOcupada(Figura* figAPosicionar){
 
 	bool choca1 = false;
@@ -870,8 +797,10 @@ bool TerrenoCliente::posicionOcupada(Figura* figAPosicionar){
 	return (choca1 || choca2);
 }
 
+
 void TerrenoCliente::borrarAtadura(Figura* fig){
 }
+
 
 void TerrenoCliente::interactuar(double posClickX, double posClickY){
 
@@ -880,13 +809,8 @@ void TerrenoCliente::interactuar(double posClickX, double posClickY){
 	if (this->adentroZonaTerreno(posClickX,posClickY)){
 		figAInteract = this->buscarFigura(posClickX,posClickY);
 		if(figAInteract != NULL){
-			figAInteract->interactuar();
 			MaquinaEstados::putMensaje(-1,figAInteract->numero,0,0);
 		}
 	}
 
-}
-
-bool TerrenoCliente::objetivosCumplidos(){
-	return false;
 }
