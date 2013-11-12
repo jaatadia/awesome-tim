@@ -19,6 +19,12 @@ public:
 	virtual void editor()=0;
 	virtual void play(void* ter)=0;
 
+	virtual bool isRunning()=0;
+	virtual bool onEvent()=0;
+	virtual void onLoop()=0;
+	virtual void onRender()=0;
+	virtual void esperar(double tiempo)=0;
+
 private:
 	Mutex _mutex;
 };
