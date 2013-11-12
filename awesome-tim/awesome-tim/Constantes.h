@@ -86,9 +86,9 @@
 #define ARCO 30
 #define FLECHA 31
 #define ESCOPETA 32
-#define BALA 33
-#define CARRO_ATABLE 34
+#define BALA 33#define CARRO_ATABLE 34
 #define MOTOR_RATON 35
+#define CANIO 36
 
 //valores fisicos
 
@@ -256,6 +256,12 @@
 #define PALETA_DER_MAXANG 3*PI/4
 #define PALETA_DER_MINANG -3*PI/4
 
+#define ANCHO_CANIO 10
+#define ALTO_CANIO 2*RADIO_PELOTATENIS+2
+#define CANIO_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CANIO)-1
+#define CANIO_MINLARGO 1
+#define CANIO_BORDE 0.3
+
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
@@ -275,6 +281,7 @@
 #define VERTICES_DEFAULT 5
 #define ID_DEFAULT ""
 #define LARGO_PLATAFORMA_DEFAULT 2
+#define LARGO_CANIO_DEFAULT 1
 
 //Por si no estuviese claro: PI
 #define PI 3.1415926535897932384626433832795028841971693993751058209749
@@ -341,6 +348,7 @@
 #define ID_ESCOPETA "../images/shotgun.png"
 #define ID_BALA "../images/shotgun_bullet.png"
 
+#define ID_CANIO "../images/Rectangulo.png"
 #define ID_MOTOR_RATON "../images/FondoRaton.png"
 #define ID_MOTOR_RATON_OPUESTO "../images/FondoRatonOpuesto.png"
 #define ID_MOTOR_RATON_1 "../images/ratonDer.png"

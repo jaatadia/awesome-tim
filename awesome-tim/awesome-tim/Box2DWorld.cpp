@@ -280,6 +280,63 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+		case CANIO:{
+				cuerpo->SetType(b2_staticBody);
+				b2PolygonShape forma;
+				double ancho = (dim)->getAncho();
+				double alto = (dim)->getAlto();
+				forma.SetAsBox(ancho/2,alto/2);
+				fD.shape = &forma;
+				fD.isSensor = true;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
+				cuerpo->CreateFixture(&fD);
+				std::cout << cuerpo->GetAngle() << "\n";
+
+				b2BodyDef pared1;
+				pared1.position.Set(dim->getX(),dim->getY()-alto/2+CANIO_BORDE/2);
+				//pared1.angle = -(dim->getAngulo()/180*PI);
+				pared1.angle = cuerpo->GetAngle();
+				pared1.type = b2_staticBody;
+				b2Body* cuerpo_pared1 = this->mundo->CreateBody(&pared1);
+
+				b2PolygonShape forma_pared1;
+				b2PolygonShape forma_pared2;
+				forma_pared1.SetAsBox(ancho/2,CANIO_BORDE/2);
+				forma_pared2.SetAsBox(ancho/2,CANIO_BORDE/2);
+
+				fD.shape = &forma_pared1;
+				fD.density = 1;
+				fD.friction = 10;
+				fD.isSensor = false;
+				cuerpo_pared1->CreateFixture(&fD);
+				std::cout << cuerpo_pared1->GetAngle() << "\n";
+
+				b2BodyDef pared2;
+				pared2.position.Set(dim->getX(),dim->getY()+alto/2-CANIO_BORDE/2);
+				//pared2.angle = -(dim->getAngulo()/180*PI);
+				pared2.angle = cuerpo->GetAngle();
+				pared2.type = b2_staticBody;
+				b2Body* cuerpo_pared2 = this->mundo->CreateBody(&pared2);
+				
+				fD.shape = &forma_pared2;
+				fD.density = 1;
+				fD.friction = 10;
+				fD.isSensor = false;
+				cuerpo_pared2->CreateFixture(&fD);
+				std::cout << cuerpo_pared2->GetAngle() << "\n";
+
+				//union del canio
+				b2WeldJointDef joint1;
+				joint1.Initialize(cuerpo_pared1,cuerpo,cuerpo_pared1->GetPosition());
+				b2Joint* enlace1 = this->mundo->CreateJoint(&joint1);
+
+				b2WeldJointDef joint2;
+				joint2.Initialize(cuerpo_pared2,cuerpo,cuerpo_pared2->GetPosition());
+				b2Joint* enlace2 = this->mundo->CreateJoint(&joint2);
+					
+				break;
+			}
 		case PALETA:{
 
 				b2PolygonShape forma;
