@@ -366,9 +366,11 @@ void BotoneraController::ScrollDown(){
 #include "Tijera.h"
 #include "Chinche.h"
 #include "PaletaFlipper.h"
+#include "Canio.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Canio(LARGO_CANIO_DEFAULT,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Escopeta(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
@@ -390,9 +392,7 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(ID_BALANCIN_IZQ,0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(ID_BALANCIN_DER,0,0,ANGULO_BALANCIN_DER),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new PaletaFlipper(0,0,IZQUIERDA),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new PaletaFlipper(0,0,DERECHA),INSTANCIAS_DEFAULT);
-	
+	this->agregarBoton(new PaletaFlipper(0,0,IZQUIERDA),INSTANCIAS_DEFAULT);	
 
 	return true;
 }

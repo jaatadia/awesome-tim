@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Canio.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Carrito.cpp"
 				>
 			</File>
@@ -603,6 +607,10 @@
 			</File>
 			<File
 				RelativePath=".\Box2DWorld.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Canio.h"
 				>
 			</File>
 			<File
