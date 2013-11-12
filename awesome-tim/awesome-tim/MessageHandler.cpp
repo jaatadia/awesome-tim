@@ -1,13 +1,10 @@
 #include "MessageHandler.h"
 
-MessageHandler::MessageHandler(int mode) : ConnectionManager(mode)
+MessageHandler::MessageHandler(int mode, MaquinaEstados * game) : ConnectionManager(mode)
 {
+	this->game = game;
 }
 
 MessageHandler::~MessageHandler(void)
-{
-}
-
-MessageHandler::MessageHandler(void)
 {
 }

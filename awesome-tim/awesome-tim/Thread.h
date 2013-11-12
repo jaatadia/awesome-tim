@@ -1,7 +1,10 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
+#ifndef _WINSOCKAPI_
 #define _WINSOCKAPI_
+#endif // _WINSOCKAPI_
+
 #include <windows.h>
 
 class Thread

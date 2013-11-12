@@ -1,6 +1,6 @@
 #include "ServerHandler.h"
 
-ServerHandler::ServerHandler(int mode) : MessageHandler(mode)
+ServerHandler::ServerHandler(int mode, MaquinaEstados * game) : MessageHandler(mode, game)
 {
 }
 
@@ -23,14 +23,21 @@ void ServerHandler::run()
 		switch(getMode())
 		{
 			case WRITE_MODE:
-				break;
+				{
+					Message * msg = ((MEstadosCliente *)this->game)->getNextMessage();
+					if (msg)
+					{
+						this->pushOutputMessage(msg);
+					}
+				}
 			case READ_MODE:
 				Message * mensaje = this->getInputMessage();
 				if(mensaje)
 				{
 					switch(mensaje->getType())
 					{
-						case MSG_TYPE_GREETING:
+						case MSG_TYPE_ID:
+							((MEstadosCliente *)this->game)->setId(((IdMessage *) mensaje)->getId());
 							break;
 						case MSG_TYPE_FILES:
 							{
@@ -46,8 +53,6 @@ void ServerHandler::run()
 								}
 								break;
 							}
-						case MSG_TYPE_EVENT_MOUSEBUTTONDOWN:
-							break;
 						case MSG_TYPE_GOODBYE:
 							break;
 					}
