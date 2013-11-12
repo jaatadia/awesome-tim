@@ -11,7 +11,7 @@ Client::Client(MaquinaEstados * juego,char* IP)
 
 	try
 	{
-		this->commMgr = new CommunicationManager(new ClientSocket(myIP), juego);
+		this->commMgr = new CommunicationManager(new ClientSocket(myIP), juego,false);
 
 	} catch (SocketException & sE)
 	{

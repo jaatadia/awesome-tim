@@ -25,7 +25,7 @@ void Server::run()
 	{
 		while(!this->finalizando)
 		{
-			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), this->juego));
+			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), this->juego,true));
 		}
 	} catch (SocketException &ex)
 	{

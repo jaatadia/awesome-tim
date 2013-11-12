@@ -11,7 +11,7 @@
 JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	
 	this->numCliente = numCliente;
-	posVector = LARGO/5 * (numCliente-1);
+	posVector = LARGO/5 * (numCliente);
 	for(int i = 0;i<LARGO;i++){
 		vector[i] = NULL;
 	}
@@ -41,8 +41,6 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 }
 
 bool JuegoCliente::cargar(){
-	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
-	this->resume();
 	return true;
 }
 
@@ -272,8 +270,8 @@ while(SDL_PollEvent(&evento)){
 				
 				while(vector[posVector]!=NULL){
 					posVector++;
-					if (posVector == LARGO/5*(numCliente)){
-						posVector = LARGO/5*(numCliente-1);
+					if (posVector == LARGO/5*(numCliente+1)){
+						posVector = LARGO/5*(numCliente);
 					}
 				}
 				figuraEnAire->numero = posVector;
