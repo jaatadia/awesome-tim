@@ -35,6 +35,9 @@ private:
 	bool clickPressed;
 	int contEventosMov;
 
+	Figura* vector[LARGO];
+	int posVector;
+
 public:
 	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
 	~Juego(void);

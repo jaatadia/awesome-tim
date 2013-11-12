@@ -73,7 +73,7 @@ public:
 
 	void resizear();
 
-	void actualizarModelo(); 
+	void actualizarModelo(Figura* vector[]); 
 
 	void dibujate(Superficie* sup,int xIni,int yIni);
 

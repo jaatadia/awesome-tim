@@ -19,6 +19,7 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 
 	this->es_fija = false;
 	this->interactua_en_play = false;
+	this->numero = -1;
 }
 
 

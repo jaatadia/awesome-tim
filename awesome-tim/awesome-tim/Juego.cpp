@@ -11,6 +11,11 @@
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	
+	posVector = 0;
+	for(int i = 0;i<LARGO;i++){
+		vector[i] = NULL;
+	}
+
 	this->maq = maq;
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
@@ -34,6 +39,17 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 
 bool Juego::cargar(){
 	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
+	std::list<Figura*> figs = terreno->getListaFigs();
+	for (std::list<Figura*>::iterator iter = figs.begin();iter!= figs.end();iter++){
+		while(vector[posVector]!=NULL){
+			posVector++;
+			if (posVector == LARGO/5){
+				posVector = 0;
+			}
+		}
+		(*iter)->numero = posVector;
+		vector[posVector] = (*iter);
+	}
 	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
 	//necesario para que se ordenen cosas dentro de botonera
 	botonera->resizear();
@@ -104,7 +120,7 @@ bool Juego:: onRender(Superficie* superficie){
 }
 	
 void Juego:: onLoop(){
-	terreno->actualizarModelo();
+	terreno->actualizarModelo(vector);
 }
 
 //manejo de eventos
@@ -253,7 +269,15 @@ while(SDL_PollEvent(&evento)){
 			figuraEnAire = botonera->obtenerFiguraActual();
 			if (figuraEnAire){
 				estaActiva = true;
+				while(vector[posVector]!=NULL){
+					posVector++;
+					if (posVector == LARGO/5){
+						posVector = 0;
+					}
+				}
 				//innecesario pero por si acaso
+				figuraEnAire->numero = posVector;
+				vector[posVector] = figuraEnAire;
 				figuraEnAire->setX(posClickX);
 				figuraEnAire->setY(posClickY);
 			}
@@ -545,7 +569,7 @@ void Juego::soltarFiguraEnAire(){
 	}else{
 
 		botonera->restaurarInstanciaActual();
-
+		vector[figuraEnAire->numero] = NULL;
 		delete figuraEnAire;
 		figuraEnAire = NULL;
 	}
@@ -566,6 +590,7 @@ void Juego::set2Click(){
 		
 		if(result==NULL){
 			botonera->restaurarInstanciaActual();
+			vector[figuraEnAire->numero] = NULL;
 			delete figuraEnAire;
 			figuraEnAire = NULL;
 			this->setCambio(true);
@@ -580,6 +605,7 @@ void Juego::set2Click(){
 			}else{
 				if(linea->getFigura1() == result){
 					botonera->restaurarInstanciaActual();
+					vector[figuraEnAire->numero] = NULL;
 					delete figuraEnAire;
 					figuraEnAire = NULL;
 					this->setCambio(true);
@@ -608,6 +634,7 @@ void Juego::set2Click(){
 		
 		if(result==NULL){
 			botonera->restaurarInstanciaActual();
+			vector[figuraEnAire->numero] = NULL;
 			delete figuraEnAire;
 			figuraEnAire = NULL;
 			this->setCambio(true);
@@ -623,6 +650,7 @@ void Juego::set2Click(){
 			}else{
 				if (result == linea->getFigura1()){
 					botonera->restaurarInstanciaActual();			
+					vector[figuraEnAire->numero] = NULL;
 					delete figuraEnAire;
 					figuraEnAire = NULL;
 					this->setCambio(true);

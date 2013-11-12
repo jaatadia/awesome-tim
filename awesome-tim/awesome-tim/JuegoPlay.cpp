@@ -2,6 +2,11 @@
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
+	posVector = 0;
+	for(int i = 0;i<LARGO;i++){
+		vector[i] = NULL;
+	}
+
 	Terreno* ter = (Terreno*) tere;
 	this->fondo = fondo;
 	this->maq = maq;
@@ -15,14 +20,22 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 	std::list<Figura*> figuras = ter->getListaFigs();
 	std::list<Figura*>::iterator iteradorLista;
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		vector[(*iteradorLista)->numero] = (*iteradorLista);
 		if((*iteradorLista)->esUnion()){
 			figurasAux.push_back((*iteradorLista));
 		}else{
-			terreno->agregarFigura((*iteradorLista)->clonar(false));
+			Figura* fig = (*iteradorLista)->clonar(false);
+			fig->numero = (*iteradorLista)->numero;
+			vector[fig->numero] = fig;
+			terreno->agregarFigura(fig);
+			std::cout<<fig->numero<<"\n";
 		}
 	}
 	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
-		terreno->agregarFigura((*iteradorLista)->clonar(false));
+			Figura* fig = (*iteradorLista)->clonar(false);
+			fig->numero = (*iteradorLista)->numero;
+			vector[fig->numero] = fig;
+			terreno->agregarFigura(fig);
 	}
 	terreno->resizear();
 	this->setCambio(true);
@@ -114,7 +127,7 @@ void JuegoPlay::onLoop(){
 	gano = terreno->objetivosCumplidos();
 
 	if(!gano){
-		terreno->actualizarModelo();
+		terreno->actualizarModelo(vector);
 	}else{
 		actualizarVictoria();
 	}
