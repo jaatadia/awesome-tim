@@ -89,6 +89,7 @@ Contenedor::Contenedor(void){
 	mapa[ID_RUEDA_CARRITO] = new Imagen(ID_RUEDA_CARRITO);
 	mapa[ID_QUESO] = new Imagen(ID_QUESO);
 	mapa[ID_MOTOR_RATON] = new Imagen(ID_MOTOR_RATON);
+	mapa[ID_MOTOR_RATON_OPUESTO] = new Imagen(ID_MOTOR_RATON_OPUESTO);
 	mapa[ID_MOTOR_RATON_1] = new Imagen(ID_MOTOR_RATON_1);
 	mapa[ID_MOTOR_RATON_2] = new Imagen(ID_MOTOR_RATON_2);
 
