@@ -73,11 +73,19 @@ Imagen::~Imagen(void)
 
 //devuelve el alto de la superficie
 int Imagen::getAlto(){
-	return superficie->clip_rect.h;
+	if(superficie!=NULL){
+		return superficie->clip_rect.h;
+	}else{
+		return 10;
+	}
 }
 //devuelve el ancho de la superficie
 int Imagen::getAncho(){
-	return superficie->clip_rect.w;
+	if(superficie!=NULL){
+		return superficie->clip_rect.w;
+	}else{
+		return 10;
+	}
 }
 
 //transparenta toda la imagen a lo pedido (0 completamente transparente 255 completamente opaco)

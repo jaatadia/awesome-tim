@@ -107,6 +107,7 @@ Contenedor::Contenedor(void){
 	mapa[ID_FLECHA] = new Imagen(ID_FLECHA);
 	mapa[ID_ESCOPETA] = new Imagen(ID_ESCOPETA);
 	mapa[ID_BALA] = new Imagen(ID_BALA);
+	mapa[ID_PALETA] = new Imagen(ID_PALETA);
 
 	mapa[GANO_1] = new Imagen(GANO_1);
 	mapa[GANO_2] = new Imagen(GANO_2);

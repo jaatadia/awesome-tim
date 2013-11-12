@@ -336,7 +336,7 @@
 #define ID_CARRITO "../images/carroBoton.png"
 #define ID_PUNTA_CARRITO "../images/circulopunta.png"
 
-#define ID_PALETA "../images/Rectangulo.png"
+#define ID_PALETA "../images/flipper.png"
 
 #define ID_QUESO "../images/queso.png"
 

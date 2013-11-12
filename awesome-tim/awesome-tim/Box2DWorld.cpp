@@ -9,6 +9,7 @@
 #include "Polea.h"
 #include "PaletaFlipper.h"
 #include "Carrito.h"
+#include "Canio.h"
 #include <iostream>
 
 Box2DWorld::Box2DWorld(void){
@@ -291,10 +292,12 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.density = PLATAFORMA_DENSIDAD;
 				fD.friction = PLATAFORMA_FRICCION;
 				cuerpo->CreateFixture(&fD);
-				std::cout << cuerpo->GetAngle() << "\n";
+				//std::cout << cuerpo->GetAngle() << "\n";
 
 				b2BodyDef pared1;
-				pared1.position.Set(dim->getX(),dim->getY()-alto/2+CANIO_BORDE/2);
+				double x,y;
+				((Canio*)figura)->getPosPared1(&x,&y);
+				pared1.position.Set(x,y);
 				//pared1.angle = -(dim->getAngulo()/180*PI);
 				pared1.angle = cuerpo->GetAngle();
 				pared1.type = b2_staticBody;
@@ -310,10 +313,11 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = 10;
 				fD.isSensor = false;
 				cuerpo_pared1->CreateFixture(&fD);
-				std::cout << cuerpo_pared1->GetAngle() << "\n";
+				//std::cout << cuerpo_pared1->GetAngle() << "\n";
 
 				b2BodyDef pared2;
-				pared2.position.Set(dim->getX(),dim->getY()+alto/2-CANIO_BORDE/2);
+				((Canio*)figura)->getPosPared2(&x,&y);
+				pared2.position.Set(x,y);
 				//pared2.angle = -(dim->getAngulo()/180*PI);
 				pared2.angle = cuerpo->GetAngle();
 				pared2.type = b2_staticBody;
@@ -324,7 +328,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = 10;
 				fD.isSensor = false;
 				cuerpo_pared2->CreateFixture(&fD);
-				std::cout << cuerpo_pared2->GetAngle() << "\n";
+				//std::cout << cuerpo_pared2->GetAngle() << "\n";
 
 				//union del canio
 				b2WeldJointDef joint1;
