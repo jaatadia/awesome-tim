@@ -10,8 +10,7 @@
 #include "Carrito.h"
 #include <iostream>
 
-Box2DWorld::Box2DWorld(void)
-{
+Box2DWorld::Box2DWorld(void){
 }
 
 Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true)
@@ -333,6 +332,16 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.density = DENSIDAD_YUNQUE;
 				fD.friction = FRICCION_YUNQUE;
 				fD.restitution = RESTITUCION_YUNQUE;
+				cuerpo->CreateFixture(&fD);
+				break;
+			}
+		case QUESO:{
+				b2PolygonShape forma;
+				forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+				fD.shape = &forma;
+				fD.density = DENSIDAD_QUESO;
+				fD.friction = FRICCION_QUESO;
+				fD.restitution = RESTITUCION_QUESO;
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
@@ -740,6 +749,39 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case MOTOR:
+			{
+				b2BodyDef ejeDef;
+				ejeDef.type = b2_staticBody;
+				ejeDef.position.Set(figura->getDimension()->getX(),figura->getDimension()->getY());
+								
+				b2FixtureDef ejeFix;
+				b2PolygonShape ejeCirculo;
+				ejeCirculo.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
+				ejeFix.shape = &ejeCirculo;
+				b2Body* eje = this->mundo->CreateBody(&ejeDef);
+				eje->CreateFixture(&ejeFix);
+												
+				b2CircleShape forma;
+				forma.m_radius = ((Circulo *)dim)->getRadio();
+				fD.shape = &forma;
+				fD.density = DENSIDAD_ENGRANAJE;
+				fD.friction = FRICCION_ENGRANAJE;
+				fD.restitution = RESTITUCION_ENGRANAJE;
+				cuerpo->CreateFixture(&fD);
+				
+				b2RevoluteJointDef joint;
+				joint.Initialize(eje,cuerpo,cuerpo->GetPosition());
+				joint.bodyA = eje;
+				joint.bodyB = cuerpo;
+				b2Joint* enlace = this->mundo->CreateJoint(&joint);
+
+				if(activo){
+					cuerpo->SetFixedRotation(true);
+					cuerpo->SetAngularVelocity(VELOCIDAD_MOTOR*((Motor*)figura)->sentido);
+				}
+				break;
+			}
+		case MOTOR_RATON:
 			{
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -751,6 +751,10 @@
 			</File>
 			<File
 				RelativePath=".\Motor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MotorRaton.h"
 				>
 			</File>
 			<File
