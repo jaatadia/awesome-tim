@@ -687,7 +687,7 @@ bool Terreno::anguloEsPositivo(double X1, double Y1, double X2, double Y2){
 	return true;
 }
 
-void Terreno::actualizarModelo(){
+void Terreno::actualizarModelo(Figura* vector[]){
 
 	if (fisicaActiva){
 

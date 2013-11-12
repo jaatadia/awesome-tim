@@ -23,6 +23,9 @@ private:
 	int contadorGano;
 	Imagen* imgGano;
 
+	Figura* vector[LARGO];
+	int posVector;
+
 
 public:
 	JuegoPlay(Superficie* fondo,void* ter,MaquinaEstados* maq);
