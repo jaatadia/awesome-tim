@@ -12,6 +12,14 @@ MEstadosCliente::MEstadosCliente(){
 		fallar();
 	}
 	
+	Eactivo = NULL;
+	Eanterior = NULL;
+
+	Eeditor = NULL;
+	Eplay = NULL;
+
+	running = true;
+
 	ventana = new Ventana();
 	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
 	if(superficie->huboFallos()||ventana->huboFallos()){
@@ -21,9 +29,6 @@ MEstadosCliente::MEstadosCliente(){
 		delete ventana;
 		fallar();
 	}
-
-	this->fileIn = fileIn;
-	this->fileOut = fileOut;
 }
 
 MEstadosCliente::~MEstadosCliente(void){
@@ -44,7 +49,11 @@ bool MEstadosCliente::isRunning(){
 }
 
 bool MEstadosCliente::onEvent(){
-	return getEstadoActivo()->onEvent(ventana,&superficie);
+	if(getEstadoActivo()!=NULL){
+		return getEstadoActivo()->onEvent(ventana,&superficie);
+	}else{
+		return false;
+	}
 }
 
 void MEstadosCliente::onLoop(){
@@ -52,12 +61,16 @@ void MEstadosCliente::onLoop(){
 		delete Eanterior;
 		Eanterior = NULL;
 	}
-	getEstadoActivo()->onLoop();
+	if(getEstadoActivo()!=NULL){
+		getEstadoActivo()->onLoop();
+	}
 }
 
 void MEstadosCliente::onRender(){
-	bool dibujar = getEstadoActivo()->onRender(superficie);
-	if (dibujar) ventana->dibujar(superficie);
+	if(getEstadoActivo()!=NULL){
+		bool dibujar = getEstadoActivo()->onRender(superficie);
+		if (dibujar) ventana->dibujar(superficie);
+	}
 }
 	
 void MEstadosCliente::esperar(double miliseconds){
@@ -91,6 +104,7 @@ void MEstadosCliente::setId(int id)
 
 void MEstadosCliente::init()
 {
+	std::cout<<"entroaca!!!\n";
 	running = true;
 	Eactivo = Eeditor = new JuegoCliente(this->id,this);
 	Eanterior = Eplay = NULL;

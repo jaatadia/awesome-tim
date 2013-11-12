@@ -163,20 +163,23 @@ ClientTIM cliente;
 
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut,char* IP){
-	MEstados juego = MEstados(rutaIn,rutaOut);
-	//MEstadosCliente juego = MEstadosCliente(1);
+	
+	MaquinaEstados* juego;
 
 #ifdef SERVER_MODE
 	if (IP==NULL){
+		juego = new MEstados(rutaIn,rutaOut);
 		std::cout << "Initializing game in: SERVER MODE" << std::endl;
-		Server * server = new Server(&juego);
+		Server * server = new Server(juego);
 	}else{
+		juego = new MEstadosCliente();
 		std::cout << "Initializing game in: CLIENT MODE" << std::endl;
-		Client * client = new Client(&juego,IP);
+		Client * client = new Client(juego,IP);
 	}
 #else
 	std::cout << "Initializing game in: CLIENT MODE" << std::endl;
-	Client * client = new Client(&juego,IP);
+	juego = MEstadosCliente();
+	Client * client = new Client(juego,IP);
 #endif // SERVER_MODE
 
 	double tiempoTardado = 0;
@@ -187,7 +190,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 	struct timeb tInicial, tFinal;
 
-	while (juego.isRunning()&&(!juego.huboFallos())){
+	while (juego->isRunning()){
 		
 		if(tiempo>=1000){
 			std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
@@ -200,9 +203,9 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
    		ftime(&tInicial);
 
-		bool aux = juego.onEvent();
-		juego.onLoop();
-		juego.onRender();
+		bool aux = juego->onEvent();
+		juego->onLoop();
+		juego->onRender();
 		
 		if (aux){
 			continue;
@@ -218,7 +221,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 		tiempo += tiempoTardado;
 
 		if(tiempoExtra>=0){
-			juego.esperar(tiempoExtra);
+			juego->esperar(tiempoExtra);
 			tiempo+=tiempoExtra;;
 			tiempoExtra=0;
 		}else{
@@ -228,8 +231,8 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 				cant++;
 				
 				ftime(&tInicial);
-				juego.onEvent();
-				juego.onLoop();
+				juego->onEvent();
+				juego->onLoop();
 				ftime(&tFinal);
 
 				tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
@@ -243,6 +246,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 		
 
 	}
+	delete juego;
 }
 
 int main (int argc, char** argv){
