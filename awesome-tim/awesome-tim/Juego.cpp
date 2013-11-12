@@ -253,7 +253,7 @@ while(SDL_PollEvent(&evento)){
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
 					//al borrar algo restauro su contador de instancias
-					std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+					std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
 					botonera->restaurarInstancias(tipoFig);
 				}
 				else
