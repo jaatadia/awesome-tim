@@ -11,8 +11,6 @@
 #define FRAME_FRECUENCY 1000.0/FPS
 
 #define ITER_CHOQUE 4 //cantidad de movimientos a realizar entre verificaciones de choques
-
-//posiciones de las distintas partes del juego
 #define ANCHO_PANTALLA 600 //ancho de la superficie
 #define ANCHO_PANTALLA_LOGICO 120
 #define ALTO_PANTALLA 600 //alto de la superficie
@@ -86,7 +84,8 @@
 #define ARCO 30
 #define FLECHA 31
 #define ESCOPETA 32
-#define BALA 33#define CARRO_ATABLE 34
+#define BALA 33
+#define CARRO_ATABLE 34
 #define MOTOR_RATON 35
 #define CANIO 36
 

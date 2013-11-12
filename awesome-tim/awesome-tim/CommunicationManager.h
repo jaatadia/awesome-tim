@@ -12,7 +12,7 @@
 class CommunicationManager : public ActiveObject
 {
 public:
-	CommunicationManager(Socket * socket, MaquinaEstados * game);
+	CommunicationManager(Socket * socket, MaquinaEstados * game,bool server);
 	~CommunicationManager(void);
 
 private:
