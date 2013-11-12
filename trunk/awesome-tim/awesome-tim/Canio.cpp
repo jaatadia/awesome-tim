@@ -35,10 +35,30 @@ int Canio::getTipoDimension(){
 
 void Canio::setLargo(int largoN){
 	
-	if (largoN <= PLATAFORMA_MAXLARGO && largoN >= CANIO_MINLARGO){
+	if (largoN <= CANIO_MAXLARGO && largoN >= CANIO_MINLARGO){
 		largo = largoN;
 		this->getDimension()->setAncho(ANCHO_CANIO*largo);
 		setCambio(true);
 	}
 
+}
+void Canio::getPosPared1(double* x,double* y){
+	double alto = this->getDimension()->getAlto();
+	double Xc = this->getDimension()->getX();
+	double coseno = cos(-this->getDimension()->getAngulo()*PI/180);
+	double seno = sin(-this->getDimension()->getAngulo()*PI/180);
+	double Yc  = this->getDimension()->getY();
+	double Y = Yc-alto/2+CANIO_BORDE/2;
+	*x = Xc - (Y-Yc)*seno;
+	*y = Yc + (Y-Yc)*coseno;
+}
+void Canio::getPosPared2(double* x,double* y){
+	double alto = this->getDimension()->getAlto();
+	double Xc = this->getDimension()->getX();
+	double coseno = cos(-this->getDimension()->getAngulo()*PI/180);
+	double seno = sin(-this->getDimension()->getAngulo()*PI/180);
+	double Yc  = this->getDimension()->getY();
+	double Y = Yc+alto/2-CANIO_BORDE/2;
+	*x = Xc - (Y-Yc)*seno;
+	*y = Yc + (Y-Yc)*coseno;
 }

@@ -19,6 +19,8 @@ public:
 	virtual int getLargo();
 	virtual void setLargo(int largoN);
 	virtual Figura* clonar();
+	virtual void getPosPared1(double* x,double* y);
+	virtual void getPosPared2(double* x,double* y);
 
 	virtual bool rotable(){return true;}
 

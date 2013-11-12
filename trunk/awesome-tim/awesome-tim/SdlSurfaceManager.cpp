@@ -331,7 +331,7 @@ SDL_Surface* SdlSurfaceManager::rotar270(SDL_Surface *sur,bool mismaSup){
 
 //rota la superficie pasada en ang sentido antihorario
 SDL_Surface* SdlSurfaceManager::rotar(SDL_Surface *sur, double ang,bool mismaSup){
-	
+	if (sur==NULL) return NULL;
 	SDL_Surface* img;
 	bool destruir = true;
 
