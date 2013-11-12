@@ -1,6 +1,7 @@
 #include "Box2DWorld.h"
 #include "Engranaje.h"
 #include "Motor.h"
+#include "MotorRaton.h"
 #include "Linea.h"
 #include "Soga.h"
 #include "Balancin.h"
@@ -808,9 +809,10 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint.bodyB = cuerpo;
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 
-				if(activo){
+				MotorRaton* motor = (MotorRaton*)figura;
+				if(activo && motor->motorActivo()){
 					cuerpo->SetFixedRotation(true);
-					cuerpo->SetAngularVelocity(VELOCIDAD_MOTOR*((Motor*)figura)->sentido);
+					cuerpo->SetAngularVelocity(VELOCIDAD_MOTOR*((MotorRaton*)figura)->sentido);
 				}
 				break;
 			}

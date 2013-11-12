@@ -58,7 +58,7 @@ int Carrito::getTipoFigura(){
 	return CARRITO;
 }
 
-Figura* Carrito::getCarro(){
+CarroAtable* Carrito::getCarro(){
 	return this->carro;
 }
 
@@ -68,5 +68,21 @@ Figura* Carrito::getRuedaIzq(){
 
 Figura* Carrito::getRuedaDer(){
 	return this->ruedaDer;
+}
+
+int Carrito::esAtableSoga(double x,double y){
+	return this->carro->esAtableSoga(x,y);
+}
+
+void Carrito::posAtableSoga(int numero,double* x,double* y){
+	this->carro->posAtableSoga(numero,x,y);
+}
+
+void Carrito::atarSoga(int numero){
+	(this->carro)->atarSoga(numero);
+}
+
+void Carrito::desatarSoga(int numero){
+	(this->carro)->desatarSoga(numero);
 }
 

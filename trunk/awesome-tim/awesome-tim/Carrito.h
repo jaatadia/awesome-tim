@@ -4,11 +4,12 @@
 #include "Dimension.h"
 #include "Circulo.h"
 #include "Cuadrado.h"
+#include "CarroAtable.h"
 
 class Carrito : public FiguraCompuesta {
 
 private:
-	Figura* carro;
+	CarroAtable* carro;
 	Figura* ruedaIzq;
 	Figura* ruedaDer;
 	
@@ -22,8 +23,15 @@ public:
 	Figura* clonar();
 	int getTipoDimension();
 	int getTipoFigura();
-	Figura* getCarro();
+	CarroAtable* getCarro();
 	Figura* getRuedaIzq();
 	Figura* getRuedaDer();
 
+	//se le pasa la poicion en la que esta queriendo atar y devuelve el numero de posicion atable mas cercano(-1 es que no habia)
+	virtual int esAtableSoga(double x,double y);
+	//se le pasa un numero de posicion atable y devuelve la posicion x e y de donde se ata por mas que ya este atado
+	virtual void posAtableSoga(int numero,double* x,double* y);
+	virtual void atarSoga(int numero);//le dice que ate una soga en su pocicion atable numero
+	virtual void desatarSoga(int numero);//le dice que desate una soga de su posicion atable numero
+	
 };
