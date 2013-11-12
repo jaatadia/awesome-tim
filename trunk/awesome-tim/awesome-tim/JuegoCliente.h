@@ -12,6 +12,7 @@
 #include "EscalasDeEjes.h"
 #include "Contenedor.h"
 #include "MaquinaEstados.h"
+#include "MouseMotionMessage.h"
 
 
 #define JUEGO_TAG "Juego"
@@ -76,4 +77,5 @@ private:
 	bool figEnComandos();
 	void resizear();
 	void set2Click();
+	void procesarActualizaciones();
 };

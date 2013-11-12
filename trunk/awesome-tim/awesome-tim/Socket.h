@@ -1,6 +1,10 @@
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
 
+#ifndef _WINSOCKAPI_
+#define _WINSOCKAPI_
+#endif // _WINSOCKAPI_
+
 #include <WinSock2.h>
 #include <Ws2tcpip.h>
 #include <windows.h>

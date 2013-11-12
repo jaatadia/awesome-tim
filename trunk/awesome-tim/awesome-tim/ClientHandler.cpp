@@ -1,6 +1,6 @@
 #include "ClientHandler.h"
 
-ClientHandler::ClientHandler(int mode) : MessageHandler(mode)
+ClientHandler::ClientHandler(int mode, MaquinaEstados * game) : MessageHandler(mode, game)
 {
 }
 
@@ -59,7 +59,7 @@ void ClientHandler::run()
 				{
 					switch(msg->getType())
 					{
-						case MSG_TYPE_GREETING:
+						case MSG_TYPE_ID:
 							break;
 						case MSG_TYPE_FILES:
 							break;

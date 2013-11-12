@@ -57,9 +57,6 @@ void SocketHandler::run()
 							{
 								switch(type)
 								{
-									case MSG_TYPE_GREETING:
-										msg = new GreetingMessage(cadena.substr(2, pos));
-										break;
 									case MSG_TYPE_FILES:
 										msg = new FilesMessage(cadena.substr(2));
 										break;

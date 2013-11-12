@@ -8,15 +8,21 @@
 class MouseEventMessage : public Message
 {
 public:
+	MouseEventMessage(void);
 	MouseEventMessage(string msg);
 	virtual ~MouseEventMessage(void);
 	virtual string serialize();
 	int getX();
 	int getY();
+	int getEstado();
+	void setX(int x);
+	void setY(int y);
+	void setEstado(int estado);
 
 private:
 	int x;
 	int y;
+	int estado;
 };
 
 #endif // __MOUSEEVENT_H__

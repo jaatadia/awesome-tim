@@ -7,7 +7,11 @@ class MouseMotionMessage : public MouseEventMessage
 {
 public:
 	MouseMotionMessage(string msg);
+	MouseMotionMessage(void);
 	virtual ~MouseMotionMessage(void);
+
+private:
+	int estado;
 };
 
 #endif // __MOUSEMOTIONMESSAGE_H__

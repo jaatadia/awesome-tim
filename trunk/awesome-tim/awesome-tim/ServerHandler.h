@@ -4,14 +4,16 @@
 #include "MessageHandler.h"
 #include "Message.h"
 #include "FilesMessage.h"
+#include "IdMessage.h"
 #include "Constantes.h"
+#include "MEstadosCliente.h"
 #include <iostream>
 #include <fstream>
 
 class ServerHandler : public MessageHandler
 {
 public:
-	ServerHandler(int mode);
+	ServerHandler(int mode, MaquinaEstados * game);
 	virtual ~ServerHandler(void);
 
 private:

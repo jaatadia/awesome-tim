@@ -3,7 +3,7 @@
 
 #include "ConnectionManager.h"
 #include "Message.h"
-#include "GreetingMessage.h"
+#include "IdMessage.h"
 #include "FilesMessage.h"
 #include "MouseDownMessage.h"
 #include "GoodbyeMessage.h"

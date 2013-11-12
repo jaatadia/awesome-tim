@@ -5,9 +5,7 @@
 #include "JuegoCliente.h"
 
 
-MEstadosCliente::MEstadosCliente(int cliente){
-
-	MaquinaEstados::nroCliente = cliente;
+MEstadosCliente::MEstadosCliente(){
 	
 	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
 		ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
@@ -26,10 +24,6 @@ MEstadosCliente::MEstadosCliente(int cliente){
 
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
-	running = true;
-
-	Eactivo = Eeditor = new JuegoCliente(cliente,this);
-	Eanterior = Eplay = NULL;
 }
 
 MEstadosCliente::~MEstadosCliente(void){
@@ -88,4 +82,16 @@ void MEstadosCliente::play(void* ter){
 	
 	Eplay = new JuegoPlayCliente(aux,(void*) ter,this);
 	Eactivo = Eplay;
+}
+
+void MEstadosCliente::setId(int id)
+{
+	this->id = id;
+}
+
+void MEstadosCliente::init()
+{
+	running = true;
+	Eactivo = Eeditor = new JuegoCliente(this->id,this);
+	Eanterior = Eplay = NULL;
 }

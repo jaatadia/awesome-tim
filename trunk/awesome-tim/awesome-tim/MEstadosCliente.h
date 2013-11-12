@@ -24,9 +24,10 @@ private:
 	
 	Ventana* ventana;
 	Superficie* superficie;
+	int id;
 
 public:
-	MEstadosCliente(int cliente);
+	MEstadosCliente();
 	~MEstadosCliente(void);
 
 	bool isRunning();
@@ -35,6 +36,8 @@ public:
 	void onRender();
 	
 	void esperar(double miliseconds);
+	void setId(int id);
+	void init();
 
 
 	virtual void salir();
