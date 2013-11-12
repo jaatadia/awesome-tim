@@ -8,6 +8,7 @@
 #include "Huevo.h"
 #include "GloboHelio.h"
 #include "MaquinaEstados.h"
+#include "Linea.h"
 
 TerrenoCliente::TerrenoCliente(int ancho,int alto,bool fisicaActiva){
 	
@@ -675,6 +676,12 @@ bool TerrenoCliente::anguloEsPositivo(double X1, double Y1, double X2, double Y2
 }
 
 void TerrenoCliente::actualizarModelo(Figura* vector[]){
+	for(std::list<Figura*>::iterator iter = figuras.begin(); iter != figuras.end();iter++){
+		if(((*iter)->getTipoFigura()==SOGA)||((*iter)->getTipoFigura()==LINEA)){
+			((Linea*)(*iter))->actualizar();
+			this->setCambio(true);
+		}
+	}
 }
 
 bool TerrenoCliente::posEnTerrenoExtendido(double posX,double posY){

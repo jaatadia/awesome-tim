@@ -63,7 +63,10 @@ Imagen::~Imagen(void)
 {
 	if(superficie!=NULL){
 		if(superficie->map!=NULL){
-			SDL_FreeSurface(superficie);
+			try{
+				SDL_FreeSurface(superficie);
+			}catch(...){
+			}
 		}
 	}
 }
