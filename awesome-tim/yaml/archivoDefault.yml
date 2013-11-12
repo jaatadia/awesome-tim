@@ -12,13 +12,6 @@ juego:
           fija: NO
           interactuable: NO
       - figura:
-          tipo_figura: CARRITO
-          posX: 25
-          posY: 20
-          angulo: 0
-          fija: NO
-          interactuable: NO
-      - figura:
           tipo_figura: GLOBO_HELIO
           posX: 73.8
           posY: 41.6
@@ -112,6 +105,15 @@ juego:
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: MOTOR
+              posX: 0
+              posY: 0
+              radio: 5
+              sentido: -1
+              fija: NO
+              interactuable: NO
+            cantidad_de_instancias: 10
+          - figura:
+              tipo_figura: MOTOR_RATON
               posX: 0
               posY: 0
               radio: 5
