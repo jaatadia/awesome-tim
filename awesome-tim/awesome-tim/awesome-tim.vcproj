@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CarroAtable.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CintaTransportadora.cpp"
 				>
 			</File>
@@ -280,11 +284,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GreetingMessage.cpp"
+				RelativePath=".\HuevoB2ContactListener.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\HuevoB2ContactListener.cpp"
+				RelativePath=".\IdMessage.cpp"
 				>
 			</File>
 			<File
@@ -606,6 +610,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CarroAtable.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Chinche.h"
 				>
 			</File>
@@ -702,15 +710,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GreetingMessage.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Huevo.h"
 				>
 			</File>
 			<File
 				RelativePath=".\HuevoB2ContactListener.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IdMessage.h"
 				>
 			</File>
 			<File
