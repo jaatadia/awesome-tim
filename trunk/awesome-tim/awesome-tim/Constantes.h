@@ -87,6 +87,7 @@
 #define FLECHA 31
 #define ESCOPETA 32
 #define BALA 33
+#define CARRO_ATABLE 34
 
 //valores fisicos
 
@@ -232,7 +233,8 @@
 
 #define ANCHO_CARRITO 20
 #define ALTO_CARRITO 6
-#define RADIO_RUEDA_CARRITO 3
+#define RADIO_PUNTA_CARRITO 0.5
+#define RADIO_RUEDA_CARRITO 2.5
 #define RESTITUCION_CARRITO 0.4
 #define DENSIDAD_CARRITO 2.0
 #define FRICCION_CARRITO 0.001
@@ -322,6 +324,7 @@
 #define ID_BASE_CARRITO "../images/carro.png"
 #define ID_RUEDA_CARRITO "../images/rueda.png"
 #define ID_CARRITO "../images/carroBoton.png"
+#define ID_PUNTA_CARRITO "../images/circulopunta.png"
 
 #define ID_PALETA "../images/Rectangulo.png"
 

@@ -1,25 +1,24 @@
 #include "Carrito.h"
 #include "Constantes.h"
 #include "Cuadrado.h"
+#include "CarroAtable.h"
 
 #define TABLA 0
 
-Carrito::Carrito(double posX, double posY, double angulo):FiguraCompuesta(ID_CARRITO,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO+RADIO_RUEDA_CARRITO,posX,posY,0)){
+Carrito::Carrito(double posX, double posY, double angulo):FiguraCompuesta(ID_CARRITO,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO+RADIO_RUEDA_CARRITO+2*RADIO_PUNTA_CARRITO,posX,posY,0)){
 
 	this->partesFigura = std::list<Figura*>();
 	double posXRuedaIzq,posXRuedaDer,posYRuedaIzq,posYRuedaDer,posXCarro,posYCarro;
 
 	calcularPosiciones(posXRuedaIzq,posXRuedaDer,posYRuedaIzq,posYRuedaDer,posXCarro,posYCarro,posX,posY);
 
-	this->carro = new Figura(ID_BASE_CARRITO,new Cuadrado(ANCHO_CARRITO,ALTO_CARRITO,posXCarro,posYCarro,0));
+	this->carro = new CarroAtable(posXCarro,posYCarro);
 	this->ruedaIzq = new Figura(ID_RUEDA_CARRITO,new Circulo(RADIO_RUEDA_CARRITO,posXRuedaIzq,posYRuedaIzq,0));
 	this->ruedaDer = new Figura(ID_RUEDA_CARRITO,new Circulo(RADIO_RUEDA_CARRITO,posXRuedaDer,posYRuedaDer,0));
 
 	this->partesFigura.push_back(this->carro);
 	this->partesFigura.push_back(this->ruedaIzq);
 	this->partesFigura.push_back(this->ruedaDer);
-
-	this->atado = false;
 
 	this->inicAngulosCentro();
 
@@ -39,8 +38,7 @@ void Carrito::calcularPosiciones(double& posXizq,double& posXder, double& posYiz
 
 	posXizq = ( posX_Carro - (ANCHO_CARRITO / 2) + RADIO_RUEDA_CARRITO + RADIO_RUEDA_CARRITO/2);
 	posXder = ( posX_Carro + (ANCHO_CARRITO / 2) - RADIO_RUEDA_CARRITO - + RADIO_RUEDA_CARRITO/2);
-	//posYizq = posYder = posY + ((ALTO_CARRITO+RADIO_RUEDA_CARRITO)/2)  - RADIO_RUEDA_CARRITO;
-	posYizq = posYder = posY + (ALTO_CARRITO/2);
+	posYizq = posYder = posY_Carro + (ALTO_CARRITO/2);
 
 }
 
@@ -72,22 +70,3 @@ Figura* Carrito::getRuedaDer(){
 	return this->ruedaDer;
 }
 
-int Carrito::esAtableSoga(double x,double y){
-	if (!this->atado) return 1;
-	return -1;
-}
-
-void Carrito::posAtableSoga(int numero,double* x,double* y){
-	if (numero == 1){
-		*x = this->carro->getDimension()->getX();
-		*y = this->carro->getDimension()->getY();
-	}
-}
-void Carrito::atarSoga(int numero){
-	if (numero == 1 )
-		atado = true;
-}
-void Carrito::desatarSoga(int numero){
-	if (numero == 1)
-		atado = false;
-}
