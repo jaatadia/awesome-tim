@@ -46,34 +46,6 @@ void CargadorYaml::obtenerPosicion(const YAML::Node& nodoFigura, double* posX, d
 	obtenerPos(nodoFigura,posX,posY,POSX_DEFAULT,POSY_DEFAULT);
 }
 
-void CargadorYaml::obtenerFuerzas(const YAML::Node& nodoFigura, double* fuerzaX, double* fuerzaY){
-	try{
-		nodoFigura["fuerzaX"] >> *fuerzaX;
-		nodoFigura["fuerzaY"] >> *fuerzaY;
-	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("Fuerza no esta definida. Se carga fuerza por defecto.",e.what());
-		*fuerzaX = FUERZA_X_DEFAULT;
-		*fuerzaY = FUERZA_Y_DEFAULT;
-	}catch(YAML::InvalidScalar &e){
-		imprimir_error_excepcion("Dato erroneo en Fuerza. Se carga Fuerza por defecto.",e.what());
-		*fuerzaX = FUERZA_X_DEFAULT;
-		*fuerzaY = FUERZA_Y_DEFAULT;
-	}
-
-	if(!fuerza_validaX(*fuerzaX)){
-		int linea = nodoFigura["fuerzaX"].GetMark().line;
-		imprimir_error_linea("Fuerza X invalida. Se carga feurza X por defecto.",linea);
-		*fuerzaX = FUERZA_X_DEFAULT;
-	}
-
-	if(!fuerza_validaY(*fuerzaY)){
-		int linea = nodoFigura["fuerzaY"].GetMark().line;
-		imprimir_error_linea("Fuerza Y invalida. Se carga fuerza Y por defecto.",linea);
-		*fuerzaY = FUERZA_Y_DEFAULT;
-	}
-
-}
-
 void CargadorYaml::obtenerAngulo(const YAML::Node& nodoFigura, double* angulo){
 	try{
 		nodoFigura["angulo"] >> *angulo;
@@ -648,16 +620,6 @@ Figura* CargadorYaml::crearArco(const YAML::Node& nodoFigura){
 	return new Arco(posX,posY,angulo);
 }
 
-Figura* CargadorYaml::crearFlecha(const YAML::Node& nodoFigura){
-	double posX,posY,angulo,fuerzaX,fuerzaY;
-
-	obtenerAngulo(nodoFigura,&angulo);
-	obtenerPosicion(nodoFigura,&posX,&posY);
-	obtenerFuerzas(nodoFigura,&fuerzaX,&fuerzaY);
-
-	return new Flecha(posX,posY,angulo,fuerzaX,fuerzaY);
-}
-
 Figura* CargadorYaml::crearEscopeta(const YAML::Node& nodoFigura){
 	double posX,posY,angulo;
 
@@ -972,13 +934,6 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		Figura* figura = crearArco(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Arco."); 	
-		return figura;
-	}
-
-	if (strcmp(tipo_figura,"FLECHA") == 0){
-		Figura* figura = crearFlecha(nodoFigura);
-		if(!figura)
-			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Flecha."); 	
 		return figura;
 	}
 
@@ -1364,10 +1319,9 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool queso = (strcmp(tipo_figura,"QUESO") == 0);
 	bool flipper = (strcmp(tipo_figura,"PALETA-FLIPPER") == 0);
 	bool arco = (strcmp(tipo_figura,"ARCO") == 0);
-	bool flecha = (strcmp(tipo_figura,"FLECHA") == 0);
 	bool escopeta = (strcmp(tipo_figura,"ESCOPETA") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || flecha || escopeta);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta);
 
 	return (figuraSimple || figuraCompleja);
 }
@@ -1378,14 +1332,6 @@ bool CargadorYaml::posicion_validaX(double posX){
 
 bool CargadorYaml::posicion_validaY(double posY){
 	return ((posY >= 0) && (posY <= ALTO_TERRENO_LOGICO)); //menor estricto o no???;
-}
-
-bool CargadorYaml::fuerza_validaY(double fuerzaY){
-	return true;
-}
-
-bool CargadorYaml::fuerza_validaX(double fuerzaX){
-	return true;
 }
 
 bool CargadorYaml::angulo_valido(double angulo){

@@ -382,10 +382,6 @@
 
 #define VELOCIDAD_MIN_RUPTURA 10
 
-// Fuerzas de la flecha
-#define FUERZA_X_DEFAULT 1
-#define FUERZA_Y_DEFAULT 1
-
 // Acciones posibles en play:
 
 #define CLICK_MOUSE 0

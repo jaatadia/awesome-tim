@@ -78,8 +78,6 @@ private:
 	static bool sentido_valido(int sentido);
 	static bool opcion_valida(const char* opcion);
 	static bool cantidad_jugadores_valida(int cantidad);
-	static bool fuerza_validaY(double fuerzaY);
-	static bool fuerza_validaX(double fuerzaX);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
@@ -115,12 +113,10 @@ private:
 	static Figura* crearPaleta(const YAML::Node& nodoFigura);
 	static Figura* crearQueso(const YAML::Node& nodoFigura);
 	static Figura* crearArco(const YAML::Node& nodoFigura);
-	static Figura* crearFlecha(const YAML::Node& nodoFigura);
 	static Figura* crearEscopeta(const YAML::Node& nodoFigura);
 
 	static void obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant);
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
-	static void obtenerFuerzas(const YAML::Node& nodoFigura, double* fuerzaX, double* fuerzaY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
 	static void obtenerLargo(const YAML::Node& nodoFigura, int* largo);
 	static void obtenerAncho(const YAML::Node& nodoFigura, double* ancho);
