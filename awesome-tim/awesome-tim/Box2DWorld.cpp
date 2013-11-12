@@ -367,47 +367,47 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 		case CARRITO:{
 				//forma del carro con sus partes
 				b2PolygonShape forma_base;
-				b2PolygonShape forma_pared1;
-				b2PolygonShape forma_pared2;
+				//b2PolygonShape forma_pared1;
+				//b2PolygonShape forma_pared2;
 				double ancho = ((Carrito*)figura)->getCarro()->getDimension()->getAncho()/2;
 				double alto = ((Carrito*)figura)->getCarro()->getDimension()->getAlto()/2;
-				forma_base.SetAsBox(ancho,alto/2);
-				forma_pared1.SetAsBox(ancho/8,alto);
-				forma_pared2.SetAsBox(ancho/8,alto);
+				//forma_base.SetAsBox(ancho,alto/2);
+				//forma_pared1.SetAsBox(ancho/8,alto);
+				//forma_pared2.SetAsBox(ancho/8,alto);
+				forma_base.SetAsBox(ancho,alto);
 
 				fD.shape = &forma_base;
 				fD.density = DENSIDAD_CARRITO;
 				fD.friction = FRICCION_CARRITO;
 				fD.restitution = RESTITUCION_CARRITO;
-				cuerpo->SetTransform(b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX(),((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2),cuerpo->GetAngle());
+				//cuerpo->SetTransform(b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX(),((Carrito*)figura)->getCarro()->getDimension()->getY()+alto/2),cuerpo->GetAngle());
 				cuerpo->CreateFixture(&fD);
 				cuerpo->SetUserData(((Carrito*)figura)->getCarro());
 
-				b2BodyDef pared1;
-				pared1.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());
-				pared1.type = b2_dynamicBody;
-				b2Body* cuerpo_pared1 = this->mundo->CreateBody(&pared1);
+				//b2BodyDef pared1;
+				//pared1.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());
+				//pared1.type = b2_dynamicBody;
+				//b2Body* cuerpo_pared1 = this->mundo->CreateBody(&pared1);
 
-				fD.shape = &forma_pared1;
-				cuerpo_pared1->CreateFixture(&fD);
+				//fD.shape = &forma_pared1;
+				//cuerpo_pared1->CreateFixture(&fD);
 
-
-				b2BodyDef pared2;
-				pared2.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()+ancho-ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());
-				pared2.type = b2_dynamicBody;
-				b2Body* cuerpo_pared2 = this->mundo->CreateBody(&pared2);
-				
-				fD.shape = &forma_pared2;
-				cuerpo_pared2->CreateFixture(&fD);
+				//b2BodyDef pared2;
+				//pared2.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()+ancho-ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());
+				//pared2.type = b2_dynamicBody;
+				//b2Body* cuerpo_pared2 = this->mundo->CreateBody(&pared2);
+				//
+				//fD.shape = &forma_pared2;
+				//cuerpo_pared2->CreateFixture(&fD);
 
 				//union del carro
-				b2WeldJointDef jointcarro1;
-				jointcarro1.Initialize(cuerpo_pared1,cuerpo,b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2));
-				b2Joint* enlace_carro1 = this->mundo->CreateJoint(&jointcarro1);
+				//b2WeldJointDef jointcarro1;
+				//jointcarro1.Initialize(cuerpo_pared1,cuerpo,b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2));
+				//b2Joint* enlace_carro1 = this->mundo->CreateJoint(&jointcarro1);
 
-				b2WeldJointDef jointcarro2;
-				jointcarro2.Initialize(cuerpo_pared2,cuerpo,b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX()+ancho-ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2));
-				b2Joint* enlace_carro2 = this->mundo->CreateJoint(&jointcarro2);
+				//b2WeldJointDef jointcarro2;
+				//jointcarro2.Initialize(cuerpo_pared2,cuerpo,b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX()+ancho-ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2));
+				//b2Joint* enlace_carro2 = this->mundo->CreateJoint(&jointcarro2);
 
 				//def de cuerpo de rueda izq
 				b2BodyDef rueda1;
@@ -436,11 +436,13 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				//union izq
 				b2RevoluteJointDef joint1;
 				joint1.Initialize(cuerpo_rueda1,cuerpo,cuerpo_rueda1->GetPosition());
+				joint1.collideConnected = false;
 				b2Joint* enlace1 = this->mundo->CreateJoint(&joint1);
 
 				//union der
 				b2RevoluteJointDef joint2;
 				joint2.Initialize(cuerpo_rueda2,cuerpo,cuerpo_rueda2->GetPosition());
+				joint2.collideConnected = false;
 				b2Joint* enlace2 = this->mundo->CreateJoint(&joint2);
 
 				break;
