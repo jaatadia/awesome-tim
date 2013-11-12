@@ -8,17 +8,20 @@ class MotorRaton : public Engranaje {
 private:
 	VistaFiguraEstatica* myVista2;
 	MotorRaton(const char* id,Dimension* dim,bool flag):Engranaje(id,dim,flag){
-	sentido = 1;
-	myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
+		sentido = 1;
+		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
+		activo = false;
 	};
 	
 public:
 	int sentido;
+	bool activo;
 
 public:
 	MotorRaton(double pos_X,double pos_Y,double radio1 = RADIO_MINENGRANAJE, double angulo = 0):Engranaje(ID_MOTOR_RATON,pos_X,pos_Y,radio1){
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
+		activo = false;
 	}
 
 	~MotorRaton(void){
@@ -58,6 +61,10 @@ public:
 		setCambio(false);
 	}
 
+	bool motorActivo(){
+		return true;
+	}
+
 	bool choqueConFigura(Figura* fig){
 
 		//me fijo si fig que me pasaron choca con esta dimension (para cada una que tenga en este caso solo 1)
@@ -93,4 +100,12 @@ public:
 
 	virtual bool cortaSoga(){return false;}
 	virtual bool pinchaGlobo(Dimension* dim){return false;}
+
+	void ActivarMotor(){
+		activo = true;
+	}
+
+	void DesactivarMotor(){
+		activo = false;
+	}
 };
