@@ -25,9 +25,5 @@ public:
 	Figura* getCarro();
 	Figura* getRuedaIzq();
 	Figura* getRuedaDer();
-	int esAtableSoga(double x,double y);
-	void posAtableSoga(int numero,double* x,double* y);
-	void atarSoga(int numero);
-	void desatarSoga(int numero);
 
 };
