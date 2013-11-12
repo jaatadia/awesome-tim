@@ -38,8 +38,16 @@ public:
 	virtual void shift(){
 		this->sentido = -this->sentido;
 		delete this->myVista;
-		if(sentido == 1) this->ID = ID_MOTOR_RATON_1;
-		if(sentido == -1) this->ID = ID_MOTOR_RATON_2;
+		if(sentido == 1){
+			delete(myVista2);		
+			myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
+			this->ID = ID_MOTOR_RATON_1;
+		}
+		if(sentido == -1){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON_OPUESTO);
+			this->ID = ID_MOTOR_RATON_2;
+		}
 		this->myVista = new VistaFigura(this);
 		this->setCambio(true);
 	}

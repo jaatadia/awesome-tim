@@ -342,6 +342,7 @@
 #define ID_BALA "../images/shotgun_bullet.png"
 
 #define ID_MOTOR_RATON "../images/FondoRaton.png"
+#define ID_MOTOR_RATON_OPUESTO "../images/FondoRatonOpuesto.png"
 #define ID_MOTOR_RATON_1 "../images/ratonDer.png"
 #define ID_MOTOR_RATON_2 "../images/RatonIzq.png"
 
