@@ -425,8 +425,8 @@ bool Terreno::hayFiguras(){
 	return false;
 }
 
-std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY){
-//aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
+std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY,Figura* vector[]){
+//aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-clickt
 
 	std::vector<int> tiposBorradas;
 
@@ -439,6 +439,7 @@ std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY){
 		
 		if(figuraABorrar->esUnion()){
 			figuraABorrar->desUnir();
+			vector[figuraABorrar->numero] = NULL;
 		}else{
 			std::list<Figura*>::iterator iteradorLista;
 			std::list<Figura*> listaFigAux;
@@ -460,7 +461,8 @@ std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY){
 				(*iter)->desUnir();
 
 				tiposBorradas.push_back((*iter)->getTipoFigura());
-
+				
+				vector[(*iter)->numero] = NULL;
 				delete (*iter);
 			}
 		}
