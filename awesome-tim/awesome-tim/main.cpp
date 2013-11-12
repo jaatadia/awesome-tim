@@ -10,11 +10,8 @@
 #include "Contenedor.h"
 #include "GeneradorYaml.h"
 
-#ifdef SERVER_MODE
-	#include "Server.h"
-#else
-	#include "Client.h"
-#endif // SERVER_MODE
+#include "Server.h"
+#include "Client.h"
 
 #define RUTA_DEFAULT_IN "../yaml/archivoDefault.yml"
 #define RUTA_DEFAULT_OUT "../yaml/nuevoJuego.yml"
@@ -36,11 +33,12 @@ bool es_erroneo(char* comando){
 	bool version = (es_igual(comando,"--version","-v"));
 	bool juego = (es_igual(comando,"--save","-s") || es_igual(comando,"--load","-l"));
 	bool test = (es_igual(comando,"--test","-t"));
-	bool erroneo = ((!ayuda) && (!version) && (!test) && (!juego));
+	bool Ip = (es_igual(comando,"--IP","-i"));
+	bool erroneo = ((!ayuda) && (!version) && (!test) && (!juego) && (!Ip));
 	return erroneo;
 }
 
-int obtener_parametros(int argc,char* argv[],char** rutaIn, char** rutaOut){
+int obtener_parametros(int argc,char* argv[],char** rutaIn, char** rutaOut,char** IP){
 
 	int opcion = OPC_JUEGO;//opcion default
 
@@ -84,6 +82,19 @@ int obtener_parametros(int argc,char* argv[],char** rutaIn, char** rutaOut){
 				continue;
 			}
 			*rutaOut = argv[i+1];
+			i = i+2;
+			continue;
+		}
+
+		if(es_igual(argv[i],"--IP","-i")){
+			opcion = OPC_JUEGO;
+			if(i >= argc){
+				ErrorLogHandler::addError("main","Se especifico que se desea conectar a una ip pero no se especifico a cual");
+				opcion = OPC_JUEGO;
+				i++;
+				continue;
+			}
+			*IP = argv[i+1];
 			i = i+2;
 			continue;
 		}
@@ -151,16 +162,21 @@ ClientTIM cliente;
 #include<sys/timeb.h>
 
 //Corre el programa del juego
-void jugar(char* rutaIn, char* rutaOut){
+void jugar(char* rutaIn, char* rutaOut,char* IP){
 	MEstados juego = MEstados(rutaIn,rutaOut);
 	//MEstadosCliente juego = MEstadosCliente(1);
 
 #ifdef SERVER_MODE
-	std::cout << "Initializing game in: SERVER MODE" << std::endl;
-	Server * server = new Server(&juego);
+	if (IP==NULL){
+		std::cout << "Initializing game in: SERVER MODE" << std::endl;
+		Server * server = new Server(&juego);
+	}else{
+		std::cout << "Initializing game in: CLIENT MODE" << std::endl;
+		Client * client = new Client(&juego,IP);
+	}
 #else
 	std::cout << "Initializing game in: CLIENT MODE" << std::endl;
-	Client * client = new Client(&juego);
+	Client * client = new Client(&juego,IP);
 #endif // SERVER_MODE
 
 	double tiempoTardado = 0;
@@ -235,8 +251,10 @@ int main (int argc, char** argv){
 
 	char* rutaIn = NULL;
 	char* rutaOut = NULL;
+	char* IP = NULL;
+	bool server = true;
 
-	opcion = obtener_parametros(argc,argv,&rutaIn, &rutaOut);
+	opcion = obtener_parametros(argc,argv,&rutaIn, &rutaOut,&IP);
 
 	if (!rutaIn || !rutaOut){
 		ErrorLogHandler::addError("main","No es posible cargar rutas de archivos. Fin del programa.");			
@@ -247,7 +265,7 @@ int main (int argc, char** argv){
 		case OPC_JUEGO:
 			//compilo como cliente o como servidor
 			//en sus initThread va el jugar()
-			jugar(rutaIn, rutaOut);
+			jugar(rutaIn, rutaOut,IP);
 			//iniciarClienteOServer();
 			break;
 		case OPC_IMPRIMIR_AYUDA:

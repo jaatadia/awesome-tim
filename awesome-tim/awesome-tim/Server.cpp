@@ -7,6 +7,7 @@ Server::Server(MaquinaEstados * juego)
 		this->_socket = new ServerSocket();
 		this->juego = juego;
 		this->_thread.resume();
+		PrintIP();
 	} catch (SocketException &sE)
 	{
 		cout << sE.what() << endl;
