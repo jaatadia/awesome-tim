@@ -456,6 +456,24 @@ Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
 	return figura;
 }
 
+Figura* CargadorYaml::crearMotorRaton(const YAML::Node& nodoFigura){
+	double posX,posY,radio;
+	int sentido;
+
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerSentido(nodoFigura,&sentido);
+	obtenerRadio(nodoFigura,&radio);
+
+	Figura* figura = new MotorRaton(posX,posY,radio,0);
+
+	if(!figura) return NULL;
+
+	if(sentido == SENT_ANTIHORARIO)
+		figura->shift();
+
+	return figura;
+}
+
 Figura* CargadorYaml::crearSoga(const YAML::Node& nodoFigura){
 	double x1,y1,x2,y2;
 	
@@ -944,6 +962,13 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		return figura;
 	}
 
+	if (strcmp(tipo_figura,"MOTOR_RATON") == 0){
+		Figura* figura = crearMotorRaton(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Motor Raton."); 	
+		return figura;
+	}
+
 	//No deberia llegar a este caso porque el error deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
 	return NULL;
@@ -1306,6 +1331,7 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool bowling = (strcmp(tipo_figura,"BOLA_BOWLING") == 0);
 	bool globoHelio = (strcmp(tipo_figura,"GLOBO_HELIO") == 0);
 	bool tenis = (strcmp(tipo_figura,"PELOTA_TENIS") == 0);
+	bool motorRaton = (strcmp(tipo_figura,"MOTOR_RATON") == 0);
 
 	bool vela = (strcmp(tipo_figura,"VELA") == 0);
 	bool clavo = (strcmp(tipo_figura,"CLAVO") == 0);
@@ -1321,7 +1347,7 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool arco = (strcmp(tipo_figura,"ARCO") == 0);
 	bool escopeta = (strcmp(tipo_figura,"ESCOPETA") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta || motorRaton);
 
 	return (figuraSimple || figuraCompleja);
 }

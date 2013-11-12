@@ -85,8 +85,12 @@ Contenedor::Contenedor(void){
 	mapa[ID_HUEVO_ROMPIENDO3] = new Imagen(ID_HUEVO_ROMPIENDO3);
 	mapa[ID_DOMINO] = new Imagen(ID_DOMINO);
 	mapa[ID_BASE_CARRITO] = new Imagen(ID_BASE_CARRITO);
+	mapa[ID_PUNTA_CARRITO] = new Imagen(ID_PUNTA_CARRITO);
 	mapa[ID_RUEDA_CARRITO] = new Imagen(ID_RUEDA_CARRITO);
 	mapa[ID_QUESO] = new Imagen(ID_QUESO);
+	mapa[ID_MOTOR_RATON] = new Imagen(ID_MOTOR_RATON);
+	mapa[ID_MOTOR_RATON_1] = new Imagen(ID_MOTOR_RATON_1);
+	mapa[ID_MOTOR_RATON_2] = new Imagen(ID_MOTOR_RATON_2);
 
 	mapa[COLOR_CELESTE] = new Imagen(COLOR_CELESTE);
 	mapa[COLOR_ROJO] = new Imagen(COLOR_ROJO);

@@ -88,6 +88,7 @@
 #define ESCOPETA 32
 #define BALA 33
 #define CARRO_ATABLE 34
+#define MOTOR_RATON 35
 
 //valores fisicos
 
@@ -189,6 +190,12 @@
 #define RESTITUCION_YUNQUE 0
 #define FRICCION_YUNQUE 0.01
 
+#define BASE_QUESO 4
+#define ALTO_QUESO 5
+#define RESTITUCION_QUESO 0.1
+#define DENSIDAD_QUESO 20
+#define FRICCION_QUESO 0.01
+
 #define RADIO_MINENGRANAJE 5.0
 #define RADIO_MAXENGRANAJE 15.0
 #define RESTITUCION_ENGRANAJE 0.3
@@ -249,9 +256,6 @@
 #define PALETA_DER_MAXANG 3*PI/4
 #define PALETA_DER_MINANG -3*PI/4
 
-#define BASE_QUESO 4
-#define ALTO_QUESO 5
-
 //cuadrantes
 #define CUADRANTE1 1
 #define CUADRANTE2 2
@@ -284,6 +288,7 @@
 #define ID_PELOTABOWLING "../images/Bowling.png"
 #define ID_ENGRANAJE "../images/Icon-Gear02-Blue.png"
 
+#define ID_MOTOR "../images/motor.jpg"
 #define ID_MOTOR_1 "../images/engranaje2-1.png"
 #define ID_MOTOR_2 "../images/engranaje2-2.png"
 
@@ -292,7 +297,6 @@
 #define ID_CTRANSP_CLAVO "../images/clavo.png"
 #define ID_CINTA_TRANSPORTADORA "../images/cintatransport.png"
 
-#define ID_MOTOR "../images/motor.jpg"
 #define ID_CORREA "../images/correa.png"
 #define ID_TABLA_BALANCIN "../images/rect.png"
 #define ID_PUNTA_BALANCIN "../images/circulopunta.png"
@@ -336,6 +340,10 @@
 
 #define ID_ESCOPETA "../images/shotgun.png"
 #define ID_BALA "../images/shotgun_bullet.png"
+
+#define ID_MOTOR_RATON "../images/FondoRaton.png"
+#define ID_MOTOR_RATON_1 "../images/ratonDer.png"
+#define ID_MOTOR_RATON_2 "../images/RatonIzq.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1

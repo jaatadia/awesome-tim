@@ -46,6 +46,7 @@
 #include "Arco.h"
 #include "Flecha.h"
 #include "Escopeta.h"
+#include "MotorRaton.h"
 
 class CargadorYaml{
 public:
@@ -114,6 +115,7 @@ private:
 	static Figura* crearQueso(const YAML::Node& nodoFigura);
 	static Figura* crearArco(const YAML::Node& nodoFigura);
 	static Figura* crearEscopeta(const YAML::Node& nodoFigura);
+	static Figura* crearMotorRaton(const YAML::Node& nodoFigura);
 
 	static void obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant);
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
