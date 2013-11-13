@@ -14,6 +14,7 @@
 #include "MaquinaEstados.h"
 #include "MouseMotionMessage.h"
 #include "CreateFigureMessage.h"
+#include "MessageFigura.h"
 
 
 #define JUEGO_TAG "Juego"
@@ -76,4 +77,6 @@ private:
 	void resizear();
 	void set2Click();
 	void procesarActualizaciones();
+	void procesarMensaje(MessageFigura* msj);
+
 };

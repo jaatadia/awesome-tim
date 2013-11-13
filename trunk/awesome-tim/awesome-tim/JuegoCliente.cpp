@@ -7,6 +7,13 @@
 #include "Linea.h"
 #include <vector>
 
+//Definicion de constantes que no se que son: Jenny :P
+#define MSG_SUBTYPE_MOVEMENT 0
+#define MSG_SUBTYPE_SETANGLE 1
+#define MSG_SUBTYPE_CREATE 2
+#define MSG_SUBTYPE_DELETE 3
+#define MSG_SUBTYPE_SHIFT 4
+#define MSG_SUBTYPE_STRETCH 5
 
 JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	
