@@ -29,16 +29,13 @@ private:
 public:
 	MEstadosCliente();
 	~MEstadosCliente(void);
-
+	void init();
 	bool isRunning();
 	bool onEvent();
 	void onLoop();
 	void onRender();
 	
 	void esperar(double miliseconds);
-	void setId(int id);
-	void init();
-
 
 	virtual void salir();
 	virtual void editor();

@@ -97,11 +97,6 @@ void MEstadosCliente::play(void* ter){
 	Eactivo = Eplay;
 }
 
-void MEstadosCliente::setId(int id)
-{
-	this->id = id;
-}
-
 void MEstadosCliente::init()
 {
 	std::cout<<"entroaca!!!\n";

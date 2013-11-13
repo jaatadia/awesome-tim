@@ -8,11 +8,12 @@
 #include "ServerHandler.h"
 #include "ActiveObject.h"
 #include "MaquinaEstados.h"
+#include "MEstadosCliente.h"
 
 class CommunicationManager : public ActiveObject
 {
 public:
-	CommunicationManager(Socket * socket, MaquinaEstados * game,bool server);
+	CommunicationManager(Socket * socket, MaquinaEstados * game,bool server, int id);
 	~CommunicationManager(void);
 
 private:
@@ -20,7 +21,7 @@ private:
 	MessageHandler * messageWriter;
 	SocketHandler * socketReader;
 	SocketHandler * socketWriter;
-	MaquinaEstados * juego;
+	MaquinaEstados * game;
 	virtual void initThread();
 	virtual void run();
 	virtual void flushThread();

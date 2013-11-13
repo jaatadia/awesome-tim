@@ -23,9 +23,10 @@ void ClientHandler::run()
 		switch(this->getMode())
 		{
 			case WRITE_MODE:
-				if (getState() == 0)
+				if (this->getState() == 0)
 				{
-					string nombreArchivo = "C:\\archivoDefault.txt";
+					// Envio Yaml
+					string nombreArchivo = "archivoDefault.yaml";
 					char buffer[TAM_BUFFER];
 					ifstream archivoPrueba(nombreArchivo.c_str(), ios::in | ios::binary);
 					if(!archivoPrueba.fail())
@@ -50,7 +51,13 @@ void ClientHandler::run()
 						}
 						archivoPrueba.close();
 					}
-					setState(1);
+
+					// Envio ID
+					IdMessage * msg = new IdMessage();
+					msg->setId(this->game->getId());
+					this->pushOutputMessage(msg);
+
+					this->setState(1);
 				}
 				break;
 			case READ_MODE:

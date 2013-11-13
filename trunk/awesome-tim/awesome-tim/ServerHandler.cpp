@@ -37,11 +37,12 @@ void ServerHandler::run()
 					switch(mensaje->getType())
 					{
 						case MSG_TYPE_ID:
-							((MEstadosCliente *)this->game)->setId(((IdMessage *) mensaje)->getId());
+							this->game->setId(((IdMessage *) mensaje)->getId());
+							((MEstadosCliente *)this->game)->init();
 							break;
 						case MSG_TYPE_FILES:
 							{
-								ofstream file(((FilesMessage *) mensaje)->getNombre().append(".old").c_str(), ios::out | ios::app | ios::binary);
+								ofstream file(((FilesMessage *) mensaje)->getNombre().c_str(), ios::out | ios::app | ios::binary);
 								if (file.is_open())
 								{
 									file << ((FilesMessage *) mensaje)->getStream().c_str();
