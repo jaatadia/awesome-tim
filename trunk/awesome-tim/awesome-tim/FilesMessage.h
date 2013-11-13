@@ -2,7 +2,6 @@
 #define __FILESMESSAGE_H__
 
 #include "Message.h"
-#include <sstream>
 
 //TAM_BUFFER = 512
 //0-1		ID Mensaje

@@ -133,7 +133,7 @@ void imprimir_version(){
 	fprintf(stdout,"Trabajo Practico - Taller de Programacion I \n");
 	fprintf(stdout,"The Incredible Machine \n Version 1.0 \n");
 	fprintf(stdout,"Segundo Cuatrimestre - 2013 \n \n");
-	fprintf(stdout,"Grupo: \n");
+	fprintf(stdout,"Grupo 3: \n");
 	fprintf(stdout," ATADIA, Javier Alejandro (93223) \n");
 	fprintf(stdout," FULD, Juan Federico (93395) \n");
 	fprintf(stdout," WOITES, Jennifer Andrea (93274) \n");
@@ -146,19 +146,7 @@ void test(void){
 	GeneradorYaml::pruebayaml();
 	Contenedor::pruebaContenedor();
 }
-/*
-void iniciarClienteOServer(){
 
-#ifdef ES_SERVIDOR
-Server server();
-server.run();
-#else
-//lo creo y dentro hace toda la inicializacion necesaria
-//y se pone a correr el programa.
-ClientTIM cliente;
-#endif
-}
-*/
 #include<sys/timeb.h>
 
 //Corre el programa del juego
@@ -251,6 +239,8 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 int main (int argc, char** argv){
 
+//	Client* cliente = new Client();
+
 	int opcion; //guarda el modo del programa
 
 	char* rutaIn = NULL;
@@ -267,10 +257,7 @@ int main (int argc, char** argv){
 
 	switch (opcion){
 		case OPC_JUEGO:
-			//compilo como cliente o como servidor
-			//en sus initThread va el jugar()
 			jugar(rutaIn, rutaOut,IP);
-			//iniciarClienteOServer();
 			break;
 		case OPC_IMPRIMIR_AYUDA:
 			imprimir_ayuda();

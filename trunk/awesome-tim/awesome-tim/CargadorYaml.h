@@ -18,7 +18,6 @@
 #include "Triangulo.h"
 #include "PoligonoRegular.h"
 
-
 #include "Figura.h"
 #include "Plataforma.h"
 #include "PelotaBasquet.h"
@@ -47,11 +46,13 @@
 #include "Flecha.h"
 #include "Escopeta.h"
 #include "MotorRaton.h"
+//#include "Canio.h"
+//#include "Codo.h"
 
 class CargadorYaml{
 public:
 	
-	static bool cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno);
+	static std::string cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno, int* cant_jugadores);
 
 private:
 
@@ -117,6 +118,9 @@ private:
 	static Figura* crearEscopeta(const YAML::Node& nodoFigura);
 	static Figura* crearMotorRaton(const YAML::Node& nodoFigura);
 
+	static Figura* crearCanio(const YAML::Node& nodoFigura);
+	static Figura* crearCodo(const YAML::Node& nodoFigura);
+	
 	static void obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant);
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
@@ -130,9 +134,10 @@ private:
 	static void obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2);
 	static void obtenerSentido(const YAML::Node& nodoFigura,int* sentido);
 	static bool obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura);
-	static bool obtenerPropiedadFiguraInteractuable(const YAML::Node& nodoFigura);
+	static bool obtenerPropiedadFiguraObjetivo(const YAML::Node& nodoFigura);
 	static void establecerZonaPorDefault(double* x1,double* y1,double* x2,double* y2);
 	static void obtenerZona(const YAML::Node& nodoZona,double* x1,double* y1,double* x2,double* y2);
 	static void obtenerPos(const YAML::Node& nodoFigura,double* posX, double* posY, double X_Default, double Y_Default);
+	static std::string obtenerObjetivo(const YAML::Node& nodo);
 
 };

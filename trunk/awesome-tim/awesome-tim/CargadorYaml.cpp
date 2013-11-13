@@ -123,6 +123,23 @@ void CargadorYaml::obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant)
 	}
 }
 
+std::string CargadorYaml::obtenerObjetivo(const YAML::Node& nodo){
+	
+	std::string obj;
+
+	try{
+		nodo["objetivo"] >> obj;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe objetivo. Se carga objetivo nulo por defecto.",e.what());
+		obj = OBJETIVO_NULO;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de objetivo. Se carga objetivo nulo por defecto.",e.what());
+		obj = OBJETIVO_NULO;
+	}
+
+	return obj;
+}
+
 void CargadorYaml::obtenerBaseTriangulo(const YAML::Node& nodoFigura, double* base){
 	try{
 		nodoFigura["base"] >> *base;
@@ -231,26 +248,26 @@ void CargadorYaml::obtenerVertices(const YAML::Node& nodoFigura,int* vertices){
 	}
 }
 
-bool CargadorYaml::obtenerPropiedadFiguraInteractuable(const YAML::Node& nodoFigura){
-	std::string interac;
+bool CargadorYaml::obtenerPropiedadFiguraObjetivo(const YAML::Node& nodoFigura){
+	std::string obj;
 
 	try{
-		nodoFigura["interactuable"] >> interac;
+		nodoFigura["objetivo"] >> obj;
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
-		imprimir_error_excepcion("No existe propiedad interactuable de figura. Se carga propiedad por defecto.",e.what());
-		interac = "NO";
+		imprimir_error_excepcion("No existe propiedad objetivo de figura. Se carga propiedad por defecto.",e.what());
+		obj = "NO";
 	}catch(YAML::InvalidScalar &e){
 		imprimir_error_excepcion("Dato erroneo de la propiedad de figura. Se carga propiedad por defecto.",e.what());
-		interac = "NO";
+		obj = "NO";
 	}
 
-	if(!opcion_valida(interac.c_str())){
-		int linea = nodoFigura["interactuable"].GetMark().line;
-		imprimir_error_linea("Propiedad interactuable de Figura invalida. Se carga propiedad por defecto.", linea);
-		interac = "NO";
+	if(!opcion_valida(obj.c_str())){
+		int linea = nodoFigura["objetivo"].GetMark().line;
+		imprimir_error_linea("Propiedad objetivo de Figura invalida. Se carga propiedad por defecto.", linea);
+		obj = "NO";
 	}
 
-	if(strcmp(interac.c_str(), "NO") == 0)
+	if(strcmp(obj.c_str(), "NO") == 0)
 		return false;
 
 	return true;
@@ -620,6 +637,28 @@ Figura* CargadorYaml::crearPlataforma(const YAML::Node& nodoFigura){
 	return new Plataforma(largo,posX,posY,angulo);
 }
 
+Figura* CargadorYaml::crearCanio(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+	int largo;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerLargo(nodoFigura, &largo);
+
+	//return new Canio(largo,posX,posY,angulo);
+	return NULL;
+}
+
+Figura* CargadorYaml::crearCodo(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+
+	//return new Codo(posX,posY,angulo);
+	return NULL;
+}
+
 Figura* CargadorYaml::crearCarrito(const YAML::Node& nodoFigura){
 	double posX,posY,angulo;
 
@@ -969,6 +1008,20 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		return figura;
 	}
 
+	if (strcmp(tipo_figura,"CANIO") == 0){
+		Figura* figura = crearCanio(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Canio."); 	
+		return figura;
+	}
+
+	if (strcmp(tipo_figura,"CODO") == 0){
+		Figura* figura = crearCodo(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Codo."); 	
+		return figura;
+	}
+
 	//No deberia llegar a este caso porque el error deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
 	return NULL;
@@ -1002,11 +1055,11 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 	}
 
 	bool fija = obtenerPropiedadFiguraFija(nodoFig);
-	bool interactuable = obtenerPropiedadFiguraInteractuable(nodoFig);
+	bool objetivo = obtenerPropiedadFiguraObjetivo(nodoFig);
 
 	if(fija) figura->fijarFigura();
 
-	if(interactuable) figura->hacerInteractuableEnPlay();
+	if(objetivo) figura->hacerObjetivo();
 
 	return figura;
 }
@@ -1169,8 +1222,10 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, BotoneraContro
 **                      CARGADOR                         **
 **                                                       **
 **********************************************************/
-bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
-
+std::string CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno, int* cant_jugadores){
+	
+	std::string imagen_objetivo	= OBJETIVO_NULO;
+	
 	//Abro el archivo Yaml para parsearlo.
 	YAML::Node doc;
 	std::ifstream mi_archivo;
@@ -1182,10 +1237,10 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		CargadorYaml::imprimir_error_sin_linea("No se encontro el abrir archivo de juego indicado. Se carga archivo default.");
 		if (!mi_archivo.is_open()){
 			ErrorLogHandler::addError("CargadorYaml","Error al abrir archivo de juego default."); 
-			return false;
+			return OBJETIVO_NULO;
 		}
 		mi_archivo.close();
-		return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+		return cargarJuego(RUTA_DEFAULT,botonera,terreno,cant_jugadores);
 	}
 	
 	try{
@@ -1195,11 +1250,11 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("Error al parsear el archivo. Se continua con archivo default.",e.what());
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno, cant_jugadores);
 		} else {
 			imprimir_error_excepcion("Error al parsear el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}
 
@@ -1210,32 +1265,28 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No se encontro nodo raiz juego. Se carga archivo default.",e.what());
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno,cant_jugadores);
 		} else {
 			imprimir_error_excepcion("No se encontro nodo raiz juego en el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}catch(YAML::BadDereference &e){
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No hay nodo raiz juego. Se carga archivo default.",e.what());
-			//std::cout << e.what();
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno, cant_jugadores);
 		} else {
 			imprimir_error_excepcion("No hay nodo raiz juego en el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}
 
 	const YAML::Node& nodoRaiz = doc["juego"];
 
-	int cant_jugadores;
-	obtenerCantidadDeJugadores(nodoRaiz,&cant_jugadores);
-
-	// FIXME: Qué hago con la cantidad de jugadores???
-
+	obtenerCantidadDeJugadores(nodoRaiz,cant_jugadores);
+	imagen_objetivo = obtenerObjetivo(nodoRaiz);
 
 	//Busco la botonera
 	try{
@@ -1244,21 +1295,21 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what());
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno,cant_jugadores);
 		} else {
 			imprimir_error_excepcion("No se encontro nodo botonera en el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}catch(YAML::BadDereference &e){
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No se encontro nodo botonera. Se carga archivo default.",e.what()); 
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno,cant_jugadores);
 		} else {
 			imprimir_error_excepcion("No se encontro nodo botonera en el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}
 
@@ -1272,21 +1323,21 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno,cant_jugadores);
 		} else {
 			imprimir_error_excepcion("No se encontro nodo terreno en el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}catch(YAML::BadDereference &e){
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
 			mi_archivo.close();
-			return cargarJuego(RUTA_DEFAULT,botonera,terreno);
+			return cargarJuego(RUTA_DEFAULT,botonera,terreno,cant_jugadores);
 		} else {
 			imprimir_error_excepcion("No se encontro nodo terreno en el archivo default.",e.what());
 			mi_archivo.close();
-			return false;
+			return OBJETIVO_NULO;
 		}
 	}
 
@@ -1300,7 +1351,7 @@ bool CargadorYaml::cargarJuego(const char* file,BotoneraController* botonera,Ter
 
 	mi_archivo.close();
 
-	return true;
+	return imagen_objetivo;
 
 }
 
@@ -1346,8 +1397,10 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool flipper = (strcmp(tipo_figura,"PALETA-FLIPPER") == 0);
 	bool arco = (strcmp(tipo_figura,"ARCO") == 0);
 	bool escopeta = (strcmp(tipo_figura,"ESCOPETA") == 0);
+	bool codo = (strcmp(tipo_figura,"CODO") == 0);
+	bool canio = (strcmp(tipo_figura,"CANIO") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta || motorRaton);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta || motorRaton || codo || canio);
 
 	return (figuraSimple || figuraCompleja);
 }
