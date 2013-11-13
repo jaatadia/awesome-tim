@@ -22,12 +22,16 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	this->fileOut = fileOut;
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,false);
 	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
-	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS);
 	for (int i = 0;i<=MAX_CLIENTES;i++){
 		figuraEnAire[i]=NULL;
 	}
+
+	int cant_jugadores;
+	std::string objetivo;
 	
-	cargar();
+	objetivo = cargar(&cant_jugadores);
+
+	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
 
 	this->setCambio(true);
 
@@ -36,12 +40,13 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	clickPressed = false;
 	contEventosMov = 0;
 
-	Sonidos::playMusic(MUSIC);
+//	Sonidos::playMusic(MUSIC);
 
 }
 
-bool Juego::cargar(){
-	CargadorYaml::cargarJuego(fileIn,botonera,terreno);
+std::string Juego::cargar(int* cant_jugadores){
+
+	std::string objetivo = CargadorYaml::cargarJuego(fileIn,botonera,terreno,cant_jugadores);
 	std::list<Figura*> figs = terreno->getListaFigs();
 	for (std::list<Figura*>::iterator iter = figs.begin();iter!= figs.end();iter++){
 		while(vector[posVector]!=NULL){
@@ -56,7 +61,7 @@ bool Juego::cargar(){
 	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
 	//necesario para que se ordenen cosas dentro de botonera
 	botonera->resizear();
-	return true;
+	return objetivo;
 }
 
 bool Juego::guardar(){

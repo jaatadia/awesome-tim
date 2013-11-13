@@ -3,7 +3,7 @@
 
 PaletaFlipper::PaletaFlipper(double posX,double posY,int sentido):Figura(ID_PALETA,new Cuadrado(ANCHO_PALETA,ALTO_PALETA,posX,posY,0),true){
 
-	this->interactua_en_play = true;
+	this->es_objetivo = true;
 	this->is_pushed = false;
 	this->sentido = sentido;
 

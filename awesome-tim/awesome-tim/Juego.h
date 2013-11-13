@@ -43,7 +43,7 @@ public:
 	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
 	~Juego(void);
 
-	bool cargar();
+	std::string cargar(int* cant_jugadores);
 	bool guardar();
 
 	void quit();

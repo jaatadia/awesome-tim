@@ -722,3 +722,73 @@ void JuegoCliente::set2Click(){
 			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 	}
 }
+
+void JuegoCliente::procesarMensaje(MessageFigura* msj){
+
+	//declaro un stringstream que uso para pasar de string a int cuando lo necesito
+	stringstream ss;
+	ss.str("");
+
+	int subtipo = msj->getSubtipoMsj();
+	
+	//antes que nada obtengo el id de la figura (pos en el vector)
+	int idFig = msj->getIdFigura();
+
+	switch (subtipo){
+		case MSG_SUBTYPE_MOVEMENT:
+		{
+			//data1 es mov en x y data2 mov en y
+			double movX,movY;
+
+			ss << msj->getData1();
+			ss >> movX;
+			
+			ss.str("");
+			ss << msj->getData2();
+			ss >> movY;
+
+			//muevo la figura que sea
+			vector[idFig]->cambiarPosicion(movX,movY);
+
+			break;
+		}
+		case MSG_SUBTYPE_SETANGLE:
+		{
+			//data1 es angulo
+			double angulo;
+
+			ss << msj->getData1();
+			ss >> angulo;
+
+			//muevo la figura que sea
+			vector[idFig]->setAngulo(angulo);
+
+			break;
+		}
+		case MSG_SUBTYPE_CREATE:
+		{
+			//data1 es tipoFig y data2 y data 3 la posicion
+			//ToDo
+			/*No olvidar meterla en alguna de las figuras en aire*/
+			break;
+		}
+		case MSG_SUBTYPE_DELETE:
+		{
+			break;
+		}
+		case MSG_SUBTYPE_SHIFT:
+		{
+			break;
+		}
+		case MSG_SUBTYPE_STRETCH:
+		{
+			break;
+		}
+/*		case MSG_SUBTYPE_ADD:
+		{
+			//agregarla al terreno!
+			break;
+		}
+*/
+	}
+}
