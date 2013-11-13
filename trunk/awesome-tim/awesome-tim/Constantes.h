@@ -409,6 +409,7 @@
 
 //Javier
 #define LARGO 2048
+#define MAX_CLIENTES 4
 
 // NET
 #define PUERTO							"10000"
