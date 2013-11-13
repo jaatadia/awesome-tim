@@ -261,6 +261,7 @@
 
 #define ANCHO_CODO 2*ALTO_CANIO
 #define ALTO_CODO ANCHO_CODO
+#define CODO_CORRECCION_UNION 0.05
 
 //cuadrantes
 #define CUADRANTE1 1

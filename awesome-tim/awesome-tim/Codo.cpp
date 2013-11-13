@@ -12,7 +12,9 @@ int Codo::getTipoFigura(){
 int Codo::getTipoDimension(){
 	return CUADRADO;
 }
-
+Figura* Codo::clonar(){
+	return new Codo(this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+}
 void Codo::calcularPuntosRotados(double* x1r,double* y1r,double* x2r,double* y2r,double* x3r,double* y3r,double* x4r,double* y4r,double* x5r,double* y5r,double* x6r,double* y6r){
 
 	double Xc = this->getDimension()->getX();
@@ -70,4 +72,16 @@ void Codo::calcularPuntosSinRotar(double* x1,double* y1,double* x2,double* y2,do
 
 	*x6 = Xc - ancho/2;
 	*y6 = Yc + alto/2;
+}
+double Codo::calcularAngulo(double x1,double y1,double x2,double y2){
+
+	return atan2(y2-y1,x2-x1);
+}
+double Codo::calcularAncho(double x1,double y1,double x2,double y2){
+
+	double x = x2-x1;
+	double y = y2-y1;
+
+	return sqrt(x*x+y*y);
+	
 }
