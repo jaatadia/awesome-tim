@@ -238,21 +238,25 @@ SDL_Surface* SdlSurfaceManager::rotarLock(SDL_Surface* sur,double angulo){
 
 //imprime en la las coordenadas x/yDestino de la superficie destino el rectoOrigen de la superficieOrigen
 void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDestino,Rectangulo* rectOrigen,int xDestino,int yDestino){
-	if((supOrigen==NULL)||(supDestino==NULL))return;
-	SDL_Rect* rO;
-	SDL_Rect rectO,rectD;
-	if(rectOrigen == NULL) rO = NULL;
-	else{
-		rectO.x = int(rectOrigen->x);
-		rectO.y = int(rectOrigen->y);
-		rectO.h = int(rectOrigen->alto);
-		rectO.w = int(rectOrigen->ancho);
-		rO = &rectO;
-	}
-		rectD.x = xDestino;
-		rectD.y = yDestino;
+	try{
+		if((supOrigen==NULL)||(supDestino==NULL))return;
+		SDL_Rect* rO;
+		SDL_Rect rectO,rectD;
+		if(rectOrigen == NULL) rO = NULL;
+		else{
+			rectO.x = int(rectOrigen->x);
+			rectO.y = int(rectOrigen->y);
+			rectO.h = int(rectOrigen->alto);
+			rectO.w = int(rectOrigen->ancho);
+			rO = &rectO;
+		}
+			rectD.x = xDestino;
+			rectD.y = yDestino;
 
-	SDL_BlitSurface(supOrigen,rO,supDestino,&rectD);
+		SDL_BlitSurface(supOrigen,rO,supDestino,&rectD);
+	}catch(...){
+		return;
+	}
 }
 
 //rota la imagen 90 grados

@@ -299,6 +299,8 @@
 #define ID_MOTOR_1 "../images/engranaje2-1.png"
 #define ID_MOTOR_2 "../images/engranaje2-2.png"
 
+#define ID_RATON_COMPLETO "../images/ratonCompleto.png"
+
 #define ID_CINTA "../images/cintamedio2.png"
 #define ID_CTRANSP_CIRC "../images/cintacirculo.png"
 #define ID_CTRANSP_CLAVO "../images/clavo.png"
