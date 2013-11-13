@@ -26,7 +26,29 @@ void Server::run()
 	{
 		while(!this->finalizando)
 		{
-			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), this->juego, true, ++this->ultimoId));
+			Socket* sok = this->_socket->acceptConnection();
+			int prox = -1;
+			for (int i = 1;i<=juego->clientesDelJuego;i++){
+				bool encontrado = false;
+				for (std::list<int>::iterator iter = juego->clientesConectados.begin();iter != juego->clientesConectados.end();iter++){
+					if ((*iter) == i){
+						encontrado = true;
+					}
+				}
+				if(!encontrado){
+					prox = i;
+					break;
+				}
+			}
+			
+			
+			if (prox == -1){
+				delete sok;
+			}else{
+				CommunicationManager* com = new CommunicationManager(sok, this->juego, true, prox);
+				this->commMgrLst.push_back(com);
+				juego->clientesConectados.push_back(prox);
+			}
 		}
 	} catch (SocketException &ex)
 	{

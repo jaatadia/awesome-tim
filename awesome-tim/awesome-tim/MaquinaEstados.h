@@ -9,6 +9,10 @@ class Terrreno;
 class MaquinaEstados
 {
 public:
+	
+	std::list<int> clientesConectados;
+	int clientesDelJuego;
+
 	std::list<Message *> aEnviar[MAX_CLIENTES+1];
 	std::list<Message *> aProcesar;
 	void pushSendMessage(Message * msg, int id = -1);

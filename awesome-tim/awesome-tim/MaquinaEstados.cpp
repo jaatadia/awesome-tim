@@ -1,5 +1,6 @@
 #include "MaquinaEstados.h"
 MaquinaEstados::MaquinaEstados(){
+	clientesDelJuego = 2;
 }
 
 MaquinaEstados::~MaquinaEstados(){

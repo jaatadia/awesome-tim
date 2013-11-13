@@ -53,7 +53,7 @@ std::string Socket::read()
 		salida = salida.substr(0,cantidadLeida);
 	}
 	else if (cantidadLeida == 0)
-		printf("Fin mensaje\n");
+		throw SocketException("Fin de la conexion");
 	else
 	{
 		std::stringstream id;

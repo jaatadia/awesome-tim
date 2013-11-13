@@ -1,4 +1,5 @@
 #include "ClientSocket.h"
+#include <iostream>
 
 ClientSocket::ClientSocket(char * ip)
 {
@@ -27,6 +28,7 @@ ClientSocket::ClientSocket(char * ip)
 		throw SocketException(mensaje);
 	}
 
+	this->_socket==NULL;
 	if(connect(this->_socket, resultado->ai_addr, (int)resultado->ai_addrlen) == SOCKET_ERROR)
 	{
 		freeaddrinfo(resultado);
