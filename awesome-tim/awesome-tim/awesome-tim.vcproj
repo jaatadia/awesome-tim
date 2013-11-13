@@ -248,6 +248,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CreateFigureMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CreateFigureMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Escopeta.cpp"
 				>
 			</File>

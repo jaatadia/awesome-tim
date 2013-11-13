@@ -1,10 +1,15 @@
 #include "MaquinaEstados.h"
+MaquinaEstados::MaquinaEstados(){
+}
+
+MaquinaEstados::~MaquinaEstados(){
+}
 
 void MaquinaEstados::pushSendMessage(Message * msg, int id){
 	Lock lock(this->_mutex);
 	if(id < 0)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 1; i <= MAX_CLIENTES; i++)
 		{
 			this->aEnviar[i].push_back(msg);
 		}
@@ -17,6 +22,8 @@ void MaquinaEstados::pushSendMessage(Message * msg, int id){
 
 Message * MaquinaEstados::getSendMessage(int id)
 {
+	if(id==-1) return NULL;
+
 	Lock lock(this->_mutex);
 	Message * msg = NULL;
 	if(!this->aEnviar[id].empty())

@@ -189,12 +189,6 @@ while(SDL_PollEvent(&evento)){
 				
 			// y verificar que el boton izq este apretado o no deberia pasar arrastre, idem boton derecho
 
-			MouseMotionMessage * msg = new MouseMotionMessage();
-			msg->setX(evento.motion.x);
-			msg->setY(evento.motion.y);
-			msg->setEstado(evento.motion.state);
-			this->maq->pushSendMessage(msg, maq->getId());
-
 			if (terreno->adentroZonaTerreno(posClickX,posClickY))
 				if (evento.motion.state == SDL_BUTTON_LMASK){
 					terreno->arrastrarFigura(posClickX - X_TERRENO_LOGICO, posClickY - Y_TERRENO_LOGICO, cantMovX, cantMovY);

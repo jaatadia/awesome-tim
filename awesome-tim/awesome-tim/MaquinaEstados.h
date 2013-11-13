@@ -9,7 +9,7 @@ class Terrreno;
 class MaquinaEstados
 {
 public:
-	std::list<Message *> aEnviar[5];
+	std::list<Message *> aEnviar[MAX_CLIENTES+1];
 	std::list<Message *> aProcesar;
 	void pushSendMessage(Message * msg, int id = -1);
 	void pushProcessMessage(Message * msg);
@@ -18,7 +18,8 @@ public:
 	void setId(int id);
 	int getId();
 	static void putMensaje(int tipo,int nroFigura,int data1,int data2);
-	virtual ~MaquinaEstados(){};
+	MaquinaEstados();
+	virtual ~MaquinaEstados();
 	virtual void salir()=0;
 	virtual void editor()=0;
 	virtual void play(void* ter)=0;
