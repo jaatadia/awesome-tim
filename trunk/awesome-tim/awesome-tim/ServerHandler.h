@@ -13,7 +13,7 @@
 class ServerHandler : public MessageHandler
 {
 public:
-	ServerHandler(int mode, MaquinaEstados * game);
+	ServerHandler(int mode, MaquinaEstados * game, int id);
 	virtual ~ServerHandler(void);
 
 private:

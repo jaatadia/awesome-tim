@@ -12,6 +12,7 @@
 #include "EscalasDeEjes.h"
 #include "Contenedor.h"
 #include "MaquinaEstados.h"
+#include "CreateFigureMessage.h"
 
 
 #define JUEGO_TAG "Juego"

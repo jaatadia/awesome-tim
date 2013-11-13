@@ -193,7 +193,7 @@ while(SDL_PollEvent(&evento)){
 			msg->setX(evento.motion.x);
 			msg->setY(evento.motion.y);
 			msg->setEstado(evento.motion.state);
-			this->maq->pushMessage(msg);
+			this->maq->pushSendMessage(msg, maq->getId());
 
 			if (terreno->adentroZonaTerreno(posClickX,posClickY))
 				if (evento.motion.state == SDL_BUTTON_LMASK){
@@ -240,6 +240,9 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
+			/*CreateFigureMessage * msg = new CreateFigureMessage();
+			msg->setId(this->maq->getId());
+			this->maq->pushMessage(msg);*/
 			if(figuraEnAire){
 				set2Click();
 				break;

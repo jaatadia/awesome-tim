@@ -66,6 +66,12 @@ void SocketHandler::run()
 									case MSG_TYPE_GOODBYE:
 										msg = new GoodbyeMessage(cadena.substr(2));
 										break;
+									case MSG_TYPE_ID:
+										msg = new IdMessage(cadena.substr(2));
+										break;
+									case MSG_TYPE_CREATE_FIGURE:
+										msg = new CreateFigureMessage(cadena.substr(2));
+										break;
 								}
 
 								if (msg->validate())

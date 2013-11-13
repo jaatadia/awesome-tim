@@ -14,7 +14,7 @@ using namespace std;
 class ClientHandler : public MessageHandler
 {
 public:
-	ClientHandler(int mode, MaquinaEstados * game);
+	ClientHandler(int mode, MaquinaEstados * game, int id);
 	virtual ~ClientHandler(void);
 
 private:

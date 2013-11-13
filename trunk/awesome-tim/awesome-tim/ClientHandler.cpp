@@ -1,6 +1,6 @@
 #include "ClientHandler.h"
 
-ClientHandler::ClientHandler(int mode, MaquinaEstados * game) : MessageHandler(mode, game)
+ClientHandler::ClientHandler(int mode, MaquinaEstados * game, int id) : MessageHandler(mode, game, id)
 {
 }
 
@@ -23,7 +23,7 @@ void ClientHandler::run()
 		switch(this->getMode())
 		{
 			case WRITE_MODE:
-				if (this->getState() == 0)
+				if (this->getState() == 0) // EVENTOS DE SERVER
 				{
 					// Envio Yaml
 					string nombreArchivo = "archivoDefault.yaml";
@@ -54,27 +54,25 @@ void ClientHandler::run()
 
 					// Envio ID
 					IdMessage * msg = new IdMessage();
-					msg->setId(this->game->getId());
+					msg->setId(this->id);
 					this->pushOutputMessage(msg);
 
 					this->setState(1);
+				}
+				else // EVENTOS DE JUEGO
+				{
+					Message * msg = this->game->getSendMessage(this->id);
+					if(msg)
+					{
+						this->pushOutputMessage(msg);
+					}
 				}
 				break;
 			case READ_MODE:
 				Message * msg = this->getInputMessage();
 				if(msg)
 				{
-					switch(msg->getType())
-					{
-						case MSG_TYPE_ID:
-							break;
-						case MSG_TYPE_FILES:
-							break;
-						case MSG_TYPE_EVENT_MOUSEBUTTONDOWN:
-							break;
-						case MSG_TYPE_GOODBYE:
-							break;
-					}
+					this->game->pushProcessMessage(msg);
 				}
 		}
 		this->_thread.sleep(100);

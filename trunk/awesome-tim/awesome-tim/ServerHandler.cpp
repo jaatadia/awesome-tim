@@ -1,6 +1,6 @@
 #include "ServerHandler.h"
 
-ServerHandler::ServerHandler(int mode, MaquinaEstados * game) : MessageHandler(mode, game)
+ServerHandler::ServerHandler(int mode, MaquinaEstados * game, int id) : MessageHandler(mode, game, id)
 {
 }
 
@@ -24,7 +24,7 @@ void ServerHandler::run()
 		{
 			case WRITE_MODE:
 				{
-					Message * msg = ((MEstadosCliente *)this->game)->getNextMessage();
+					Message * msg = ((MEstadosCliente *)this->game)->getSendMessage(this->id);
 					if (msg)
 					{
 						this->pushOutputMessage(msg);
@@ -34,31 +34,29 @@ void ServerHandler::run()
 				Message * mensaje = this->getInputMessage();
 				if(mensaje)
 				{
-					switch(mensaje->getType())
+					if(mensaje->getType() == MSG_TYPE_ID)
 					{
-						case MSG_TYPE_ID:
-							this->game->setId(((IdMessage *) mensaje)->getId());
-							((MEstadosCliente *)this->game)->init();
-							break;
-						case MSG_TYPE_FILES:
-							{
-								ofstream file(((FilesMessage *) mensaje)->getNombre().c_str(), ios::out | ios::app | ios::binary);
-								if (file.is_open())
-								{
-									file << ((FilesMessage *) mensaje)->getStream().c_str();
-									file.close();
-								}
-								else
-								{
-									cout << "No se pudo abrir el archivo";
-								}
-								break;
-							}
-						case MSG_TYPE_GOODBYE:
-							break;
+						this->game->setId(((IdMessage *) mensaje)->getId());
+						((MEstadosCliente *)this->game)->init();
+					}
+					else if (mensaje->getType() == MSG_TYPE_FILES)
+					{
+						ofstream file(((FilesMessage *) mensaje)->getNombre().c_str(), ios::out | ios::app | ios::binary);
+						if (file.is_open())
+						{
+							file << ((FilesMessage *) mensaje)->getStream().c_str();
+							file.close();
+						}
+						else
+						{
+							cout << "No se pudo abrir el archivo";
+						}
+					}
+					else
+					{
+						this->game->pushProcessMessage(mensaje);
 					}
 				}
-				break;
 		}
 		this->_thread.sleep(100);
 	}

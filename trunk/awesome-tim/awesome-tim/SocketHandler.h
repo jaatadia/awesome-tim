@@ -7,6 +7,7 @@
 #include "FilesMessage.h"
 #include "MouseDownMessage.h"
 #include "GoodbyeMessage.h"
+#include "CreateFigureMessage.h"
 #include "Constantes.h"
 #include "Socket.h"
 #include "SocketException.h"

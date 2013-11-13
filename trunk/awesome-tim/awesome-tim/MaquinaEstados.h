@@ -9,12 +9,14 @@ class Terrreno;
 class MaquinaEstados
 {
 public:
-	std::list<Message *> aEnviar;
+	std::list<Message *> aEnviar[5];
 	std::list<Message *> aProcesar;
-	void pushMessage(Message * msg);
+	void pushSendMessage(Message * msg, int id = -1);
+	void pushProcessMessage(Message * msg);
+	Message * getSendMessage(int id);
+	Message * getProcessMessage();
 	void setId(int id);
 	int getId();
-	Message * getNextMessage();
 	static void putMensaje(int tipo,int nroFigura,int data1,int data2);
 	virtual ~MaquinaEstados(){};
 	virtual void salir()=0;

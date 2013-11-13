@@ -3,6 +3,9 @@
 MouseEventMessage::MouseEventMessage(void)
 {
 	this->valid = MSG_VALID;
+	this->estado = 0;
+	this->x = 0;
+	this->y = 0;
 }
 
 MouseEventMessage::MouseEventMessage(string msg)
