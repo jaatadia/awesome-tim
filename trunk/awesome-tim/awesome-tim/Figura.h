@@ -67,6 +67,8 @@ public:
 	virtual void dibujar(Superficie* super,int xIni,int yIni);
 
 	virtual const char* getID();
+	virtual const char* getIDBotonera(){ return this->getID();};
+
 	virtual int getTipoDimension(){return dimension->getTipoDimension();};
 	virtual Dimension* getDimension();
 	virtual int getTipoFigura(){return -1;};//=0;

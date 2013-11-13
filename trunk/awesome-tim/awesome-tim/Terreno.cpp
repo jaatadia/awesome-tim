@@ -15,8 +15,8 @@ Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
 	
 	x1 = 0;
 	y1 = 0;
-	x2 = ancho;
-	y2 = alto;
+	x2 = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(ancho);
+	y2 = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
 
 	ex1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x1);
 	ex2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x2);
@@ -397,7 +397,7 @@ void Terreno::soltarFigura(bool flag)
 {
 	if (figuraActiva){
 		bool poner = ((flag) || (adentroZonaTerreno(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY())));
-		if (!(figuraActiva->superpuesta)&& poner ){
+		if (!(figuraActiva->superpuesta) && poner ){
 			agregarFigura(figuraActiva);
 			figuraActiva=NULL;
 		}else{

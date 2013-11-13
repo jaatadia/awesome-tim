@@ -8,6 +8,7 @@ class MotorRaton : public Engranaje {
 private:
 	VistaFiguraEstatica* myVista2;
 	MotorRaton(const char* id,Dimension* dim,bool flag):Engranaje(id,dim,flag){
+		ID = ID_MOTOR_RATON_1;
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
@@ -28,12 +29,14 @@ public:
 		delete myVista2;
 	};
 	
-	Figura* clonar(){
-		MotorRaton* eng = new MotorRaton(ID_MOTOR_RATON,dimension->clonar(),true);
+	virtual Figura* clonar(){
+		MotorRaton* eng = new MotorRaton(ID_MOTOR_RATON_1,dimension->clonar(),true);
 		eng->setRadio(this->radio1);
 		if(this->sentido == -1) eng->shift();
 		return eng;
 	};
+
+	virtual const char* getIDBotonera(){ return ID_RATON_COMPLETO;};
 
 	virtual int getTipoFigura(){return MOTOR_RATON;}
 	virtual int getTipoDimension(){return CIRCULO;}
@@ -45,7 +48,7 @@ public:
 			delete(myVista2);		
 			myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 			this->ID = ID_MOTOR_RATON_1;
-		}
+		}else
 		if(sentido == -1){
 			delete(myVista2);
 			myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON_OPUESTO);

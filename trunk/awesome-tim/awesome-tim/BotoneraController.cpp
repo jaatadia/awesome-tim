@@ -254,7 +254,7 @@ Superficie* BotoneraController::getImpresion(){
 }
 
 void BotoneraController::agregarBoton(Figura * figura, int cantidadInstancias) {
-	Imagen * img = new Imagen(figura->getID());
+	Imagen * img = new Imagen(figura->getIDBotonera());
 	int buttonSide = (this->botonera->getAnchoBoton() > this->botonera->getAltoBoton()) ? this->botonera->getAltoBoton() * this->buttonScaleFactor : this->botonera->getAnchoBoton() * this->buttonScaleFactor;
 	
 	Imagen* temp = img->scaleImagen(buttonSide, buttonSide);
@@ -434,7 +434,7 @@ void BotoneraController::dibujarCantInstancias(){
 			//dibujar
 			img = new Imagen(dig,altoBoton*0.2,255,255,255);
 			//y un pequeño desplazamiento para que entren bien al boton
-			layerADibujar->dibujarImagen(img, NULL, anchoBoton*1/10, posBotonY+altoBoton*1/10);
+			layerADibujar->dibujarImagen(img, NULL, 7, posBotonY+7);
 
 			posBotonY += altoBoton;
 			++itFig;
