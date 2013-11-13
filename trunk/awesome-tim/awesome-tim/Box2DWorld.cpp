@@ -298,27 +298,89 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				
 				//pared12
 				b2BodyDef pared12;
-				pared12.position.Set(x1,y1);
-				//pared12.angle = 
+				pared12.position.Set(x1+(x2-x1)/2,y1+(y2-y1)/2);
+				pared12.angle = ((Codo*)figura)->calcularAngulo(x1,y1,x2,y2);
 				pared12.type = b2_staticBody;
 				b2Body* cuerpo_pared12 = this->mundo->CreateBody(&pared12);
 
-				b2PolygonShape forma_pared1;
-				b2PolygonShape forma_pared2;
-				//forma_pared1.SetAsBox(ancho/2,CANIO_BORDE/2);
-				//forma_pared2.SetAsBox(ancho/2,CANIO_BORDE/2);
+				b2PolygonShape forma_pared12;
+				forma_pared12.SetAsBox((((Codo*)figura)->calcularAncho(x1,y1,x2,y2)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
 
-				fD.shape = &forma_pared1;
+				fD.shape = &forma_pared12;
 				fD.density = 1;
 				fD.friction = 10;
 				fD.isSensor = false;
 				cuerpo_pared12->CreateFixture(&fD);
 
+				//la uno al fondo
+				b2WeldJointDef joint12;
+				joint12.Initialize(cuerpo_pared12,cuerpo,cuerpo_pared12->GetPosition());
+				b2Joint* enlace12 = this->mundo->CreateJoint(&joint12);
+
 				//pared23
+				b2BodyDef pared23;
+				pared23.position.Set(x2+(x3-x2)/2,y2+(y3-y2)/2);
+				pared23.angle = ((Codo*)figura)->calcularAngulo(x2,y2,x3,y3);
+				pared23.type = b2_staticBody;
+				b2Body* cuerpo_pared23 = this->mundo->CreateBody(&pared23);
+
+				b2PolygonShape forma_pared23;
+				forma_pared23.SetAsBox((((Codo*)figura)->calcularAncho(x2,y2,x3,y3)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
+
+				fD.shape = &forma_pared23;
+				fD.density = 1;
+				fD.friction = 10;
+				fD.isSensor = false;
+				cuerpo_pared23->CreateFixture(&fD);
+
+				//la uno al fondo
+				b2WeldJointDef joint23;
+				joint23.Initialize(cuerpo_pared23,cuerpo,cuerpo_pared23->GetPosition());
+				b2Joint* enlace23 = this->mundo->CreateJoint(&joint23);
 
 				//pared54
+				b2BodyDef pared54;
+				pared54.position.Set(x5+(x4-x5)/2,y5+(y4-y5)/2);
+				pared54.angle = ((Codo*)figura)->calcularAngulo(x5,y5,x4,y4);
+				pared54.type = b2_staticBody;
+				b2Body* cuerpo_pared54 = this->mundo->CreateBody(&pared54);
+
+				b2PolygonShape forma_pared54;
+				forma_pared54.SetAsBox((((Codo*)figura)->calcularAncho(x5,y5,x4,y4)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
+
+				fD.shape = &forma_pared54;
+				fD.density = 1;
+				fD.friction = 10;
+				fD.isSensor = false;
+				cuerpo_pared54->CreateFixture(&fD);
+
+				//la uno al fondo
+				b2WeldJointDef joint54;
+				joint54.Initialize(cuerpo_pared54,cuerpo,cuerpo_pared54->GetPosition());
+				b2Joint* enlace54 = this->mundo->CreateJoint(&joint54);
 
 				//pared65
+				b2BodyDef pared65;
+				pared65.position.Set(x6+(x5-x6)/2,y6+(y5-y6)/2);
+				pared65.angle = ((Codo*)figura)->calcularAngulo(x6,y6,x5,y5);
+				pared65.type = b2_staticBody;
+				b2Body* cuerpo_pared65 = this->mundo->CreateBody(&pared65);
+
+				b2PolygonShape forma_pared65;
+				forma_pared65.SetAsBox((((Codo*)figura)->calcularAncho(x6,y6,x5,y5)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
+
+				fD.shape = &forma_pared65;
+				fD.density = 1;
+				fD.friction = 10;
+				fD.isSensor = false;
+				cuerpo_pared65->CreateFixture(&fD);
+
+				//la uno al fondo
+				b2WeldJointDef joint65;
+				joint65.Initialize(cuerpo_pared65,cuerpo,cuerpo_pared65->GetPosition());
+				b2Joint* enlace65 = this->mundo->CreateJoint(&joint65);
+
+				break;
 			}
 		case CANIO:{
 				cuerpo->SetType(b2_staticBody);

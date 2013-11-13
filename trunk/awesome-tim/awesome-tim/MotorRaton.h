@@ -39,7 +39,7 @@ public:
 	virtual const char* getIDBotonera(){ return ID_RATON_COMPLETO;};
 
 	virtual int getTipoFigura(){return MOTOR_RATON;}
-	virtual int getTipoDimension(){return CIRCULO;}
+	virtual int getTipoDimension(){return CUADRADO;}
 
 	virtual void shift(){
 		this->sentido = -this->sentido;

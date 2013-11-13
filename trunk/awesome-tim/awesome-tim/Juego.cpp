@@ -196,10 +196,10 @@ while(SDL_PollEvent(&evento)){
 			charIngresado = evento.text.text[0];
 //			if(clickPressed){
 				if(charIngresado == '+'){
-					if(figuraEnAire) figuraEnAire[0]->agrandar();
+					if(figuraEnAire[0]) figuraEnAire[0]->agrandar();
 					else terreno->agrandarFigura();
 				}else if(charIngresado == '-'){
-					if(figuraEnAire) figuraEnAire[0]->achicar();
+					if(figuraEnAire[0]) figuraEnAire[0]->achicar();
 					else terreno->achicarFigura();
 //				}
 			}else comandos->agregarLetra(charIngresado);
