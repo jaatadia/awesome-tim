@@ -388,8 +388,7 @@ bool BotoneraControllerCliente::agregarBotonesDefault(){
 	this->agregarBoton(new PelotaBowling(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PelotaBasquet(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Balancin(ID_BALANCIN_IZQ,0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Balancin(ID_BALANCIN_DER,0,0,ANGULO_BALANCIN_DER),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Balancin(0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
 	
 
 	return true;

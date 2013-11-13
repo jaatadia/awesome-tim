@@ -528,7 +528,7 @@ Figura* CargadorYaml::crearBalancin(const YAML::Node& nodoFigura, int sentido){
 	if(sentido == IZQUIERDA)
 		IDBotonera = ID_BALANCIN_IZQ;
 
-	return new Balancin(IDBotonera.c_str(),posX,posY,angulo);
+	return new Balancin(posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearPaleta(const YAML::Node& nodoFigura){

@@ -29,7 +29,7 @@ private:
 public:
 	MEstadosCliente();
 	~MEstadosCliente(void);
-	void init();
+	void init(int id);
 	bool isRunning();
 	bool onEvent();
 	void onLoop();

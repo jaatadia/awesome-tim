@@ -29,7 +29,7 @@ private:
 	Terreno* terreno;
 	BotoneraController * botonera;
 	Comandos* comandos;
-	Figura* figuraEnAire;
+	Figura* figuraEnAire[MAX_CLIENTES+1];
 	bool estaActiva; //indica si la figura en aire esta habilitada a moverse
 
 	bool shiftPressed;

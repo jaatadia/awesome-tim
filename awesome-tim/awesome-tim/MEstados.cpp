@@ -26,6 +26,8 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 	this->fileOut = fileOut;
 	running = true;
 
+	this->setId(0);
+
 	Eactivo = Eeditor = new Juego(fileIn,fileOut,this);
 	Eanterior = Eplay = NULL;
 }

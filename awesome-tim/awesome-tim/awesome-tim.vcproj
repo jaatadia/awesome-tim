@@ -264,6 +264,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FactoryFiguras.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FiguraCompuesta.cpp"
 				>
 			</File>
@@ -691,6 +695,10 @@
 			</File>
 			<File
 				RelativePath=".\EventMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FactoryFiguras.h"
 				>
 			</File>
 			<File

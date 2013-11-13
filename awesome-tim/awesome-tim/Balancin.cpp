@@ -27,7 +27,7 @@
 //}
 */
 
-Balancin::Balancin(const char* id,double posX, double posY, double angulo):FiguraCompuesta(id,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN+2*RADIO_PUNTA_BALANCIN,posX,posY,0)){
+Balancin::Balancin(double posX, double posY, double angulo):FiguraCompuesta(ID_BALANCIN_DER,new Cuadrado(ANCHO_BALANCIN,ALTO_BALANCIN+2*RADIO_PUNTA_BALANCIN,posX,posY,0)){
 
 	this->partesFigura = std::list<Figura*>();
 	double posXPuntaIzq,posXPuntaDer,posYPuntaIzq,posYPuntaDer;
@@ -152,7 +152,7 @@ Figura* Balancin::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
 
-	return new Balancin("",dim->getX(),dim->getY(),dim->getAngulo());
+	return new Balancin(dim->getX(),dim->getY(),dim->getAngulo());
 }//copia la figura
 
 
