@@ -39,6 +39,7 @@ void SocketHandler::run()
 					{
 						cout << sE.what() << endl;
 						this->kill();
+						throw SocketException("cerrar");
 					}
 					if (cadena.size())
 					{

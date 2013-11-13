@@ -95,9 +95,7 @@ bool Juego:: onRender(Superficie* superficie){
 
 	bool dibujar = false;
 	
-	if (figuraEnAire[0]){
-		confirmarPosicionFiguraEnAire();
-	}
+	confirmarPosicionFiguraEnAire();
 	
 	if(this->huboCambios()){
 		superficie->restore();
@@ -530,23 +528,25 @@ bool Juego::figEnEspacioIntermedio(){
 	//tiene ganas de chequear eso hagalo.
 
 	//obviamente tambien asumo que no puede estar por completo en la separacion.
-if( figuraEnAire[0]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figuraEnAire[i] ==NULL) continue;
+		if( figuraEnAire[i]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
 
-	figuraEnAire[0]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
 
-	figuraEnAire[0]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
-	figuraEnAire[0]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) 
-	)
-	return true;
-else
+			figuraEnAire[i]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
+			figuraEnAire[i]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) 
+			)
+			return true;
+	}
 	return false;
 }
 
@@ -554,28 +554,35 @@ else
 //entonces si un punto coincide esta dentro de quien corresponda.
 bool Juego::figEnBotonera(){
 
-	if (figuraEnAire[0]->getDimension()->getX()>X_BOTONERA_LOGICO && figuraEnAire[0]->getDimension()->getX()<X_BOTONERA_LOGICO+ANCHO_BOTONERA_LOGICO
-		&& figuraEnAire[0]->getDimension()->getY()>Y_BOTONERA_LOGICO && figuraEnAire[0]->getDimension()->getY()<Y_BOTONERA_LOGICO+ALTO_BOTONERA_LOGICO )
-		return true;
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figuraEnAire[i] ==NULL) continue;
+		if (figuraEnAire[i]->getDimension()->getX()>X_BOTONERA_LOGICO && figuraEnAire[i]->getDimension()->getX()<X_BOTONERA_LOGICO+ANCHO_BOTONERA_LOGICO
+			&& figuraEnAire[i]->getDimension()->getY()>Y_BOTONERA_LOGICO && figuraEnAire[i]->getDimension()->getY()<Y_BOTONERA_LOGICO+ALTO_BOTONERA_LOGICO )
+			return true;
+	}
 	
 	return false;
 }
 
 bool Juego::figEnTerreno(){
 
-	if (figuraEnAire[0]->getDimension()->getX()>X_TERRENO_LOGICO && figuraEnAire[0]->getDimension()->getX()<X_TERRENO_LOGICO+ANCHO_TERRENO_LOGICO
-		&& figuraEnAire[0]->getDimension()->getY()>Y_TERRENO_LOGICO && figuraEnAire[0]->getDimension()->getY()<Y_TERRENO_LOGICO+ALTO_TERRENO_LOGICO )
-		return true;
-	
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figuraEnAire[i] ==NULL) continue;
+		if (figuraEnAire[i]->getDimension()->getX()>X_TERRENO_LOGICO && figuraEnAire[i]->getDimension()->getX()<X_TERRENO_LOGICO+ANCHO_TERRENO_LOGICO
+			&& figuraEnAire[i]->getDimension()->getY()>Y_TERRENO_LOGICO && figuraEnAire[i]->getDimension()->getY()<Y_TERRENO_LOGICO+ALTO_TERRENO_LOGICO )
+			return true;
+	}	
 	return false;
 }
 
 bool Juego::figEnComandos(){
 
-	if (figuraEnAire[0]->getDimension()->getX()>X_COMANDOS_LOGICO && figuraEnAire[0]->getDimension()->getX()<X_COMANDOS_LOGICO+ANCHO_COMANDOS_LOGICO
-		&& figuraEnAire[0]->getDimension()->getY()>Y_COMANDOS_LOGICO && figuraEnAire[0]->getDimension()->getY()<Y_COMANDOS_LOGICO+ALTO_COMANDOS_LOGICO )
-		return true;
-	
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figuraEnAire[i] ==NULL) continue;
+		if (figuraEnAire[i]->getDimension()->getX()>X_COMANDOS_LOGICO && figuraEnAire[i]->getDimension()->getX()<X_COMANDOS_LOGICO+ANCHO_COMANDOS_LOGICO
+			&& figuraEnAire[i]->getDimension()->getY()>Y_COMANDOS_LOGICO && figuraEnAire[i]->getDimension()->getY()<Y_COMANDOS_LOGICO+ALTO_COMANDOS_LOGICO )
+			return true;
+	}
 	return false;
 }
 

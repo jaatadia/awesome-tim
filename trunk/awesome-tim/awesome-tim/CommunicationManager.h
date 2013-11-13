@@ -17,6 +17,8 @@ public:
 	~CommunicationManager(void);
 
 private:
+	bool server;
+	int ID;
 	MessageHandler * messageReader;
 	MessageHandler * messageWriter;
 	SocketHandler * socketReader;

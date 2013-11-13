@@ -2,6 +2,8 @@
 
 CommunicationManager::CommunicationManager(Socket * socket, MaquinaEstados * game, bool server, int id)
 {
+	this->server = server;
+	this->ID = id;
 	this->socketReader = new SocketHandler(socket, READ_MODE);
 	this->socketWriter = new SocketHandler(socket, WRITE_MODE);
 	if(server){
@@ -42,7 +44,17 @@ void CommunicationManager::run()
 		msg = this->socketReader->getInputMessage();
 		if(msg)
 		{
-			this->messageReader->pushInputMessage(msg);
+			try{
+				this->messageReader->pushInputMessage(msg);
+			}catch(...){
+				this->finalizando = true;
+				if(this->server){
+					this->game->clientesConectados.remove(this->ID);
+				}else{
+					std::cout<<"Se perdio la conexion con el servivdor\n";
+					this->game->salir();
+				}
+			}
 		}
 		this->_thread.sleep(100);
 	}

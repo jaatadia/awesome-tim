@@ -9,6 +9,7 @@ Client::Client(MaquinaEstados * juego,char* IP)
 	} catch (SocketException & sE)
 	{
 		cout << sE.what() << endl;
+		juego->salir();
 	}
 }
 

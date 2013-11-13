@@ -66,7 +66,6 @@ JuegoCliente::~JuegoCliente(){
 	delete comandos;
 	delete EscalasDeEjes::getInstance();
 	Contenedor::deleteContenedor();
-	
 	for(int i=0;i<=MAX_CLIENTES;i++){
 		if(figurasEnAire[i]!=NULL)delete figurasEnAire[i];
 	}
