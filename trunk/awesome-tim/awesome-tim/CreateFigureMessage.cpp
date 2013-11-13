@@ -3,6 +3,7 @@
 CreateFigureMessage::CreateFigureMessage(void)
 {
 	this->valid = MSG_VALID;
+	this->type = MSG_TYPE_CREATE_FIGURE;
 	this->id = 0;
 	this->figureType = 0;
 	this->x = 0;
@@ -176,7 +177,7 @@ string CreateFigureMessage::serialize()
 	ss << "|";
 	ss << this->angle;
 	ss << "|";
-	ss << (this->inAir) ? "T" : "F";
+	ss << ((this->inAir) ? "T" : "F");
 	ss << "$";
 	return ss.str();
 }

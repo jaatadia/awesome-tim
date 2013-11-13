@@ -24,15 +24,18 @@ void ServerHandler::run()
 		{
 			case WRITE_MODE:
 				{
-					int gID = game->getId();
-					if((this->id == -1)&& (gID>0)&&(gID<MAX_CLIENTES)){
-						this->id = gID;
-					}
-					if(this->id == -1) continue;
-					Message * msg = ((MEstadosCliente *)this->game)->getSendMessage(this->id);
-					if (msg)
+					if(this->id != -1)
 					{
-						this->pushOutputMessage(msg);
+						Message * msg = this->game->getSendMessage(this->id);
+						if (msg)
+						{
+							this->pushOutputMessage(msg);
+						}
+					}
+					else if (this->game->getId() >= 0)
+					{
+						this->id = this->game->getId();
+						((MEstadosCliente *)this->game)->init(this->id);
 					}
 				}
 			case READ_MODE:
@@ -43,7 +46,6 @@ void ServerHandler::run()
 					{
 						this->id = ((IdMessage *) mensaje)->getId();
 						this->game->setId(this->id);
-						((MEstadosCliente *)this->game)->init(((IdMessage *) mensaje)->getId());
 					}
 					else if (mensaje->getType() == MSG_TYPE_FILES)
 					{
