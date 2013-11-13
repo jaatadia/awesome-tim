@@ -88,12 +88,9 @@
 #define CARRO_ATABLE 34
 #define MOTOR_RATON 35
 #define CANIO 36
+#define CODO 37
 
 //valores fisicos
-
-#define PALETA_DENSIDAD 10
-#define PALETA_RESTITUTION 0.8
-#define PALETA_FRICCION  1
 
 #define FUERZA_BALA 100000
 #define ANCHO_BALA 2
@@ -231,11 +228,11 @@
 #define DENSIDAD_HUEVO 6.0
 #define FRICCION_HUEVO 0.3
 
-#define ANCHO_DOMINO 2
+#define ANCHO_DOMINO 1.8
 #define ALTO_DOMINO 4
 #define RESTITUCION_DOMINO 0.5
-#define DENSIDAD_DOMINO 5.0
-#define FRICCION_DOMINO 0.3
+#define DENSIDAD_DOMINO 0.05
+#define FRICCION_DOMINO 0.001
 
 #define ANCHO_CARRITO 20
 #define ALTO_CARRITO 6
@@ -243,13 +240,13 @@
 #define RADIO_RUEDA_CARRITO 2.5
 #define RESTITUCION_CARRITO 0.4
 #define DENSIDAD_CARRITO 2.0
-#define FRICCION_CARRITO 0.001
+#define FRICCION_CARRITO 0.3
 
 #define ANCHO_PALETA 12
 #define ALTO_PALETA 4
-//#define RESTITUCION_PALETA 0.4
-#define DENSIDAD_PALETA 1.0f
-//#define FRICCION_PALETA 0.001
+#define PALETA_DENSIDAD 10
+#define PALETA_RESTITUTION 0.1
+#define PALETA_FRICCION  1
 #define PALETA_IZQ_MAXANG PI/4
 #define PALETA_IZQ_MINANG -PI/4
 #define PALETA_DER_MAXANG 3*PI/4
@@ -260,6 +257,9 @@
 #define CANIO_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CANIO)-1
 #define CANIO_MINLARGO 1
 #define CANIO_BORDE 0.3
+
+#define ANCHO_CODO 2*ALTO_CANIO
+#define ALTO_CODO ANCHO_CODO
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -348,6 +348,8 @@
 #define ID_BALA "../images/shotgun_bullet.png"
 
 #define ID_CANIO "../images/Rectangulo.png"
+#define ID_CODO ID_CANIO
+
 #define ID_MOTOR_RATON "../images/FondoRaton.png"
 #define ID_MOTOR_RATON_OPUESTO "../images/FondoRatonOpuesto.png"
 #define ID_MOTOR_RATON_1 "../images/ratonDer.png"
@@ -399,7 +401,7 @@
 
 #define REPEAT_FROM INICIO_GANO5
 
-#define VELOCIDAD_MIN_RUPTURA 10
+#define VELOCIDAD_MIN_RUPTURA 40
 
 // Acciones posibles en play:
 

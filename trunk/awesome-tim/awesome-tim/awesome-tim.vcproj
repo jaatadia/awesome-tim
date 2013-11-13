@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -233,6 +233,10 @@
 			</File>
 			<File
 				RelativePath=".\ClientSocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Codo.cpp"
 				>
 			</File>
 			<File
@@ -658,6 +662,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Codo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ComandosPlay.h"
 				>
 			</File>
@@ -835,10 +843,6 @@
 			</File>
 			<File
 				RelativePath=".\Queso.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource.h"
 				>
 			</File>
 			<File
