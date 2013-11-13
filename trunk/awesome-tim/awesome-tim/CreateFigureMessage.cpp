@@ -33,22 +33,32 @@ CreateFigureMessage::CreateFigureMessage(string msg)
 			pos = msg.find("|");
 			if (pos != std::string::npos)
 			{
-				this->x = atof(msg.substr(0, pos).c_str());
+				this->figureID = atoi(msg.substr(0, pos).c_str());
 				msg = msg.substr(pos + 1);
 				pos = msg.find("|");
 				if (pos != std::string::npos)
 				{
-					this->y = atof(msg.substr(0, pos).c_str());
+					this->x = atof(msg.substr(0, pos).c_str());
 					msg = msg.substr(pos + 1);
 					pos = msg.find("|");
 					if (pos != std::string::npos)
 					{
-						this->angle = atof(msg.substr(0, pos).c_str());
+						this->y = atof(msg.substr(0, pos).c_str());
 						msg = msg.substr(pos + 1);
-						pos = msg.find("$");
+						pos = msg.find("|");
 						if (pos != std::string::npos)
 						{
-							this->inAir = (msg.substr(0, pos).compare("T") == 0) ? true : false;
+							this->angle = atof(msg.substr(0, pos).c_str());
+							msg = msg.substr(pos + 1);
+							pos = msg.find("$");
+							if (pos != std::string::npos)
+							{
+								this->inAir = (msg.substr(0, pos).compare("T") == 0) ? true : false;
+							}
+							else
+							{
+								this->valid = MSG_INVALID;
+							}
 						}
 						else
 						{
@@ -91,6 +101,10 @@ int CreateFigureMessage::getFigureType()
 	return this->figureType;
 }
 
+int CreateFigureMessage::getFigureID(){
+	return this->figureID;
+}
+
 double CreateFigureMessage::getX()
 {
 	return this->x;
@@ -121,6 +135,10 @@ void CreateFigureMessage::setFigureType(int figureType)
 	this->figureType = figureType;
 }
 
+void CreateFigureMessage::setFigureID(int figureID){
+	this->figureID = figureID;
+}
+
 void CreateFigureMessage::setX(double x)
 {
 	this->x = x;
@@ -149,6 +167,8 @@ string CreateFigureMessage::serialize()
 	ss << this->id;
 	ss << "|";
 	ss << this->figureType;
+	ss << "|";
+	ss << this->figureID;
 	ss << "|";
 	ss << this->x;
 	ss << "|";

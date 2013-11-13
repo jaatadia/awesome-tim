@@ -41,6 +41,10 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 }
 
 bool JuegoCliente::cargar(){
+	if(botonera->estaVacia()){
+		botonera->agregarBotonesDefault();
+		this->resume();
+	}
 	return true;
 }
 
@@ -234,9 +238,6 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
-			/*CreateFigureMessage * msg = new CreateFigureMessage();
-			msg->setId(this->maq->getId());
-			this->maq->pushMessage(msg);*/
 			if(figuraEnAire){
 				set2Click();
 				break;
@@ -264,6 +265,10 @@ while(SDL_PollEvent(&evento)){
 			//puede que me haya devuelto la figura en aire
 			figuraEnAire = botonera->obtenerFiguraActual();
 			if (figuraEnAire){
+				estaActiva = true;
+				//innecesario pero por si acaso
+				figuraEnAire->setX(posClickX);
+				figuraEnAire->setY(posClickY);
 				
 				while(vector[posVector]!=NULL){
 					posVector++;
@@ -273,13 +278,16 @@ while(SDL_PollEvent(&evento)){
 				}
 				figuraEnAire->numero = posVector;
 				vector[posVector] = figuraEnAire;
-				//enviarMensaje(figuraEnAire,"Se creo una desde la botonera!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
-
-				estaActiva = true;
-				//innecesario pero por si acaso
-				figuraEnAire->setX(posClickX);
-				figuraEnAire->setY(posClickY);
+					CreateFigureMessage * msg = new CreateFigureMessage();
+					msg->setId(this->maq->getId());
+					msg->setFigureType(figuraEnAire->getTipoFigura());
+					msg->setFigureID(figuraEnAire->numero);
+					msg->setX(figuraEnAire->getDimension()->getX());
+					msg->setY(figuraEnAire->getDimension()->getY());
+					msg->setAngle(figuraEnAire->getDimension()->getAngulo());
+					msg->setInAir(true);
+				this->maq->pushSendMessage(msg,numCliente);
+				std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
 			}
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos

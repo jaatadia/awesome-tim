@@ -37,7 +37,7 @@ void ServerHandler::run()
 					if(mensaje->getType() == MSG_TYPE_ID)
 					{
 						this->game->setId(((IdMessage *) mensaje)->getId());
-						((MEstadosCliente *)this->game)->init();
+						((MEstadosCliente *)this->game)->init(((IdMessage *) mensaje)->getId());
 					}
 					else if (mensaje->getType() == MSG_TYPE_FILES)
 					{

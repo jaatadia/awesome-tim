@@ -97,10 +97,9 @@ void MEstadosCliente::play(void* ter){
 	Eactivo = Eplay;
 }
 
-void MEstadosCliente::init()
+void MEstadosCliente::init(int id)
 {
-	std::cout<<"entroaca!!!\n";
 	running = true;
-	Eactivo = Eeditor = new JuegoCliente(this->id,this);
+	Eactivo = Eeditor = new JuegoCliente(id,this);
 	Eanterior = Eplay = NULL;
 }
