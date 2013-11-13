@@ -1,11 +1,33 @@
 #include "MaquinaEstados.h"
 
-void MaquinaEstados::pushMessage(Message * msg){
+void MaquinaEstados::pushSendMessage(Message * msg, int id){
 	Lock lock(this->_mutex);
-	this->aEnviar.push_back(msg);
+	if(id < 0)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			this->aEnviar[i].push_back(msg);
+		}
+	}
+	else
+	{
+		this->aEnviar[id].push_back(msg);
+	}
 }
 
-Message * MaquinaEstados::getNextMessage()
+Message * MaquinaEstados::getSendMessage(int id)
+{
+	Lock lock(this->_mutex);
+	Message * msg = NULL;
+	if(!this->aEnviar[id].empty())
+	{
+		msg = (Message *) this->aEnviar[id].front();
+		this->aEnviar[id].pop_front();
+	}
+	return msg;
+}
+
+Message * MaquinaEstados::getProcessMessage()
 {
 	Lock lock(this->_mutex);
 	Message * msg = NULL;
@@ -15,6 +37,12 @@ Message * MaquinaEstados::getNextMessage()
 		this->aProcesar.pop_front();
 	}
 	return msg;
+}
+
+void MaquinaEstados::pushProcessMessage(Message * msg)
+{
+	Lock lock(this->_mutex);
+	this->aProcesar.push_back(msg);
 }
 
 void MaquinaEstados::putMensaje(int tipo, int nroFigura, int data1, int data2){

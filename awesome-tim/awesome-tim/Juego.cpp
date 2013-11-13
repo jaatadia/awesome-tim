@@ -120,6 +120,7 @@ bool Juego:: onRender(Superficie* superficie){
 }
 	
 void Juego:: onLoop(){
+	Message * msg = this->maq->getProcessMessage();
 	terreno->actualizarModelo(vector);
 }
 

@@ -2,7 +2,8 @@
 
 IdMessage::IdMessage(string msg)
 {
-	IdMessage();
+	this->valid = MSG_VALID;
+	this->type = MSG_TYPE_ID;
 	size_t pos = msg.find("$");
 	if (pos != std::string::npos)
 	{
