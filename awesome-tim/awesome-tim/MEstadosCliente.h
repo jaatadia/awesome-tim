@@ -4,6 +4,8 @@
 #include "Estado.h"
 #include "Ventana.h"
 #include "MaquinaEstados.h"
+#include "MessageFigura.h"
+#include "MessageState.h"
 
 
 #define M_ESTADOS "Maquina de Estados"
@@ -26,6 +28,8 @@ private:
 	Superficie* superficie;
 	int id;
 
+	bool ready; //indica si esta listo para empezar a simular el juego
+
 public:
 	MEstadosCliente();
 	~MEstadosCliente(void);
@@ -41,6 +45,15 @@ public:
 	virtual void editor();
 	virtual void play(void* ter);
 
+	//PARA RECIBIR MENSAJES
+	//todos los mensajes tipo interactuar, mover, agregar figura ,etc...
+	virtual void procesarMensaje(MessageFigura* msj);
+	//para cambiar a ready, play o stop
+	virtual void procesarCambioEstado(MessageState* msj);
+
+	//PARA ENVIAR MENSAJES
+	//devuelve todos los mensajes a enviar Y limpia la lista
+//	virtual std::list<Message*> obtenerMensajes();
 private:
 	Estado* getEstadoActivo(){return Eactivo;}
 

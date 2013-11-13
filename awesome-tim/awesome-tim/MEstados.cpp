@@ -91,3 +91,20 @@ void MEstados::play(void* ter){
 	Eplay = new JuegoPlay(aux,ter,this);
 	Eactivo = Eplay;
 }
+
+void MEstados::procesarMensaje(Message* msj){
+
+	//se los paso al estado activo de juego
+
+}
+
+void MEstados::procesarCambioEstado(Message* msj){
+
+	//parseo y segun si es stop o play cambio a eso
+}
+/*
+std::list<Message*> MEstados::obtenerMensajes(){
+
+	//return listaMsjOut;
+}
+*/

@@ -3,6 +3,7 @@
 #define CANT_JUG_MAX 4
 
 #define CANT_JUG_DEFAULT 1
+#define OBJETIVO_NULO "../images/objetivoNulo.png"
 
 //#define ES_SERVIDOR 1
 

@@ -5,6 +5,7 @@
 #include "Ventana.h"
 #include "Estado.h"
 #include "MaquinaEstados.h"
+#include "MessageFigura.h"
 
 #include "ComandosPlayCliente.h"
 #include "TerrenoCliente.h"
@@ -38,6 +39,11 @@ public:
 	virtual bool onRender(Superficie* sup);
 	
 	void quit();
+
+	//si ya esta en play no hace nada
+	void cambiarAPlay(){};
+
+	void procesarMensaje(MessageFigura* msj);
 
 private:
 	void actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);

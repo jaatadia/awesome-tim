@@ -2,7 +2,7 @@
 
 EventMessage::EventMessage(string msg)
 {
-	//TODO Convertir msg
+	//ToDo
 }
 
 EventMessage::~EventMessage()
