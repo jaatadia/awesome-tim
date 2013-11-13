@@ -8,9 +8,11 @@ class IdMessage : public Message
 {
 public:
 	IdMessage(string msg);
+	IdMessage(void);
 	virtual ~IdMessage(void);
 	virtual string serialize();
 	int getId();
+	void setId(int id);
 
 private:
 	int id;

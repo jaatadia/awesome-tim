@@ -22,6 +22,7 @@ private:
 	ServerSocket * _socket;
 	std::list<CommunicationManager *> commMgrLst;
 	MaquinaEstados * juego;
+	int ultimoId;
 	void initThread();
 	void run();
 	void flushThread();

@@ -4,6 +4,7 @@
 #include "MessageHandler.h"
 #include "Message.h"
 #include "FilesMessage.h"
+#include "IdMessage.h"
 #include "Constantes.h"
 #include <iostream>
 #include <fstream>

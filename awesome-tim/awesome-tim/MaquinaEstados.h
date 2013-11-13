@@ -12,6 +12,8 @@ public:
 	std::list<Message *> aEnviar;
 	std::list<Message *> aProcesar;
 	void pushMessage(Message * msg);
+	void setId(int id);
+	int getId();
 	Message * getNextMessage();
 	static void putMensaje(int tipo,int nroFigura,int data1,int data2);
 	virtual ~MaquinaEstados(){};
@@ -27,4 +29,5 @@ public:
 
 private:
 	Mutex _mutex;
+	int id;
 };

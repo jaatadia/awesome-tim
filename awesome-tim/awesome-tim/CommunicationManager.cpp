@@ -1,17 +1,18 @@
 #include "CommunicationManager.h"
 
-CommunicationManager::CommunicationManager(Socket * socket, MaquinaEstados * game,bool server)
+CommunicationManager::CommunicationManager(Socket * socket, MaquinaEstados * game, bool server, int id)
 {
 	this->socketReader = new SocketHandler(socket, READ_MODE);
 	this->socketWriter = new SocketHandler(socket, WRITE_MODE);
 	if(server){
 		this->messageReader = new ClientHandler(READ_MODE, game);
 		this->messageWriter = new ClientHandler(WRITE_MODE, game);
+		this->game->setId(id);
 	}else{
 		this->messageReader = new ServerHandler(READ_MODE, game);
 		this->messageWriter = new ServerHandler(WRITE_MODE, game);
 	}
-	this->juego = juego;
+	this->game = game;
 	this->_thread.resume();
 }
 

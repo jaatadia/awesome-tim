@@ -6,6 +6,7 @@ Server::Server(MaquinaEstados * juego)
 	{
 		this->_socket = new ServerSocket();
 		this->juego = juego;
+		this->ultimoId = 0;
 		this->_thread.resume();
 		PrintIP();
 	} catch (SocketException &sE)
@@ -25,7 +26,7 @@ void Server::run()
 	{
 		while(!this->finalizando)
 		{
-			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), this->juego,true));
+			this->commMgrLst.push_back(new CommunicationManager(this->_socket->acceptConnection(), this->juego, true, ++this->ultimoId));
 		}
 	} catch (SocketException &ex)
 	{
