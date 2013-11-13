@@ -215,14 +215,6 @@ juego:
               interactuable: NO
             cantidad_de_instancias: 10
           - figura:
-              tipo_figura: PALETA-FLIPPER
-              posX: 0
-              posY: 0
-              sentido: -1
-              fija: NO
-              interactuable: NO
-            cantidad_de_instancias: 10
-          - figura:
               tipo_figura: ARCO
               posX: 0
               posY: 0
