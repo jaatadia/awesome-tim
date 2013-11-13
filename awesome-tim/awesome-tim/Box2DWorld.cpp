@@ -10,6 +10,7 @@
 #include "PaletaFlipper.h"
 #include "Carrito.h"
 #include "Canio.h"
+#include "Codo.h"
 #include <iostream>
 
 Box2DWorld::Box2DWorld(void){
@@ -281,6 +282,44 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				break;
 			}
+		case CODO:{
+				//fondo
+				cuerpo->SetType(b2_staticBody);
+				b2PolygonShape forma;
+				double ancho = (dim)->getAncho();
+				double alto = (dim)->getAlto();
+				forma.SetAsBox(ancho/2,alto/2);
+				fD.shape = &forma;
+				fD.isSensor = true;
+				cuerpo->CreateFixture(&fD);
+				
+				double x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6;
+				((Codo*)figura)->calcularPuntosRotados(&x1,&y1,&x2,&y2,&x3,&y3,&x4,&y4,&x5,&y5,&x6,&y6);
+				
+				//pared12
+				b2BodyDef pared12;
+				pared12.position.Set(x1,y1);
+				//pared12.angle = 
+				pared12.type = b2_staticBody;
+				b2Body* cuerpo_pared12 = this->mundo->CreateBody(&pared12);
+
+				b2PolygonShape forma_pared1;
+				b2PolygonShape forma_pared2;
+				//forma_pared1.SetAsBox(ancho/2,CANIO_BORDE/2);
+				//forma_pared2.SetAsBox(ancho/2,CANIO_BORDE/2);
+
+				fD.shape = &forma_pared1;
+				fD.density = 1;
+				fD.friction = 10;
+				fD.isSensor = false;
+				cuerpo_pared12->CreateFixture(&fD);
+
+				//pared23
+
+				//pared54
+
+				//pared65
+			}
 		case CANIO:{
 				cuerpo->SetType(b2_staticBody);
 				b2PolygonShape forma;
@@ -289,8 +328,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma.SetAsBox(ancho/2,alto/2);
 				fD.shape = &forma;
 				fD.isSensor = true;
-				fD.density = PLATAFORMA_DENSIDAD;
-				fD.friction = PLATAFORMA_FRICCION;
+				fD.density = 1;
+				fD.friction = 10;
 				cuerpo->CreateFixture(&fD);
 				//std::cout << cuerpo->GetAngle() << "\n";
 
