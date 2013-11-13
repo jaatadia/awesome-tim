@@ -1,5 +1,6 @@
 juego:
   jugadores: 1
+  objetivo: ../images/texto_objetivo1.png
   terreno:
     fondo: ../images/15.jpg
     lista_figuras:
@@ -10,13 +11,13 @@ juego:
           angulo: 0
           largo: 5
           fija: NO
-          interactuable: NO
+          objetivo: NO
       - figura:
           tipo_figura: GLOBO_HELIO
           posX: 73.8
           posY: 41.6
           fija: NO
-          interactuable: SI
+          objetivo: SI
     lista_clientes:
       - terreno_cliente:
           puntoSupIzq:
@@ -35,7 +36,7 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: PELOTA_TENIS
@@ -43,21 +44,21 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: BOLA_BOWLING
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: PELOTA_BASQUET
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: SOGA
@@ -68,21 +69,21 @@ juego:
                 posX: 0
                 posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: GLOBO_HELIO
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: BALANCIN_IZQUIERDA
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: VELA
@@ -90,7 +91,7 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: LINEA
@@ -101,7 +102,7 @@ juego:
                 posX: 0
                 posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: MOTOR
@@ -110,7 +111,7 @@ juego:
               radio: 5
               sentido: -1
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: MOTOR_RATON
@@ -128,7 +129,7 @@ juego:
               angulo: 0
               largo: 3
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: ENGRANAJE
@@ -137,21 +138,21 @@ juego:
               angulo: 0
               radio: 5
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: CLAVO
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: ARO
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: POLEA
@@ -159,7 +160,7 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: YUNQUE
@@ -167,21 +168,21 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: HUEVO
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: DOMINO
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: TIJERA
@@ -189,7 +190,7 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: CARRITO
@@ -197,14 +198,14 @@ juego:
               posY: 0
               angulo: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: QUESO
               posX: 0
               posY: 0
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: PALETA-FLIPPER
@@ -212,7 +213,7 @@ juego:
               posY: 0
               sentido: 1
               fija: NO
-              interactuable: NO
+              objetivo: NO
             cantidad_de_instancias: 10
           - figura:
               tipo_figura: ARCO
