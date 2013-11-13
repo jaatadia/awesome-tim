@@ -18,7 +18,7 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	fig1 = fig2 = NULL;
 
 	this->es_fija = false;
-	this->interactua_en_play = false;
+	this->es_objetivo = false;
 	this->numero = -1;
 }
 
@@ -39,12 +39,12 @@ void Figura::fijarFigura(){
 	this->es_fija = true;
 }
 
-bool Figura::esInteractuableEnPlay(){
-	return this->interactua_en_play;
+bool Figura::esObjetivo(){
+	return this->es_objetivo;
 }
 
-void Figura::hacerInteractuableEnPlay(){
-	this->interactua_en_play = true;
+void Figura::hacerObjetivo(){
+	this->es_objetivo = true;
 }
 
 void Figura::cambiarPosicion(double x,double y)
