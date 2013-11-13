@@ -22,10 +22,10 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,false);
 	botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new ComandosCliente(ANCHO_COMANDOS,ALTO_COMANDOS);
-	figuraEnAire=NULL;
-	figuraEnAire2=NULL;
-	figuraEnAire3=NULL;
-	figuraEnAire4=NULL;
+
+	for (int i = 0;i<=MAX_CLIENTES;i++){
+		figurasEnAire[i]=NULL;
+	}
 	
 	cargar();
 
@@ -59,7 +59,11 @@ JuegoCliente::~JuegoCliente(){
 	delete comandos;
 	delete EscalasDeEjes::getInstance();
 	Contenedor::deleteContenedor();
-	if(figuraEnAire!=NULL)delete figuraEnAire;
+	
+	for(int i=0;i<=MAX_CLIENTES;i++){
+		if(figurasEnAire[i]!=NULL)delete figurasEnAire[i];
+	}
+	
 }
 
 
@@ -69,9 +73,7 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 
 	bool dibujar = false;
 	
-	if (figuraEnAire){
-		confirmarPosicionFiguraEnAire();
-	}
+	confirmarPosicionFiguraEnAire();
 	
 	if(this->huboCambios()){
 		superficie->restore();
@@ -95,21 +97,11 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 		dibujar = true;
 	}
 
-	if(figuraEnAire){
-		figuraEnAire->dibujar(superficie);
-		dibujar = true;
-	}
-	if(figuraEnAire2){
-		figuraEnAire2->dibujar(superficie);
-		dibujar = true;
-	}
-	if(figuraEnAire3){
-		figuraEnAire3->dibujar(superficie);
-		dibujar = true;
-	}
-	if(figuraEnAire4){
-		figuraEnAire4->dibujar(superficie);
-		dibujar = true;
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if(figurasEnAire[i]){
+			figurasEnAire[i]->dibujar(superficie);
+			dibujar = true;
+		}
 	}
 
 	return dibujar;
@@ -148,7 +140,7 @@ while(SDL_PollEvent(&evento)){
 
 			if (evento.key.keysym.sym == SDLK_TAB){
 				if(clickPressed){
-					if(figuraEnAire) figuraEnAire->shift();
+					if(figurasEnAire[this->numCliente]) figurasEnAire[this->numCliente]->shift();
 					else terreno->shiftFigura();
 				}
 			}	
@@ -169,10 +161,10 @@ while(SDL_PollEvent(&evento)){
 			charIngresado = evento.text.text[0];
 //			if(clickPressed){
 				if(charIngresado == '+'){
-					if(figuraEnAire) figuraEnAire->agrandar();
+					if(figurasEnAire[this->numCliente]) figurasEnAire[this->numCliente]->agrandar();
 					else terreno->agrandarFigura();
 				}else if(charIngresado == '-'){
-					if(figuraEnAire) figuraEnAire->achicar();
+					if(figurasEnAire[this->numCliente]) figurasEnAire[this->numCliente]->achicar();
 					else terreno->achicarFigura();
 //				}
 			}else comandos->agregarLetra(charIngresado);
@@ -202,26 +194,26 @@ while(SDL_PollEvent(&evento)){
 					}
 
 			//muevo la figura voladora, si es que la hay
-			if (figuraEnAire)
+			if (figurasEnAire[this->numCliente])
 				if ((estaActiva)){
 					confirmarPosicionFiguraEnAire();
-					figuraEnAire->cambiarPosicion(cantMovX, cantMovY);
+					figurasEnAire[this->numCliente]->cambiarPosicion(cantMovX, cantMovY);
 					//como ver si se superpone tarda demasiado lo hago solo cada 5 movimientos!
 					
 					//para saber si choca con las de terreno tengo que relativizar su posicion!
-					figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+					figurasEnAire[this->numCliente]->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 
 					if (contEventosMov % ITER_CHOQUE == 0){
 						//si choca es superpuesta
 						//para que no choque con las de terreno que sobrepasan el canvas
-						if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
-							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
+						if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX(),figurasEnAire[this->numCliente]->getDimension()->getY())){
+							figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
 						}else{
-							figuraEnAire->setSuperpuesta( false );
+							figurasEnAire[this->numCliente]->setSuperpuesta( false );
 						}
 					}
 					//y vuelvo para atras
-					figuraEnAire->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
+					figurasEnAire[this->numCliente]->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno
@@ -238,7 +230,7 @@ while(SDL_PollEvent(&evento)){
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
-			if(figuraEnAire){
+			if(figurasEnAire[this->numCliente]){
 				set2Click();
 				break;
 			}
@@ -263,12 +255,12 @@ while(SDL_PollEvent(&evento)){
 			}
 
 			//puede que me haya devuelto la figura en aire
-			figuraEnAire = botonera->obtenerFiguraActual();
-			if (figuraEnAire){
+			figurasEnAire[this->numCliente] = botonera->obtenerFiguraActual();
+			if (figurasEnAire[this->numCliente]){
 				estaActiva = true;
 				//innecesario pero por si acaso
-				figuraEnAire->setX(posClickX);
-				figuraEnAire->setY(posClickY);
+				figurasEnAire[this->numCliente]->setX(posClickX);
+				figurasEnAire[this->numCliente]->setY(posClickY);
 				
 				while(vector[posVector]!=NULL){
 					posVector++;
@@ -276,15 +268,15 @@ while(SDL_PollEvent(&evento)){
 						posVector = LARGO/5*(numCliente);
 					}
 				}
-				figuraEnAire->numero = posVector;
-				vector[posVector] = figuraEnAire;
+				figurasEnAire[this->numCliente]->numero = posVector;
+				vector[posVector] = figurasEnAire[this->numCliente];
 					CreateFigureMessage * msg = new CreateFigureMessage();
 					msg->setId(this->maq->getId());
-					msg->setFigureType(figuraEnAire->getTipoFigura());
-					msg->setFigureID(figuraEnAire->numero);
-					msg->setX(figuraEnAire->getDimension()->getX());
-					msg->setY(figuraEnAire->getDimension()->getY());
-					msg->setAngle(figuraEnAire->getDimension()->getAngulo());
+					msg->setFigureType(figurasEnAire[this->numCliente]->getTipoFigura());
+					msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+					msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+					msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+					msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
 					msg->setInAir(true);
 				this->maq->pushSendMessage(msg,numCliente);
 				std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
@@ -309,9 +301,9 @@ while(SDL_PollEvent(&evento)){
 			//Es siempre para la botonera, hasta que no se deja de clickear sigue scrolleando
 			botonera->handleEventBotonera(posClickX - X_BOTONERA_LOGICO,  posClickY - Y_BOTONERA_LOGICO,  evento.button.type);
 
-			if (figuraEnAire){
+			if (figurasEnAire[this->numCliente]){
 				//o es de figura viva
-				if(!(figuraEnAire->getTipoFigura()==LINEA)&& !(figuraEnAire->getTipoFigura()==SOGA)){
+				if(!(figurasEnAire[this->numCliente]->getTipoFigura()==LINEA)&& !(figurasEnAire[this->numCliente]->getTipoFigura()==SOGA)){
 					soltarFiguraEnAire();
 				}
 			}
@@ -325,12 +317,12 @@ while(SDL_PollEvent(&evento)){
 			//scroll de botonera SIEMPRE sin importar la posicion
 			if (evento.wheel.y > 0){	
 				if(clickPressed){
-					if(figuraEnAire){
-						figuraEnAire->agrandar();
-						if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
-							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
+					if(figurasEnAire[this->numCliente]){
+						figurasEnAire[this->numCliente]->agrandar();
+						if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX(),figurasEnAire[this->numCliente]->getDimension()->getY())){
+							figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
 						}else{
-							figuraEnAire->setSuperpuesta( false );
+							figurasEnAire[this->numCliente]->setSuperpuesta( false );
 						}
 					}else terreno->agrandarFigura();
 				}else{
@@ -338,12 +330,12 @@ while(SDL_PollEvent(&evento)){
 				}
 			}else if (evento.wheel.y < 0){
 				if(clickPressed){
-					if(figuraEnAire){
-						figuraEnAire->achicar();
-						if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY())){
-							figuraEnAire->setSuperpuesta( terreno->posicionOcupada(figuraEnAire) );
+					if(figurasEnAire[this->numCliente]){
+						figurasEnAire[this->numCliente]->achicar();
+						if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX(),figurasEnAire[this->numCliente]->getDimension()->getY())){
+							figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
 						}else{
-							figuraEnAire->setSuperpuesta( false );
+							figurasEnAire[this->numCliente]->setSuperpuesta( false );
 						}
 					}else terreno->achicarFigura();
 				}else{
@@ -400,7 +392,7 @@ void JuegoCliente::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDvent
 			
 			terreno->soltarFigura();
 
-			if (figuraEnAire)
+			if (figurasEnAire[this->numCliente])
 				soltarFiguraEnAire();
 
 			break;
@@ -516,23 +508,25 @@ bool JuegoCliente::figEnEspacioIntermedio(){
 	//tiene ganas de chequear eso hagalo.
 
 	//obviamente tambien asumo que no puede estar por completo en la separacion.
-if( figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO) ||
-	figuraEnAire->intersecaCon(X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
-	figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
-	figuraEnAire->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figurasEnAire[i] ==NULL) continue;
+		if( figurasEnAire[i]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO, X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO, X_TERRENO_LOGICO + ANCHO_TERRENO_LOGICO, Y_TERRENO_LOGICO + ALTO_TERRENO_LOGICO) ||
 
-	figuraEnAire->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO) ||
-	figuraEnAire->intersecaCon(X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
-	figuraEnAire->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
-	figuraEnAire->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO, X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO, X_BOTONERA_LOGICO + ANCHO_BOTONERA_LOGICO, Y_BOTONERA_LOGICO + ALTO_BOTONERA_LOGICO) ||
 
-	figuraEnAire->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO) ||
-	figuraEnAire->intersecaCon(X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
-	figuraEnAire->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
-	figuraEnAire->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) 
-	)
-	return true;
-else
+			figurasEnAire[i]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO, X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) ||
+			figurasEnAire[i]->intersecaCon(X_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO, X_COMANDOS_LOGICO + ANCHO_COMANDOS_LOGICO, Y_COMANDOS_LOGICO + ALTO_COMANDOS_LOGICO) 
+			)
+			return true;
+	}
 	return false;
 }
 
@@ -540,28 +534,35 @@ else
 //entonces si un punto coincide esta dentro de quien corresponda.
 bool JuegoCliente::figEnBotonera(){
 
-	if (figuraEnAire->getDimension()->getX()>X_BOTONERA_LOGICO && figuraEnAire->getDimension()->getX()<X_BOTONERA_LOGICO+ANCHO_BOTONERA_LOGICO
-		&& figuraEnAire->getDimension()->getY()>Y_BOTONERA_LOGICO && figuraEnAire->getDimension()->getY()<Y_BOTONERA_LOGICO+ALTO_BOTONERA_LOGICO )
-		return true;
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figurasEnAire[i] ==NULL) continue;
+		if (figurasEnAire[i]->getDimension()->getX()>X_BOTONERA_LOGICO && figurasEnAire[i]->getDimension()->getX()<X_BOTONERA_LOGICO+ANCHO_BOTONERA_LOGICO
+			&& figurasEnAire[i]->getDimension()->getY()>Y_BOTONERA_LOGICO && figurasEnAire[i]->getDimension()->getY()<Y_BOTONERA_LOGICO+ALTO_BOTONERA_LOGICO )
+			return true;
+	}
 	
 	return false;
 }
 
 bool JuegoCliente::figEnTerreno(){
 
-	if (figuraEnAire->getDimension()->getX()>X_TERRENO_LOGICO && figuraEnAire->getDimension()->getX()<X_TERRENO_LOGICO+ANCHO_TERRENO_LOGICO
-		&& figuraEnAire->getDimension()->getY()>Y_TERRENO_LOGICO && figuraEnAire->getDimension()->getY()<Y_TERRENO_LOGICO+ALTO_TERRENO_LOGICO )
-		return true;
-	
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figurasEnAire[i] ==NULL) continue;
+		if (figurasEnAire[i]->getDimension()->getX()>X_TERRENO_LOGICO && figurasEnAire[i]->getDimension()->getX()<X_TERRENO_LOGICO+ANCHO_TERRENO_LOGICO
+			&& figurasEnAire[i]->getDimension()->getY()>Y_TERRENO_LOGICO && figurasEnAire[i]->getDimension()->getY()<Y_TERRENO_LOGICO+ALTO_TERRENO_LOGICO )
+			return true;
+	}	
 	return false;
 }
 
 bool JuegoCliente::figEnComandos(){
 
-	if (figuraEnAire->getDimension()->getX()>X_COMANDOS_LOGICO && figuraEnAire->getDimension()->getX()<X_COMANDOS_LOGICO+ANCHO_COMANDOS_LOGICO
-		&& figuraEnAire->getDimension()->getY()>Y_COMANDOS_LOGICO && figuraEnAire->getDimension()->getY()<Y_COMANDOS_LOGICO+ALTO_COMANDOS_LOGICO )
-		return true;
-	
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		if( figurasEnAire[i] ==NULL) continue;
+		if (figurasEnAire[i]->getDimension()->getX()>X_COMANDOS_LOGICO && figurasEnAire[i]->getDimension()->getX()<X_COMANDOS_LOGICO+ANCHO_COMANDOS_LOGICO
+			&& figurasEnAire[i]->getDimension()->getY()>Y_COMANDOS_LOGICO && figurasEnAire[i]->getDimension()->getY()<Y_COMANDOS_LOGICO+ALTO_COMANDOS_LOGICO )
+			return true;
+	}
 	return false;
 }
 
@@ -572,32 +573,32 @@ void JuegoCliente::soltarFiguraEnAire(){
 
 	confirmarPosicionFiguraEnAire();
 
-	if (terreno->adentroZonaTerreno(figuraEnAire->getDimension()->getX(),figuraEnAire->getDimension()->getY()) && !figuraEnAire->superpuesta){
+	if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX(),figurasEnAire[this->numCliente]->getDimension()->getY()) && !figurasEnAire[this->numCliente]->superpuesta){
 		//relativizar posiciones al terreno!
-		figuraEnAire->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
-		terreno->agregarFigura( figuraEnAire );
+		figurasEnAire[this->numCliente]->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
+		terreno->agregarFigura( figurasEnAire[this->numCliente] );
 		
-		MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+		MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 		
-		figuraEnAire = NULL;
+		figurasEnAire[this->numCliente] = NULL;
 	}else{
 
 		botonera->restaurarInstanciaActual();
 		
-		vector[figuraEnAire->numero] = NULL;
-		MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+		vector[figurasEnAire[this->numCliente]->numero] = NULL;
+		MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
-		delete figuraEnAire;
-		figuraEnAire = NULL;
+		delete figurasEnAire[this->numCliente];
+		figurasEnAire[this->numCliente] = NULL;
 	}
 }
 
 
 void JuegoCliente::set2Click(){
 	
-	if(figuraEnAire->getTipoFigura()==LINEA){
+	if(figurasEnAire[this->numCliente]->getTipoFigura()==LINEA){
 		
-		Linea* linea = ((Linea*)figuraEnAire);
+		Linea* linea = ((Linea*)figurasEnAire[this->numCliente]);
 		linea->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 		
 		double x = linea->getDimension()->getX();
@@ -608,11 +609,11 @@ void JuegoCliente::set2Click(){
 		if(result==NULL){
 			botonera->restaurarInstanciaActual();
 
-			vector[figuraEnAire->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+			vector[figurasEnAire[this->numCliente]->numero] = NULL;
+			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
-			delete figuraEnAire;
-			figuraEnAire = NULL;
+			delete figurasEnAire[this->numCliente];
+			figurasEnAire[this->numCliente] = NULL;
 			this->setCambio(true);
 			terreno->setCambio(true);
 			botonera->setCambio(true);
@@ -623,17 +624,17 @@ void JuegoCliente::set2Click(){
 				linea->setFigura1(result);
 				linea->actualizar();
 
-				MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+				MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 			}else{
 				if(linea->getFigura1() == result){
 					botonera->restaurarInstanciaActual();
 
-					vector[figuraEnAire->numero] = NULL;
-					MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+					vector[figurasEnAire[this->numCliente]->numero] = NULL;
+					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
-					delete figuraEnAire;
-					figuraEnAire = NULL;
+					delete figurasEnAire[this->numCliente];
+					figurasEnAire[this->numCliente] = NULL;
 					this->setCambio(true);
 					terreno->setCambio(true);
 					botonera->setCambio(true);
@@ -641,22 +642,22 @@ void JuegoCliente::set2Click(){
 				}else{
 					linea->setFigura2(result);
 					
-					MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 					
 					linea->getFigura1()->atarCorrea();
 					linea->getFigura2()->atarCorrea();
-					terreno->agregarFigura( figuraEnAire );
+					terreno->agregarFigura( figurasEnAire[this->numCliente] );
 
-					MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 					linea->actualizar();
-					figuraEnAire = NULL;
+					figurasEnAire[this->numCliente] = NULL;
 				}
 			}
 		}
-	}else if(figuraEnAire->getTipoFigura()==SOGA){
+	}else if(figurasEnAire[this->numCliente]->getTipoFigura()==SOGA){
 		
-		Linea* linea = ((Linea*)figuraEnAire);
+		Linea* linea = ((Linea*)figurasEnAire[this->numCliente]);
 		linea->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 		
 		double x = linea->getDimension()->getX();
@@ -667,11 +668,11 @@ void JuegoCliente::set2Click(){
 		if(result==NULL){
 			botonera->restaurarInstanciaActual();
 
-			vector[figuraEnAire->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+			vector[figurasEnAire[this->numCliente]->numero] = NULL;
+			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
-			delete figuraEnAire;
-			figuraEnAire = NULL;
+			delete figurasEnAire[this->numCliente];
+			figurasEnAire[this->numCliente] = NULL;
 			this->setCambio(true);
 			terreno->setCambio(true);
 			comandos->setCambio(true);
@@ -681,7 +682,7 @@ void JuegoCliente::set2Click(){
 			if(!linea->primerPuntoPuesto()){
 				linea->setFigura1(result);
 
-				MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+				MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 				((Soga*)linea)->setNumsPosAtable(res,0);
 				linea->actualizar();
@@ -689,11 +690,11 @@ void JuegoCliente::set2Click(){
 				if (result == linea->getFigura1()){
 					botonera->restaurarInstanciaActual();			
 					
-					vector[figuraEnAire->numero] = NULL;
-					MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+					vector[figurasEnAire[this->numCliente]->numero] = NULL;
+					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 					
-					delete figuraEnAire;
-					figuraEnAire = NULL;
+					delete figurasEnAire[this->numCliente];
+					figurasEnAire[this->numCliente] = NULL;
 					this->setCambio(true);
 					terreno->setCambio(true);
 					comandos->setCambio(true);
@@ -701,23 +702,23 @@ void JuegoCliente::set2Click(){
 				}else{
 					linea->setFigura2(result);
 
-					MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 					((Soga*)linea)->setNumsPosAtable(((Soga*)linea)->num1,res);
 					linea->actualizar();
 					linea->getFigura1()->atarSoga(((Soga*)linea)->num1);
 					linea->getFigura2()->atarSoga(((Soga*)linea)->num2);
-					terreno->agregarFigura( figuraEnAire );
+					terreno->agregarFigura( figurasEnAire[this->numCliente] );
 	
-					MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
-					figuraEnAire = NULL;
+					figurasEnAire[this->numCliente] = NULL;
 				}
 			}
 		}
 	}else{
 			botonera->restaurarInstanciaActual();
-			vector[figuraEnAire->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,figuraEnAire->numero,0,0);
+			vector[figurasEnAire[this->numCliente]->numero] = NULL;
+			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 	}
 }

@@ -32,10 +32,7 @@ private:
 	BotoneraControllerCliente * botonera;
 	ComandosCliente* comandos;
 	
-	Figura* figuraEnAire;
-	Figura* figuraEnAire2;
-	Figura* figuraEnAire3;
-	Figura* figuraEnAire4;
+	Figura* figurasEnAire[MAX_CLIENTES+1];
 	
 	bool estaActiva; //indica si la figura en aire esta habilitada a moverse
 
