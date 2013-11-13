@@ -24,6 +24,11 @@ void ServerHandler::run()
 		{
 			case WRITE_MODE:
 				{
+					int gID = game->getId();
+					if((this->id == -1)&& (gID>0)&&(gID<MAX_CLIENTES)){
+						this->id = gID;
+					}
+					if(this->id == -1) continue;
 					Message * msg = ((MEstadosCliente *)this->game)->getSendMessage(this->id);
 					if (msg)
 					{
