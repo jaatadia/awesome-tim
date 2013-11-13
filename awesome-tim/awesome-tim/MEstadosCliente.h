@@ -47,9 +47,14 @@ public:
 
 	//PARA RECIBIR MENSAJES
 	//todos los mensajes tipo interactuar, mover, agregar figura ,etc...
-	virtual void procesarMensaje(MessageFigura* msj);
+	virtual void procesarMensaje(MessageFigura* msj){
+	//FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	}
 	//para cambiar a ready, play o stop
-	virtual void procesarCambioEstado(MessageState* msj);
+
+	virtual void procesarCambioEstado(MessageState* msj){
+	//FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	};
 
 	//PARA ENVIAR MENSAJES
 	//devuelve todos los mensajes a enviar Y limpia la lista
