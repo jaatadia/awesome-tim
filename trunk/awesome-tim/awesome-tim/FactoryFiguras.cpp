@@ -28,6 +28,7 @@
 #include "CarroAtable.h"
 #include "MotorRaton.h"
 #include "Canio.h"
+#include "Codo.h"
 
 
 Figura* FactoryFiguras::create(CreateFigureMessage* msg){
@@ -49,7 +50,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new Soga(msg->getX(),msg->getY(),msg->getX(),msg->getY());
 			break;
 		case PLATAFORMA:
-			fig = new Plataforma(2,msg->getX(),msg->getY(),msg->getAngle());
+			fig = new Plataforma(msg->getData1(),msg->getX(),msg->getY(),msg->getAngle());
 			break;
 		case PELOTATENIS:
 			fig = new PelotaTenis(msg->getX(),msg->getY());
@@ -58,7 +59,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new Engranaje(msg->getX(),msg->getY());
 			break;
 		case CINTATRANSPORTADORA:
-			fig = new CintaTransportadora(2,msg->getX(),msg->getY(),msg->getAngle());
+			fig = new CintaTransportadora(msg->getData1(),msg->getX(),msg->getY(),msg->getAngle());
 			break;
 		case MOTOR:
 			fig = new Motor(msg->getX(),msg->getY());
@@ -97,7 +98,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new Carrito(msg->getX(),msg->getY(),msg->getAngle());
 			break;
 		case PALETA:
-			fig = new PaletaFlipper(msg->getX(),msg->getY(),1);
+			fig = new PaletaFlipper(msg->getX(),msg->getY(),msg->getData1());
 			break;
 		case QUESO:
 			fig = new Queso(msg->getX(),msg->getY());
@@ -121,7 +122,10 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new MotorRaton(msg->getX(),msg->getY());
 			break;
 		case CANIO:
-			fig = new Canio(2,msg->getX(),msg->getY(),msg->getAngle());
+			fig = new Canio(msg->getData1(),msg->getX(),msg->getY(),msg->getAngle());
+			break;
+		case CODO:
+			fig = new Codo(msg->getX(),msg->getY(),msg->getAngle());
 			break;
 	}
 	if (fig!=NULL){

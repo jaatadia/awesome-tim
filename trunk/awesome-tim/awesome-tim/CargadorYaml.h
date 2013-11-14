@@ -49,10 +49,22 @@
 #include "Canio.h"
 #include "Codo.h"
 
+#include "Boton.h"
+
 class CargadorYaml{
 public:
 	
 	static std::string cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno, int* cant_jugadores);
+
+	//botoneras y areas tienen 5 espacios en el array, para la botoneras del cliente 1 se deveria guardar en botonera[1] (si quieren la botonera del server y el area del server se puede guardar en el 0)
+	//areas contiene las limitaciones de los terrenos de la misma manera que el anterior
+	//areas[i][0] = x1; //del cliente nro i
+	//areas[i][1] = y1; 
+	//areas[i][2] = x2; 
+	//areas[i][3] = y2; 
+	static std::string cargarJuego(const char* fileIn,Terreno* terreno,int* cant_jugadores,std::list<struct boton> botoneras[],double areas[][4]){
+		return "hola";
+	}
 
 private:
 

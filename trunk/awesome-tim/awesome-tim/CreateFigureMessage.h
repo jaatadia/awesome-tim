@@ -25,6 +25,8 @@ public:
 	double getY();
 	double getAngle();
 	bool isInAir();
+	double getData1();
+	double getData2();
 	void setId(int id);
 	void setFigureType(int type);
 	void setFigureID(int figureID);
@@ -32,8 +34,10 @@ public:
 	void setY(double y);
 	void setAngle(double angle);
 	void setInAir(bool inAir);
+	void setData1(double data1);
+	void setData2(double data2);
 
-private:
+protected:
 	int id;
 	int figureType;
 	int figureID;
@@ -41,6 +45,8 @@ private:
 	double y;
 	double angle;
 	bool inAir;
+	double data1;
+	double data2;
 };
 
 #endif // __CREATEFIGUREMESSAGE_H__

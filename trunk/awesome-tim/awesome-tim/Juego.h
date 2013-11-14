@@ -13,6 +13,7 @@
 #include "Contenedor.h"
 #include "MaquinaEstados.h"
 #include "CreateFigureMessage.h"
+#include "Boton.h"
 
 
 #define JUEGO_TAG "Juego"
@@ -39,11 +40,15 @@ private:
 	Figura* vector[LARGO];
 	int posVector;
 
+	int cant_jugadores;
+	std::list<struct boton> botoneras[MAX_CLIENTES+1];
+	double areas[MAX_CLIENTES+1][4];
+
 public:
 	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
 	~Juego(void);
 
-	std::string cargar(int* cant_jugadores);
+	std::string cargar();
 	bool guardar();
 
 	void quit();

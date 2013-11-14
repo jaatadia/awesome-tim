@@ -10,6 +10,9 @@ CreateFigureMessage::CreateFigureMessage(void)
 	this->y = 0;
 	this->angle = 0;
 	this->inAir = false;
+	this->figureType = -1;
+	this->data1 = 0;
+	this->data2 = 0;
 
 }
 
@@ -51,10 +54,24 @@ CreateFigureMessage::CreateFigureMessage(string msg)
 						{
 							this->angle = atof(msg.substr(0, pos).c_str());
 							msg = msg.substr(pos + 1);
-							pos = msg.find("$");
+							pos = msg.find("|");
 							if (pos != std::string::npos)
 							{
 								this->inAir = (msg.substr(0, pos).compare("T") == 0) ? true : false;
+								msg = msg.substr(pos + 1);
+								pos = msg.find("|");
+								if (pos != std::string::npos){
+									this->data1 = atof(msg.substr(0, pos).c_str());
+									msg = msg.substr(pos + 1);
+									pos = msg.find("$");
+									if (pos != std::string::npos){
+										this->data1 = atof(msg.substr(0, pos).c_str());
+									}else{
+										this->valid = MSG_INVALID;
+									}
+								}else{
+									this->valid = MSG_INVALID;
+								}
 							}
 							else
 							{
@@ -126,6 +143,16 @@ bool CreateFigureMessage::isInAir()
 	return this->inAir;
 }
 
+double CreateFigureMessage::getData1()
+{
+	return this->data1;
+}
+
+double CreateFigureMessage::getData2()
+{
+	return this->data2;
+}
+
 void CreateFigureMessage::setId(int id)
 {
 	this->id = id;
@@ -160,6 +187,17 @@ void CreateFigureMessage::setInAir(bool inAir)
 	this->inAir = inAir;
 }
 
+void CreateFigureMessage::setData1(double data1)
+{
+	this->data1 = data1;
+}
+
+void CreateFigureMessage::setData2(double data2)
+{
+	this->data2 = data2;
+}
+
+
 string CreateFigureMessage::serialize()
 {
 	stringstream ss;
@@ -178,6 +216,10 @@ string CreateFigureMessage::serialize()
 	ss << this->angle;
 	ss << "|";
 	ss << ((this->inAir) ? "T" : "F");
+	ss << "|";
+	ss << this->data1;
+	ss << "|";
+	ss << this->data2;
 	ss << "$";
 	return ss.str();
 }
