@@ -44,18 +44,20 @@ void CommunicationManager::run()
 		msg = this->socketReader->getInputMessage();
 		if(msg)
 		{
-			try{
-				this->messageReader->pushInputMessage(msg);
-			}catch(...){
-				this->finalizando = true;
-				if(this->server){
-					this->game->clientesConectados.remove(this->ID);
-				}else{
-					std::cout<<"Se perdio la conexion con el servivdor\n";
-					this->game->salir();
-				}
-			}
+			this->messageReader->pushInputMessage(msg);
 		}
 		this->_thread.sleep(100);
+
+		
+		if((socketWriter->getActiveState())||(socketReader->getActiveState())){
+			this->kill();
+			if(server){
+				this->game->clientesConectados.remove(this->ID);
+			}else{
+				std::cout<<"Se perdio la Conexion con el servidor. Cerrando el programa...\n";
+				this->game->salir();
+			}
+		}
+
 	}
 }
