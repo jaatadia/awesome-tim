@@ -727,3 +727,17 @@ void SdlSurfaceManager::pintar(SDL_Surface* sup,int r,int g,int b,int a){
 
 }
 
+void SdlSurfaceManager::replace(SDL_Surface* sur,Uint32 col1,Uint32 col2){
+
+	SDL_LockSurface(sur);
+
+		for(int i=0;i<sur->w;i++){
+			for(int j=0;j<sur->h;j++){
+				if(getPixel(sur,i,j)==col1){
+					putPixel(sur,i,j,col2);
+				}
+			}
+		}
+	
+	SDL_UnlockSurface(sur); 
+};
