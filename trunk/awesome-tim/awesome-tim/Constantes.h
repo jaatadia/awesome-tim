@@ -253,15 +253,15 @@
 #define PALETA_DER_MAXANG 3*PI/4
 #define PALETA_DER_MINANG -3*PI/4
 
-#define ANCHO_CANIO 10
-#define ALTO_CANIO 2*RADIO_PELOTATENIS+2
+#define ANCHO_CANIO 14
+#define ALTO_CANIO 7 //2*RADIO_PELOTATENIS+2
 #define CANIO_MAXLARGO (ANCHO_TERRENO_LOGICO/ANCHO_CANIO)-1
 #define CANIO_MINLARGO 1
-#define CANIO_BORDE 0.3
+#define CANIO_BORDE 0.2
 
 #define ANCHO_CODO 2*ALTO_CANIO
 #define ALTO_CODO ANCHO_CODO
-#define CODO_CORRECCION_UNION 0.05
+#define CODO_CORRECCION_UNION 0.005
 
 //cuadrantes
 #define CUADRANTE1 1
@@ -351,8 +351,8 @@
 #define ID_ESCOPETA "../images/shotgun.png"
 #define ID_BALA "../images/shotgun_bullet.png"
 
-#define ID_CANIO "../images/Rectangulo.png"
-#define ID_CODO ID_CANIO
+#define ID_CANIO "../images/canioventana.png"
+#define ID_CODO "../images/codoventana.png"
 
 #define ID_MOTOR_RATON "../images/FondoRaton.png"
 #define ID_MOTOR_RATON_OPUESTO "../images/FondoRatonOpuesto.png"

@@ -94,6 +94,7 @@ void Terreno::redraw(){
 	}
 
 	std::list<Figura*> figurasAux;
+	std::list<Figura*> figurasFinales;
 	std::list<Figura*>::iterator iteradorLista;
 	
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
@@ -107,11 +108,26 @@ void Terreno::redraw(){
 					(*iteradorLista)->dibujar(this->sup);	
 			
 		}else{
-			figurasAux.push_back((*iteradorLista));
+			if (! ( (*iteradorLista)->getTipoFigura()== CANIO||(*iteradorLista)->getTipoFigura()== CODO ) ){
+				figurasAux.push_back((*iteradorLista));
+			} else {
+				figurasFinales.push_back((*iteradorLista));
+			}
 		}
 	}
 
 	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
+		double x = (*iteradorLista)->getDimension()->getX();
+		double y = (*iteradorLista)->getDimension()->getY();
+		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
+		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
+		
+		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
+			(*iteradorLista)->dibujar(this->sup);
+		}
+	}
+	//dibujo los canios y codos
+	for (iteradorLista = figurasFinales.begin() ; iteradorLista != figurasFinales.end(); iteradorLista++){
 		double x = (*iteradorLista)->getDimension()->getX();
 		double y = (*iteradorLista)->getDimension()->getY();
 		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;

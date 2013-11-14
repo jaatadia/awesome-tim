@@ -49,7 +49,7 @@ Contenedor::Contenedor(void){
 
 	////cargo las imagenes de los elementos del juego
 	mapa[ID_PLATAFORMA] = new Imagen(ID_PLATAFORMA); //si el id estuviese en el archivo yaml esto no iria
-	mapa[ID_CUADRADO]= new Imagen(ID_CUADRADO);
+	//mapa[ID_CUADRADO]= new Imagen(ID_CUADRADO);
 	mapa[ID_GLOBO] = new Imagen(ID_GLOBO);
 	mapa[ID_PELOTATENIS] = new Imagen(ID_PELOTATENIS);
 	mapa[ID_PELOTABASQUET] = new Imagen(ID_PELOTABASQUET);
@@ -108,6 +108,8 @@ Contenedor::Contenedor(void){
 	mapa[ID_ESCOPETA] = new Imagen(ID_ESCOPETA);
 	mapa[ID_BALA] = new Imagen(ID_BALA);
 	mapa[ID_PALETA] = new Imagen(ID_PALETA);
+	mapa[ID_CANIO] = new Imagen(ID_CANIO);
+	mapa[ID_CODO] = new Imagen(ID_CODO);
 
 	mapa[GANO_1] = new Imagen(GANO_1);
 	mapa[GANO_2] = new Imagen(GANO_2);
