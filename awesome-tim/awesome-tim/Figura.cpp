@@ -5,6 +5,9 @@
 
 Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	marcada = false;
+	this->es_fija = false;
+	this->es_objetivo = false;
+
 	this->ID = ID;
 	this->dimension = dim;
 	this->setCambio(true);
@@ -17,8 +20,6 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->superpuesta = false;
 	fig1 = fig2 = NULL;
 
-	this->es_fija = false;
-	this->es_objetivo = false;
 	this->numero = -1;
 }
 

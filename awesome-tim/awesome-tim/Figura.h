@@ -46,11 +46,8 @@ public:
 public:
 
 	bool esFija();
-	bool esObjetivo();
 
 	void fijarFigura();
-	void hacerObjetivo();
-	
 
 	Figura(const char* ID,Dimension* dim,bool crearVista = true);
 	virtual ~Figura(void);
@@ -156,8 +153,11 @@ public:
 	}
 
 	virtual bool cumplioObjetivo(){
-		return true;
+		return false;
 	}
+	void hacerObjetivo();
+	bool esObjetivo();
 
 	virtual void corregirEstado(){};
+
 };
