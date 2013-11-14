@@ -51,6 +51,7 @@ public:
 
 	static void dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int y2,int ancho,int r,int g,int b);
 	static void pintar(SDL_Surface* sup,int r,int g,int b,int a);
+	static void replace(SDL_Surface* sup,Uint32 col1,Uint32 col2);
 	
 private:
 	static void fallar();//le indica que tiene que fallar(uso interno)

@@ -26,16 +26,18 @@ void VistaFigAgrandable::redraw(){
 	if (largo_anterior != fig->getLargo()){
 		delete imggrande;
 		imggrande = new Imagen(orig->getAncho()*this->fig->getLargo(),orig->getAlto());
+		Uint32 aux = imggrande->atransparentar();
 		largo_anterior = fig->getLargo();
 
 		for(int i=0;i<fig->getLargo();i++){
 			imggrande->dibujarImagen(orig,NULL,i*orig->getAncho(),0);
 		}
+		imggrande->atransparentar(aux);
 	}
 
 	delete rotada;
 	rotada = imggrande->rotarImagen(fig->getDimension()->getAngulo());
-
+	
 	if (fig->traslucido) rotada->setTransparency(150);
 	if(fig->superpuesta) rotada->pintarRojo();
 }

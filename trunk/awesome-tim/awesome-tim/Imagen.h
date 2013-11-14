@@ -54,4 +54,8 @@ public:
 	void dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,int yDestino);
 
 	void pintarRojo();
+	void pintar(int r,int g,int b,int a);
+	void colorear(int r,int g,int b,int a);
+	Uint32 atransparentar();
+	void atransparentar(Uint32 col);
 };

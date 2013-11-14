@@ -145,3 +145,23 @@ Imagen* Imagen::rotarZoom(int ancho,int alto,double angulo){
 void Imagen::pintarRojo(){
 	SdlSurfaceManager::pintar(superficie,255,0,0,150);
 }
+
+void Imagen::pintar(int r,int g,int b,int a){
+	SdlSurfaceManager::pintar(superficie,r,g,b,a);
+}
+
+void Imagen::colorear(int r,int g,int b,int a){
+	Uint32 color = SDL_MapRGBA(superficie->format,r,g,b,a);
+	SdlSurfaceManager::dibujarCuadrado(superficie,0,0,superficie->w,superficie->h,color);
+}
+
+Uint32 Imagen::atransparentar(){
+	Uint32 color = SDL_MapRGBA(superficie->format,255,0,255,255);
+	SdlSurfaceManager::dibujarCuadrado(superficie,0,0,superficie->w,superficie->h,color);
+	return color;
+}
+
+void Imagen::atransparentar(Uint32 col1){
+	Uint32 col2 = SDL_MapRGBA(superficie->format,0,0,0,0);
+	SdlSurfaceManager::replace(superficie,col1,col2);
+}
