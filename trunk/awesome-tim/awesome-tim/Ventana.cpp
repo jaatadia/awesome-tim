@@ -30,6 +30,8 @@ Ventana::~Ventana(void)
 //dibuja en la ventana la superficie pasada
 void Ventana::dibujar(Superficie* sup){
 	
+	if(sup==NULL) return;
+
 	SDL_Texture* tex = NULL;
 	tex = SDL_CreateTextureFromSurface(ren,sup->superficie);
 	if(tex!=NULL){
