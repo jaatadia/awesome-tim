@@ -1279,7 +1279,7 @@ void Box2DWorld::ponerEnPolea(Figura* soga,b2Body* cuerpo1,Figura* fig1,int num1
 	}
 }
 
-void Box2DWorld::eliminarSoga(Soga *figura,std::list<Figura*>* lista){
+void Box2DWorld::eliminarSoga(Soga *figura){
 	
 	figura->marcar(true);
 	Figura* figura1;
@@ -1314,16 +1314,12 @@ void Box2DWorld::eliminarSoga(Soga *figura,std::list<Figura*>* lista){
 		mundo->DestroyJoint(pol->joint);
 
 	}
-	
-	if(lista == NULL) return;
 
 	if(figura1->getTipoFigura()==ARCO){
-		Figura* fig =((Arco*)figura1)->disparar();
-		lista->push_back(fig);
+		((Arco*)figura1)->desatarSoga(1);
 	}
 	if(figura2->getTipoFigura()==ARCO){
-		Figura* fig =((Arco*)figura2)->disparar();
-		lista->push_back(fig);
+		((Arco*)figura2)->desatarSoga(1);
 	}
 }
 

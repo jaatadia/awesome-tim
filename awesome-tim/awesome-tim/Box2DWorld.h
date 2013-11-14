@@ -38,7 +38,7 @@ public:
 	void eliminarFigura(Figura * figura);
 	~Box2DWorld(void);
 
-	void eliminarSoga(Soga* figura,std::list<Figura*>* lista);
+	void eliminarSoga(Soga* figura);
 	void dispararEscopeta(Escopeta* escopeta,std::list<Figura*>* lista);
 private:
 	void ponerEnPolea(Figura* soga, b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
