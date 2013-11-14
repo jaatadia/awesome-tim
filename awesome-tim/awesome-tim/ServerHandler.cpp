@@ -63,6 +63,7 @@ void ServerHandler::run()
 					else
 					{
 						this->game->pushProcessMessage(mensaje);
+						cout<<"recibi un mensaje\n";
 					}
 				}
 		}
