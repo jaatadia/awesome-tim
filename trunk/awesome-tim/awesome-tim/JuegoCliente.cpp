@@ -118,7 +118,6 @@ void JuegoCliente:: onLoop(){
 	bool continuar = false;
 	Message * msg = NULL;
 	while((continuar)&&((msg = this->maq->getProcessMessage())!=NULL)){
-		std::cout<<"recibi una figura \n";
 		if(msg->getType()==MSG_TYPE_CREATE_FIGURE){
 			Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
 			if(fig!=NULL){
