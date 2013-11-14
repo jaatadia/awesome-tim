@@ -286,6 +286,7 @@ bool CargadorYaml::obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura){
 		fija = "NO";
 	}
 
+	//que??? FIX?
 	if(!opcion_valida(fija.c_str())){
 		int linea = nodoFigura["interactuable"].GetMark().line;
 		imprimir_error_linea("Propiedad interactuable de Figura invalida. Se carga propiedad por defecto.", linea);
