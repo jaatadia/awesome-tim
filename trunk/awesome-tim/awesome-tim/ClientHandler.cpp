@@ -56,6 +56,12 @@ void ClientHandler::run()
 					IdMessage * msg = new IdMessage();
 					msg->setId(this->id);
 					this->pushOutputMessage(msg);
+					std::cout<<"envie el id\n";
+
+					ClientMessage* c_msg = new ClientMessage();
+					c_msg->setClientID(this->id);
+					c_msg->setAction(A_CONNECT);
+					this->game->pushProcessMessage(c_msg);
 
 					this->setState(1);
 				}

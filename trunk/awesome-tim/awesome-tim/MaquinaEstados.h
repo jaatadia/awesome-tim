@@ -19,6 +19,7 @@ public:
 	void pushProcessMessage(Message * msg);
 	Message * getSendMessage(int id);
 	Message * getProcessMessage();
+	void clearSendMessage(int id);
 	void setId(int id);
 	int getId();
 	static void putMensaje(int tipo,int nroFigura,int data1,int data2);

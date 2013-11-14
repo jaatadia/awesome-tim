@@ -232,6 +232,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ClientMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ClientSocket.cpp"
 				>
 			</File>
@@ -667,6 +671,10 @@
 			</File>
 			<File
 				RelativePath=".\ClientHandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ClientMessage.h"
 				>
 			</File>
 			<File

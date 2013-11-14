@@ -8,6 +8,8 @@
 #include <vector>
 #include "FactoryFiguras.h"
 
+#include "ClientMessage.h"
+
 
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
@@ -45,6 +47,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 
 std::string Juego::cargar(){
 
+	cant_jugadores = 4;
 	std::string objetivo = CargadorYaml::cargarJuego(fileIn,terreno,&cant_jugadores,botoneras,areas);
 	this->maq->clientesDelJuego = cant_jugadores;
 
@@ -61,9 +64,16 @@ std::string Juego::cargar(){
 		vector[posVector] = (*iter);
 	}
 
-	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
+	for (std::list<struct boton>::iterator iter = botoneras[0].begin(); iter != botoneras[0].end();iter++){
+		botonera->agregarBoton((*iter).figura,(*iter).cant);
+	}
+
+	if(botonera->estaVacia()){
+		botonera->agregarBotonesDefault();
+		botonera->resizear();
+	}
 	//necesario para que se ordenen cosas dentro de botonera
-	botonera->resizear();
+	
 	return objetivo;
 }
 
@@ -134,23 +144,70 @@ bool Juego:: onRender(Superficie* superficie){
 	
 void Juego:: onLoop(){
 	
-	Message * msg = this->maq->getProcessMessage();
-	if((msg!= NULL)&&(msg->getType()==MSG_TYPE_CREATE_FIGURE)){
-		std::cout<<"mensaje\n";
-		Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
-		if(fig!=NULL){
-			vector[fig->numero] = fig;
-			if (((CreateFigureMessage*)msg)->isInAir()){
-				figuraEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
-			}else{
-				terreno->agregarFigura(fig);
+	Message * msg;
+	bool continuar = true;
+	while ((continuar) && ((msg = this->maq->getProcessMessage())!=NULL)){
+		switch(msg->getType()){
+			/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			case MSG_TYPE_CREATE_FIGURE:
+				{
+					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
+					if(fig!=NULL){
+						vector[fig->numero] = fig;
+						if (((CreateFigureMessage*)msg)->isInAir()){
+							figuraEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
+						}else{
+							terreno->agregarFigura(fig);
+						}
+						for(std::list<int>::iterator iter = this->maq->clientesConectados.begin();iter != this->maq->clientesConectados.end();iter++){
+							if((*iter)!=((CreateFigureMessage*)msg)->getId()){
+								this->maq->pushSendMessage(msg,(*iter));
+							}
+						}
+					}
+				}
+				break;
+			/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			case MSG_TYPE_CLIENT_MESSAGE:
+				{
+					ClientMessage* c_msg = (ClientMessage*)msg;
+					switch (c_msg->getAction()){
+						case A_CONNECT:
+							{
+								this->maq->clientesConectados.push_back(c_msg->getClientID());
+								std::list<Figura*> lista = terreno->getListaFigs();
+								for (std::list<Figura*>::iterator iter = lista.begin(); iter != lista.end();iter++){
+									CreateFigureMessage* f_msg = new CreateFigureMessage();
+									f_msg->setId(0);
+									f_msg->setFigureID((*iter)->numero);
+									f_msg->setFigureType((*iter)->getTipoFigura());
+									f_msg->setX((*iter)->getDimension()->getX());
+									f_msg->setY((*iter)->getDimension()->getY());
+									f_msg->setAngle((*iter)->getDimension()->getAngulo());
+									f_msg->setInAir(false);
+									double data1,data2;
+									(*iter)->getExtraData(&data1,&data2);
+									f_msg->setData1(data1);
+									f_msg->setData1(data2);
+
+									this->maq->pushSendMessage(f_msg,c_msg->getClientID());
+									std::cout<<"eniando una figura a cliente n: "<<c_msg->getClientID()<< "\n";
+								}
+								//mandar tambien los botones
+								//mandar tambien el area
+							}
+							break;
+						case A_DISCONECT:
+							{
+								this->maq->clearSendMessage(c_msg->getClientID());
+								this->maq->clientesConectados.remove(c_msg->getClientID());
+							}
+							break;
+					}
+					delete c_msg;
+				}
+				break;
 			}
-		}
-		for(std::list<int>::iterator iter = this->maq->clientesConectados.begin();iter != this->maq->clientesConectados.end();iter++){
-			if((*iter)!=((CreateFigureMessage*)msg)->getId()){
-				this->maq->pushSendMessage(msg,(*iter));
-			}
-		}
 	}
 
 	terreno->actualizarModelo(vector);

@@ -52,7 +52,10 @@ void CommunicationManager::run()
 		if((socketWriter->getActiveState())||(socketReader->getActiveState())){
 			this->kill();
 			if(server){
-				this->game->clientesConectados.remove(this->ID);
+				ClientMessage* c_msg = new ClientMessage();
+				c_msg->setClientID(this->ID);
+				c_msg->setAction(A_DISCONECT);
+				this->game->pushProcessMessage(c_msg);
 			}else{
 				std::cout<<"Se perdio la Conexion con el servidor. Cerrando el programa...\n";
 				this->game->salir();

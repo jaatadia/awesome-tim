@@ -8,6 +8,7 @@
 #include "MouseDownMessage.h"
 #include "GoodbyeMessage.h"
 #include "CreateFigureMessage.h"
+#include "ClientMessage.h"
 #include "Constantes.h"
 #include "Socket.h"
 #include "SocketException.h"

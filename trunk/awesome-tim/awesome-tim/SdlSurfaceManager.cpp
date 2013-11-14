@@ -252,7 +252,7 @@ void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDest
 		}
 			rectD.x = xDestino;
 			rectD.y = yDestino;
-
+		if(supDestino==NULL) return;
 		SDL_BlitSurface(supOrigen,rO,supDestino,&rectD);
 	}catch(...){
 		return;

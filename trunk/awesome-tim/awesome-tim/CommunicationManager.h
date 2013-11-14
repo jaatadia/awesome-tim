@@ -2,6 +2,7 @@
 #define __COMMUNICATIONMANAGER_H__
 
 #include "MessageHandler.h"
+#include "ClientMessage.h"
 #include "SocketHandler.h"
 #include "Socket.h"
 #include "ClientHandler.h"
