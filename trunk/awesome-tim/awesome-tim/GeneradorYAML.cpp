@@ -1,6 +1,7 @@
 #include "GeneradorYaml.h"
 #include "Motor.h"
-
+#include "MotorRaton.h"
+#include "PaletaFlipper.h"
 
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
 //out << YAML::BeginMap;
@@ -41,8 +42,8 @@ return out;
 
 YAML::Emitter& operator << (YAML::Emitter& out,Circulo* circ){
 //out << YAML::BeginMap;
-out << YAML::Key << "radio";
-out << YAML::Value << circ->getRadio();
+/*out << YAML::Key << "radio";
+out << YAML::Value << circ->getRadio();*/
 out << YAML::Key << "posX";
 out << YAML::Value << circ->getX();
 out << YAML::Key << "posY";
@@ -164,9 +165,103 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << YAML::Value << ((Motor*) fig)->sentido;
 				break;
 
+			case MOTOR_RATON:
+				out << YAML::Value << "MOTOR_RATON";
+				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "sentido";
+				out << YAML::Value << ((MotorRaton*) fig)->sentido;
+				break;
+
+			case VELA:
+				out << YAML::Value << "VELA";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case CLAVO:
+				out << YAML::Value << "CLAVO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case ARO:
+				out << YAML::Value << "ARO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case POLEA:
+				out << YAML::Value << "POLEA";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case YUNQUE:
+				out << YAML::Value << "YUNQUE";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case HUEVO:
+				out << YAML::Value << "HUEVO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case DOMINO:
+				out << YAML::Value << "DOMINO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case TIJERA:
+				out << YAML::Value << "TIJERA";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case CARRITO:
+				out << YAML::Value << "CARRITO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case QUESO:
+				out << YAML::Value << "QUESO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case PALETA:
+				out << YAML::Value << "PALETA-FLIPPER";
+				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "sentido";
+				out << YAML::Value << ((PaletaFlipper*) fig)->getSentido();
+				break;
+				
+			case ARCO:
+				out << YAML::Value << "ARCO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case ESCOPETA:
+				out << YAML::Value << "ESCOPETA";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+			case CODO:
+				out << YAML::Value << "CODO";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+				
+			case CANIO:
+				out << YAML::Value << "CANIO";
+				out << (Cuadrado*) fig->getDimension();
+				out << YAML::Key << "largo";
+				out << YAML::Value << fig->getLargo();
+				break;
+
 			default:
 				out << YAML::Value << "";
 		};
+
+	out << YAML::Key << "fija";
+	if (fig->esFija()) out << YAML::Value << "SI";
+	else out << YAML::Value << "NO";
+
+	out << YAML::Key << "objetivo";
+	if (fig->esObjetivo()) out << YAML::Value << "SI";
+	else out << YAML::Value << "NO";
 		
 	out << YAML::EndMap;
 	return out;
@@ -250,6 +345,57 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 			}
 		out << YAML::EndSeq;
 
+		//lista de clientes
+		out << YAML::Key << "lista_clientes";
+		out << YAML::Value << YAML::BeginSeq;
+
+			out << YAML::BeginMap;
+			out << YAML::Key << "terreno_cliente";
+			out << YAML::Value << YAML::BeginMap;
+
+				out <<  YAML::Key << "puntoSupIzq";
+				out << YAML::Value << YAML::BeginMap;
+					out <<  YAML::Key << "posX";
+					out << YAML::Value << 0;
+					out <<  YAML::Key << "posY";
+					out << YAML::Value << 0;
+				out << YAML::EndMap;
+
+				out <<  YAML::Key << "puntoInfDer";
+				out << YAML::Value << YAML::BeginMap;
+					out <<  YAML::Key << "posX";
+					out << YAML::Value << 100;
+					out <<  YAML::Key << "posY";
+					out << YAML::Value << 100;
+				out << YAML::EndMap;
+
+			out << YAML::EndMap;
+
+
+			out << YAML::BeginMap;
+			out << YAML::Key << "terreno_cliente";
+			out << YAML::Value << YAML::BeginMap;
+
+				out <<  YAML::Key << "puntoSupIzq";
+				out << YAML::Value << YAML::BeginMap;
+					out <<  YAML::Key << "posX";
+					out << YAML::Value << 0;
+					out <<  YAML::Key << "posY";
+					out << YAML::Value << 0;
+				out << YAML::EndMap;
+
+				out <<  YAML::Key << "puntoInfDer";
+				out << YAML::Value << YAML::BeginMap;
+					out <<  YAML::Key << "posX";
+					out << YAML::Value << 100;
+					out <<  YAML::Key << "posY";
+					out << YAML::Value << 100;
+				out << YAML::EndMap;
+
+			out << YAML::EndMap;
+
+		out << YAML::EndSeq;
+
 	out << YAML::EndMap;
 
 	return out;
@@ -280,6 +426,12 @@ bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,T
 		out << YAML::Value <<			//adentro de juego
 			
 			YAML::BeginMap;
+				out << YAML::Key << "jugadores";
+				out << YAML::Value << 2;
+
+				out << YAML::Key << "objetivo";
+				out << YAML::Value << "./images/texto_objetivo1.png";
+
 				out << YAML::Key << "terreno";
 				out << YAML::Value << terreno; //adentro de terreno
 	
