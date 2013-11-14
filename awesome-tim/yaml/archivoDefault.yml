@@ -236,7 +236,7 @@ juego:
               posX: 0
               posY: 0
               angulo: 0
-              largo: 5
+              largo: 1
               fija: NO
               interactuable: NO
             cantidad_de_instancias: 10
