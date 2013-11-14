@@ -26,7 +26,8 @@ void VistaFigura::dibujarEnPixel(Superficie *canvas){
 }
 
 void VistaFigura::dibujar(Superficie *canvas){
-	
+	if (this==NULL) return;
+	if (canvas==NULL) return;
 
 	if (this->fig->huboCambios()||(orig==NULL)){
 		redraw();

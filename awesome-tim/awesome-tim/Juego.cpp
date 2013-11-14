@@ -133,7 +133,7 @@ bool Juego:: onRender(Superficie* superficie){
 	}
 
 	for (int i = 0; i<=MAX_CLIENTES;i++){
-		if(figuraEnAire[i]){
+		if(figuraEnAire[i]!=NULL){
 			figuraEnAire[i]->dibujar(superficie);
 			dibujar = true;
 		}
