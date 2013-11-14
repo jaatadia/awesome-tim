@@ -46,8 +46,8 @@
 #include "Flecha.h"
 #include "Escopeta.h"
 #include "MotorRaton.h"
-//#include "Canio.h"
-//#include "Codo.h"
+#include "Canio.h"
+#include "Codo.h"
 
 class CargadorYaml{
 public:

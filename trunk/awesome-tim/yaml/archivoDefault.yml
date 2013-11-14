@@ -231,3 +231,20 @@ juego:
               fija: NO
               interactuable: NO
             cantidad_de_instancias: 10
+          - figura:
+              tipo_figura: CANIO
+              posX: 0
+              posY: 0
+              angulo: 0
+              largo: 5
+              fija: NO
+              interactuable: NO
+            cantidad_de_instancias: 10
+          - figura:
+              tipo_figura: CODO
+              posX: 0
+              posY: 0
+              angulo: 0
+              fija: NO
+              interactuable: NO
+            cantidad_de_instancias: 10

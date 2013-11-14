@@ -645,8 +645,7 @@ Figura* CargadorYaml::crearCanio(const YAML::Node& nodoFigura){
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	obtenerLargo(nodoFigura, &largo);
 
-	//return new Canio(largo,posX,posY,angulo);
-	return NULL;
+	return new Canio(largo,posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearCodo(const YAML::Node& nodoFigura){
@@ -655,8 +654,7 @@ Figura* CargadorYaml::crearCodo(const YAML::Node& nodoFigura){
 	obtenerAngulo(nodoFigura,&angulo);
 	obtenerPosicion(nodoFigura,&posX,&posY);
 
-	//return new Codo(posX,posY,angulo);
-	return NULL;
+	return new Codo(posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearCarrito(const YAML::Node& nodoFigura){
