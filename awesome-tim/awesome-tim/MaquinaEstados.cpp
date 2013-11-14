@@ -47,6 +47,17 @@ Message * MaquinaEstados::getProcessMessage()
 	return msg;
 }
 
+void MaquinaEstados::clearSendMessage(int id){
+	Lock lock(this->_mutex);
+	if(id == -1){
+		for(int i = 0;i<=MAX_CLIENTES;i++){
+			this->aEnviar[i].clear();
+		}
+	}else{	
+		this->aEnviar[id].clear();
+	}
+}
+
 void MaquinaEstados::pushProcessMessage(Message * msg)
 {
 	Lock lock(this->_mutex);

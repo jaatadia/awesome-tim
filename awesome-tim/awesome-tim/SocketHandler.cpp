@@ -72,6 +72,9 @@ void SocketHandler::run()
 									case MSG_TYPE_CREATE_FIGURE:
 										msg = new CreateFigureMessage(cadena.substr(2));
 										break;
+									case MSG_TYPE_CLIENT_MESSAGE:
+										msg = new ClientMessage(cadena.substr(2));
+										break;
 								}
 
 								if (msg->validate())

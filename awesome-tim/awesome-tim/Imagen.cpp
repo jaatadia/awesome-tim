@@ -7,6 +7,8 @@
 
 //nueva superficie de las dimensiones pasadas
 Imagen::Imagen(int ancho,int alto){
+	if(ancho == 0) ancho = 1;
+	if(alto == 0) alto = 1;
 	superficie = SdlSurfaceManager::crearSup(ancho,alto);
 	Uint32 negro = SDL_MapRGBA(superficie->format,0,0,0,255);
 	SdlSurfaceManager::pintarSup(superficie,negro);

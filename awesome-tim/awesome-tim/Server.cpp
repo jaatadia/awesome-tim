@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "ClientMessage.h"
 
 Server::Server(MaquinaEstados * juego)
 {
@@ -47,7 +48,6 @@ void Server::run()
 			}else{
 				CommunicationManager* com = new CommunicationManager(sok, this->juego, true, prox);
 				this->commMgrLst.push_back(com);
-				juego->clientesConectados.push_back(prox);
 			}
 		}
 	} catch (SocketException &ex)

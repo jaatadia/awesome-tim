@@ -5,6 +5,7 @@
 #include "Message.h"
 #include "FilesMessage.h"
 #include "IdMessage.h"
+#include "ClientMessage.h"
 #include "Constantes.h"
 #include <iostream>
 #include <fstream>

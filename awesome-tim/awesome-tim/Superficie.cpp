@@ -73,8 +73,21 @@ Superficie* Superficie::rotarSuperficie(double ang){
 //devuelve una copia rotada de la imagen
 Superficie* Superficie::scaleSurface(int pixelesAncho,int pixelesAlto){
 	
+	if(this == NULL) return NULL;
+
+	int pixAnc = 1,pixAlt = 1;
+
+	if(pixelesAncho!=0){
+		pixAnc = pixelesAncho;
+	}
+	if(pixelesAlto!=0){
+		pixAlt = pixelesAlto;
+	}
+
 	Superficie* sup = new Superficie();
-	sup->superficie = SdlSurfaceManager::scale(superficie,pixelesAncho,pixelesAlto);
+	if( this->superficie == NULL) return sup;
+
+	sup->superficie = SdlSurfaceManager::scale(superficie,pixAnc,pixAlt);
 	if(SdlSurfaceManager::huboFallas()){
 		delete sup;
 		sup = NULL;

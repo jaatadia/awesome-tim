@@ -115,15 +115,19 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 }
 	
 void JuegoCliente:: onLoop(){
-	Message * msg = this->maq->getProcessMessage();
-	if((msg!= NULL)&&(msg->getType()==MSG_TYPE_CREATE_FIGURE)){
-		Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
-		if(fig!=NULL){
-			vector[fig->numero] = fig;
-			if (((CreateFigureMessage*)msg)->isInAir()){
-				figurasEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
-			}else{
-				terreno->agregarFigura(fig);
+	bool continuar = false;
+	Message * msg = NULL;
+	while((continuar)&&((msg = this->maq->getProcessMessage())!=NULL)){
+		std::cout<<"recibi una figura \n";
+		if(msg->getType()==MSG_TYPE_CREATE_FIGURE){
+			Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
+			if(fig!=NULL){
+				vector[fig->numero] = fig;
+				if (((CreateFigureMessage*)msg)->isInAir()){
+					figurasEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
+				}else{
+					terreno->agregarFigura(fig);
+				}
 			}
 		}
 	}
