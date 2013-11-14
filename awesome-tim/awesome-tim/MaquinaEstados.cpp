@@ -1,6 +1,6 @@
 #include "MaquinaEstados.h"
 MaquinaEstados::MaquinaEstados(){
-	clientesDelJuego = 2;
+	clientesDelJuego = MAX_CLIENTES;
 }
 
 MaquinaEstados::~MaquinaEstados(){

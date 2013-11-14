@@ -39,7 +39,6 @@ void SocketHandler::run()
 					{
 						cout << sE.what() << endl;
 						this->kill();
-						throw SocketException("cerrar");
 					}
 					if (cadena.size())
 					{
@@ -99,6 +98,7 @@ void SocketHandler::run()
 					} catch (SocketException &sE)
 					{
 						cout << sE.what() << endl;
+						this->kill();
 					}
 				}
 				break;

@@ -130,6 +130,7 @@ bool Juego:: onRender(Superficie* superficie){
 }
 	
 void Juego:: onLoop(){
+	
 	Message * msg = this->maq->getProcessMessage();
 	if((msg!= NULL)&&(msg->getType()==MSG_TYPE_CREATE_FIGURE)){
 		std::cout<<"mensaje\n";
@@ -142,7 +143,13 @@ void Juego:: onLoop(){
 				terreno->agregarFigura(fig);
 			}
 		}
+		for(std::list<int>::iterator iter = this->maq->clientesConectados.begin();iter != this->maq->clientesConectados.end();iter++){
+			if((*iter)!=((CreateFigureMessage*)msg)->getId()){
+				this->maq->pushSendMessage(msg,(*iter));
+			}
+		}
 	}
+
 	terreno->actualizarModelo(vector);
 }
 

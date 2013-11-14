@@ -166,8 +166,8 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 	}
 #else
 	std::cout << "Initializing game in: CLIENT MODE" << std::endl;
-	juego = MEstadosCliente();
-	Client * client = new Client(juego,IP);
+	juego = new MEstadosCliente();
+	Client * client = new Client(juego);
 #endif // SERVER_MODE
 
 	double tiempoTardado = 0;

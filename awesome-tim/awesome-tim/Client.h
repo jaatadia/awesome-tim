@@ -12,7 +12,7 @@ using namespace std;
 class Client
 {
 public:
-	Client(MaquinaEstados * juego,char* IP = NULL);
+	Client(MaquinaEstados * juego,char* IP = "25.169.117.108");
 	virtual ~Client(void);
 
 private:
