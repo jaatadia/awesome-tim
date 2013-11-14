@@ -160,4 +160,9 @@ public:
 
 	virtual void corregirEstado(){};
 
+	virtual void getExtraData(double* d1,double* d2){
+		*d1 = -1;
+		*d2 = -2;
+	}
+
 };

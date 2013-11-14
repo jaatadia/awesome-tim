@@ -49,4 +49,8 @@ public:
 
 	virtual void setAngulo(double angulo);
 
+	virtual void getExtraData(double* d1,double* d2){
+		*d1 = largo;
+		*d2 = -1;
+	}
 };

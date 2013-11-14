@@ -24,4 +24,9 @@ public:
 
 	virtual bool rotable(){return true;}
 
+	virtual void getExtraData(double* d1,double* d2){
+		*d1 = largo;
+		*d2 = -1;
+	}
+
 };

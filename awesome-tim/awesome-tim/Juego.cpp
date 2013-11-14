@@ -26,10 +26,9 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 		figuraEnAire[i]=NULL;
 	}
 
-	int cant_jugadores;
 	std::string objetivo;
 	
-	objetivo = cargar(&cant_jugadores);
+	objetivo = cargar();
 
 	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
 
@@ -40,14 +39,17 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	clickPressed = false;
 	contEventosMov = 0;
 
-//	Sonidos::playMusic(MUSIC);
+	Sonidos::playMusic(MUSIC);
 
 }
 
-std::string Juego::cargar(int* cant_jugadores){
+std::string Juego::cargar(){
 
-	std::string objetivo = CargadorYaml::cargarJuego(fileIn,botonera,terreno,cant_jugadores);
+	std::string objetivo = CargadorYaml::cargarJuego(fileIn,terreno,&cant_jugadores,botoneras,areas);
+	this->maq->clientesDelJuego = cant_jugadores;
+
 	std::list<Figura*> figs = terreno->getListaFigs();
+	
 	for (std::list<Figura*>::iterator iter = figs.begin();iter!= figs.end();iter++){
 		while(vector[posVector]!=NULL){
 			posVector++;
@@ -58,6 +60,7 @@ std::string Juego::cargar(int* cant_jugadores){
 		(*iter)->numero = posVector;
 		vector[posVector] = (*iter);
 	}
+
 	if(botonera->estaVacia()) botonera->agregarBotonesDefault();
 	//necesario para que se ordenen cosas dentro de botonera
 	botonera->resizear();

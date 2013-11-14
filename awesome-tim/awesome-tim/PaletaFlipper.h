@@ -28,4 +28,9 @@ public:
 	void corregirEstado();
 
 	virtual void interactuar(int accion);
+
+	virtual void getExtraData(double* d1,double* d2){
+		*d1 = sentido;
+		*d2 = -1;
+	}
 };

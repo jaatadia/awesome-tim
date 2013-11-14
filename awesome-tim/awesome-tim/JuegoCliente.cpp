@@ -298,6 +298,11 @@ while(SDL_PollEvent(&evento)){
 					msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
 					msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
 					msg->setInAir(true);
+					double d1,d2;
+					figurasEnAire[this->numCliente]->getExtraData(&d1,&d2);
+					msg->setData1(d1);
+					msg->setData1(d2);
+
 				this->maq->pushSendMessage(msg,numCliente);
 				std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
 			}
