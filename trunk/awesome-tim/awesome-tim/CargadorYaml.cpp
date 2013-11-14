@@ -1059,8 +1059,9 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 
 	if(fija) figura->fijarFigura();
 
-	if(objetivo) figura->hacerObjetivo();
-
+	if(objetivo)
+		figura->hacerObjetivo();
+	
 	return figura;
 }
 

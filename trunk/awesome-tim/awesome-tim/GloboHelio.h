@@ -44,7 +44,10 @@ public:
 			else if (color == 4) this->ID = COLOR_VERDE;
 			else if (color == 5) this->ID = COLOR_VIOLETA;
 		}
-		return new GloboHelio(ID.c_str(),dimension->clonar(),true);
+		Figura* globo = new GloboHelio(ID.c_str(),dimension->clonar(),true);
+		if(this->esObjetivo())
+			globo->hacerObjetivo();
+		return globo;
 	};
 
 	//se le pasa la poicion en la que esta queriendo atar y devuelve el numero de posicion atable mas cercano(-1 es que no habia)
@@ -103,12 +106,8 @@ public:
 			this->pinchar();
 	}
 
-	virtual bool esObjetivo(){
-		return true;
-	}
-
 	virtual bool cumplioObjetivo(){
-		return this->estaMarcada();
+		return (this->esObjetivo() && this->estaMarcada());
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){
