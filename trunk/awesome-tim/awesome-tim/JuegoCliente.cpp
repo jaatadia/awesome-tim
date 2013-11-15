@@ -7,6 +7,7 @@
 #include "Linea.h"
 #include <vector>
 #include "FactoryFiguras.h"
+#include "TransformFigureMessage.h"
 
 //Definicion de constantes que no se que son: Jenny :P
 #define MSG_SUBTYPE_MOVEMENT 0
@@ -118,20 +119,50 @@ void JuegoCliente:: onLoop(){
 	bool continuar = true;
 	Message * msg = this->maq->getProcessMessage();
 	while((continuar)&&(msg!=NULL)){
-		if(msg->getType()==MSG_TYPE_CREATE_FIGURE){
-			Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
-			if(fig!=NULL){
-				vector[fig->numero] = fig;
-				if (((CreateFigureMessage*)msg)->isInAir()){
-					figurasEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
-				}else{
-					terreno->agregarFigura(fig);
+		switch (msg->getType()){
+			case MSG_TYPE_CREATE_FIGURE:
+				{
+					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
+					if(fig!=NULL){
+						vector[fig->numero] = fig;
+						if (((CreateFigureMessage*)msg)->isInAir()){
+							figurasEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
+						}else{
+							terreno->agregarFigura(fig);
+						}
+					}
 				}
-			}
-			if(continuar){
-				msg = this->maq->getProcessMessage();
-			}
+				break;
+			case MSG_TYPE_TRANSFORM_FIGURE:
+				{
+					TransformFigureMessage* t_msg = (TransformFigureMessage*) msg;
+					Figura* fig = vector[t_msg->getFigureID()];
+					if(fig!=NULL){
+						switch(t_msg->getSizeChange()){
+							case T_SHIFT:
+								fig->shift();
+								break;
+							case T_SHRINK:
+								fig->achicar();
+								break;
+							case T_GROW:
+								fig->agrandar();
+								break;
+							case T_NONE:
+								break;
+						}
+						fig->setX(t_msg->getX());
+						fig->setY(t_msg->getY());
+						fig->setAngulo(t_msg->getAngle());
+					}
+				}
+				break;
 		}
+		delete msg;
+		if(continuar){
+			msg = this->maq->getProcessMessage();
+		}
+
 	}
 
 	terreno->actualizarModelo(vector);
@@ -240,6 +271,17 @@ while(SDL_PollEvent(&evento)){
 					}
 					//y vuelvo para atras
 					figurasEnAire[this->numCliente]->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
+
+					TransformFigureMessage* t_msg = new TransformFigureMessage();
+					t_msg->setClientID(this->numCliente);
+					t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+					t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+					t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+					t_msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
+					t_msg->setSizeChange(T_NONE);
+
+					this->maq->pushSendMessage(t_msg,numCliente);
+
 				}
 						
 			//chequeo la posicion del mouse por si hay perdida de foco del terreno

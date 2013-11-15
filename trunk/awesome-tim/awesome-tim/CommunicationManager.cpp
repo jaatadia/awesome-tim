@@ -50,6 +50,14 @@ void CommunicationManager::run()
 
 		
 		if((socketWriter->getActiveState())||(socketReader->getActiveState())){
+			if(!socketWriter->getActiveState()) socketWriter->kill();
+			if(!socketReader->getActiveState()) socketReader->kill();
+			messageWriter->kill();
+			messageReader->kill();
+			delete socketWriter;
+			delete socketReader;
+			delete messageWriter;
+			delete messageReader;
 			this->kill();
 			if(server){
 				ClientMessage* c_msg = new ClientMessage();

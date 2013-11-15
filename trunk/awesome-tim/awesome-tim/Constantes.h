@@ -8,7 +8,7 @@
 //#define ES_SERVIDOR 1
 
 //frecuencias de simulacion, dibujo y calculo de cosas
-#define FPS 60
+#define FPS 30
 #define FRAME_FRECUENCY 1000.0/FPS
 
 #define ITER_CHOQUE 4 //cantidad de movimientos a realizar entre verificaciones de choques
@@ -433,4 +433,5 @@
 #define MSG_TYPE_GOODBYE				MSG_TYPE_EVENT_MOUSEWHEEL + 1
 #define MSG_TYPE_CREATE_FIGURE			MSG_TYPE_GOODBYE + 1
 #define MSG_TYPE_CLIENT_MESSAGE			MSG_TYPE_CREATE_FIGURE +1
+#define MSG_TYPE_TRANSFORM_FIGURE		MSG_TYPE_CLIENT_MESSAGE +1
 #define SERVER_MODE
