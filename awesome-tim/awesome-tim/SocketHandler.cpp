@@ -57,29 +57,33 @@ void SocketHandler::run()
 						}
 						while((pos = cadena.find("$")) > 0)
 						{
-							Message * msg;
-							int type = std::atoi(cadena.substr(0,1).c_str());
+							Message * msg = NULL;
+							int npos = cadena.find("|");
+							int type = std::atoi(cadena.substr(0,npos).c_str());
 							if (type)
 							{
 								switch(type)
 								{
 									case MSG_TYPE_FILES:
-										msg = new FilesMessage(cadena.substr(2));
+										msg = new FilesMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_EVENT_MOUSEBUTTONDOWN:
-										msg = new MouseDownMessage(cadena.substr(2));
+										msg = new MouseDownMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_GOODBYE:
-										msg = new GoodbyeMessage(cadena.substr(2));
+										msg = new GoodbyeMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_ID:
-										msg = new IdMessage(cadena.substr(2));
+										msg = new IdMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_CREATE_FIGURE:
-										msg = new CreateFigureMessage(cadena.substr(2));
+										msg = new CreateFigureMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_CLIENT_MESSAGE:
-										msg = new ClientMessage(cadena.substr(2));
+										msg = new ClientMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_TRANSFORM_FIGURE:
+										msg = new TransformFigureMessage(cadena.substr(npos+1));
 										break;
 								}
 

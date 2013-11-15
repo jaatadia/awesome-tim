@@ -440,6 +440,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TransformFigureMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Vela.cpp"
 				>
 			</File>
@@ -915,6 +919,10 @@
 			</File>
 			<File
 				RelativePath=".\Tijera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TransformFigureMessage.h"
 				>
 			</File>
 			<File

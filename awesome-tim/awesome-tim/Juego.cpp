@@ -9,6 +9,7 @@
 #include "FactoryFiguras.h"
 
 #include "ClientMessage.h"
+#include "TransformFigureMessage.h"
 
 
 
@@ -214,6 +215,39 @@ void Juego:: onLoop(){
 					delete c_msg;
 				}
 				break;
+			/* ++++++++++++++++++++++++++++++++++++++++++++++++*/
+			case MSG_TYPE_TRANSFORM_FIGURE:
+				{
+					TransformFigureMessage* t_msg = (TransformFigureMessage*) msg;
+					Figura* fig = vector[t_msg->getFigureID()];
+					if(fig!=NULL){
+						switch(t_msg->getSizeChange()){
+							case T_SHIFT:
+								fig->shift();
+								break;
+							case T_SHRINK:
+								fig->achicar();
+								break;
+							case T_GROW:
+								fig->agrandar();
+								break;
+							case T_NONE:
+								break;
+						}
+						fig->setX(t_msg->getX());
+						fig->setY(t_msg->getY());
+						fig->setAngulo(t_msg->getAngle());
+					}
+					
+					for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
+						if((*iter)!=((CreateFigureMessage*)msg)->getId()){
+							this->maq->pushSendMessage(msg,(*iter));
+						}
+					}
+				}
+				break;
+			/* +++++++++++++++++++++++++++++++++++++++++++++++++++*/
+			//case
 			}
 	}
 

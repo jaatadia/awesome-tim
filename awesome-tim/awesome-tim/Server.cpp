@@ -21,6 +21,10 @@ void Server::initThread()
 
 }
 
+bool isDead(CommunicationManager* com){
+	return com->getActiveState();
+}
+
 void Server::run()
 {
 	try
@@ -36,6 +40,7 @@ void Server::run()
 				this->commMgrLst.push_back(com);
 				this->juego->addClient(prox);
 			}
+			commMgrLst.remove_if(isDead);
 		}
 	} catch (SocketException &ex)
 	{
