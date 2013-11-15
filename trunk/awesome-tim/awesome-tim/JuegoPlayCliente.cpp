@@ -6,9 +6,10 @@ JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados*
 	TerrenoCliente* ter = (TerrenoCliente*) tere;
 	this->fondo = fondo;
 	this->maq = maq;
+	this->numCliente = maq->getId();
 		
 	comandos = new ComandosPlayCliente(ANCHO_COMANDOS,ALTO_COMANDOS);
-	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,true);
+	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,true);
 
 	terreno->setFondo(ter->getFondo().c_str());
 	

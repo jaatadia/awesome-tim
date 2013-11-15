@@ -10,8 +10,11 @@
 #include "MaquinaEstados.h"
 #include "Linea.h"
 
-TerrenoCliente::TerrenoCliente(int ancho,int alto,bool fisicaActiva){
+TerrenoCliente::TerrenoCliente(int ancho,int alto,MaquinaEstados* maq,int numCliente,bool fisicaActiva){
 	
+	this->numCliente = numCliente;
+	this->maq = maq;
+
 	this->fisicaActiva = fisicaActiva;
 	
 	x1 = 0;
@@ -296,6 +299,16 @@ void TerrenoCliente::rotarFigura(double posClickX, double posClickY, double cant
 		if (contEventosMov > 10000){
 			contEventosMov = 0;
 		}
+
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(numCliente);
+		t_msg->setFigureID(figuraActiva->numero);
+		t_msg->setX(figuraActiva->getDimension()->getX());
+		t_msg->setY(figuraActiva->getDimension()->getY());
+		t_msg->setAngle(figuraActiva->getDimension()->getAngulo());
+		t_msg->setSizeChange(T_ROTATE);
+		this->maq->pushSendMessage(t_msg,this->numCliente);
+
 		this->setCambio(true);
 	}
 }
@@ -333,6 +346,14 @@ void TerrenoCliente::arrastrarFigura(double posClickX,double posClickY,double ca
 		}
 
 		this->setCambio(true);
+		
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(numCliente);
+		t_msg->setFigureID(figuraActiva->numero);
+		t_msg->setX(figuraActiva->getDimension()->getX());
+		t_msg->setY(figuraActiva->getDimension()->getY());
+		t_msg->setSizeChange(T_NONE);
+		this->maq->pushSendMessage(t_msg,this->numCliente);
 	}
 }
 
@@ -349,6 +370,14 @@ void TerrenoCliente::agrandarFigura()
 		bool choca = this->posicionOcupada(figuraActiva);
 		figuraActiva->setSuperpuesta(choca);
 		if(choca) MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
+
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(numCliente);
+		t_msg->setFigureID(figuraActiva->numero);
+		t_msg->setX(figuraActiva->getDimension()->getX());
+		t_msg->setY(figuraActiva->getDimension()->getY());
+		t_msg->setSizeChange(T_GROW);
+		this->maq->pushSendMessage(t_msg,this->numCliente);
 	}
 }
 
@@ -356,11 +385,19 @@ void TerrenoCliente::shiftFigura()
 {
 	if (figuraActiva != NULL){
 		figuraActiva->shift();
-		MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
 
 		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
 		this->setCambio(true);
+
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(numCliente);
+		t_msg->setFigureID(figuraActiva->numero);
+		t_msg->setX(figuraActiva->getDimension()->getX());
+		t_msg->setY(figuraActiva->getDimension()->getY());
+		t_msg->setAngle(figuraActiva->getDimension()->getAngulo());
+		t_msg->setSizeChange(T_SHIFT);
+		this->maq->pushSendMessage(t_msg,this->numCliente);
 	}
 }
 
@@ -369,15 +406,20 @@ void TerrenoCliente::achicarFigura()
 	if (figuraActiva != NULL){
 
 		figuraActiva->achicar();
-		MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
 
 		this->setCambio(true);
 
 		bool choca = this->posicionOcupada(figuraActiva);
 		figuraActiva->setSuperpuesta(choca);
-		if(choca){
-			MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
-		}
+
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(numCliente);
+		t_msg->setFigureID(figuraActiva->numero);
+		t_msg->setX(figuraActiva->getDimension()->getX());
+		t_msg->setY(figuraActiva->getDimension()->getY());
+		t_msg->setSizeChange(T_SHRINK);
+		this->maq->pushSendMessage(t_msg,this->numCliente);
+
 	}
 }
 
@@ -387,6 +429,15 @@ void TerrenoCliente::soltarFigura(bool flag)
 		bool poner = ((flag) || (adentroZonaTerreno(figuraActiva->getDimension()->getX(),figuraActiva->getDimension()->getY())));
 		if (!(figuraActiva->superpuesta)&& poner ){
 			agregarFigura(figuraActiva);
+
+			TransformFigureMessage* t_msg = new TransformFigureMessage();
+			t_msg->setClientID(numCliente);
+			t_msg->setFigureID(figuraActiva->numero);
+			t_msg->setX(figuraActiva->getDimension()->getX());
+			t_msg->setY(figuraActiva->getDimension()->getY());
+			t_msg->setSizeChange(T_NONE);
+			this->maq->pushSendMessage(t_msg,this->numCliente);
+
 			figuraActiva=NULL;
 		}else{
 			//la meto con su posicion / angulo / largo anterior
@@ -395,11 +446,20 @@ void TerrenoCliente::soltarFigura(bool flag)
 			figuraActiva->setAngulo(angAntFigActiva);
 			figuraActiva->setLargo(largoAntFigActiva);
 			
+			TransformFigureMessage* t_msg = new TransformFigureMessage();
+			t_msg->setClientID(numCliente);
+			t_msg->setFigureID(figuraActiva->numero);
+			t_msg->setX(figuraActiva->getDimension()->getX());
+			t_msg->setY(figuraActiva->getDimension()->getY());
+			t_msg->setAngle(figuraActiva->getDimension()->getAngulo());
+			t_msg->setLength(figuraActiva->getLargo());
+			t_msg->setSizeChange(T_RESTORE);
+			this->maq->pushSendMessage(t_msg,this->numCliente);
+
 			agregarFigura(figuraActiva);
 
 			//y ya no esta chocando
 			figuraActiva->setSuperpuesta(false);
-			MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
 
 			figuraActiva = NULL;
 		}
@@ -414,7 +474,7 @@ bool TerrenoCliente::hayFiguras(){
 	return false;
 }
 
-std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY){
+std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY,Figura* vec[]){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
 
 	std::vector<int> tiposBorradas;
@@ -424,7 +484,6 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 	if (figuraABorrar){
 		//saco de la lista y libero memoria
 		eliminarFigura(figuraABorrar);
-		MaquinaEstados::putMensaje(-1,figuraABorrar->numero,0,0);
 		setCambio(true);
 		
 		if(figuraABorrar->esUnion()){
@@ -446,6 +505,16 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 			}
 
 			for(std::list<Figura*>::iterator iter = listaFigAux.begin();iter != listaFigAux.end();iter++){
+				
+				vec[(*iter)->numero] = NULL;
+
+				TransformFigureMessage* t_msg = new TransformFigureMessage();
+				t_msg->setClientID(numCliente);
+				t_msg->setFigureID((*iter)->numero);
+				t_msg->setSizeChange(T_REMOVE);
+				this->maq->pushSendMessage(t_msg,this->numCliente);
+				
+				
 				eliminarFigura(*iter);
 				(*iter)->desUnir();
 				MaquinaEstados::putMensaje(-0,(*iter)->numero,0,0);
@@ -455,6 +524,15 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 			}
 		}
 		
+		
+		
+		vec[figuraABorrar->numero] = NULL;
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(numCliente);
+		t_msg->setFigureID(figuraABorrar->numero);
+		t_msg->setSizeChange(T_REMOVE);
+		this->maq->pushSendMessage(t_msg,this->numCliente);
+
 		tiposBorradas.push_back(figuraABorrar->getTipoFigura());
 		delete figuraABorrar;
 	}

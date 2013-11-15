@@ -222,21 +222,58 @@ void Juego:: onLoop(){
 					Figura* fig = vector[t_msg->getFigureID()];
 					if(fig!=NULL){
 						switch(t_msg->getSizeChange()){
+							case T_RESTORE:
+								fig->setLargo(t_msg->getLength());
+							case T_ROTATE:
+								fig->setAngulo(t_msg->getAngle());
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								if(figuraEnAire[t_msg->getClientID()]==NULL) terreno->setCambio(true);
+								break;
 							case T_SHIFT:
 								fig->shift();
+								fig->setAngulo(t_msg->getAngle());
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								if(figuraEnAire[t_msg->getClientID()]==NULL) terreno->setCambio(true);
 								break;
 							case T_SHRINK:
 								fig->achicar();
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								if(figuraEnAire[t_msg->getClientID()]==NULL) terreno->setCambio(true);
 								break;
 							case T_GROW:
 								fig->agrandar();
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								if(figuraEnAire[t_msg->getClientID()]==NULL) terreno->setCambio(true);
 								break;
 							case T_NONE:
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								if(figuraEnAire[t_msg->getClientID()]==NULL) terreno->setCambio(true);
+								break;
+							case T_DROP:
+								figuraEnAire[t_msg->getClientID()] = NULL;
+								terreno->agregarFigura(fig);
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								break;
+							case T_DROPDEAD:
+								figuraEnAire[t_msg->getClientID()] = NULL;
+								vector[t_msg->getFigureID()] = NULL;
+								delete fig;
+								break;
+							case T_REMOVE:
+								fig->desUnir();
+								vector[t_msg->getFigureID()] = NULL;
+								terreno->eliminarFigura(fig);
+								terreno->setCambio(true);
+								delete fig;
 								break;
 						}
-						fig->setX(t_msg->getX());
-						fig->setY(t_msg->getY());
-						fig->setAngulo(t_msg->getAngle());
+
 					}
 					
 					for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
