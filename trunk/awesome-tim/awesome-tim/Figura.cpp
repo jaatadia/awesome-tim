@@ -95,7 +95,7 @@ void Figura::dibujarEnPixel(Superficie* super){
 
 void Figura::dibujar(Superficie* super){
 	myVista->dibujar(super);
-	setCambio(false);
+	this->setCambio(false);
 }
 
 void Figura::dibujar(Superficie* super,int xIni, int yIni){

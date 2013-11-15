@@ -128,8 +128,10 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new Codo(msg->getX(),msg->getY(),msg->getAngle());
 			break;
 	}
+	
 	if (fig!=NULL){
 		fig->numero = msg->getFigureID();
 	}
+
 	return fig;
 } 

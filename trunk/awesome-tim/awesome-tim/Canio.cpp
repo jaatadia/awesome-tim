@@ -1,7 +1,12 @@
 #include "Canio.h"
 
 Canio::Canio(int largo,double posX,double posY,double angulo):Figura(ID_CANIO,new Cuadrado(ANCHO_CANIO*largo,ALTO_CANIO,posX,posY,angulo),false){
-	this->largo = largo;
+	if(largo<=0){
+		this->largo = 1;
+		this->getDimension()->setAncho(ANCHO_CANIO*1);
+	}else{
+		this->largo = largo;
+	}
 	this->myVista = new VistaFigAgrandable(this);
 }
 Canio::~Canio(void){
