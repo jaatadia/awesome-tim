@@ -188,7 +188,7 @@ void Juego:: onLoop(){
 									double data1,data2;
 									(*iter)->getExtraData(&data1,&data2);
 									f_msg->setData1(data1);
-									f_msg->setData1(data2);
+									f_msg->setData2(data2);
 
 									this->maq->pushSendMessage(f_msg,c_msg->getClientID());
 									std::cout<<"eniando una figura a cliente n: "<<c_msg->getClientID()<< "\n";

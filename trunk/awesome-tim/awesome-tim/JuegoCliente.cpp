@@ -307,7 +307,7 @@ while(SDL_PollEvent(&evento)){
 					double d1,d2;
 					figurasEnAire[this->numCliente]->getExtraData(&d1,&d2);
 					msg->setData1(d1);
-					msg->setData1(d2);
+					msg->setData2(d2);
 
 				this->maq->pushSendMessage(msg,numCliente);
 				std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
