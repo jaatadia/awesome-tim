@@ -43,7 +43,9 @@ public:
 	}
 
 	virtual Figura* clonar(){
-		return new Chinche(ID.c_str(),dimension->clonar(),true);
+		Figura* chinche = new Chinche(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(chinche);
+		return chinche;
 	}
 
 	virtual void shift(){

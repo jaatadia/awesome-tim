@@ -30,7 +30,9 @@ int Plataforma::getLargo(){
 	return this->largo;
 }
 Figura* Plataforma::clonar(){
-	return new Plataforma(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	Figura* plataforma = new Plataforma(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	this->completarInteraccionesPosibles(plataforma);
+	return plataforma;
 }
 int Plataforma::getTipoFigura(){
 	return PLATAFORMA;

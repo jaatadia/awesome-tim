@@ -31,8 +31,10 @@ Vela::~Vela(void){}
 Figura* Vela::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
-	return new Vela("",dim->getX(),dim->getY(),dim->getAngulo());
-}//copia la figura
+	Figura* vela = new Vela("",dim->getX(),dim->getY(),dim->getAngulo());
+	this->completarInteraccionesPosibles(vela);
+	return vela;
+}
 
 
 int Vela::getTipoDimension(){

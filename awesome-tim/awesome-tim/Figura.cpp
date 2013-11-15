@@ -5,8 +5,10 @@
 
 Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	marcada = false;
+	
 	this->es_fija = false;
 	this->es_objetivo = false;
+	this->es_interactuable = false;
 
 	this->ID = ID;
 	this->dimension = dim;
@@ -38,6 +40,20 @@ bool Figura::esFija(){
 
 void Figura::fijarFigura(){
 	this->es_fija = true;
+}
+
+void Figura::hacerInteractuable(){
+	this->es_interactuable = true;
+}
+
+bool Figura::esInteractuable(){
+	return this->es_interactuable;
+}
+
+void Figura::completarInteraccionesPosibles(Figura* nuevaFigura){
+	if(this->es_objetivo) nuevaFigura->hacerObjetivo();
+	if(this->es_interactuable) nuevaFigura->hacerInteractuable();
+	if(this->es_fija) nuevaFigura->fijarFigura();
 }
 
 bool Figura::esObjetivo(){
@@ -119,7 +135,9 @@ Figura* Figura::clonar(bool flag){
 }
 
 Figura* Figura::clonar(){
-	return new Figura(ID.c_str(),dimension->clonar());
+	Figura* fig = new Figura(ID.c_str(),dimension->clonar());
+	this->completarInteraccionesPosibles(fig);
+	return fig;
 }
 
 void Figura::setTraslucido(bool flag){

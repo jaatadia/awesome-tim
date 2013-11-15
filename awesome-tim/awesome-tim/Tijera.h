@@ -36,6 +36,7 @@ public:
 	virtual Figura* clonar(){
 		 Tijera* tij = new Tijera(ID.c_str(),dimension->clonar(),true);
 		 tij->pos = pos;
+		 this->completarInteraccionesPosibles(tij);
 		 return tij;
 	}
 

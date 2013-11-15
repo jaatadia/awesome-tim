@@ -15,7 +15,9 @@ public:
 	virtual int getTipoDimension(){return CUADRADO;}
 	
 	Figura* clonar(){
-		return new Queso(this->getDimension()->getX(),this->getDimension()->getY());
+		Figura* queso = new Queso(this->getDimension()->getX(),this->getDimension()->getY());
+		this->completarInteraccionesPosibles(queso);
+		return queso;
 	}
 
 };

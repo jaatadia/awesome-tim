@@ -26,7 +26,9 @@ public:
 	virtual int getTipoDimension(){return CIRCULO;}
 	
 	Figura* clonar(){
-		return new Huevo(ID.c_str(),dimension->clonar(),true);
+		Figura* huevo = new Huevo(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(huevo);
+		return huevo;
 	}
 
 	void romper(){

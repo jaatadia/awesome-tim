@@ -14,7 +14,11 @@ public:
 	virtual int getTipoFigura(){return PELOTABOWLING;}
 	virtual int getTipoDimension(){return CIRCULO;}
 
-	Figura* clonar(){return new PelotaBowling(ID.c_str(),dimension->clonar(),true);};
+	Figura* clonar(){
+		Figura* pelota = new PelotaBowling(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(pelota);
+		return pelota;
+	};
 
 //	bool choqueConFigura(Figura* fig);
 };

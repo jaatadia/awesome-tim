@@ -45,8 +45,7 @@ public:
 			else if (color == 5) this->ID = COLOR_VIOLETA;
 		}
 		Figura* globo = new GloboHelio(ID.c_str(),dimension->clonar(),true);
-		if(this->esObjetivo())
-			globo->hacerObjetivo();
+		this->completarInteraccionesPosibles(globo);
 		return globo;
 	};
 

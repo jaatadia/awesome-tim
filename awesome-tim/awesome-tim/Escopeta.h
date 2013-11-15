@@ -40,7 +40,9 @@ public:
 	}
 
 	virtual Figura* clonar(){
-		return new Escopeta(ID.c_str(),dimension->clonar(),true);
+		Figura* arma = new Escopeta(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(arma);
+		return arma;
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){

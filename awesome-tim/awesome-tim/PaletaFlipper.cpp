@@ -15,7 +15,9 @@ PaletaFlipper::~PaletaFlipper(void){
 }
 
 Figura* PaletaFlipper::clonar(){
-	return new PaletaFlipper(this->dimension->getX(),this->dimension->getY(),this->sentido);
+	Figura* paleta = new PaletaFlipper(this->dimension->getX(),this->dimension->getY(),this->sentido);
+	this->completarInteraccionesPosibles(paleta);
+	return paleta;
 }
 int PaletaFlipper::getTipoFigura(){
 	return PALETA;

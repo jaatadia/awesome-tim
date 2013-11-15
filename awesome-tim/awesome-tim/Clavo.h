@@ -29,7 +29,9 @@ public:
 	}
 
 	virtual Figura* clonar(){
-		return new Clavo(ID.c_str(),dimension->clonar(),true);
+		Figura* clavo = new Clavo(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(clavo);
+		return clavo;
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){
