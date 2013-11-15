@@ -1,4 +1,6 @@
 #include "JuegoPlay.h"
+#include "TransformFigureMessage.h"
+#include "ClientMessage.h";
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -119,6 +121,33 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 
 void JuegoPlay::onLoop(){
 	
+	Message * msg;
+	bool continuar = true;
+	while ((continuar) && ((msg = this->maq->getProcessMessage())!=NULL)){
+		switch(msg->getType()){
+			/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			case MSG_TYPE_CLIENT_MESSAGE:
+				{
+					ClientMessage* c_msg = (ClientMessage*)msg;
+					switch (c_msg->getAction()){
+						case A_UNREADY:
+						case A_DISCONECT:
+							{
+								this->maq->returnProcessMessage(msg);
+								this->quit();
+								continuar = false;
+							}
+					}
+				}
+				break;
+
+			/* +++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			//case
+			}
+	}
+
+	if(!continuar) return;
+
 	if(contador<FPS){
 		contador++;
 		return;
@@ -128,6 +157,19 @@ void JuegoPlay::onLoop(){
 
 	if(!gano){
 		terreno->actualizarModelo(vector);
+		std::list<Figura*> figs = terreno->getListaFigs();
+		std::list<Figura*>::iterator iter; 
+		for(iter = figs.begin();iter!=figs.end();iter++){
+			TransformFigureMessage* t_msg = new TransformFigureMessage();
+			t_msg->setClientID(0);
+			t_msg->setFigureID((*iter)->numero);
+			t_msg->setX((*iter)->getDimension()->getX());
+			t_msg->setY((*iter)->getDimension()->getY());
+			t_msg->setAngle((*iter)->getDimension()->getAngulo());
+			t_msg->setSizeChange(T_ROTATE);
+			this->maq->pushSendMessage(t_msg);
+		}
+
 	}else{
 		actualizarVictoria();
 	}

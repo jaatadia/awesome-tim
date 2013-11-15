@@ -16,9 +16,10 @@ public:
 	std::list<Message *> aProcesar;
 	void pushSendMessage(Message * msg, int id = -1);
 	void pushProcessMessage(Message * msg);
+	void returnProcessMessage(Message * msg);
 	Message * getSendMessage(int id);
 	Message * getProcessMessage();
-
+	
 	int getNextClient();
 	void setMaxClients(int clients);
 	void addClient(int id);
