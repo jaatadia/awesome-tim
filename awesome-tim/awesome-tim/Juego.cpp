@@ -49,7 +49,7 @@ std::string Juego::cargar(){
 
 	cant_jugadores = 4;
 	std::string objetivo = CargadorYaml::cargarJuego(fileIn,terreno,&cant_jugadores,botoneras,areas);
-	this->maq->clientesDelJuego = cant_jugadores;
+	this->maq->setMaxClients(cant_jugadores);
 
 	std::list<Figura*> figs = terreno->getListaFigs();
 	
@@ -144,6 +144,13 @@ bool Juego:: onRender(Superficie* superficie){
 	
 void Juego:: onLoop(){
 	
+	//std::cout<<"Clientes Conectados: ";
+	//for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
+	//	std::cout<<(*iter)<<"|";
+	//}
+	//std::cout<<"\n";
+
+
 	Message * msg;
 	bool continuar = true;
 	while ((continuar) && ((msg = this->maq->getProcessMessage())!=NULL)){
@@ -159,7 +166,7 @@ void Juego:: onLoop(){
 						}else{
 							terreno->agregarFigura(fig);
 						}
-						for(std::list<int>::iterator iter = this->maq->clientesConectados.begin();iter != this->maq->clientesConectados.end();iter++){
+						for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
 							if((*iter)!=((CreateFigureMessage*)msg)->getId()){
 								this->maq->pushSendMessage(msg,(*iter));
 							}
@@ -174,7 +181,7 @@ void Juego:: onLoop(){
 					switch (c_msg->getAction()){
 						case A_CONNECT:
 							{
-								this->maq->clientesConectados.push_back(c_msg->getClientID());
+								this->myClients.push_back(c_msg->getClientID());
 								std::list<Figura*> lista = terreno->getListaFigs();
 								for (std::list<Figura*>::iterator iter = lista.begin(); iter != lista.end();iter++){
 									CreateFigureMessage* f_msg = new CreateFigureMessage();
@@ -199,8 +206,8 @@ void Juego:: onLoop(){
 							break;
 						case A_DISCONECT:
 							{
-								this->maq->clearSendMessage(c_msg->getClientID());
-								this->maq->clientesConectados.remove(c_msg->getClientID());
+								this->maq->removeClient(c_msg->getClientID());
+								this->myClients.remove(c_msg->getClientID());
 							}
 							break;
 					}
@@ -574,16 +581,14 @@ void Juego::confirmarPosicionFiguraEnAire(){
 		terreno->setCambio(true);
 		botonera->setCambio(true);
 		comandos->setCambio(true);
-	}
-	else
+	}else{
 		if (figEnBotonera())
 			botonera->setCambio(true);
-		else
-			if (figEnTerreno())
-				terreno->setCambio(true);
-			else
-				if (figEnComandos())
-					comandos->setCambio(true);
+		if (figEnTerreno())
+			terreno->setCambio(true);
+		if (figEnComandos())
+			comandos->setCambio(true);
+	}
 
 }
 

@@ -2,10 +2,12 @@
 
 SocketHandler::SocketHandler(void)
 {
+	this->msgRemainder = "";
 }
 
 SocketHandler::SocketHandler(Socket * socket, int mode) : _socket(socket), ConnectionManager(mode)
 {
+	this->msgRemainder = "";
 }
 
 SocketHandler::~SocketHandler(void)
@@ -35,6 +37,7 @@ void SocketHandler::run()
 					try
 					{
 						cadena = this->_socket->read();
+						std::cout<<cadena<<"\n";
 					} catch (SocketException &sE)
 					{
 						cout << sE.what() << endl;
@@ -48,6 +51,9 @@ void SocketHandler::run()
 						{
 							this->msgRemainder = cadena.substr(pos + 1);
 							cadena = cadena.substr(0, pos + 1);
+						}else{
+							this->msgRemainder = cadena;
+							continue;
 						}
 						while((pos = cadena.find("$")) > 0)
 						{
@@ -98,6 +104,7 @@ void SocketHandler::run()
 					try
 					{
 						this->_socket->write(msg->serialize());
+						std::cout<<msg->serialize()<<"\n";
 					} catch (SocketException &sE)
 					{
 						cout << sE.what() << endl;

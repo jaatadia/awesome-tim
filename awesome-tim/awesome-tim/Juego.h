@@ -40,6 +40,8 @@ private:
 	Figura* vector[LARGO];
 	int posVector;
 
+	std::list<int> myClients;
+
 	int cant_jugadores;
 	std::list<struct boton> botoneras[MAX_CLIENTES+1];
 	double areas[MAX_CLIENTES+1][4];

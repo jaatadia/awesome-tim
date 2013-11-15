@@ -10,8 +10,7 @@ class MaquinaEstados
 {
 public:
 	
-	std::list<int> clientesConectados;
-	int clientesDelJuego;
+
 
 	std::list<Message *> aEnviar[MAX_CLIENTES+1];
 	std::list<Message *> aProcesar;
@@ -19,7 +18,12 @@ public:
 	void pushProcessMessage(Message * msg);
 	Message * getSendMessage(int id);
 	Message * getProcessMessage();
-	void clearSendMessage(int id);
+
+	int getNextClient();
+	void setMaxClients(int clients);
+	void addClient(int id);
+	void removeClient(int id);
+
 	void setId(int id);
 	int getId();
 	static void putMensaje(int tipo,int nroFigura,int data1,int data2);
@@ -38,4 +42,6 @@ public:
 private:
 	Mutex _mutex;
 	int id;
+	std::list<int> clientesConectados;
+	int clientesDelJuego;
 };

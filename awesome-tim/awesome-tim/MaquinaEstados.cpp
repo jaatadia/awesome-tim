@@ -47,15 +47,33 @@ Message * MaquinaEstados::getProcessMessage()
 	return msg;
 }
 
-void MaquinaEstados::clearSendMessage(int id){
+void MaquinaEstados::addClient(int id){
 	Lock lock(this->_mutex);
-	if(id == -1){
-		for(int i = 0;i<=MAX_CLIENTES;i++){
-			this->aEnviar[i].clear();
-		}
-	}else{	
-		this->aEnviar[id].clear();
-	}
+	this->clientesConectados.push_back(id);
+}
+
+void MaquinaEstados::removeClient(int id){
+	Lock lock(this->_mutex);
+	this->aEnviar[id].clear();
+	this->clientesConectados.remove(id);
+}
+
+void MaquinaEstados::setMaxClients(int clients){
+	Lock lock(this->_mutex);
+	this->clientesDelJuego = ((clients>0)&&(clients<=clientesDelJuego)) ? clients : clientesDelJuego;
+}
+
+int MaquinaEstados::getNextClient(){
+	Lock lock(this->_mutex);
+	
+	if (this->clientesConectados.size()==this->clientesDelJuego) return -1;
+
+	std::list<int> aux;
+	std::list<int>::iterator iter;
+	for(int i=1;i<=this->clientesDelJuego;i++) aux.push_back(i);
+	for(iter = this->clientesConectados.begin();iter != this->clientesConectados.end();iter++) aux.remove(*iter);
+	
+	return aux.front();
 }
 
 void MaquinaEstados::pushProcessMessage(Message * msg)

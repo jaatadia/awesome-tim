@@ -28,26 +28,13 @@ void Server::run()
 		while(!this->finalizando)
 		{
 			Socket* sok = this->_socket->acceptConnection();
-			int prox = -1;
-			for (int i = 1;i<=juego->clientesDelJuego;i++){
-				bool encontrado = false;
-				for (std::list<int>::iterator iter = juego->clientesConectados.begin();iter != juego->clientesConectados.end();iter++){
-					if ((*iter) == i){
-						encontrado = true;
-					}
-				}
-				if(!encontrado){
-					prox = i;
-					break;
-				}
-			}
-			
-			
+			int prox = this->juego->getNextClient();
 			if (prox == -1){
 				delete sok;
 			}else{
 				CommunicationManager* com = new CommunicationManager(sok, this->juego, true, prox);
 				this->commMgrLst.push_back(com);
+				this->juego->addClient(prox);
 			}
 		}
 	} catch (SocketException &ex)
