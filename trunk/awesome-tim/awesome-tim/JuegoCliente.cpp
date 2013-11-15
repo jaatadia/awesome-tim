@@ -518,16 +518,14 @@ void JuegoCliente::confirmarPosicionFiguraEnAire(){
 		terreno->setCambio(true);
 		botonera->setCambio(true);
 		comandos->setCambio(true);
-	}
-	else
+	}else{
 		if (figEnBotonera())
 			botonera->setCambio(true);
-		else
-			if (figEnTerreno())
-				terreno->setCambio(true);
-			else
-				if (figEnComandos())
-					comandos->setCambio(true);
+		if (figEnTerreno())
+			terreno->setCambio(true);
+		if (figEnComandos())
+			comandos->setCambio(true);
+	}
 
 }
 

@@ -244,7 +244,7 @@ bool TerrenoCliente::agregarFigura(Figura* fig){
 	corregirPosicion(fig);
 
 	try{
-		bool aux;
+		bool aux = true;
 		if(fisicaActiva){
 			if(aux){
 				if(fig->getTipoFigura()==SOGA){
