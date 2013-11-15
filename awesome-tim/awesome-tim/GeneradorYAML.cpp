@@ -262,6 +262,10 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 	out << YAML::Key << "objetivo";
 	if (fig->esObjetivo()) out << YAML::Value << "SI";
 	else out << YAML::Value << "NO";
+
+	out << YAML::Key << "interactuable";
+	if (fig->esInteractuable()) out << YAML::Value << "SI";
+	else out << YAML::Value << "NO";
 		
 	out << YAML::EndMap;
 	return out;

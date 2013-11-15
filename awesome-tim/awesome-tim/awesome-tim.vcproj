@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -280,6 +280,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FiguraSensor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FilesMessage.cpp"
 				>
 			</File>
@@ -397,6 +401,10 @@
 			</File>
 			<File
 				RelativePath=".\Polea.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SensorB2ContactListener.cpp"
 				>
 			</File>
 			<File
@@ -738,6 +746,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FiguraSensor.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FilesMessage.h"
 				>
 			</File>
@@ -875,6 +887,10 @@
 			</File>
 			<File
 				RelativePath=".\Queso.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SensorB2ContactListener.h"
 				>
 			</File>
 			<File

@@ -90,6 +90,7 @@
 #define MOTOR_RATON 35
 #define CANIO 36
 #define CODO 37
+#define FIG_SENSOR 38
 
 //valores fisicos
 
