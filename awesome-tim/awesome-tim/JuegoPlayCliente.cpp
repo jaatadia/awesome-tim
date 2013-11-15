@@ -1,5 +1,8 @@
 #include "JuegoPlayCliente.h"
 #include "Sonidos.h"
+#include "CreateFigureMessage.h"
+#include "ClientMessage.h"
+#include "FactoryFiguras.h"
 
 JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -90,6 +93,47 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 }
 
 void JuegoPlayCliente::onLoop(){
+	bool continuar = true;
+	Message * msg = this->maq->getProcessMessage();
+	while((continuar)&&(msg!=NULL)){
+		switch (msg->getType()){
+			case MSG_TYPE_CREATE_FIGURE:
+				{
+					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
+					if(fig!=NULL){
+						vector[fig->numero] = fig;
+						terreno->agregarFigura(fig);
+					}
+				}
+				break;
+			case MSG_TYPE_TRANSFORM_FIGURE:
+				{
+					TransformFigureMessage* t_msg = (TransformFigureMessage*) msg;
+					Figura* fig = vector[t_msg->getFigureID()];
+					if(fig!=NULL){
+						switch(t_msg->getSizeChange()){
+							case T_ROTATE:
+								fig->setAngulo(t_msg->getAngle());
+								fig->setX(t_msg->getX());
+								fig->setY(t_msg->getY());
+								break;
+						}
+					}
+				}
+			case MSG_TYPE_CLIENT_MESSAGE:
+				{
+				}
+				break;
+		}
+		delete msg;
+		if(continuar){
+			msg = this->maq->getProcessMessage();
+		}
+
+	}
+
+	terreno->actualizarModelo(vector);
+	terreno->setCambio(true);
 }
 
 bool JuegoPlayCliente::onRender(Superficie* sup){

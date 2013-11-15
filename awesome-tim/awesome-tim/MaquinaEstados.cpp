@@ -82,6 +82,11 @@ void MaquinaEstados::pushProcessMessage(Message * msg)
 	this->aProcesar.push_back(msg);
 }
 
+void MaquinaEstados::returnProcessMessage(Message * msg){
+	Lock lock(this->_mutex);
+	this->aProcesar.push_front(msg);
+}
+
 void MaquinaEstados::putMensaje(int tipo, int nroFigura, int data1, int data2){
 	std::cout<<"Tipo: "<<tipo<<" Cliente Nro: "<<-1<<" Numero Fig: "<<nroFigura<<" Data: "<<data1<<data2<<"\n";
 }
