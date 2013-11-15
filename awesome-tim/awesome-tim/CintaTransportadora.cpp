@@ -1,8 +1,13 @@
 #include "CintaTransportadora.h"
 #include "VistaFigAgrandable.h"	
 
-CintaTransportadora::CintaTransportadora(int largo,double posX,double posY,double angulo):FiguraCompuesta(ID_CINTA_TRANSPORTADORA,new Cuadrado(ANCHO_CINTA*largo,ALTO_CINTA,posX,posY,0)){
-	this->largo = largo;
+CintaTransportadora::CintaTransportadora(int largor,double posX,double posY,double angulo):FiguraCompuesta(ID_CINTA_TRANSPORTADORA,new Cuadrado(ANCHO_CINTA*largor,ALTO_CINTA,posX,posY,0)){
+	if(largor<=0){
+		this->largo = 1;
+		this->getDimension()->setAncho(ANCHO_PLATAFORMA*1);
+	}else{
+		this->largo = largor;
+	}
 	
 	this->atadoDerecha = false;
 	this->atadoIzquierda = false;

@@ -25,7 +25,7 @@ void VistaFigAgrandable::redraw(){
 
 	if (largo_anterior != fig->getLargo()){
 		delete imggrande;
-		imggrande = new Imagen(orig->getAncho()*this->fig->getLargo(),orig->getAlto());
+		imggrande = new Imagen((orig->getAncho())*(this->fig->getLargo()),orig->getAlto());
 		Uint32 aux = imggrande->atransparentar();
 		largo_anterior = fig->getLargo();
 

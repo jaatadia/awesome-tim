@@ -98,7 +98,9 @@ void TerrenoCliente::redraw(){
 					(*iteradorLista)->dibujar(this->sup);	
 			
 		}else{
-			figurasAux.push_back((*iteradorLista));
+			if((*iteradorLista)!=NULL){
+				figurasAux.push_back((*iteradorLista));
+			}
 		}
 	}
 

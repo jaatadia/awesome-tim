@@ -65,7 +65,7 @@ CreateFigureMessage::CreateFigureMessage(string msg)
 									msg = msg.substr(pos + 1);
 									pos = msg.find("$");
 									if (pos != std::string::npos){
-										this->data1 = atof(msg.substr(0, pos).c_str());
+										this->data2 = atof(msg.substr(0, pos).c_str());
 									}else{
 										this->valid = MSG_INVALID;
 									}

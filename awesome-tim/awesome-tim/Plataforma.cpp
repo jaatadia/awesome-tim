@@ -1,7 +1,12 @@
 #include "Plataforma.h"
 
 Plataforma::Plataforma(int largo,double posX,double posY,double angulo):Figura(ID_PLATAFORMA,new Cuadrado(ANCHO_PLATAFORMA*largo,ALTO_PLATAFORMA,posX,posY,angulo),false){
-	this->largo = largo;
+	if(largo<=0){
+		this->largo = 1;
+		this->getDimension()->setAncho(ANCHO_PLATAFORMA*1);
+	}else{
+		this->largo = largo;
+	}
 	this->myVista = new VistaFigAgrandable(this);
 }
 

@@ -2,6 +2,6 @@
 #define _BOTON_
 struct boton{
 	Figura* figura;
-	int cant;
+	int cantInstancias;
 };
 #endif //_BOTON_

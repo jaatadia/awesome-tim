@@ -65,7 +65,7 @@ std::string Juego::cargar(){
 	}
 
 	for (std::list<struct boton>::iterator iter = botoneras[0].begin(); iter != botoneras[0].end();iter++){
-		botonera->agregarBoton((*iter).figura,(*iter).cant);
+		botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
 	}
 
 	if(botonera->estaVacia()){
