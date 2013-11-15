@@ -59,6 +59,19 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
+		case FIG_SENSOR:{
+
+			cuerpo->SetType(b2_staticBody);
+			b2PolygonShape forma;
+			double ancho = (dim)->getAncho();
+			double alto = (dim)->getAlto();
+			forma.SetAsBox(ancho/2,alto/2);
+			fD.shape = &forma;
+			fD.isSensor = true;
+			cuerpo->CreateFixture(&fD);			
+
+			break;
+		}
 		case BALA:{
 
 			Bala* bala = (Bala*) figura;
@@ -79,6 +92,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			
 			b2Vec2 fuerza = b2Vec2(bala->fuerzaX,bala->fuerzaY);
 			cuerpo->SetLinearVelocity(fuerza);
+			cuerpo->SetBullet(true);
 
 			break;
 		}

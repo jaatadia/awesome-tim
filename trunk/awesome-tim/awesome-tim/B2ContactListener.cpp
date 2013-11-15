@@ -6,6 +6,7 @@ B2ContactListener::B2ContactListener(void)
 	listSoga = new SogaB2ContactListener();
 	listGlobo = new GloboB2ContactListener();
 	listHuevo = new HuevoB2ContactListener();
+	//listSensor = new SensorB2ContactListener();
 }
 
 B2ContactListener::~B2ContactListener(void)
@@ -14,6 +15,7 @@ B2ContactListener::~B2ContactListener(void)
 	delete listSoga;
 	delete listGlobo;
 	delete listHuevo;
+	//delete listSensor;
 }
 
 void B2ContactListener::BeginContact(b2Contact* contact){
@@ -21,6 +23,7 @@ void B2ContactListener::BeginContact(b2Contact* contact){
 	listSoga->BeginContact(contact);
 	listGlobo->BeginContact(contact);
 	listHuevo->BeginContact(contact);
+	//listSensor->BeginContact(contact);
 }
 
 void B2ContactListener::EndContact(b2Contact* contact){
@@ -28,6 +31,7 @@ void B2ContactListener::EndContact(b2Contact* contact){
 	listSoga->EndContact(contact);
 	listGlobo->EndContact(contact);
 	listHuevo->EndContact(contact);
+	//listSensor->EndContact(contact);
 }
 
 void B2ContactListener::terminar(){
@@ -35,4 +39,5 @@ void B2ContactListener::terminar(){
 	listSoga->terminar();
 	listGlobo->terminar();
 	listHuevo->terminar();
+	//listSensor->terminar();
 }

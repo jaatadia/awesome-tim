@@ -5,6 +5,7 @@
 #include "SogaB2ContactListener.h"
 #include "GloboB2ContactListener.h"
 #include "HuevoB2ContactListener.h"
+//#include "SensorB2ContactListener.h"
 
 class B2ContactListener: public b2ContactListener
 {
@@ -13,6 +14,7 @@ private:
 	SogaB2ContactListener* listSoga;
 	GloboB2ContactListener* listGlobo;
 	HuevoB2ContactListener* listHuevo;
+	//SensorB2ContactListener* listSensor;
 
 public:
 	B2ContactListener(void);

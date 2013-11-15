@@ -1397,6 +1397,10 @@ std::string CargadorYaml::cargarJuego(const char* file,BotoneraController* boton
 
 }
 
+std::string CargadorYaml::cargarJuego(const char* fileIn,Terreno* terreno,int* cant_jugadores,std::list<struct boton> botoneras[],double areas[][4]){
+		return "";
+	}
+
 /**********************************************************
 **                                                       **
 **                    VALIDACIONES                       **

@@ -63,9 +63,7 @@ public:
 	//areas[i][1] = y1; 
 	//areas[i][2] = x2; 
 	//areas[i][3] = y2; 
-	static std::string cargarJuego(const char* fileIn,Terreno* terreno,int* cant_jugadores,std::list<struct boton> botoneras[],double areas[][4]){
-		return "hola";
-	}
+	static std::string cargarJuego(const char* fileIn,Terreno* terreno,int* cant_jugadores,std::list<struct boton> botoneras[],double areas[][4]);
 
 private:
 
