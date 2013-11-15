@@ -64,6 +64,7 @@ public:
 	Figura* clonar(){
 		Engranaje* eng = new Engranaje(ID.c_str(),dimension->clonar(),true);
 		eng->setRadio(this->radio1);
+		this->completarInteraccionesPosibles(eng);
 		return eng;
 	};
 

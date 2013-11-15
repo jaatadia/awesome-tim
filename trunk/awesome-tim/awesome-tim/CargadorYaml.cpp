@@ -286,10 +286,9 @@ bool CargadorYaml::obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura){
 		fija = "NO";
 	}
 
-	//que??? FIX?
 	if(!opcion_valida(fija.c_str())){
-		int linea = nodoFigura["interactuable"].GetMark().line;
-		imprimir_error_linea("Propiedad interactuable de Figura invalida. Se carga propiedad por defecto.", linea);
+		int linea = nodoFigura["fija"].GetMark().line;
+		imprimir_error_linea("Propiedad Fija de Figura invalida. Se carga propiedad por defecto.", linea);
 		fija = "NO";
 	}
 
@@ -298,6 +297,32 @@ bool CargadorYaml::obtenerPropiedadFiguraFija(const YAML::Node& nodoFigura){
 
 	return true;
 }
+
+bool CargadorYaml::obtenerPropiedadFiguraInteractuable(const YAML::Node& nodoFigura){
+	std::string interac;
+
+	try{
+		nodoFigura["interactuable"] >> interac;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe propiedad Interactuable de figura. Se carga propiedad por defecto.",e.what());
+		interac = "NO";
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo de la propiedad de figura. Se carga propiedad por defecto.",e.what());
+		interac = "NO";
+	}
+
+	if(!opcion_valida(interac.c_str())){
+		int linea = nodoFigura["interactuable"].GetMark().line;
+		imprimir_error_linea("Propiedad Interactuable de Figura invalida. Se carga propiedad por defecto.", linea);
+		interac = "NO";
+	}
+
+	if(strcmp(interac.c_str(), "NO") == 0)
+		return false;
+
+	return true;
+}
+
 
 void CargadorYaml::obtenerExtremos(const YAML::Node& nodoFigura,double* x1,double* y1,double* x2,double* y2){
 
@@ -566,6 +591,14 @@ Figura* CargadorYaml::crearVela(const YAML::Node& nodoFigura){
 	obtenerAngulo(nodoFigura,&angulo);	
 
 	return new Vela(ID_VELA,posX,posY,angulo);
+}
+Figura* CargadorYaml::crearChinche(const YAML::Node& nodoFigura){
+	double posX,posY,angulo;
+	
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAngulo(nodoFigura,&angulo);	
+
+	return new Chinche(posX,posY,angulo);
 }
 
 Figura* CargadorYaml::crearClavo(const YAML::Node& nodoFigura){
@@ -1021,6 +1054,13 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 		return figura;
 	}
 
+	if (strcmp(tipo_figura,"CHINCHE") == 0){
+		Figura* figura = crearChinche(nodoFigura);
+		if(!figura)
+			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Chinche."); 	
+		return figura;
+	}
+
 	//No deberia llegar a este caso porque el error deberia haber saltado antes.
 	ErrorLogHandler::addError("CargadorYaml","Error del tipo figura. El tipo de figura no es un tipo valido."); 	
 	return NULL;
@@ -1055,12 +1095,14 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 
 	bool fija = obtenerPropiedadFiguraFija(nodoFig);
 	bool objetivo = obtenerPropiedadFiguraObjetivo(nodoFig);
+	bool interactuable = obtenerPropiedadFiguraInteractuable(nodoFig);
 
 	if(fija) figura->fijarFigura();
 
-	if(objetivo)
-		figura->hacerObjetivo();
+	if(objetivo) figura->hacerObjetivo();
 	
+	if(interactuable) figura->hacerInteractuable();
+
 	return figura;
 }
 
@@ -1399,8 +1441,9 @@ bool CargadorYaml::tipo_figura_valida(const char* tipo_figura){
 	bool escopeta = (strcmp(tipo_figura,"ESCOPETA") == 0);
 	bool codo = (strcmp(tipo_figura,"CODO") == 0);
 	bool canio = (strcmp(tipo_figura,"CANIO") == 0);
+	bool chinche = (strcmp(tipo_figura,"CHINCHE") == 0);
 
-	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta || motorRaton || codo || canio);
+	bool figuraCompleja = (plataforma || balancin || cintaTrans || engranaje || motor || correa || linea || soga || motor || pelotaBask || bowling || globoHelio || tenis || vela || clavo || aro || polea || yunque || huevo || tijera || domino || carrito || queso || flipper || arco || escopeta || motorRaton || codo || canio || chinche);
 
 	return (figuraSimple || figuraCompleja);
 }

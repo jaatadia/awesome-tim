@@ -16,7 +16,11 @@ public:
 	virtual int getTipoFigura(){return PELOTABASQUET;}
 	virtual int getTipoDimension(){return CIRCULO;}
 
-	Figura* clonar(){return new PelotaBasquet(ID.c_str(),dimension->clonar(),true);};
+	Figura* clonar(){
+		Figura* pelota = new PelotaBasquet(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(pelota);
+		return pelota;
+	};
 
 //	virtual bool choqueConFigura(Figura* fig);
 

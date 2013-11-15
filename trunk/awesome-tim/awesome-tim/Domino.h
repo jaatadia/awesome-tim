@@ -13,7 +13,9 @@ public:
 	virtual int getTipoDimension(){return CUADRADO;}
 	
 	Figura* clonar(){
-		return new Domino(this->getDimension()->getX(),this->getDimension()->getY(), ID_DOMINO);
+		Figura* domino = new Domino(this->getDimension()->getX(),this->getDimension()->getY(), ID_DOMINO);
+		this->completarInteraccionesPosibles(domino);
+		return domino;
 	}
 
 };

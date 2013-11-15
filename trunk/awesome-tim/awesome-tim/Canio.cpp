@@ -29,7 +29,9 @@ int Canio::getLargo(){
 	return this->largo;
 }
 Figura* Canio::clonar(){
-	return new Canio(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	Figura* canio = new Canio(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	this->completarInteraccionesPosibles(canio);
+	return canio;
 }
 int Canio::getTipoFigura(){
 	return CANIO;

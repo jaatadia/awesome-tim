@@ -33,6 +33,7 @@ public:
 		MotorRaton* eng = new MotorRaton(ID_MOTOR_RATON_1,dimension->clonar(),true);
 		eng->setRadio(this->radio1);
 		if(this->sentido == -1) eng->shift();
+		this->completarInteraccionesPosibles(eng);
 		return eng;
 	};
 

@@ -36,7 +36,9 @@ public:
 	}
 
 	virtual Figura* clonar(){
-		return new Arco(ID.c_str(),dimension->clonar(),true);
+		Figura* arco = new Arco(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(arco);
+		return arco;
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){

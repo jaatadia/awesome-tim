@@ -151,9 +151,10 @@ bool Balancin::esAtable(double* posX, double* posY){
 Figura* Balancin::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
-
-	return new Balancin(dim->getX(),dim->getY(),dim->getAngulo());
-}//copia la figura
+	Figura* balancin = new Balancin(dim->getX(),dim->getY(),dim->getAngulo());
+	this->completarInteraccionesPosibles(balancin);
+	return balancin;
+}
 
 
 int Balancin::getTipoDimension(){

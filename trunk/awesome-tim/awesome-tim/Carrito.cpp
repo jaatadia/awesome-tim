@@ -45,8 +45,9 @@ void Carrito::calcularPosiciones(double& posXizq,double& posXder, double& posYiz
 Figura* Carrito::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
-
-	return new Carrito(dim->getX(),dim->getY(),dim->getAngulo());
+	Figura* carrito = new Carrito(dim->getX(),dim->getY(),dim->getAngulo());
+	this->completarInteraccionesPosibles(carrito);
+	return carrito;
 }
 
 

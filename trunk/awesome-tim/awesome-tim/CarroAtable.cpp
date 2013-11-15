@@ -43,8 +43,9 @@ void CarroAtable::calcularPosPuntas(double& posXizq,double& posXder, double& pos
 Figura* CarroAtable::clonar(){
 
 	Cuadrado* dim = (Cuadrado*) this->getDimension();
-
-	return new CarroAtable(dim->getX(),dim->getY());
+	Figura* carro = new CarroAtable(dim->getX(),dim->getY());
+	this->completarInteraccionesPosibles(carro);
+	return carro;
 }
 
 

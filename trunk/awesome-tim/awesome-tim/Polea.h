@@ -28,7 +28,9 @@ public:
 	virtual int getTipoDimension(){return CIRCULO;}
 
 	Figura* clonar(){
-		return new Polea(ID.c_str(),dimension->clonar(),true);
+		Figura* polea = new Polea(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(polea);
+		return polea;
 	};
 
 	virtual int esAtableSoga(double x,double y){

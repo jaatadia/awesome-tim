@@ -13,7 +13,9 @@ int Codo::getTipoDimension(){
 	return CUADRADO;
 }
 Figura* Codo::clonar(){
-	return new Codo(this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	Figura* codo = new Codo(this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	this->completarInteraccionesPosibles(codo);
+	return codo;
 }
 void Codo::calcularPuntosRotados(double* x1r,double* y1r,double* x2r,double* y2r,double* x3r,double* y3r,double* x4r,double* y4r,double* x5r,double* y5r,double* x6r,double* y6r){
 

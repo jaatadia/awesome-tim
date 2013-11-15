@@ -34,6 +34,7 @@ public:
 		Flecha* flecha = new Flecha(ID.c_str(),dimension->clonar(),true);
 		flecha->fuerzaX = fuerzaX;
 		flecha->fuerzaY = fuerzaY;
+		this->completarInteraccionesPosibles(flecha);
 		return flecha;
 	}
 

@@ -23,7 +23,9 @@ public:
 	}
 
 	virtual Figura* clonar(){
-		return new Aro(ID.c_str(),dimension->clonar(),true);
+		Figura* aro = new Aro(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(aro);
+		return aro;
 	}
 
 	virtual int getTipoFigura(){

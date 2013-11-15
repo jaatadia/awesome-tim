@@ -16,7 +16,9 @@ Soga::~Soga(void){
 
 /*copia la figura*/
 Figura* Soga::clonar(){
-	return new Soga(((DLinea*)dimension)->x1,((DLinea*)dimension)->y1,((DLinea*)dimension)->x2,((DLinea*)dimension)->y2,((DLinea*)dimension)->ancho);
+	Figura* soga = new Soga(((DLinea*)dimension)->x1,((DLinea*)dimension)->y1,((DLinea*)dimension)->x2,((DLinea*)dimension)->y2,((DLinea*)dimension)->ancho);
+	this->completarInteraccionesPosibles(soga);
+	return soga;
 }
 
 Soga::Soga(DLinea* dim):Linea(ID_SOGA,dim)

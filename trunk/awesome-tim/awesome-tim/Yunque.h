@@ -17,7 +17,11 @@ public:
 	virtual int getTipoFigura(){return YUNQUE;}
 	virtual int getTipoDimension(){return CUADRADO;}
 
-	Figura* clonar(){return new Yunque(ID.c_str(),dimension->clonar(),true);};
+	Figura* clonar(){
+		Figura* yunque = new Yunque(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(yunque);
+		return yunque;
+	};
 
 	virtual int esAtableSoga(double x,double y){
 		return 1;

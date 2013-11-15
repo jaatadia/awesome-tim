@@ -17,7 +17,11 @@ public:
 	virtual int getTipoFigura(){return PELOTATENIS;}
 	virtual int getTipoDimension(){return CIRCULO;}
 
-	Figura* clonar(){return new PelotaTenis(ID.c_str(),dimension->clonar(),true);};
+	Figura* clonar(){
+		Figura* pelota = new PelotaTenis(ID.c_str(),dimension->clonar(),true);
+		this->completarInteraccionesPosibles(pelota);
+		return pelota;
+	};
 
 //	bool choqueConFigura(Figura* fig);
 	

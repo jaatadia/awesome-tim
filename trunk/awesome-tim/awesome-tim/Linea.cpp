@@ -51,7 +51,9 @@ void Linea::setFigura1(Figura* fig){
 
 Figura* Linea::clonar(){
 	//return new Linea(ID_CORREA,(DLinea *)getDimension()->clonar());
-	return new Linea(ID_CORREA,new DLinea(((DLinea*)dimension)->x1,((DLinea*)dimension)->y1,((DLinea*)dimension)->x2,((DLinea*)dimension)->y2,((DLinea*)dimension)->ancho));
+	Figura* soga = new Linea(ID_CORREA,new DLinea(((DLinea*)dimension)->x1,((DLinea*)dimension)->y1,((DLinea*)dimension)->x2,((DLinea*)dimension)->y2,((DLinea*)dimension)->ancho));
+	this->completarInteraccionesPosibles(soga);
+	return soga;
 }
 
 Linea::Linea(const char* ID,DLinea* dim):Figura(ID,dim,true)

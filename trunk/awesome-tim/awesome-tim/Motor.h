@@ -28,6 +28,7 @@ public:
 		Motor* eng = new Motor(ID.c_str(),dimension->clonar(),true);
 		eng->setRadio(this->radio1);
 		if(this->sentido == -1) eng->shift();
+		this->completarInteraccionesPosibles(eng);
 		return eng;
 	};
 

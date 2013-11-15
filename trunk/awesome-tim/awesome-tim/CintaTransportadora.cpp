@@ -92,7 +92,9 @@ int CintaTransportadora::getLargo(){
 	return this->largo;
 }
 Figura* CintaTransportadora::clonar(){
-	return new CintaTransportadora(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	Figura* cinta = new CintaTransportadora(this->largo,this->dimension->getX(),this->dimension->getY(),this->dimension->getAngulo());
+	this->completarInteraccionesPosibles(cinta);
+	return cinta;
 }
 void CintaTransportadora::calcularPosClavo(double ang,double* posX_clavo,double* posY_clavo){
 	

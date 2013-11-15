@@ -32,6 +32,7 @@ protected:
 
 	bool es_fija;
 	bool es_objetivo;
+	bool es_interactuable;
 
 	int largoF;
 	
@@ -164,5 +165,9 @@ public:
 		*d1 = -1;
 		*d2 = -2;
 	}
+
+	void completarInteraccionesPosibles(Figura* nuevaFigura);
+	void hacerInteractuable();
+	bool esInteractuable();
 
 };
