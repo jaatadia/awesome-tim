@@ -10,6 +10,8 @@
 #include <string>
 #include <list>
 #include <vector>
+#include "TransformFigureMessage.h"
+#include "MaquinaEstados.h"
 
 /* terreno es el que contiene todas las figuras
 y tiene las funciones necesarias para que le roten algun objeto le eliminen y dibuje todos los objetos en una superficie
@@ -36,8 +38,11 @@ private:
 
 	int contEventosMov;
 
+	MaquinaEstados* maq;
+	int numCliente;
+
 public:
-	TerrenoCliente(int ancho,int alto,bool fisicaActiva=true);
+	TerrenoCliente(int ancho,int alto,MaquinaEstados* maq,int numCliente,bool fisicaActiva=true);
 	~TerrenoCliente(void);
 
 	void setMiPorcion(double x1, double y1, double x2, double y2);
@@ -54,7 +59,7 @@ public:
 	void rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
 	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
 	//devuelve un vector con los tipos de las figuras borradas.
-	std::vector<int> borrarFigura(double posClickX, double posClickY);
+	std::vector<int> borrarFigura(double posClickX, double posClickY,Figura* vec[]);
 
 	void buscarActiva(double posClickX ,double posClickY);
 	void soltarFigura(bool ponerAunqueEsteAfueraDeLaZona = false);

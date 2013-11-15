@@ -18,20 +18,20 @@ void Sonidos::initialize(){
 }
 
 void Sonidos::end(){
-	try{
-		if(!initialized) return;
+	//try{
+	//	if(!initialized) return;
 
-		Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
-		Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_UP]);
-		Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_DOWN]);
+	//	Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
+	//	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_UP]);
+	//	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_DOWN]);
 
-		Mix_FreeMusic((Mix_Music*)(*mapa)[VICTORY_MUS]);
-		Mix_FreeMusic((Mix_Music*)(*mapa)[MUSIC]);
-		delete(mapa);
+	//	Mix_FreeMusic((Mix_Music*)(*mapa)[VICTORY_MUS]);
+	//	Mix_FreeMusic((Mix_Music*)(*mapa)[MUSIC]);
+	//	delete(mapa);
 
-		Mix_CloseAudio();
-	}catch(...){
-	}
+	//	Mix_CloseAudio();
+	//}catch(...){
+	//}
 }
 
 void Sonidos::playSound(const char *file){
