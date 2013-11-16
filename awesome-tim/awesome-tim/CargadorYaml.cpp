@@ -1165,12 +1165,12 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 
 	const YAML::Node& listaClientes = nodoTerreno["lista_clientes"];
 
-	for(unsigned i=1;i<listaClientes.size() && i<=cant_jugadores;i++) {
-		agregarZonasClientes(listaClientes[i]["terreno_cliente"],areas,i);	
+	for(unsigned i=1;i<=listaClientes.size() && i<cant_jugadores;i++) {
+		agregarZonasClientes(listaClientes[i-1]["terreno_cliente"],areas,i);	
 	}
 
-	if(listaClientes.size() == cant_jugadores) return;
-	if(listaClientes.size() > cant_jugadores){
+	if(listaClientes.size() == (cant_jugadores-1)) return;
+	if(listaClientes.size() >= cant_jugadores){
 		imprimir_error_sin_linea("La cantidad de zonas definidas supera a la cantidad de jugadores. Solo se puede tener un area por jugador. Las areas extras seran ignoradas.");
 		return;
 	}
@@ -1182,7 +1182,7 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	double xDerDef = ANCHO_TERRENO_LOGICO;
 	double yDerDef = ALTO_TERRENO_LOGICO;
 
-	for(int i=listaClientes.size(); i<cant_jugadores; i++){
+	for(int i=listaClientes.size()+1; i<cant_jugadores; i++){
 		areas[i][0] = xIzqDef;
 		areas[i][1] = yIzqDef;
 		areas[i][2] = xDerDef;
@@ -1264,9 +1264,9 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 
 	const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
 	
-	for(unsigned i=1;i<listaClientes.size() && i<=cant_jugadores ;i++) {
+	for(unsigned i=1;i<=listaClientes.size() && i<=cant_jugadores ;i++) {
 		try{
-			const YAML::Node& listaFiguras = listaClientes[i]["lista_figuras"];
+			const YAML::Node& listaFiguras = listaClientes[i-1]["lista_figuras"];
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
 			imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
 			cargarBotonesDefault(botoneras[i]);
@@ -1277,20 +1277,20 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 			continue;
 		}
 
-		const YAML::Node& listaFiguras = listaClientes[i]["lista_figuras"];
+		const YAML::Node& listaFiguras = listaClientes[i-1]["lista_figuras"];
 
 		cargar_botones_de_cliente(listaFiguras,botoneras[i]);
 	}
 
-	if(listaClientes.size() == cant_jugadores) return;
+	if(listaClientes.size() == (cant_jugadores-1)) return;
 
-	if(listaClientes.size() > cant_jugadores){
+	if(listaClientes.size() >= cant_jugadores){
 		imprimir_error_sin_linea("La cantidad de Botoneras supera a la cantidad de Jugadores. Las botoneras extras no seran cargadas.");
 		return;
 	}
 
 	imprimir_error_sin_linea("La cantidad de Botoneras es menor a la cantidad de Jugadores. Las botoneras faltantes se cargan como botoneras default.");
-	for(unsigned i=listaClientes.size();i<cant_jugadores ;i++){
+	for(unsigned i=listaClientes.size()+1;i<cant_jugadores ;i++){
 		cargarBotonesDefault(botoneras[i]);
 	}
 
