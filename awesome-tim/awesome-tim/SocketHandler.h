@@ -14,17 +14,19 @@
 #include "Socket.h"
 #include "SocketException.h"
 #include <stdlib.h>
+#include "MessageHandler.h"
 
 class SocketHandler : public ConnectionManager
 {
 public:
-	SocketHandler(Socket * s, int mode);
+	SocketHandler(Socket * s, int mode,MessageHandler* m_handler);
 	virtual ~SocketHandler(void);
 
 private:
 	SocketHandler(void);
 	Socket * _socket;
 	string msgRemainder;
+	MessageHandler* m_handler;
 
 protected:
 	virtual void initThread();

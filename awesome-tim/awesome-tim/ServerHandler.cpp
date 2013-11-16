@@ -1,7 +1,8 @@
 #include "ServerHandler.h"
 
-ServerHandler::ServerHandler(int mode, MaquinaEstados * game, int id) : MessageHandler(mode, game, id)
+ServerHandler::ServerHandler(int mode, MaquinaEstados * game, int id, SocketHandler* s_handler) : MessageHandler(mode, game, id)
 {
+	this->s_handler = s_handler;
 }
 
 ServerHandler::~ServerHandler(void)
@@ -29,7 +30,8 @@ void ServerHandler::run()
 						Message * msg = this->game->getSendMessage(this->id);
 						if (msg)
 						{
-							this->pushOutputMessage(msg);
+							//this->pushOutputMessage(msg);
+							s_handler->pushOutputMessage(msg);
 						}
 					}
 					else if (this->game->getId() >= 0)

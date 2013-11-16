@@ -1,7 +1,8 @@
 #include "ClientHandler.h"
 
-ClientHandler::ClientHandler(int mode, MaquinaEstados * game, int id) : MessageHandler(mode, game, id)
+ClientHandler::ClientHandler(int mode, MaquinaEstados * game, int id,SocketHandler* s_handler) : MessageHandler(mode, game, id)
 {
+	this->s_handler = s_handler;
 }
 
 ClientHandler::~ClientHandler(void)
@@ -46,7 +47,8 @@ void ClientHandler::run()
 							Message * fM = new FilesMessage(msg);
 							if (fM->validate())
 							{
-								this->pushOutputMessage(fM);
+								//this->pushOutputMessage(fM);
+								s_handler->pushOutputMessage(fM);
 							}
 						}
 						archivoPrueba.close();
@@ -55,8 +57,8 @@ void ClientHandler::run()
 					// Envio ID
 					IdMessage * msg = new IdMessage();
 					msg->setId(this->id);
-					this->pushOutputMessage(msg);
-					std::cout<<"envie el id\n";
+					//this->pushOutputMessage(msg);
+					s_handler->pushOutputMessage(msg);
 
 					ClientMessage* c_msg = new ClientMessage();
 					c_msg->setClientID(this->id);

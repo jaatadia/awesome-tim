@@ -5,8 +5,9 @@ SocketHandler::SocketHandler(void)
 	this->msgRemainder = "";
 }
 
-SocketHandler::SocketHandler(Socket * socket, int mode) : _socket(socket), ConnectionManager(mode)
+SocketHandler::SocketHandler(Socket * socket, int mode,MessageHandler* m_handler) : _socket(socket), ConnectionManager(mode)
 {
+	this->m_handler = m_handler;
 	this->msgRemainder = "";
 }
 
@@ -88,7 +89,8 @@ void SocketHandler::run()
 
 								if (msg->validate())
 								{
-									this->pushInputMessage(msg);
+									//this->pushInputMessage(msg);
+									m_handler->pushInputMessage(msg);
 								}
 								else
 								{
