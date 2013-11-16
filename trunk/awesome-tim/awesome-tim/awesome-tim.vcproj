@@ -256,6 +256,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CreateButtonMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CreateFigureMessage.cpp"
 				>
 			</File>
@@ -417,6 +421,10 @@
 			</File>
 			<File
 				RelativePath=".\ServerSocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SetAreaMessage.cpp"
 				>
 			</File>
 			<File
@@ -714,6 +722,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CreateButtonMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DLinea.h"
 				>
 			</File>
@@ -903,6 +915,10 @@
 			</File>
 			<File
 				RelativePath=".\ServerSocket.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SetAreaMessage.h"
 				>
 			</File>
 			<File

@@ -27,7 +27,7 @@ public:
 
 	void setId(int id);
 	int getId();
-	static void putMensaje(int tipo,int nroFigura,int data1,int data2);
+
 	MaquinaEstados();
 	virtual ~MaquinaEstados();
 	virtual void salir()=0;

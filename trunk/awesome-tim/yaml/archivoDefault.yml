@@ -293,7 +293,6 @@ juego:
               objetivo: NO
               interactuable: NO
             cantidad_de_instancias: 10
-    lista_clientes:
       - lista_figuras:
           - figura:
               tipo_figura: PLATAFORMA

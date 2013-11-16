@@ -9,6 +9,8 @@
 #include "GoodbyeMessage.h"
 #include "CreateFigureMessage.h"
 #include "TransformFigureMessage.h"
+#include "SetAreaMessage.h"
+#include "CreateButtonMessage.h"
 #include "ClientMessage.h"
 #include "Constantes.h"
 #include "Socket.h"

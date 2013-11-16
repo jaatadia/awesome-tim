@@ -9,6 +9,8 @@
 #include "FactoryFiguras.h"
 #include "TransformFigureMessage.h"
 #include "ClientMessage.h"
+#include "SetAreaMessage.h"
+#include "CreateButtonMessage.h"
 
 //Definicion de constantes que no se que son: Jenny :P
 #define MSG_SUBTYPE_MOVEMENT 0
@@ -51,10 +53,10 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 }
 
 bool JuegoCliente::cargar(){
-	if(botonera->estaVacia()){
-		botonera->agregarBotonesDefault();
-		this->resume();
-	}
+	//if(botonera->estaVacia()){
+	//	botonera->agregarBotonesDefault();
+	//	this->resume();
+	//}
 	return true;
 }
 
@@ -145,6 +147,23 @@ void JuegoCliente:: onLoop(){
 							terreno->agregarFigura(fig);
 						}
 					}
+				}
+				break;
+			case MSG_TYPE_CREATE_BUTTON:
+				{
+					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
+					if(fig!=NULL){
+						this->botonera->agregarBoton(fig,((CreateFigureMessage*)msg)->getData2());
+						this->botonera->ScrollUp();
+					}
+				}
+				break;
+			case MSG_TYPE_SET_AREA:
+				{
+					SetAreaMessage* a_msg = (SetAreaMessage*)msg;
+					double x1,y1,x2,y2;
+					a_msg->getPuntos(&x1,&y1,&x2,&y2);
+					this->terreno->setMiPorcion(x1,y1,x2,y2);
 				}
 				break;
 			case MSG_TYPE_TRANSFORM_FIGURE:
@@ -470,6 +489,7 @@ while(SDL_PollEvent(&evento)){
 	}
 }
 
+	figurasAMover.unique();
 	for(std::list<Figura*>::iterator iter = figurasAMover.begin();iter!=figurasAMover.end();iter++){
 		TransformFigureMessage* t_msg = new TransformFigureMessage();
 		t_msg->setClientID(this->numCliente);
@@ -486,7 +506,6 @@ return aux;
 
 
 void JuegoCliente::quit(){
-	MaquinaEstados::putMensaje(-1,0,0,0);
 	maq->salir();
 }
 
@@ -515,7 +534,6 @@ void JuegoCliente::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDvent
 		case SDL_WINDOWEVENT_CLOSE:
 		{
 			//if (evento.windowID == ventana->getID())
-				MaquinaEstados::putMensaje(-1,0,0,0);
 				quit();
 
 			break;
@@ -718,7 +736,6 @@ void JuegoCliente::soltarFiguraEnAire(){
 		figurasEnAire[this->numCliente]->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 		terreno->agregarFigura( figurasEnAire[this->numCliente] );
 		
-		MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 		
 		
 
@@ -765,7 +782,6 @@ void JuegoCliente::set2Click(){
 			botonera->restaurarInstanciaActual();
 
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 			delete figurasEnAire[this->numCliente];
 			figurasEnAire[this->numCliente] = NULL;
@@ -779,14 +795,11 @@ void JuegoCliente::set2Click(){
 				linea->setFigura1(result);
 				linea->actualizar();
 
-				MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
-
 			}else{
 				if(linea->getFigura1() == result){
 					botonera->restaurarInstanciaActual();
 
 					vector[figurasEnAire[this->numCliente]->numero] = NULL;
-					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 					delete figurasEnAire[this->numCliente];
 					figurasEnAire[this->numCliente] = NULL;
@@ -797,13 +810,9 @@ void JuegoCliente::set2Click(){
 				}else{
 					linea->setFigura2(result);
 					
-					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
-					
 					linea->getFigura1()->atarCorrea();
 					linea->getFigura2()->atarCorrea();
 					terreno->agregarFigura( figurasEnAire[this->numCliente] );
-
-					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 					linea->actualizar();
 					figurasEnAire[this->numCliente] = NULL;
@@ -824,7 +833,6 @@ void JuegoCliente::set2Click(){
 			botonera->restaurarInstanciaActual();
 
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 			delete figurasEnAire[this->numCliente];
 			figurasEnAire[this->numCliente] = NULL;
@@ -837,8 +845,6 @@ void JuegoCliente::set2Click(){
 			if(!linea->primerPuntoPuesto()){
 				linea->setFigura1(result);
 
-				MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
-
 				((Soga*)linea)->setNumsPosAtable(res,0);
 				linea->actualizar();
 			}else{
@@ -846,7 +852,6 @@ void JuegoCliente::set2Click(){
 					botonera->restaurarInstanciaActual();			
 					
 					vector[figurasEnAire[this->numCliente]->numero] = NULL;
-					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 					
 					delete figurasEnAire[this->numCliente];
 					figurasEnAire[this->numCliente] = NULL;
@@ -857,15 +862,11 @@ void JuegoCliente::set2Click(){
 				}else{
 					linea->setFigura2(result);
 
-					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
-
 					((Soga*)linea)->setNumsPosAtable(((Soga*)linea)->num1,res);
 					linea->actualizar();
 					linea->getFigura1()->atarSoga(((Soga*)linea)->num1);
 					linea->getFigura2()->atarSoga(((Soga*)linea)->num2);
 					terreno->agregarFigura( figurasEnAire[this->numCliente] );
-	
-					MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 
 					figurasEnAire[this->numCliente] = NULL;
 				}
@@ -874,7 +875,6 @@ void JuegoCliente::set2Click(){
 	}else{
 			botonera->restaurarInstanciaActual();
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
-			MaquinaEstados::putMensaje(-1,figurasEnAire[this->numCliente]->numero,0,0);
 	}
 }
 

@@ -286,13 +286,11 @@ void TerrenoCliente::rotarFigura(double posClickX, double posClickY, double cant
 		double ang = calcularAngulo(figuraActiva->getDimension() , posClickX, posClickY, posClickX + cantMovX, posClickY + cantMovY);
 		
 		figuraActiva->setAngulo(ang);
-		MaquinaEstados::putMensaje(-1,figuraActiva->numero,ang,0);
 
 		//como ver si se superpone tarda demasiado lo hago solo cada x movimientos!
 		if (contEventosMov % 2 == 0){
 			//si choca va de rojo
 			figuraActiva->setSuperpuesta(this->posicionOcupada(figuraActiva));						
-			MaquinaEstados::putMensaje(-1,figuraActiva->numero,ang,0);
 		}
 
 		contEventosMov++;
@@ -328,7 +326,6 @@ void TerrenoCliente::arrastrarFigura(double posClickX,double posClickY,double ca
 	if (figuraActiva != NULL){
 
 		figuraActiva->cambiarPosicion(cantMovX, cantMovY);
-		MaquinaEstados::putMensaje(-10,figuraActiva->numero,cantMovX,cantMovY);
 
 		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
@@ -356,14 +353,12 @@ void TerrenoCliente::agrandarFigura()
 {
 	if (figuraActiva != NULL){
 		figuraActiva->agrandar();
-		MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
 
 		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
 		this->setCambio(true);
 		bool choca = this->posicionOcupada(figuraActiva);
 		figuraActiva->setSuperpuesta(choca);
-		if(choca) MaquinaEstados::putMensaje(-1,figuraActiva->numero,0,0);
 
 		TransformFigureMessage* t_msg = new TransformFigureMessage();
 		t_msg->setClientID(numCliente);
@@ -511,7 +506,6 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 				
 				eliminarFigura(*iter);
 				(*iter)->desUnir();
-				MaquinaEstados::putMensaje(-0,(*iter)->numero,0,0);
 				tiposBorradas.push_back((*iter)->getTipoFigura());
 
 				delete (*iter);
@@ -889,9 +883,6 @@ void TerrenoCliente::interactuar(double posClickX, double posClickY){
 	
 	if (this->adentroZonaTerreno(posClickX,posClickY)){
 		figAInteract = this->buscarFigura(posClickX,posClickY);
-		if(figAInteract != NULL){
-			MaquinaEstados::putMensaje(-1,figAInteract->numero,0,0);
-		}
 	}
 
 }

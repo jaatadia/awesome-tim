@@ -120,6 +120,7 @@ void JuegoPlayCliente::onLoop(){
 						}
 					}
 				}
+				break;
 			case MSG_TYPE_CLIENT_MESSAGE:
 				{
 					ClientMessage* c_msg = (ClientMessage*)  msg;
