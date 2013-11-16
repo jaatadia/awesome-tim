@@ -323,7 +323,7 @@ void TerrenoCliente::eliminarFigura(Figura* fig){
 	};
 }
 
-void TerrenoCliente::arrastrarFigura(double posClickX,double posClickY,double cantMovX,double cantMovY)
+void TerrenoCliente::arrastrarFigura(double posClickX,double posClickY,double cantMovX,double cantMovY,std::list<Figura*>* lista)
 {
 	if (figuraActiva != NULL){
 
@@ -347,13 +347,7 @@ void TerrenoCliente::arrastrarFigura(double posClickX,double posClickY,double ca
 
 		this->setCambio(true);
 		
-		TransformFigureMessage* t_msg = new TransformFigureMessage();
-		t_msg->setClientID(numCliente);
-		t_msg->setFigureID(figuraActiva->numero);
-		t_msg->setX(figuraActiva->getDimension()->getX());
-		t_msg->setY(figuraActiva->getDimension()->getY());
-		t_msg->setSizeChange(T_NONE);
-		this->maq->pushSendMessage(t_msg,this->numCliente);
+		lista->push_back(figuraActiva);
 	}
 }
 

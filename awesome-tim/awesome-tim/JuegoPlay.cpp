@@ -160,6 +160,7 @@ void JuegoPlay::onLoop(){
 		std::list<Figura*> figs = terreno->getListaFigs();
 		std::list<Figura*>::iterator iter; 
 		for(iter = figs.begin();iter!=figs.end();iter++){
+			if((*iter)->esUnion()) continue;
 			TransformFigureMessage* t_msg = new TransformFigureMessage();
 			t_msg->setClientID(0);
 			t_msg->setFigureID((*iter)->numero);

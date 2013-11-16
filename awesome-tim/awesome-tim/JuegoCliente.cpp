@@ -225,6 +225,8 @@ SDL_Event evento;
 double posClickX, posClickY;
 bool aux = false;
 
+std::list<Figura*> figurasAMover;
+
 while(SDL_PollEvent(&evento)){
 	switch(evento.type){
 		case SDL_WINDOWEVENT:
@@ -294,7 +296,7 @@ while(SDL_PollEvent(&evento)){
 
 			if (terreno->adentroZonaTerreno(posClickX,posClickY))
 				if (evento.motion.state == SDL_BUTTON_LMASK){
-					terreno->arrastrarFigura(posClickX - X_TERRENO_LOGICO, posClickY - Y_TERRENO_LOGICO, cantMovX, cantMovY);
+					terreno->arrastrarFigura(posClickX - X_TERRENO_LOGICO, posClickY - Y_TERRENO_LOGICO, cantMovX, cantMovY,&figurasAMover);
 				}else
 					if (evento.motion.state == SDL_BUTTON_RMASK){
 						terreno->rotarFigura(posClickX - X_TERRENO_LOGICO, posClickY - Y_TERRENO_LOGICO, cantMovX, cantMovY);
@@ -322,15 +324,7 @@ while(SDL_PollEvent(&evento)){
 					//y vuelvo para atras
 					figurasEnAire[this->numCliente]->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
 
-					TransformFigureMessage* t_msg = new TransformFigureMessage();
-					t_msg->setClientID(this->numCliente);
-					t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
-					t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
-					t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
-					t_msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
-					t_msg->setSizeChange(T_NONE);
-
-					this->maq->pushSendMessage(t_msg,numCliente);
+					figurasAMover.push_back(figurasEnAire[this->numCliente]);
 
 				}
 						
@@ -475,6 +469,18 @@ while(SDL_PollEvent(&evento)){
 		}
 	}
 }
+
+	for(std::list<Figura*>::iterator iter = figurasAMover.begin();iter!=figurasAMover.end();iter++){
+		TransformFigureMessage* t_msg = new TransformFigureMessage();
+		t_msg->setClientID(this->numCliente);
+		t_msg->setFigureID((*iter)->numero);
+		t_msg->setX((*iter)->getDimension()->getX());
+		t_msg->setY((*iter)->getDimension()->getY());
+		t_msg->setSizeChange(T_NONE);
+		this->maq->pushSendMessage(t_msg,numCliente);
+	}
+
+
 return aux;
 }
 

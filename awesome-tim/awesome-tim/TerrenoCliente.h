@@ -57,7 +57,7 @@ public:
 
 
 	void rotarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
-	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY);
+	void arrastrarFigura(double posClickX, double posClickY, double cantMovX, double cantMovY,std::list<Figura*>* lista);
 	//devuelve un vector con los tipos de las figuras borradas.
 	std::vector<int> borrarFigura(double posClickX, double posClickY,Figura* vec[]);
 
