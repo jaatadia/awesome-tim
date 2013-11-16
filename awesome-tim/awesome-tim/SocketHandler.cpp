@@ -85,6 +85,12 @@ void SocketHandler::run()
 									case MSG_TYPE_TRANSFORM_FIGURE:
 										msg = new TransformFigureMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_CREATE_BUTTON:
+										msg = new CreateButtonMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_SET_AREA:
+										msg = new SetAreaMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg->validate())

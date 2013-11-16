@@ -24,15 +24,18 @@ void MaquinaEstados::pushSendMessage(Message * msg, int id){
 Message * MaquinaEstados::getSendMessage(int id)
 {
 	if(id==-1) return NULL;
-
-	Lock lock(this->_mutex);
-	Message * msg = NULL;
-	if(!this->aEnviar[id].empty())
-	{
-		msg = (Message *) this->aEnviar[id].front();
-		this->aEnviar[id].pop_front();
+	try{
+		Lock lock(this->_mutex);
+		Message * msg = NULL;
+		if(!this->aEnviar[id].empty())
+		{
+			msg = (Message *) this->aEnviar[id].front();
+			this->aEnviar[id].pop_front();
+		}
+		return msg;
+	}catch(...){
+		return NULL;
 	}
-	return msg;
 }
 
 Message * MaquinaEstados::getProcessMessage()
@@ -85,10 +88,6 @@ void MaquinaEstados::pushProcessMessage(Message * msg)
 void MaquinaEstados::returnProcessMessage(Message * msg){
 	Lock lock(this->_mutex);
 	this->aProcesar.push_front(msg);
-}
-
-void MaquinaEstados::putMensaje(int tipo, int nroFigura, int data1, int data2){
-	std::cout<<"Tipo: "<<tipo<<" Cliente Nro: "<<-1<<" Numero Fig: "<<nroFigura<<" Data: "<<data1<<data2<<"\n";
 }
 
 void MaquinaEstados::setId(int id)

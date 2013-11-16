@@ -10,7 +10,8 @@
 
 #include "ClientMessage.h"
 #include "TransformFigureMessage.h"
-
+#include "SetAreaMessage.h"
+#include "CreateButtonMessage.h"
 
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
@@ -18,6 +19,13 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	posVector = 0;
 	for(int i = 0;i<LARGO;i++){
 		vector[i] = NULL;
+	}
+
+	for(int i=0;i<=MAX_CLIENTES;i++){
+		areas[i][0] = i*10;
+		areas[i][1] = i*10;
+		areas[i][2] = (i+1)*10;
+		areas[i][3] = (i+1)*10;
 	}
 
 	this->maq = maq;
@@ -69,10 +77,10 @@ std::string Juego::cargar(){
 		botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
 	}
 
-	if(botonera->estaVacia()){
-		botonera->agregarBotonesDefault();
-		botonera->resizear();
-	}
+	//if(botonera->estaVacia()){
+	//	botonera->agregarBotonesDefault();
+	//	botonera->resizear();
+	//}
 	//necesario para que se ordenen cosas dentro de botonera
 	
 	return objetivo;
@@ -183,6 +191,7 @@ void Juego:: onLoop(){
 						case A_CONNECT:
 							{
 								this->myClients.push_back(c_msg->getClientID());
+								//mando las figuras del terreno
 								std::list<Figura*> lista = terreno->getListaFigs();
 								for (std::list<Figura*>::iterator iter = lista.begin(); iter != lista.end();iter++){
 									CreateFigureMessage* f_msg = new CreateFigureMessage();
@@ -199,10 +208,32 @@ void Juego:: onLoop(){
 									f_msg->setData2(data2);
 
 									this->maq->pushSendMessage(f_msg,c_msg->getClientID());
-									std::cout<<"eniando una figura a cliente n: "<<c_msg->getClientID()<< "\n";
 								}
-								//mandar tambien los botones
+								
+								//mando los botones
+								std::list<struct boton>::iterator iter;
+								for (iter = this->botoneras[c_msg->getClientID()].begin();iter!=this->botoneras[c_msg->getClientID()].end();iter++){
+									CreateButtonMessage* b_msg = new CreateButtonMessage();
+									b_msg->setId(0);
+									b_msg->setFigureID((*iter).figura->numero);
+									b_msg->setFigureType((*iter).figura->getTipoFigura());
+									b_msg->setX((*iter).figura->getDimension()->getX());
+									b_msg->setY((*iter).figura->getDimension()->getY());
+									b_msg->setAngle((*iter).figura->getDimension()->getAngulo());
+									b_msg->setInAir(false);
+									double data1,data2;
+									(*iter).figura->getExtraData(&data1,&data2);
+									b_msg->setData1(data1);
+									b_msg->setData2((*iter).cantInstancias);
+
+									this->maq->pushSendMessage(b_msg,c_msg->getClientID());
+								}
+								
 								//mandar tambien el area
+
+								SetAreaMessage* a_msg = new SetAreaMessage();
+								a_msg->setPuntos(this->areas[c_msg->getClientID()][0],this->areas[c_msg->getClientID()][1],this->areas[c_msg->getClientID()][2],this->areas[c_msg->getClientID()][3]);
+								this->maq->pushSendMessage(a_msg,c_msg->getClientID());
 								delete msg;
 							}
 							break;
