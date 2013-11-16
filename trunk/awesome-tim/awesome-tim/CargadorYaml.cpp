@@ -1235,17 +1235,17 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 		const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga una sola botonera, con botones por defecto.",e.what());
-		cargarBotonesDefault(botoneras[0]);
+		cargarBotonesDefault(botoneras[1]);
 		return;
 	}catch(YAML::BadDereference &e){
 		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga una sola botonera, con botones por defecto.",e.what());
-		cargarBotonesDefault(botoneras[0]);
+		cargarBotonesDefault(botoneras[1]);
 		return;
 	}
 
 	const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
 	
-	for(unsigned i=0;i<listaClientes.size();i++) {
+	for(unsigned i=1;i<listaClientes.size();i++) {
 		try{
 			const YAML::Node& listaFiguras = listaClientes[i]["lista_figuras"];
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -1262,6 +1262,7 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 
 		cargar_botones_de_cliente(listaFiguras,botoneras[i]);
 	}
+
 
 }
 
