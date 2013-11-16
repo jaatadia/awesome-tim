@@ -45,9 +45,12 @@ public:
 
 	void procesarMensaje(MessageFigura* msj);
 
+	void sendUnready();
+
 private:
 	void actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);
 
 	void actualizarVictoria();
 	void dibujarVictoria(Superficie* sup);
+
 };

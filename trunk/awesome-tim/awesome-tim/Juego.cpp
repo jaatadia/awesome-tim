@@ -48,7 +48,7 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 
 std::string Juego::cargar(){
 
-	cant_jugadores = 4;
+	cant_jugadores = 2;
 	std::string objetivo = CargadorYaml::cargarJuego(fileIn,terreno,&cant_jugadores,botoneras,areas);
 	this->maq->setMaxClients(cant_jugadores);
 
@@ -203,16 +203,44 @@ void Juego:: onLoop(){
 								}
 								//mandar tambien los botones
 								//mandar tambien el area
+								delete msg;
 							}
 							break;
 						case A_DISCONECT:
 							{
+								if(this->jugadoresListos.size()==this->cant_jugadores){
+									this->maq->pushSendMessage(c_msg);
+								}
 								this->maq->removeClient(c_msg->getClientID());
 								this->myClients.remove(c_msg->getClientID());
+								try{
+									this->jugadoresListos.remove(c_msg->getClientID());
+								}catch(...){
+								}
 							}
 							break;
+						case A_READY:
+							{
+								this->jugadoresListos.push_back(c_msg->getClientID());
+								this->jugadoresListos.unique();
+								if(jugadoresListos.size()==this->cant_jugadores){
+									continuar = false;
+									this->maq->pushSendMessage(c_msg);
+									this->play();
+								}
+							}
+							break;
+						case A_UNREADY:
+							{
+								if(this->jugadoresListos.size()==this->cant_jugadores){
+									this->maq->pushSendMessage(c_msg);
+								}
+								try{
+									this->jugadoresListos.remove(c_msg->getClientID());
+								}catch(...){
+								}
+							}
 					}
-					delete c_msg;
 				}
 				break;
 			/* ++++++++++++++++++++++++++++++++++++++++++++++++*/

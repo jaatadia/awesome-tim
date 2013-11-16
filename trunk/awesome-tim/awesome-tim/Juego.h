@@ -43,7 +43,7 @@ private:
 	std::list<int> myClients;
 
 	int cant_jugadores;
-	int jugadoresListos;
+	std::list<int> jugadoresListos;
 	std::list<struct boton> botoneras[MAX_CLIENTES+1];
 	double areas[MAX_CLIENTES+1][4];
 

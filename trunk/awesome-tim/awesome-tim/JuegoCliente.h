@@ -64,6 +64,9 @@ public:
 
 	void resume();
 
+	void sendReady();
+	void sendUnready();
+
 private:
 	bool posEnTerreno(double posX,double posY);
 	bool posEnBotonera(double posX,double posY);
@@ -78,5 +81,6 @@ private:
 	void set2Click();
 	void procesarActualizaciones();
 	void procesarMensaje(MessageFigura* msj);
+
 
 };

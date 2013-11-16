@@ -105,8 +105,7 @@ void ComandosPlayCliente::resizear(){
 
 void ComandosPlayCliente::release(double x, double y,bool* flag,JuegoPlayCliente* juego){
 	if(in(X_B_STOP,Y_B_STOP,ANCHO_B_STOP,ALTO_B_STOP,x,y)&&botonStopActivo){
-		juego->quit();
-		*flag = true;
+		juego->sendUnready();
 	}
 
 	botonStopActivo = false;

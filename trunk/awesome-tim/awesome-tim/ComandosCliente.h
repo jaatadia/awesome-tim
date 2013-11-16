@@ -17,6 +17,7 @@ private:
 	int anchoOrig,altoOrig;
 	int ancho,alto;
 	Superficie* sup;
+	bool ready;
 	
 	Imagen* BotonOKOrigApretado;
 	Imagen* BotonSaveOrigApretado;
