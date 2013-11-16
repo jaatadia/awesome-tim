@@ -330,8 +330,11 @@
 
 #define ID_HUEVO "../images/egg.png"
 #define ID_HUEVO_ROMPIENDO1 "../images/crackedegg.png"
-#define ID_HUEVO_ROMPIENDO2 "../images/brokenegg.png"
-#define ID_HUEVO_ROMPIENDO3 "../images/brokeneggtransparente.png"
+#define ID_HUEVO_ROMPIENDO2 "../images/crackedegg2.png"
+#define ID_HUEVO_ROMPIENDO3 "../images/crackedegg3.png"
+#define ID_HUEVO_ROMPIENDO4 "../images/crackedegg4.png"
+#define ID_HUEVO_ROMPIENDO5 "../images/crackedegg5.png"
+#define ID_HUEVO_ROMPIENDO6 "../images/crackedegg6.png"
 
 #define ID_DOMINO "../images/domino.png"
 #define ID_FICHA_DOMINO "../images/fichaDomino.png"

@@ -48,20 +48,32 @@ public:
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);
 			}
-
-			if(contador == (FPS/4)){
+			if(contador == (FPS/7)){
 				this->ID = ID_HUEVO_ROMPIENDO2; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-
-			if(contador == (FPS/2)){
+			if(contador == (2*FPS/7)){
 				this->ID = ID_HUEVO_ROMPIENDO3; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-
-			if(contador == (FPS*3/4)){
+			if(contador == (3*FPS/7)){
+				this->ID = ID_HUEVO_ROMPIENDO4; 
+				delete (this->myVista);
+				this->myVista = new VistaFigura(this);			
+			}
+			if(contador == (4*FPS/7)){
+				this->ID = ID_HUEVO_ROMPIENDO5; 
+				delete (this->myVista);
+				this->myVista = new VistaFigura(this);			
+			}
+			if(contador == (5*FPS/7)){
+				this->ID = ID_HUEVO_ROMPIENDO6; 
+				delete (this->myVista);
+				this->myVista = new VistaFigura(this);			
+			}
+			if(contador == (6*FPS/7)){
 				this->marcar(true);
 			}
 		}
