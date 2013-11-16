@@ -240,7 +240,11 @@ void Juego:: onLoop(){
 						case A_DISCONECT:
 							{
 								if(this->jugadoresListos.size()==this->cant_jugadores){
-									this->maq->pushSendMessage(c_msg);
+									for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
+										if((*iter)!=((ClientMessage*)msg)->getClientID()){
+											this->maq->pushSendMessage(msg,(*iter));
+										}
+									}
 								}
 								this->maq->removeClient(c_msg->getClientID());
 								this->myClients.remove(c_msg->getClientID());

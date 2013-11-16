@@ -70,20 +70,22 @@ void ClientHandler::run()
 				else // EVENTOS DE JUEGO
 				{
 					Message * msg = this->game->getSendMessage(this->id);
-					if(msg)
+					while(msg)
 					{
 						//this->pushOutputMessage(msg);
 						s_handler->pushOutputMessage(msg);
+						msg = this->game->getSendMessage(this->id);
 					}
 				}
 				break;
 			case READ_MODE:
 				Message * msg = this->getInputMessage();
-				if(msg)
+				while(msg)
 				{
 					this->game->pushProcessMessage(msg);
+					msg = this->getInputMessage();
 				}
 		}
-		this->_thread.sleep(100);
+		this->_thread.sleep(200);
 	}
 }

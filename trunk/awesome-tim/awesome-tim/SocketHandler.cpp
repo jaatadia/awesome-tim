@@ -1,14 +1,17 @@
 #include "SocketHandler.h"
+#include "MEstadosCliente.h"
 
 SocketHandler::SocketHandler(void)
 {
 	this->msgRemainder = "";
 }
 
-SocketHandler::SocketHandler(Socket * socket, int mode,MessageHandler* m_handler) : _socket(socket), ConnectionManager(mode)
+SocketHandler::SocketHandler(Socket * socket, int mode,MessageHandler* m_handler,MaquinaEstados* maq,int id) : _socket(socket), ConnectionManager(mode)
 {
 	this->m_handler = m_handler;
 	this->msgRemainder = "";
+	this->maq = maq;
+	this->id = id;
 }
 
 SocketHandler::~SocketHandler(void)
@@ -75,6 +78,9 @@ void SocketHandler::run()
 										break;
 									case MSG_TYPE_ID:
 										msg = new IdMessage(cadena.substr(npos+1));
+										this->id = ((IdMessage*)msg)->getId();
+										maq->setId(this->id);
+										((MEstadosCliente*)maq)->init(id);
 										break;
 									case MSG_TYPE_CREATE_FIGURE:
 										msg = new CreateFigureMessage(cadena.substr(npos+1));
@@ -96,7 +102,8 @@ void SocketHandler::run()
 								if (msg->validate())
 								{
 									//this->pushInputMessage(msg);
-									m_handler->pushInputMessage(msg);
+									//m_handler->pushInputMessage(msg);
+									this->maq->pushProcessMessage(msg);;
 								}
 								else
 								{
@@ -109,7 +116,12 @@ void SocketHandler::run()
 					break;
 				}
 			case WRITE_MODE:
-				Message * msg = this->getOutputMessage();
+				//Message * msg = this->getOutputMessage();
+				while(this->id<0){
+					this->id = this->maq->getId();
+					this->_thread.sleep(1000);
+				}
+				Message * msg = this->maq->getSendMessage(this->id);
 				while(msg!=NULL){
 					try
 					{
@@ -120,7 +132,8 @@ void SocketHandler::run()
 						this->kill();
 						break;
 					}
-					msg = this->getOutputMessage();
+					//msg = this->getOutputMessage();
+					msg = this->maq->getSendMessage(this->id);
 				}
 				this->_thread.sleep(100);
 				break;
