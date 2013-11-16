@@ -1108,7 +1108,7 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 	return figura;
 }
 
-void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno,double areas[][4]){
+void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno,double areas[][4],int cant_jugadores){
 
 	//Cargo el fondo del terreno
 	std::string img;
@@ -1165,10 +1165,29 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 
 	const YAML::Node& listaClientes = nodoTerreno["lista_clientes"];
 
-	for(unsigned i=0;i<listaClientes.size();i++) {
-		agregarZonasClientes(listaClientes[i]["terreno_cliente"],areas,i+1); //porque 0 es del server	
+	for(unsigned i=1;i<listaClientes.size() && i<=cant_jugadores;i++) {
+		agregarZonasClientes(listaClientes[i]["terreno_cliente"],areas,i);	
 	}
 
+	if(listaClientes.size() == cant_jugadores) return;
+	if(listaClientes.size() > cant_jugadores){
+		imprimir_error_sin_linea("La cantidad de zonas definidas supera a la cantidad de jugadores. Solo se puede tener un area por jugador. Las areas extras seran ignoradas.");
+		return;
+	}
+
+	imprimir_error_sin_linea("La cantidad de zonas definidas es menor a la cantidad de jugadores. Las faltantes son cargadas como zonas default.");
+
+	double xIzqDef = 0;
+	double yIzqDef = 0;
+	double xDerDef = ANCHO_TERRENO_LOGICO;
+	double yDerDef = ALTO_TERRENO_LOGICO;
+
+	for(int i=listaClientes.size(); i<cant_jugadores; i++){
+		areas[i][0] = xIzqDef;
+		areas[i][1] = yIzqDef;
+		areas[i][2] = xDerDef;
+		areas[i][3] = yDerDef;
+	}
 }
 
 void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, std::list<struct boton> botonera){
@@ -1229,7 +1248,7 @@ void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, std
 
 }
 
-void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<struct boton> botoneras[]){
+void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<struct boton> botoneras[],int cant_jugadores){
 
 	try{
 		const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
@@ -1245,7 +1264,7 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 
 	const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
 	
-	for(unsigned i=1;i<listaClientes.size();i++) {
+	for(unsigned i=1;i<listaClientes.size() && i<=cant_jugadores ;i++) {
 		try{
 			const YAML::Node& listaFiguras = listaClientes[i]["lista_figuras"];
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
@@ -1263,6 +1282,17 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 		cargar_botones_de_cliente(listaFiguras,botoneras[i]);
 	}
 
+	if(listaClientes.size() == cant_jugadores) return;
+
+	if(listaClientes.size() > cant_jugadores){
+		imprimir_error_sin_linea("La cantidad de Botoneras supera a la cantidad de Jugadores. Las botoneras extras no seran cargadas.");
+		return;
+	}
+
+	imprimir_error_sin_linea("La cantidad de Botoneras es menor a la cantidad de Jugadores. Las botoneras faltantes se cargan como botoneras default.");
+	for(unsigned i=listaClientes.size();i<cant_jugadores ;i++){
+		cargarBotonesDefault(botoneras[i]);
+	}
 
 }
 
@@ -1398,11 +1428,12 @@ std::string CargadorYaml::cargarJuego(const char* file,Terreno* terreno, int* ca
 
 	const YAML::Node& nodoTerreno = nodoRaiz["terreno"];
 
+	int cant_jug = *cant_jugadores + 1; //Porque el server es el 0
 	//Cargo la botonera	
-	cargar_botones(nodoBotonera,botoneras);
+	cargar_botones(nodoBotonera,botoneras,cant_jug);
 
 	//Cargo el terreno
-	cargar_terreno(nodoTerreno,terreno,areas);
+	cargar_terreno(nodoTerreno,terreno,areas,cant_jug);
 
 	mi_archivo.close();
 
