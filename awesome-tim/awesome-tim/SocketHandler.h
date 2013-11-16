@@ -17,11 +17,12 @@
 #include "SocketException.h"
 #include <stdlib.h>
 #include "MessageHandler.h"
+#include "MaquinaEstados.h"
 
 class SocketHandler : public ConnectionManager
 {
 public:
-	SocketHandler(Socket * s, int mode,MessageHandler* m_handler);
+	SocketHandler(Socket * s, int mode,MessageHandler* m_handler,MaquinaEstados* maq,int id);
 	virtual ~SocketHandler(void);
 
 private:
@@ -29,6 +30,8 @@ private:
 	Socket * _socket;
 	string msgRemainder;
 	MessageHandler* m_handler;
+	MaquinaEstados* maq;
+	int id;
 
 protected:
 	virtual void initThread();

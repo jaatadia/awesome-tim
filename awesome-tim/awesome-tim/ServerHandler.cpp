@@ -28,10 +28,11 @@ void ServerHandler::run()
 					if(this->id != -1)
 					{
 						Message * msg = this->game->getSendMessage(this->id);
-						if (msg)
+						while (msg)
 						{
 							//this->pushOutputMessage(msg);
 							s_handler->pushOutputMessage(msg);
+							msg = this->game->getSendMessage(this->id);
 						}
 					}
 					else if (this->game->getId() >= 0)
@@ -42,7 +43,7 @@ void ServerHandler::run()
 				}
 			case READ_MODE:
 				Message * mensaje = this->getInputMessage();
-				if(mensaje)
+				while(mensaje)
 				{
 					if(mensaje->getType() == MSG_TYPE_ID)
 					{
@@ -66,8 +67,9 @@ void ServerHandler::run()
 					{
 						this->game->pushProcessMessage(mensaje);
 					}
+					mensaje = this->getInputMessage();
 				}
 		}
-		this->_thread.sleep(100);
+		this->_thread.sleep(200);
 	}
 }

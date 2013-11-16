@@ -1,5 +1,6 @@
 #include "Server.h"
 #include "ClientMessage.h"
+#include "IdMessage.h"
 
 Server::Server(MaquinaEstados * juego)
 {
@@ -38,7 +39,15 @@ void Server::run()
 			}else{
 				CommunicationManager* com = new CommunicationManager(sok, this->juego, true, prox);
 				this->commMgrLst.push_back(com);
+				IdMessage* i_msg = new IdMessage();
+				i_msg->setId(prox);
+				this->juego->pushSendMessage(i_msg,prox);
+				ClientMessage* c_msg = new ClientMessage();
+				c_msg->setAction(A_CONNECT);
+				c_msg->setClientID(prox);
+				this->juego->pushProcessMessage(c_msg);
 				this->juego->addClient(prox);
+				
 			}
 			commMgrLst.remove_if(isDead);
 		}

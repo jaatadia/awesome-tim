@@ -20,8 +20,8 @@ public:
 private:
 	bool server;
 	int ID;
-	MessageHandler * messageReader;
-	MessageHandler * messageWriter;
+	//MessageHandler * messageReader;
+	//MessageHandler * messageWriter;
 	SocketHandler * socketReader;
 	SocketHandler * socketWriter;
 	MaquinaEstados * game;
