@@ -1,13 +1,11 @@
 #include "FiguraSensor.h"
 
-FiguraSensor::FiguraSensor(double ancho,double alto,double posX,double posY,double angulo):Figura("",new Cuadrado(ancho,alto,posX,posY,angulo),false){
+FiguraSensor::FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,std::list<Figura*> figuras):Figura("",new Cuadrado(ancho,alto,posX,posY,angulo),false){
+
+	figurasInteractuar = figuras;
 }
 
 FiguraSensor::~FiguraSensor(void){
-
-	for (std::list<Figura*>::iterator iter = (this->figurasInteractuar).begin();iter != (this->figurasInteractuar).end();iter++){
-		delete (*iter);
-	}
 }
 bool FiguraSensor::intersecaCon(double X1, double Y1, double X2, double Y2){
 	return false;
@@ -23,4 +21,26 @@ int FiguraSensor::getTipoFigura(){
 }
 int FiguraSensor::getTipoDimension(){
 	return CUADRADO;
-};
+}
+void FiguraSensor::dibujar(Superficie* super){
+}
+Figura* FiguraSensor::clonar(){
+	Dimension* dim = this->getDimension();
+	return new FiguraSensor(dim->getAncho(),dim->getAlto(),dim->getX(),dim->getY(),dim->getAngulo(),this->figurasInteractuar);
+}
+void FiguraSensor::accionarMotor(){
+
+	for (std::list<Figura*>::iterator iter = figurasInteractuar.begin();iter != figurasInteractuar.end();iter++){
+		if ((*iter)->getTipoFigura() == MOTOR_RATON){
+			((MotorRaton*)(*iter))->ActivarMotor();
+		}
+	}
+}
+void FiguraSensor::cumplirObjetivo(Figura* fig){
+
+	for (std::list<Figura*>::iterator iter = figurasInteractuar.begin();iter != figurasInteractuar.end();iter++){
+		if ((*iter) == fig){
+			(*iter)->hacerObjetivo();
+		}
+	}
+}
