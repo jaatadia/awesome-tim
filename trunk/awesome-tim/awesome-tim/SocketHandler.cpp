@@ -37,7 +37,6 @@ void SocketHandler::run()
 					try
 					{
 						cadena = this->_socket->read();
-						std::cout<<cadena<<"\n";
 					} catch (SocketException &sE)
 					{
 						cout << sE.what() << endl;
@@ -103,20 +102,20 @@ void SocketHandler::run()
 				}
 			case WRITE_MODE:
 				Message * msg = this->getOutputMessage();
-				if(msg)
-				{
+				while(msg!=NULL){
 					try
 					{
 						this->_socket->write(msg->serialize());
-						std::cout<<msg->serialize()<<"\n";
 					} catch (SocketException &sE)
 					{
 						cout << sE.what() << endl;
 						this->kill();
+						break;
 					}
+					msg = this->getOutputMessage();
 				}
+				this->_thread.sleep(100);
 				break;
 		}
-		this->_thread.sleep(100);
 	}
 }
