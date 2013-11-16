@@ -55,8 +55,6 @@
 class CargadorYaml{
 public:
 	
-	static std::string cargarJuego(const char* file,BotoneraController* botonera,Terreno* terreno, int* cant_jugadores);
-
 	//botoneras y areas tienen 5 espacios en el array, para la botoneras del cliente 1 se deveria guardar en botonera[1] (si quieren la botonera del server y el area del server se puede guardar en el 0)
 	//areas contiene las limitaciones de los terrenos de la misma manera que el anterior
 	//areas[i][0] = x1; //del cliente nro i
@@ -68,13 +66,14 @@ public:
 private:
 
 	static std::string ruta_archivo;
-
-	static void cargar_botones(const YAML::Node& nodoBotonera, BotoneraController* botonera);
-	static void cargar_botones_de_cliente(const YAML::Node& listaFiguras, BotoneraController* botonera);
-	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno);
+	
+	static void cargarBotonesDefault(std::list<struct boton> botonera);
+	static void cargar_botones(const YAML::Node& nodoBotonera, std::list<struct boton> botoneras[]);
+	static void cargar_botones_de_cliente(const YAML::Node& listaFiguras, std::list<struct boton> botonera);
+	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno,double areas[][4]);
 	static Figura* cargar_figura(const YAML::Node& nodoFig);
 	static Figura* crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura);
-	static void agregarZonasClientes(const YAML::Node& nodoTerrenoCliente,Terreno* terreno);
+	static void agregarZonasClientes(const YAML::Node& nodoTerrenoCliente,double areas[][4], int i);
 
 	//Funciones de validacion de datos
 	static bool cant_instancias_valida(int instancias);
