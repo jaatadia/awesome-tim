@@ -51,7 +51,7 @@ void CommunicationManager::run()
 		//{
 		//	this->messageReader->pushInputMessage(msg);
 		//}
-		this->_thread.sleep(100);
+		this->_thread.sleep(5000);
 
 		
 		if((socketWriter->getActiveState())||(socketReader->getActiveState())){
