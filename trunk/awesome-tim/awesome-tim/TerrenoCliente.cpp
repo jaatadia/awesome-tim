@@ -19,8 +19,8 @@ TerrenoCliente::TerrenoCliente(int ancho,int alto,MaquinaEstados* maq,int numCli
 	
 	x1 = 0;
 	y1 = 0;
-	x2 = ancho;
-	y2 = alto;
+	x2 = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(ancho);
+	y2 = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
 
 	ex1 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x1);
 	ex2 = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(x2);

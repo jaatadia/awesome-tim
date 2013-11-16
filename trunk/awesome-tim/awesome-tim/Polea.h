@@ -16,11 +16,15 @@ protected:
 	bool atadoIzq,atadoDer;
 	Polea(const char* id,Dimension* dim,bool flag):Figura(id,dim){
 		atadoIzq = atadoDer = false;
+		sogaDer = sogaIzq = NULL;
+		joint = NULL;
 	};
 
 public:
 	Polea(double pos_X,double pos_Y,double angulo = 0):Figura(ID_POLEA,new Circulo(RADIO_POLEA,pos_X,pos_Y,angulo)){
 		atadoIzq = atadoDer = false;
+		sogaDer = sogaIzq = NULL;
+		joint = NULL;
 	};
 	~Polea(void){};
 
@@ -61,6 +65,7 @@ public:
 			atadoDer = true;
 		}
 	};
+
 	virtual void desatarSoga(int numero){
 		if(numero == 1){
 			atadoIzq = false;
@@ -73,6 +78,12 @@ public:
 	virtual Figura* getDer(Polea* poleaPadre);
 	virtual Polea* getPolIzq(Polea* poleaPadre,int* num);
 	virtual Polea* getPolDer(Polea* poleaPadre,int* num);
+
+	virtual Soga* getSogaIzq(){return this->sogaIzq;};
+	virtual Soga* getSogaDer(){return this->sogaDer;};
+
 	virtual void marcarSogas(bool flag,Polea* padre = NULL);
 	virtual void setJoint(b2Joint* joint,Polea* padre = NULL);
+
+	virtual bool esPolea(){return true;};
 };
