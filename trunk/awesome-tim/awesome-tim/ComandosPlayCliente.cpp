@@ -18,7 +18,7 @@ ComandosPlayCliente::ComandosPlayCliente(int ancho,int alto){
 
 	ANCHO_B_STOP = anchoTemp/8;
 	ALTO_B_STOP = altoTemp -2*SEPY;
-	X_B_STOP = anchoTemp - (ANCHO_B_STOP*3+3*SEPX);
+	X_B_STOP = anchoTemp - (ANCHO_B_STOP*3 + 3*SEPX - 75); //X_B_STOP = anchoTemp - (ANCHO_B_STOP*3+3*SEPX);
 	Y_B_STOP = SEPY;
 
 	BotonStopOrigApretado = new Imagen("../images/botonStopApretado.png");
@@ -91,7 +91,7 @@ void ComandosPlayCliente::resizear(){
 
 	ANCHO_B_STOP = anchoTemp/8;
 	ALTO_B_STOP = altoTemp -2*SEPY;
-	X_B_STOP = anchoTemp - (ANCHO_B_STOP*3+3*SEPX);
+	X_B_STOP = anchoTemp - (ANCHO_B_STOP*3+3*SEPX -75); //X_B_STOP = anchoTemp - (ANCHO_B_STOP*3+3*SEPX);
 	Y_B_STOP = SEPY;
 
 	delete BotonStopApretado;
