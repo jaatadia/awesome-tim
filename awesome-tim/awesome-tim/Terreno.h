@@ -8,6 +8,7 @@
 #include "Box2DWorld.h"
 #include "Linea.h"
 #include "Soga.h"
+#include "Polea.h"
 #include <string>
 #include <list>
 #include <vector>
@@ -28,6 +29,7 @@ private:
 	Imagen* fondo;
 	Superficie* sup;
 	std::list<Figura*> figuras;
+	std::list<Soga*> sogasExtra; //sogas para dibujar bien las poleas
 	std::list<Figura*> objetivos;//copias de los punteros a las figuras que son objetivos
 
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
@@ -94,6 +96,7 @@ private:
 	bool hayFiguras();
 	Figura* buscarFigura(double posClickX, double posClickY);
 	void corregirPosicion(Figura* fig);
+
 	void redraw();
 
 	double calcularAngulo(Dimension* dim,double XVector1,double YVector1,double XVector2,double YVector2);
@@ -103,4 +106,7 @@ private:
 	bool posEnTerrenoExtendido(double posX,double posY);
 
 	void borrarAtadura(Figura* fig,std::list<Figura*>* lista);
+	//corrije la posicion de las sogas en las poleas para que se dibujen "alrededor" 
+	//y no por el centro
+	void arreglarPosicionSogas();
 };

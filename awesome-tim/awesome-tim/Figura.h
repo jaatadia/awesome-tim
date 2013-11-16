@@ -88,6 +88,8 @@ public:
 	virtual void shift(){};//cambia los modos de la figura
 	virtual bool rotable(){return false;} //devuelve si la figura es rotable
 	virtual bool esUnion(){return false;}//devuelve si la figura se trata de una union entre fig1 y fig2
+	virtual bool esPolea(){return false;}
+
 	virtual void desUnir(){};
 
 	virtual void setFigura1(Figura* fig){this->fig1 = fig;};
