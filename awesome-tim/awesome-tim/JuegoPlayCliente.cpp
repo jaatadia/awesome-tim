@@ -122,6 +122,16 @@ void JuegoPlayCliente::onLoop(){
 				}
 			case MSG_TYPE_CLIENT_MESSAGE:
 				{
+					ClientMessage* c_msg = (ClientMessage*)  msg;
+					switch(c_msg->getAction()){
+						case A_DISCONECT:
+						case A_UNREADY:
+							{
+								continuar = false;
+								this->quit();
+							}
+							break;
+					}
 				}
 				break;
 		}
@@ -243,4 +253,11 @@ void JuegoPlayCliente::actualizarVictoria(){
 
 void JuegoPlayCliente::dibujarVictoria(Superficie* sup){
 	sup->dibujarImagen(imgGano,NULL,0,0);
+}
+
+void JuegoPlayCliente::sendUnready(){
+	ClientMessage* c_msg = new ClientMessage();
+	c_msg->setClientID(this->numCliente);
+	c_msg->setAction(A_UNREADY);
+	this->maq->pushSendMessage(c_msg);
 }

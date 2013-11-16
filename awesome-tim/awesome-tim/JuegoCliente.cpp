@@ -8,6 +8,7 @@
 #include <vector>
 #include "FactoryFiguras.h"
 #include "TransformFigureMessage.h"
+#include "ClientMessage.h"
 
 //Definicion de constantes que no se que son: Jenny :P
 #define MSG_SUBTYPE_MOVEMENT 0
@@ -120,6 +121,19 @@ void JuegoCliente:: onLoop(){
 	Message * msg = this->maq->getProcessMessage();
 	while((continuar)&&(msg!=NULL)){
 		switch (msg->getType()){
+			case MSG_TYPE_CLIENT_MESSAGE:
+				{
+					ClientMessage* c_msg = (ClientMessage*)  msg;
+					switch(c_msg->getAction()){
+						case A_READY:
+							{
+								continuar = false;
+								this->play();
+							}
+							break;
+					}
+				}
+				break;
 			case MSG_TYPE_CREATE_FIGURE:
 				{
 					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
@@ -471,9 +485,22 @@ void JuegoCliente::quit(){
 }
 
 void JuegoCliente::play(){
-	MaquinaEstados::putMensaje(-1,0,0,0);
 	Sonidos::stopMusic();
 	maq->play((void*)this->terreno);
+}
+
+void JuegoCliente::sendReady(){
+	ClientMessage* c_msg = new ClientMessage();
+	c_msg->setClientID(this->numCliente);
+	c_msg->setAction(A_READY);
+	this->maq->pushSendMessage(c_msg);
+}
+
+void JuegoCliente::sendUnready(){
+	ClientMessage* c_msg = new ClientMessage();
+	c_msg->setClientID(this->numCliente);
+	c_msg->setAction(A_UNREADY);
+	this->maq->pushSendMessage(c_msg);
 }
 
 void JuegoCliente::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
