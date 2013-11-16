@@ -10,14 +10,17 @@
 #include <iostream>
 #include <fstream>
 
+#include "SocketHandler.h"
+
 class ServerHandler : public MessageHandler
 {
 public:
-	ServerHandler(int mode, MaquinaEstados * game, int id);
+	ServerHandler(int mode, MaquinaEstados * game, int id,SocketHandler* s_handler);
 	virtual ~ServerHandler(void);
 
 private:
 	ServerHandler(void);
+	SocketHandler* s_handler;
 
 protected:
 	virtual void initThread();

@@ -10,16 +10,19 @@
 #include <iostream>
 #include <fstream>
 
+#include "SocketHandler.h"
+
 using namespace std;
 
 class ClientHandler : public MessageHandler
 {
 public:
-	ClientHandler(int mode, MaquinaEstados * game, int id);
+	ClientHandler(int mode, MaquinaEstados * game, int id,SocketHandler* s_handler);
 	virtual ~ClientHandler(void);
 
 private:
 	ClientHandler(void);
+	SocketHandler* s_handler;
 
 protected:
 	virtual void initThread();
