@@ -368,11 +368,13 @@ void BotoneraController::ScrollDown(){
 #include "PaletaFlipper.h"
 #include "Canio.h"
 #include "Codo.h"
+#include "Huevo.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 	
 	this->agregarBoton(new Canio(LARGO_CANIO_DEFAULT,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Codo(0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Huevo(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Escopeta(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);

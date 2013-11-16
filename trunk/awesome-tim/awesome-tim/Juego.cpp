@@ -77,11 +77,12 @@ std::string Juego::cargar(){
 		botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
 	}
 
-	//if(botonera->estaVacia()){
-	//	botonera->agregarBotonesDefault();
-	//	botonera->resizear();
-	//}
+	if(botonera->estaVacia()){
+		botonera->agregarBotonesDefault();
+		botonera->resizear();
+	}
 	//necesario para que se ordenen cosas dentro de botonera
+	botonera->ScrollUp();
 	
 	return objetivo;
 }

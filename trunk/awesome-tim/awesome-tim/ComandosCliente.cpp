@@ -1,6 +1,6 @@
 #include "ComandosCliente.h"
 
-ComandosCliente::ComandosCliente(int ancho,int alto, std::string id_imagen_texto_objetivo){
+ComandosCliente::ComandosCliente(int ancho,int alto,std::string id_imagen_texto_objetivo){
 	anchoOrig = this->ancho = ancho;
 	altoOrig = this->alto = alto;
 	sup = new Superficie(ancho,alto);
@@ -34,16 +34,17 @@ ComandosCliente::ComandosCliente(int ancho,int alto, std::string id_imagen_texto
 	Y_B_QUIT = Y_OBJ;
 
 	//Objetivo
-	ImagenObjetivoOrig = new Imagen(id_imagen_texto_objetivo.c_str());
-	ImagenObjetivo = ImagenObjetivoOrig->scaleImagen(ANCHO_OBJ,ALTO_OBJ);
+	ImagenObjetivoOrig = NULL;
+	ImagenObjetivo = NULL;
+
 
 	BotonQuitOrigApretado = new Imagen("../images/botonQuitApretado.png");
 	BotonQuitOrigSinApretar = new Imagen("../images/botonQuitSinApretar.png");
 	BotonQuitApretado = BotonQuitOrigApretado->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
 	BotonQuitSinApretar = BotonQuitOrigSinApretar->scaleImagen(ANCHO_B_PLAY,ALTO_B_PLAY);
 	
-	BotonPlayOrigApretado = new Imagen("../images/botonPlayApretado.png");
-	BotonPlayOrigSinApretar = new Imagen("../images/botonPlaySinApretar.png");
+	BotonPlayOrigApretado = new Imagen("../images/botonReadyApretado.png");
+	BotonPlayOrigSinApretar = new Imagen("../images/botonReadySinApretar.png");
 	BotonPlayApretado = BotonPlayOrigApretado->scaleImagen(ANCHO_B_QUIT,ALTO_B_QUIT);
 	BotonPlaySinApretar = BotonPlayOrigSinApretar->scaleImagen(ANCHO_B_PLAY,ALTO_B_PLAY);
 
@@ -90,7 +91,9 @@ void ComandosCliente::redraw(){
 
 	sup->restoreGris();
 //	sup->dibujarCuadradoNegro(X_TBOX,Y_TBOX,ANCHO_TBOX,ALTO_TBOX);
-	sup->dibujarImagen(ImagenObjetivo,NULL,X_OBJ,Y_OBJ);
+	if (ImagenObjetivo != NULL){
+		sup->dibujarImagen(ImagenObjetivo,NULL,X_OBJ,Y_OBJ);
+	}
 
 /*	if(botonOkActivo){
 		sup->dibujarImagen(BotonOKApretado,NULL,X_B_OK,Y_B_OK);
@@ -113,7 +116,7 @@ void ComandosCliente::redraw(){
 		sup->dibujarImagen(BotonQuitSinApretar,NULL,X_B_QUIT,Y_B_QUIT);
 	}
 
-	if(botonPlayActivo){
+	if(ready /*botonPlayActivo*/){
 		sup->dibujarImagen(BotonPlayApretado,NULL,X_B_PLAY,Y_B_PLAY);
 	}
 	else{
@@ -246,4 +249,8 @@ void ComandosCliente::release(double x, double y,bool* flag,JuegoCliente* juego)
 //	botonOkActivo = botonSaveActivo = false;
 	setCambio(true);
 
+}
+void ComandosCliente::setImagenObjetivo(std::string id_imagen_texto_objetivo){
+	ImagenObjetivoOrig = new Imagen(id_imagen_texto_objetivo.c_str());
+	ImagenObjetivo = ImagenObjetivoOrig->scaleImagen(ANCHO_OBJ,ALTO_OBJ);
 }
