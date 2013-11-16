@@ -72,7 +72,8 @@ void ClientHandler::run()
 					Message * msg = this->game->getSendMessage(this->id);
 					if(msg)
 					{
-						this->pushOutputMessage(msg);
+						//this->pushOutputMessage(msg);
+						s_handler->pushOutputMessage(msg);
 					}
 				}
 				break;

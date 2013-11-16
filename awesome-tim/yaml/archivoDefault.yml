@@ -1,5 +1,5 @@
 juego:
-  jugadores: 1
+  jugadores: 2
   objetivo: ../images/texto_objetivo1.png
   terreno:
     fondo: ../images/15.jpg
