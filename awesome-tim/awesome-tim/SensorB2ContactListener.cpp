@@ -12,7 +12,45 @@ void SensorB2ContactListener::BeginContact(b2Contact* contact){
 	
 	if((fig1 == NULL)||(fig2 == NULL)) return;
 
+	FiguraSensor* sensor = NULL;
+	Figura* fig = NULL;
+	//b2Body* bodySensor = NULL;
+	//b2Body* bodyFig = NULL;
 
+	if(fig1->getTipoFigura() == FIG_SENSOR){
+		sensor = (FiguraSensor*) fig1; 
+		//bodySensor = contact->GetFixtureA()->GetBody();
+		//bodyFig = contact->GetFixtureB()->GetBody();
+		fig = fig2;
+
+	} else if(fig2->getTipoFigura() == FIG_SENSOR){
+		sensor = (FiguraSensor*) fig2;
+		//bodySensor = contact->GetFixtureB()->GetBody();
+		//bodyFig = contact->GetFixtureA()->GetBody();
+		fig = fig1;
+		}else{
+			return;
+		}
+	
+	switch (fig->getTipoFigura()){
+
+		case QUESO:{
+			sensor->accionarMotor();
+			break;
+		}
+		case GLOBOHELIO:{
+			sensor->cumplirObjetivo(fig);
+			break;
+		}
+		case PELOTATENIS:{
+			sensor->cumplirObjetivo(fig);
+			break;
+		}
+		case PELOTABASQUET:{
+			sensor->cumplirObjetivo(fig);
+			break;
+		}
+	}
 }
 void SensorB2ContactListener::EndContact(b2Contact* contact){
 }

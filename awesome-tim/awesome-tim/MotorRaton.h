@@ -66,7 +66,7 @@ public:
 	}
 
 	bool motorActivo(){
-		return true;
+		return activo;
 	}
 
 	bool choqueConFigura(Figura* fig){
