@@ -15,7 +15,11 @@
 
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
-	
+
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		this->botoneras[i] = new std::list<struct boton>;
+	}
+
 	posVector = 0;
 	for(int i = 0;i<LARGO;i++){
 		vector[i] = NULL;
@@ -73,7 +77,7 @@ std::string Juego::cargar(){
 		vector[posVector] = (*iter);
 	}
 
-	for (std::list<struct boton>::iterator iter = botoneras[0].begin(); iter != botoneras[0].end();iter++){
+	for (std::list<struct boton>::iterator iter = botoneras[0]->begin(); iter != botoneras[0]->end();iter++){
 		botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
 	}
 
@@ -100,6 +104,10 @@ bool Juego::guardar(){
 }
 
 Juego::~Juego(){
+	
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		delete this->botoneras[i];
+	}
 
 	delete terreno;
 	delete botonera;
@@ -213,7 +221,7 @@ void Juego:: onLoop(){
 								
 								//mando los botones
 								std::list<struct boton>::iterator iter;
-								for (iter = this->botoneras[c_msg->getClientID()].begin();iter!=this->botoneras[c_msg->getClientID()].end();iter++){
+								for (iter = this->botoneras[c_msg->getClientID()]->begin();iter!=this->botoneras[c_msg->getClientID()]->end();iter++){
 									CreateButtonMessage* b_msg = new CreateButtonMessage();
 									b_msg->setId(0);
 									b_msg->setFigureID((*iter).figura->numero);
@@ -231,10 +239,31 @@ void Juego:: onLoop(){
 								}
 								
 								//mandar tambien el area
-
 								SetAreaMessage* a_msg = new SetAreaMessage();
 								a_msg->setPuntos(this->areas[c_msg->getClientID()][0],this->areas[c_msg->getClientID()][1],this->areas[c_msg->getClientID()][2],this->areas[c_msg->getClientID()][3]);
 								this->maq->pushSendMessage(a_msg,c_msg->getClientID());
+
+								//mando las figuras en el aire
+								for (int i = 0;i<=MAX_CLIENTES;i++){
+									if(figuraEnAire[i] != NULL){
+										CreateFigureMessage* f_msg = new CreateFigureMessage();
+										f_msg->setId(i);
+										f_msg->setFigureID(figuraEnAire[i]->numero);
+										f_msg->setFigureType(figuraEnAire[i]->getTipoFigura());
+										f_msg->setX(figuraEnAire[i]->getDimension()->getX());
+										f_msg->setY(figuraEnAire[i]->getDimension()->getY());
+										f_msg->setAngle(figuraEnAire[i]->getDimension()->getAngulo());
+										f_msg->setInAir(true);
+										double data1,data2;
+										figuraEnAire[i]->getExtraData(&data1,&data2);
+										f_msg->setData1(data1);
+										f_msg->setData2(data2);
+
+										this->maq->pushSendMessage(f_msg,c_msg->getClientID());
+									}
+								}
+
+
 								delete msg;
 							}
 							break;

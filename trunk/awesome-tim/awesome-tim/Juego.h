@@ -44,7 +44,7 @@ private:
 
 	int cant_jugadores;
 	std::list<int> jugadoresListos;
-	std::list<struct boton> botoneras[MAX_CLIENTES+1];
+	(std::list<struct boton>*) botoneras[MAX_CLIENTES+1];
 	double areas[MAX_CLIENTES+1][4];
 
 public:

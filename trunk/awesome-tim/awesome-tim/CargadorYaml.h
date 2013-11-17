@@ -62,7 +62,7 @@ public:
 	//areas[i][1] = y1; 
 	//areas[i][2] = x2; 
 	//areas[i][3] = y2; 
-	static std::string cargarJuego(const char* fileIn,Terreno* terreno,int* cant_jugadores,std::list<struct boton> botoneras[],double areas[][4]);
+	static std::string cargarJuego(const char* fileIn,Terreno* terreno,int* cant_jugadores,std::list<struct boton>* botoneras[],double areas[][4]);
 
 private:
 
@@ -70,7 +70,7 @@ private:
 	
 	static void cargarBotonesDefault(std::list<struct boton> botonera);
 	static void agregarBoton(Figura* fig,std::list<struct boton> botonera);
-	static void cargar_botones(const YAML::Node& nodoBotonera, std::list<struct boton> botoneras[],int cant_jugadores);
+	static void cargar_botones(const YAML::Node& nodoBotonera, std::list<struct boton>* botoneras[],int cant_jugadores);
 	static void cargar_botones_de_cliente(const YAML::Node& listaFiguras, std::list<struct boton> botonera);
 	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno,double areas[][4], int cant_jugadores);
 	static Figura* cargar_figura(const YAML::Node& nodoFig);

@@ -54,10 +54,10 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 }
 
 bool JuegoCliente::cargar(){
-	if(botonera->estaVacia()){
-		botonera->agregarBotonesDefault();
-		this->resume();
-	}
+	//if(botonera->estaVacia()){
+	//	botonera->agregarBotonesDefault();
+	//	this->resume();
+	//}
 	return true;
 }
 
