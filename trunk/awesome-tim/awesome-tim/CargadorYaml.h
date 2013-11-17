@@ -93,6 +93,7 @@ private:
 	static bool sentido_valido(int sentido);
 	static bool opcion_valida(const char* opcion);
 	static bool cantidad_jugadores_valida(int cantidad);
+	static bool color_valido(int color);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
@@ -136,6 +137,7 @@ private:
 	static Figura* crearCodo(const YAML::Node& nodoFigura);
 	
 	static void obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant);
+	static void obtenerColor(const YAML::Node& nodo, int* color);
 	static void obtenerPosicion(const YAML::Node& nodoFigura, double* posX, double* posY);
 	static void obtenerAngulo(const YAML::Node& nodoFigura, double* angulo);
 	static void obtenerLargo(const YAML::Node& nodoFigura, int* largo);

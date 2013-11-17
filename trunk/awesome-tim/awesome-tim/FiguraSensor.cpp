@@ -37,6 +37,7 @@ void FiguraSensor::accionarMotor(){
 void FiguraSensor::cumplirObjetivo(Figura* fig){
 
 		if (figuraInteractuar == fig){
-			//figuraInteractuar->realizarObjetivo !!!!!!!
+		//if (figuraInteractuar->numero == fig->numero){
+			figuraInteractuar->cumplirObjetivo();
 		}
 }

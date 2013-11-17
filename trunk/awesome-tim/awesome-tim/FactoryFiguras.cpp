@@ -41,7 +41,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new PelotaBowling(msg->getX(),msg->getY(),msg->getAngle());
 			break;
 		case GLOBOHELIO:
-			fig = new GloboHelio(msg->getX(),msg->getY());
+			fig = new GloboHelio(msg->getX(),msg->getY(),msg->getData1());
 			break;
 		case BALANCIN:
 			fig = new Balancin(msg->getX(),msg->getY(),msg->getAngle());
