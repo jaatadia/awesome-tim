@@ -72,10 +72,6 @@ void MEstadosCliente::onRender(){
 		if (dibujar) ventana->dibujar(superficie);
 	}
 }
-	
-void MEstadosCliente::esperar(double miliseconds){
-	SDL_Delay(miliseconds);
-}
 
 void MEstadosCliente::salir(){
 	running = false;

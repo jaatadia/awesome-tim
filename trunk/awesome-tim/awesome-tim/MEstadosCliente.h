@@ -38,8 +38,6 @@ public:
 	bool onEvent();
 	void onLoop();
 	void onRender();
-	
-	void esperar(double miliseconds);
 
 	virtual void salir();
 	virtual void editor();

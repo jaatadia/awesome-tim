@@ -256,3 +256,8 @@ void ComandosCliente::setImagenObjetivo(std::string id_imagen_texto_objetivo){
 	ImagenObjetivoOrig = new Imagen(id_imagen_texto_objetivo.c_str());
 	ImagenObjetivo = ImagenObjetivoOrig->scaleImagen(ANCHO_OBJ,ALTO_OBJ);
 }
+
+void ComandosCliente::setListoUnpressed(){
+	ready = false;
+	redraw();
+}

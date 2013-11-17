@@ -38,7 +38,7 @@ public:
 	virtual bool onEvent()=0;
 	virtual void onLoop()=0;
 	virtual void onRender()=0;
-	virtual void esperar(double tiempo)=0;
+	virtual void esperar(double tiempo);
 
 private:
 	Mutex _mutex;
