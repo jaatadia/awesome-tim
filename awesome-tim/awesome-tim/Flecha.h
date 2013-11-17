@@ -38,10 +38,6 @@ public:
 		return flecha;
 	}
 
-	virtual bool rompeHuevo(Dimension* dim){
-		return true;
-	}
-
 	virtual void getPunta(double* x,double* y){
 		//busco el centro mio
 		double cx = dimension->getX();

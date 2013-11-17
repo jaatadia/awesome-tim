@@ -45,10 +45,6 @@ public:
 		return arma;
 	}
 
-	virtual bool rompeHuevo(Dimension* dim){
-		return false;
-	}
-
 	virtual bool rotable(){return true;}
 
 	

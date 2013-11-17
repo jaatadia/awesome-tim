@@ -41,10 +41,6 @@ public:
 		return arco;
 	}
 
-	virtual bool rompeHuevo(Dimension* dim){
-		return true;
-	}
-
 	virtual bool rotable(){return true;}
 
 	
