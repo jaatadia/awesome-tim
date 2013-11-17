@@ -96,12 +96,12 @@ Contenedor::Contenedor(void){
 	mapa[ID_MOTOR_RATON_1] = new Imagen(ID_MOTOR_RATON_1);
 	mapa[ID_MOTOR_RATON_2] = new Imagen(ID_MOTOR_RATON_2);
 
-	mapa[COLOR_CELESTE] = new Imagen(COLOR_CELESTE);
-	mapa[COLOR_ROJO] = new Imagen(COLOR_ROJO);
-	mapa[COLOR_VERDE] = new Imagen(COLOR_VERDE);
-	mapa[COLOR_AMARILLO] = new Imagen(COLOR_AMARILLO);
-	mapa[COLOR_ROSA] = new Imagen(COLOR_ROSA);
-	mapa[COLOR_VIOLETA] = new Imagen(COLOR_VIOLETA);
+	mapa[ID_COLOR_CELESTE] = new Imagen(ID_COLOR_CELESTE);
+	mapa[ID_COLOR_ROJO] = new Imagen(ID_COLOR_ROJO);
+	mapa[ID_COLOR_VERDE] = new Imagen(ID_COLOR_VERDE);
+	mapa[ID_COLOR_AMARILLO] = new Imagen(ID_COLOR_AMARILLO);
+	mapa[ID_COLOR_ROSA] = new Imagen(ID_COLOR_ROSA);
+	mapa[ID_COLOR_VIOLETA] = new Imagen(ID_COLOR_VIOLETA);
 	mapa[ID_GLOBO_EXPLOTANDO1] = new Imagen(ID_GLOBO_EXPLOTANDO1);
 	//mapa[ID_GLOBO_EXPLOTANDO2] = new Imagen(ID_GLOBO_EXPLOTANDO2);
 	//mapa[ID_GLOBO_EXPLOTANDO3] = new Imagen(ID_GLOBO_EXPLOTANDO3);

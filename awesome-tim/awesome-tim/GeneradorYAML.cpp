@@ -2,6 +2,7 @@
 #include "Motor.h"
 #include "MotorRaton.h"
 #include "PaletaFlipper.h"
+#include "GloboHelio.h"
 
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
 //out << YAML::BeginMap;
@@ -134,6 +135,8 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 			case GLOBOHELIO:
 				out << YAML::Value << "GLOBO_HELIO";
 				out << (Circulo*) fig->getDimension();
+				out << YAML::Key << "color";
+				out << YAML::Value << ((GloboHelio*)fig)->getColor();
 				break;
 
 			case ENGRANAJE:
@@ -170,6 +173,14 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << (Cuadrado*) fig->getDimension();
 				out << YAML::Key << "sentido";
 				out << YAML::Value << ((MotorRaton*) fig)->sentido;
+				out << YAML::Key << "sensores";
+				out << YAML::Value << YAML::BeginSeq;
+				out << YAML::BeginMap;
+					out << YAML::Key << "sensor";
+					out << YAML::Value << (Cuadrado*) fig->getDimension();
+				out << YAML::EndMap;
+				out << YAML::EndSeq;
+					
 				break;
 
 			case VELA:

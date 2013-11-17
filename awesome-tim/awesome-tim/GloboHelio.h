@@ -8,19 +8,44 @@ class GloboHelio : public Figura
 {
 
 private:
-	GloboHelio(const char* id,Dimension* dim,bool flag):Figura(id,dim){
+	GloboHelio(const char* id,Dimension* dim,int color):Figura(id,dim){
 		pinchando = false;
 		atado = false;
 		contador = 0;
+		miColor = color;
 	};
 	bool atado;
 	static int color;
-	
+	int miColor;	
 	int contador;
 	bool pinchando;
 
 public:
-	GloboHelio(double pos_X,double pos_Y):Figura(ID_GLOBO,new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0)){
+	GloboHelio(double pos_X,double pos_Y,int color):Figura("",new Circulo(RADIO_GLOBOHELIO,pos_X,pos_Y,0),false){
+		
+		if (color == CELESTE){
+			this->ID = ID_COLOR_CELESTE;
+			miColor = CELESTE;
+		}else if (color == ROJO){
+			this->ID = ID_COLOR_ROJO;
+			miColor = ROJO;
+		}else if (color == AMARILLO){
+			this->ID = ID_COLOR_AMARILLO;
+			miColor = AMARILLO;
+		}else if (color == ROSA){
+			this->ID = ID_COLOR_ROSA;
+			miColor = ROSA;
+		}else if (color == VERDE){
+			this->ID = ID_COLOR_VERDE;
+			miColor = VERDE;
+		}else if (color == VIOLETA){
+			this->ID = ID_COLOR_VIOLETA;
+			miColor = VIOLETA;
+		} else {
+			this->ID = ID_COLOR_CELESTE;
+			miColor = CELESTE;
+		}
+		this->myVista = new VistaFigura(this);
 		pinchando = false;
 		atado = false;
 		contador = 0;
@@ -35,16 +60,35 @@ public:
 	}
 
 	Figura* clonar(bool cambiar){ //YA SE, ESTA FEO
+		int elcolor = this->miColor;
 		if (cambiar){
 			color = (color+1) % CANT_COLORES;
-			if (color == 0) this->ID = COLOR_CELESTE;
-			else if (color == 1) this->ID = COLOR_ROJO;
-			else if (color == 2) this->ID = COLOR_AMARILLO;
-			else if (color == 3) this->ID = COLOR_ROSA;
-			else if (color == 4) this->ID = COLOR_VERDE;
-			else if (color == 5) this->ID = COLOR_VIOLETA;
+			if (color == CELESTE){
+				this->ID = ID_COLOR_CELESTE;
+				elcolor = CELESTE;
+			}
+			else if (color == ROJO){
+				this->ID = ID_COLOR_ROJO;
+				elcolor = ROJO;
+			}
+			else if (color == AMARILLO){
+				this->ID = ID_COLOR_AMARILLO;
+				elcolor = AMARILLO;
+			}
+			else if (color == ROSA){
+				this->ID = ID_COLOR_ROSA;
+				elcolor = ROSA;
+			}
+			else if (color == VERDE){
+				this->ID = ID_COLOR_VERDE;
+				elcolor = VERDE;
+			}
+			else if (color == VIOLETA){
+				this->ID = ID_COLOR_VIOLETA;
+				elcolor = VIOLETA;
+			}
 		}
-		Figura* globo = new GloboHelio(ID.c_str(),dimension->clonar(),true);
+		Figura* globo = new GloboHelio(ID.c_str(),dimension->clonar(),elcolor);
 		this->completarInteraccionesPosibles(globo);
 		return globo;
 	};
@@ -109,5 +153,11 @@ public:
 	virtual bool rompeHuevo(Dimension* dim){
 		return false;
 	}
-
+	virtual void getExtraData(double* d1,double* d2){
+	*d1 = miColor;
+	*d2 = -1;
+	}
+	int getColor(){
+		return this->miColor;
+	}
 };

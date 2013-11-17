@@ -380,12 +380,19 @@
 #define ID_GLOBO_EXPLOTANDO2 "../images/globoExp2.png"
 #define ID_GLOBO_EXPLOTANDO3 "../images/globoExp3.png"
 #define CANT_COLORES 6
-#define COLOR_CELESTE "../images/globoceleste.png"
-#define COLOR_ROJO "../images/globorojo.png"
-#define COLOR_VERDE "../images/globoverde.png"
-#define COLOR_AMARILLO "../images/globoamarillo.png"
-#define COLOR_ROSA "../images/globorosa.png"
-#define COLOR_VIOLETA "../images/globovioleta.png"
+#define ID_COLOR_CELESTE "../images/globoceleste.png"
+#define ID_COLOR_ROJO "../images/globorojo.png"
+#define ID_COLOR_VERDE "../images/globoverde.png"
+#define ID_COLOR_AMARILLO "../images/globoamarillo.png"
+#define ID_COLOR_ROSA "../images/globorosa.png"
+#define ID_COLOR_VIOLETA "../images/globovioleta.png"
+
+#define CELESTE 0
+#define ROJO 1
+#define AMARILLO 2
+#define ROSA 3
+#define VERDE 4
+#define VIOLETA 5
 
 //constantes para la pantalla de que gano
 #define DURACION_SEGS 1

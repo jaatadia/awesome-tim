@@ -384,7 +384,7 @@ bool BotoneraControllerCliente::agregarBotonesDefault(){
 	this->agregarBoton(new Carrito(0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Codo(0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Escopeta(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new GloboHelio((double)0,(double)0,CELESTE),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Linea(0,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PaletaFlipper(0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PelotaBasquet(0,0),INSTANCIAS_DEFAULT);

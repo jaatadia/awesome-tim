@@ -122,7 +122,23 @@ void CargadorYaml::obtenerCantidadDeJugadores(const YAML::Node& nodo, int* cant)
 		*cant = CANT_JUG_DEFAULT;
 	}
 }
+void CargadorYaml::obtenerColor(const YAML::Node& nodoFigura,int* color){
+	try{
+		nodoFigura["color"] >> *color;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe color de figura. Se carga color por defecto.",e.what());
+		*color = CELESTE;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del color de figura. Se color angulo por defecto.",e.what());
+		*color = CELESTE;
+	}
 
+	if(!color_valido(*color)){
+		int linea = nodoFigura["color"].GetMark().line;
+		imprimir_error_linea("Color de Figura invalido. Se carga color por defecto.", linea);
+		*color = CELESTE;
+	}
+}
 std::string CargadorYaml::obtenerObjetivo(const YAML::Node& nodo){
 	
 	std::string obj;
@@ -434,10 +450,12 @@ void CargadorYaml::agregarZonasClientes(const YAML::Node& nodoTerrenoCliente,dou
 **********************************************************/
 Figura* CargadorYaml::crearGloboHelio(const YAML::Node& nodoFigura){
 	double posX,posY;
+	int color;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerColor(nodoFigura,&color);
 
-	Figura* figura = new GloboHelio(posX,posY);
+	Figura* figura = new GloboHelio(posX,posY,color);
 
 	return figura;
 }
@@ -1353,7 +1371,7 @@ void CargadorYaml::cargarBotonesDefault(std::list<struct boton> botonera){
 	agregarBoton(new Carrito(0,0,0),botonera);
 	agregarBoton(new Codo(0,0,0),botonera);
 	agregarBoton(new Escopeta(0,0),botonera);
-	agregarBoton(new GloboHelio(0,0),botonera);
+	agregarBoton(new GloboHelio((double)0,(double)0,CELESTE),botonera);
 	agregarBoton(new Linea(0,0,0,0),botonera);
 	agregarBoton(new PaletaFlipper(0,0,0),botonera);
 	agregarBoton(new PelotaBasquet(0,0),botonera);
@@ -1587,6 +1605,10 @@ bool CargadorYaml::sentido_valido(int sentido){
 
 bool CargadorYaml::cantidad_jugadores_valida(int cantidad){
 	return ((cantidad > 0) && (cantidad <= CANT_JUG_MAX));
+}
+
+bool CargadorYaml::color_valido(int color){
+	return ((color == CELESTE) || (color == VERDE) || (color == ROJO) || (color == ROSA) || (color == AMARILLO) || (color == VIOLETA));
 }
 
 bool CargadorYaml::cant_instancias_valida(int instancias){

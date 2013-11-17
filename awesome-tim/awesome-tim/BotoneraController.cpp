@@ -379,7 +379,7 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new GloboHelio((double)0,(double)0,CELESTE),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Chinche(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Clavo(0,0),INSTANCIAS_DEFAULT);
