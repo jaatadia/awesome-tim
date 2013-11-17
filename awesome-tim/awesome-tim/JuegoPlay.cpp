@@ -30,7 +30,6 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 			fig->numero = (*iteradorLista)->numero;
 			vector[fig->numero] = fig;
 			terreno->agregarFigura(fig);
-			std::cout<<fig->numero<<"\n";
 		}
 	}
 	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
