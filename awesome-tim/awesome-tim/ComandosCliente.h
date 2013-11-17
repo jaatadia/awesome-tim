@@ -94,6 +94,8 @@ public:
 
 	void setImagenObjetivo(std::string id_imagen_texto_objetivo);
 
+	void setListoUnpressed();
+
 private:
 	void redraw();
 	bool in(int x, int y, int ancho,int alto,double x2,double y2);

@@ -101,3 +101,7 @@ int MaquinaEstados::getId()
 	Lock lock(this->_mutex);
 	return this->id;
 }
+
+void MaquinaEstados::esperar(double miliseconds){
+	Sleep(miliseconds);
+}

@@ -109,6 +109,7 @@ void JuegoPlayCliente::onLoop(){
 						vector[fig->numero] = fig;
 						terreno->agregarFigura(fig);
 					}
+					delete msg;
 				}
 				break;
 			case MSG_TYPE_TRANSFORM_FIGURE:
@@ -124,6 +125,7 @@ void JuegoPlayCliente::onLoop(){
 								break;
 						}
 					}
+					delete msg;
 				}
 				break;
 			case MSG_TYPE_CLIENT_MESSAGE:
@@ -133,6 +135,11 @@ void JuegoPlayCliente::onLoop(){
 						case A_DISCONECT:
 						case A_UNREADY:
 							{
+								if (c_msg->getClientID()==this->numCliente){
+									this->maq->returnProcessMessage(msg);
+								}else{
+									delete msg;
+								}
 								continuar = false;
 								this->quit();
 							}
@@ -141,7 +148,7 @@ void JuegoPlayCliente::onLoop(){
 				}
 				break;
 		}
-		delete msg;
+		
 		if(continuar){
 			msg = this->maq->getProcessMessage();
 		}

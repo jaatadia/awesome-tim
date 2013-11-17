@@ -67,10 +67,6 @@ void MEstados::onRender(){
 	bool dibujar = getEstadoActivo()->onRender(superficie);
 	if (dibujar) ventana->dibujar(superficie);
 }
-	
-void MEstados::esperar(double miliseconds){
-	SDL_Delay(miliseconds);
-}
 
 void MEstados::salir(){
 	running = false;

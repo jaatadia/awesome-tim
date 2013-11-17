@@ -134,6 +134,11 @@ void JuegoCliente:: onLoop(){
 								this->play();
 							}
 							break;
+						case A_UNREADY:
+							{
+								this->comandos->setListoUnpressed();
+							}
+							break;
 					}
 				}
 				break;
