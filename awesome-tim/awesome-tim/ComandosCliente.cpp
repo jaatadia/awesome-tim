@@ -208,8 +208,10 @@ void ComandosCliente::resizear(){
 	X_B_QUIT = X_B_PLAY + ANCHO_B_PLAY + SEPX;
 	Y_B_QUIT = Y_OBJ;
 
-	delete ImagenObjetivo;
-	ImagenObjetivo = ImagenObjetivoOrig->scaleImagen(ANCHO_OBJ,ALTO_OBJ);
+	if(ImagenObjetivoOrig!=NULL){
+		delete ImagenObjetivo;
+		ImagenObjetivo = ImagenObjetivoOrig->scaleImagen(ANCHO_OBJ,ALTO_OBJ);
+	}
 
 	delete BotonQuitApretado;
 	delete BotonQuitSinApretar;

@@ -45,6 +45,8 @@ private:
 	int posVector;
 	int numCliente;
 
+	std::list<Figura*> figurasAMover;
+
 public:
 	JuegoCliente(int nroCliente,MaquinaEstados* maq);//se crea el juego
 	~JuegoCliente(void);

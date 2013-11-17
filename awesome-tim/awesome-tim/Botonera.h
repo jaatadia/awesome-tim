@@ -8,6 +8,7 @@
 #include "Rectangulo.h"
 #include "Figura.h"
 #include "Constantes.h"
+#include "Boton.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class Botonera
 private:
 	int x, y, ancho, alto, anchoBoton, altoBoton, alturaMax;
 	int alturaMaxOrig;
-	std::list<map<Figura *, int>> lstFiguras;
+	std::list<struct boton> lstFiguras;
 
 public:
 
@@ -36,7 +37,7 @@ public:
 	int getAltoBoton(){return this->altoBoton;}
 	int getAlturaMax(){return this->alturaMax;}
 	int getAlturaMaxOrig(){return this->alturaMaxOrig;}
-	std::list<map<Figura *, int>> getListaFiguras();
+	std::list<struct boton> getListaFiguras();
 
 	// Setters
 	void setY(int y) {this->y = y;}

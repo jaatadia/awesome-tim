@@ -322,7 +322,7 @@ int BotoneraController::getAncho() {
 	return this->botonera->getAncho();
 }
 
-std::list<map<Figura *, int>> BotoneraController::getListaFiguras() {
+std::list<struct boton> BotoneraController::getListaFiguras() {
 	return this->botonera->getListaFiguras();
 }
 
@@ -401,7 +401,7 @@ bool BotoneraController::agregarBotonesDefault(){
 }
 
 bool BotoneraController::estaVacia(){
-	std::list<map<Figura *, int>> lista = this->botonera->getListaFiguras();
+	std::list<struct boton> lista = this->botonera->getListaFiguras();
 	return (lista.size()==0);
 }
 
@@ -415,8 +415,8 @@ void BotoneraController::dibujarCantInstancias(){
 		int posBotonX = 0;
 		int posBotonY = 0;
 
-		std::list<map<Figura *, int>> figs = botonera->getListaFiguras();
-		std::list<map<Figura *, int>>::iterator itFig = figs.begin();
+		std::list<struct boton> figs = botonera->getListaFiguras();
+		std::list<struct boton>::iterator itFig = figs.begin();
 
 		int cantInstancias;
 		Imagen* img;
@@ -425,9 +425,9 @@ void BotoneraController::dibujarCantInstancias(){
 
 		int cantDeFig = figs.size();
 
-		for(int i = 0; i < cantDeFig; ++i){
+		for(itFig = figs.begin(); itFig != figs.end(); itFig++){
 
-			cantInstancias = (*itFig).begin()->second;
+			cantInstancias = (*itFig).cantInstancias;
 
 			//convertir a c string
 			stringstream ss;
@@ -441,7 +441,6 @@ void BotoneraController::dibujarCantInstancias(){
 			layerADibujar->dibujarImagen(img, NULL, 7, posBotonY+7);
 
 			posBotonY += altoBoton;
-			++itFig;
 
 			if(img!=NULL){
 				delete img;

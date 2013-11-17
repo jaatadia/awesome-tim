@@ -287,15 +287,15 @@ YAML::Emitter& operator << (YAML::Emitter& out,BotoneraController* botonera){
 		out << YAML::Value << YAML::BeginSeq;
 			//itero y imprimo de a una las figuras en sequence
 			
-			std::list<map<Figura *, int>> lista_figs = botonera->getListaFiguras();
-			std::list<map<Figura *, int>>::iterator iter;
+			std::list<struct boton> lista_figs = botonera->getListaFiguras();
+			std::list<struct boton>::iterator iter;
 			
 			for (iter = lista_figs.begin(); iter != lista_figs.end(); ++iter){
 				out << YAML::BeginMap;
 				out << YAML::Key << "figura";
-				out << YAML::Value << ((std::map<Figura*,int>::iterator)((*iter).begin()))->first; //obtengo la figura y la emito
+				out << YAML::Value << (*iter).figura; //obtengo la figura y la emito
 				out << YAML::Key << "cantidad_de_instancias";
-				out << YAML::Value << ((std::map<Figura*,int>::iterator)((*iter).begin()))->second; //obtengo la cant de instancias q se pueden crear de esa fig
+				out << YAML::Value << (*iter).cantInstancias; //obtengo la cant de instancias q se pueden crear de esa fig
 				out << YAML::EndMap;
 			};
 			

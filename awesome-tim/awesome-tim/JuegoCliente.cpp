@@ -31,12 +31,10 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	this->maq = maq;
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
-	
-	std::string objetivo = NULL;
 
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,false);
 	botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
-	comandos = new ComandosCliente(ANCHO_COMANDOS,ALTO_COMANDOS,NULL);
+	comandos = new ComandosCliente(ANCHO_COMANDOS,ALTO_COMANDOS,"");
 
 	for (int i = 0;i<=MAX_CLIENTES;i++){
 		figurasEnAire[i]=NULL;
@@ -56,10 +54,10 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 }
 
 bool JuegoCliente::cargar(){
-	//if(botonera->estaVacia()){
-	//	botonera->agregarBotonesDefault();
-	//	this->resume();
-	//}
+	if(botonera->estaVacia()){
+		botonera->agregarBotonesDefault();
+		this->resume();
+	}
 	return true;
 }
 
@@ -247,7 +245,7 @@ SDL_Event evento;
 double posClickX, posClickY;
 bool aux = false;
 
-std::list<Figura*> figurasAMover;
+this->figurasAMover.clear();
 
 while(SDL_PollEvent(&evento)){
 	switch(evento.type){
@@ -737,10 +735,7 @@ void JuegoCliente::soltarFiguraEnAire(){
 	if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX() - X_TERRENO_LOGICO,figurasEnAire[this->numCliente]->getDimension()->getY() - Y_TERRENO_LOGICO) && !figurasEnAire[this->numCliente]->superpuesta){
 		//relativizar posiciones al terreno!
 		figurasEnAire[this->numCliente]->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
-		terreno->agregarFigura( figurasEnAire[this->numCliente] );
-		
-		
-		
+		bool aux = terreno->agregarFigura( figurasEnAire[this->numCliente] );
 
 		TransformFigureMessage* t_msg = new TransformFigureMessage();
 		t_msg->setClientID(this->numCliente);
@@ -748,9 +743,7 @@ void JuegoCliente::soltarFiguraEnAire(){
 		t_msg->setSizeChange(T_DROP);
 		t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
 		t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
-
 		this->maq->pushSendMessage(t_msg,this->numCliente);
-
 		figurasEnAire[this->numCliente] = NULL;
 	}else{
 
@@ -762,6 +755,9 @@ void JuegoCliente::soltarFiguraEnAire(){
 		t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
 		t_msg->setSizeChange(T_DROPDEAD);
 		this->maq->pushSendMessage(t_msg,this->numCliente);
+
+		figurasAMover.unique();
+		figurasAMover.remove(figurasEnAire[this->numCliente]);
 
 		delete figurasEnAire[this->numCliente];
 		figurasEnAire[this->numCliente] = NULL;

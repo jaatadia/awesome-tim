@@ -18,6 +18,7 @@
 #include "Clavo.h"
 #include "Tijera.h"
 #include "Chinche.h"
+#include "Boton.h"
 
 BotoneraControllerCliente::BotoneraControllerCliente(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
 	altoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
@@ -327,7 +328,7 @@ int BotoneraControllerCliente::getAncho() {
 	return this->botonera->getAncho();
 }
 
-std::list<map<Figura *, int>> BotoneraControllerCliente::getListaFiguras() {
+std::list<struct boton> BotoneraControllerCliente::getListaFiguras() {
 	return this->botonera->getListaFiguras();
 }
 
@@ -395,7 +396,7 @@ bool BotoneraControllerCliente::agregarBotonesDefault(){
 }
 
 bool BotoneraControllerCliente::estaVacia(){
-	std::list<map<Figura *, int>> lista = this->botonera->getListaFiguras();
+	std::list<struct boton> lista = this->botonera->getListaFiguras();
 	return (lista.size()==0);
 }
 
@@ -409,33 +410,35 @@ void BotoneraControllerCliente::dibujarCantInstancias(){
 	int posBotonX = 0;
 	int posBotonY = 0;
 
-	std::list<map<Figura *, int>> figs = botonera->getListaFiguras();
-	std::list<map<Figura *, int>>::iterator itFig = figs.begin();
+	std::list<struct boton> figs = botonera->getListaFiguras();
+	std::list<struct boton>::iterator itFig = figs.begin();
 
 	int cantInstancias;
 	Imagen* img;
 	//solo para copiarla y no cambiar la original
 	layerADibujar = layerFiguras->rotarSuperficie(0);
 
-	for(int i = 0; i < cantDeFig; ++i){
+	for(itFig = figs.begin(); itFig != figs.end(); itFig++){
+		try{
+			cantInstancias = (*itFig).cantInstancias;
 
-		cantInstancias = (*itFig).begin()->second;
+			//convertir a c string
+			stringstream ss;
+			ss<<cantInstancias;
+			string digito =ss.str();
+			const char* dig = digito.c_str();
 
-		//convertir a c string
-		stringstream ss;
-		ss<<cantInstancias;
-		string digito =ss.str();
-		const char* dig = digito.c_str();
+			//dibujar
+			img = NULL;
+			img = new Imagen(dig,altoBoton*0.2,255,255,255);
+			//y un pequeño desplazamiento para que entren bien al boton
+			layerADibujar->dibujarImagen(img, NULL, 7, posBotonY+7);
 
-		//dibujar
-		img = new Imagen(dig,altoBoton*0.2,255,255,255);
-		//y un pequeño desplazamiento para que entren bien al boton
-		layerADibujar->dibujarImagen(img, NULL, 7, posBotonY+7);
+			posBotonY += altoBoton;
 
-		posBotonY += altoBoton;
-		++itFig;
-
-		delete img;
+			delete img;
+		}catch(...){
+		}
 	}
 
 }
