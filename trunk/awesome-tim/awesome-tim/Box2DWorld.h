@@ -16,6 +16,8 @@
 #include "Flecha.h"
 #include "Bala.h"
 #include "Escopeta.h"
+#include <string>
+#include <list>
 
 class Box2DWorld
 {
@@ -25,12 +27,13 @@ private:
 	b2World * mundo;
 	float tiempoStep;
 	int velIteracion, posIteracion;
-
+	std::list<char*> sonidos;
 	bool activo;
 
 public:
 	Box2DWorld(float fuerzaX, float fuerzaY,bool flag);
 	void setFrecuenciaActualizacion(float tiempoStep, int velIteracion, int posIteracion);
+	void reproducirSonidos();
 	void actualizar();
 	void actualizar(Figura * figura);
 	bool agregarFigura(Figura * figura);
