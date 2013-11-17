@@ -34,8 +34,4 @@ public:
 		return clavo;
 	}
 
-	virtual bool rompeHuevo(Dimension* dim){
-		return true;
-	}
-
 };

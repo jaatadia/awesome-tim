@@ -38,11 +38,6 @@ public:
 		return flecha;
 	}
 
-	virtual bool rompeHuevo(Dimension* dim){
-		return true;
-	}
-
-
 	virtual bool pinchaGlobo(Dimension* dim){
 		return true;
 	}
