@@ -227,7 +227,7 @@
 
 #define RADIO_HUEVO 2
 #define RESTITUCION_HUEVO 0.4
-#define DENSIDAD_HUEVO 6.0
+#define DENSIDAD_HUEVO 3.1
 #define FRICCION_HUEVO 0.3
 
 #define ANCHO_DOMINO 1.8
@@ -409,7 +409,7 @@
 
 #define REPEAT_FROM INICIO_GANO5
 
-#define VELOCIDAD_MIN_RUPTURA 40
+#define VELOCIDAD_MIN_RUPTURA 1150
 
 // Acciones posibles en play:
 

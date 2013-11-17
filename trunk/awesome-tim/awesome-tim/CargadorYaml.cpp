@@ -1342,7 +1342,7 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 
 
 void CargadorYaml::cargarBotonesDefault(std::list<struct boton> botonera){
-	std::cout << "\n IMPLEMENTAR BOTONES DEFUALT EN YAML \n \n";
+	//std::cout << "\n IMPLEMENTAR BOTONES DEFUALT EN YAML \n \n"; FIX
 }
 
 /**********************************************************

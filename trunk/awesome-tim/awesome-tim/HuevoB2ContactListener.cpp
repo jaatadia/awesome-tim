@@ -37,15 +37,18 @@ void HuevoB2ContactListener::BeginContact(b2Contact* contact){
 	}
 
 	b2Vec2 velocityHuevo = bodyHuevo->GetLinearVelocity();
-
-	int velYHuevo = velocityHuevo.y;
+	//int velYHuevo = velocityHuevo.y;
+	double masaH = bodyHuevo->GetMass();
 
 	b2Vec2 velocityFig = bodyFig->GetLinearVelocity();
+	//int velXFig = velocityFig.x;
+	//int velYFig = velocityFig.y;
+	double masaF = bodyFig->GetMass();
 
-	int velXFig = velocityFig.x;
-	int velYFig = velocityFig.y;
-
-	bool hayMovimientoQueRompa = ((velYHuevo > VELOCIDAD_MIN_RUPTURA) || (velYFig > VELOCIDAD_MIN_RUPTURA) || (velXFig > VELOCIDAD_MIN_RUPTURA) );
+	//bool hayMovimientoQueRompa = ((velYHuevo > VELOCIDAD_MIN_RUPTURA) || (velYFig > VELOCIDAD_MIN_RUPTURA) || (velXFig > VELOCIDAD_MIN_RUPTURA) );
+	bool hayMovimientoQueRompa = (((velocityHuevo.Length()*masaH) > VELOCIDAD_MIN_RUPTURA) || ((velocityFig.Length()*masaF) > VELOCIDAD_MIN_RUPTURA) );
+	std::cout << (velocityHuevo.Length()*masaH) << " HUEVO \n";
+	std::cout << (velocityFig.Length()*masaF) << " FIGURA \n";
 
 	if (hayMovimientoQueRompa)
 		huevo->romper();
