@@ -45,10 +45,11 @@
 #include "Arco.h"
 #include "Flecha.h"
 #include "Escopeta.h"
-#include "MotorRaton.h"
+//#include "MotorRaton.h"
 #include "Canio.h"
 #include "Codo.h"
 #include "Chinche.h"
+#include "FiguraSensor.h"
 
 #include "Boton.h"
 
@@ -74,6 +75,7 @@ private:
 	static Figura* cargar_figura(const YAML::Node& nodoFig);
 	static Figura* crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura);
 	static void agregarZonasClientes(const YAML::Node& nodoTerrenoCliente,double areas[][4], int i);
+	static void agregarDetectorDeObjetivo(const YAML::Node& nodoFigura,Terreno* terreno,Figura* figAsociada);
 
 	//Funciones de validacion de datos
 	static bool cant_instancias_valida(int instancias);
@@ -96,7 +98,6 @@ private:
 	static void imprimir_error_linea(std::string mensaje, int linea);
 	static void imprimir_error_sin_linea(std::string mensaje);
 	static void imprimir_error_excepcion(std::string mensaje,std::string what);
-
 
 	static Figura* crearCirculo(const YAML::Node& nodoFigura);
 	static Figura* crearPoligono(const YAML::Node& nodoFigura);
@@ -128,6 +129,7 @@ private:
 	static Figura* crearEscopeta(const YAML::Node& nodoFigura);
 	static Figura* crearMotorRaton(const YAML::Node& nodoFigura);
 	static Figura* crearChinche(const YAML::Node& nodoFigura);
+	static Figura* crearSensorTransparente(const YAML::Node& nodoFigura, Figura* figAsociada);
 
 	static Figura* crearCanio(const YAML::Node& nodoFigura);
 	static Figura* crearCodo(const YAML::Node& nodoFigura);

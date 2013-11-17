@@ -684,6 +684,20 @@ Figura* CargadorYaml::crearCanio(const YAML::Node& nodoFigura){
 	return new Canio(largo,posX,posY,angulo);
 }
 
+Figura* CargadorYaml::crearSensorTransparente(const YAML::Node& nodoFigura, Figura* figAsociada){
+	double posX,posY,angulo,ancho,alto;
+
+	obtenerAngulo(nodoFigura,&angulo);
+	obtenerPosicion(nodoFigura,&posX,&posY);
+	obtenerAlto(nodoFigura, &alto);
+	obtenerAncho(nodoFigura, &ancho);
+
+	std::list<Figura*> figuras;
+	figuras.push_back(figAsociada);
+
+	return new FiguraSensor(ancho, alto, posX, posY, angulo,figuras);
+}
+
 Figura* CargadorYaml::crearCodo(const YAML::Node& nodoFigura){
 	double posX,posY,angulo;
 
@@ -821,6 +835,31 @@ Figura* CargadorYaml::crearCuadrado(const YAML::Node& nodoFigura){
 		delete(cuadrado);
 	
 	return figura; 
+}
+
+void CargadorYaml::agregarDetectorDeObjetivo(const YAML::Node& nodoFigura,Terreno* terreno,Figura* figAsociada){
+	try{
+		const YAML::Node& sensor = nodoFigura["sensores"];
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("Informativo: La figura es objetivo pero no tiene sensor asociado.",e.what());
+		return;
+	}catch(YAML::BadDereference &e){
+		imprimir_error_excepcion("Informativo: La figura es objetivo pero no tiene sensor asociado.",e.what());
+		return;
+	}
+
+	const YAML::Node& sensores = nodoFigura["sensores"];
+
+	for(unsigned i=0;i<sensores.size();i++) {
+	
+		Figura* fig = crearSensorTransparente(sensores[i],figAsociada);
+
+		if (!fig) continue;
+		
+		terreno->agregarFigura(fig);
+
+	}
+	
 }
 
 Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo_figura){
@@ -1102,7 +1141,7 @@ Figura* CargadorYaml::cargar_figura(const YAML::Node& nodoFig){
 	if(fija) figura->fijarFigura();
 
 	if(objetivo) figura->hacerObjetivo();
-	
+
 	if(interactuable) figura->hacerInteractuable();
 
 	return figura;
@@ -1149,7 +1188,11 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 
 		if (!fig) continue;
 		
-		terreno->agregarFigura(fig);	
+		terreno->agregarFigura(fig);
+
+		if(fig->esObjetivo()){
+			agregarDetectorDeObjetivo(listaFiguras[i]["figura"], terreno, fig);
+		}
 	}
 
 	//Cargo las dimensiones de las zonas de terreno de cada cliente
