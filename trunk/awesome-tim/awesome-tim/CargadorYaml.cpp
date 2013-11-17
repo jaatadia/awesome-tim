@@ -1276,6 +1276,7 @@ void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, std
 		
 		struct boton bot;
 		bot.cantInstancias = instancias;
+		bot.figura = fig;
 
 		botonera.push_back(bot);
 
@@ -1336,10 +1337,45 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 
 }
 
+void CargadorYaml::agregarBoton(Figura* fig,std::list<struct boton> botonera){
+	if(!fig) return;
 
+	struct boton bot;
+	bot.cantInstancias = INSTANCIAS_DEFAULT;
+	bot.figura = fig;
+
+	botonera.push_back(bot);
+}
 
 void CargadorYaml::cargarBotonesDefault(std::list<struct boton> botonera){
-	//std::cout << "\n IMPLEMENTAR BOTONES DEFUALT EN YAML \n \n"; FIX
+	agregarBoton(new Arco(0,0),botonera);
+	agregarBoton(new Canio(0,0,0,0),botonera);
+	agregarBoton(new Carrito(0,0,0),botonera);
+	agregarBoton(new Codo(0,0,0),botonera);
+	agregarBoton(new Escopeta(0,0),botonera);
+	agregarBoton(new GloboHelio(0,0),botonera);
+	agregarBoton(new Linea(0,0,0,0),botonera);
+	agregarBoton(new PaletaFlipper(0,0,0),botonera);
+	agregarBoton(new PelotaBasquet(0,0),botonera);
+	agregarBoton(new Plataforma(LARGO_PLATAFORMA_DEFAULT,0,0,0),botonera);
+	agregarBoton(new Polea(0,0),botonera);
+	agregarBoton(new Soga(0,0,0,0),botonera);
+	agregarBoton(new Vela(ID_VELA,0,0,0),botonera);
+	agregarBoton(new Aro(0,0),botonera);
+	agregarBoton(new Balancin(0,0,ANGULO_BALANCIN_IZQ),botonera);
+	agregarBoton(new Chinche(0,0),botonera);	
+	agregarBoton(new CintaTransportadora(3,0,0,0),botonera);
+	agregarBoton(new Clavo(0,0),botonera);
+	agregarBoton(new Domino(0,0),botonera);
+	agregarBoton(new Engranaje(0,0),botonera);
+	agregarBoton(new Huevo(0,0),botonera); 
+	agregarBoton(new Motor(0,0),botonera); 
+	agregarBoton(new MotorRaton(0,0),botonera);
+	agregarBoton(new PelotaBowling(0,0),botonera);
+	agregarBoton(new PelotaTenis(0,0),botonera);
+	agregarBoton(new Queso(0,0),botonera); 
+	agregarBoton(new Tijera(0,0),botonera);
+	agregarBoton(new Yunque(0,0),botonera);
 }
 
 /**********************************************************

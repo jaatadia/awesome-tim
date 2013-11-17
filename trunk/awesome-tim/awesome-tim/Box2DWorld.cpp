@@ -551,6 +551,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case CARRITO:{
+
+				Sonidos::playMusic(CARRITO_MUSIC);
 				//forma del carro con sus partes
 				b2PolygonShape forma_base;
 				//b2PolygonShape forma_pared1;
@@ -630,6 +632,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint2.Initialize(cuerpo_rueda2,cuerpo,cuerpo_rueda2->GetPosition());
 				joint2.collideConnected = false;
 				b2Joint* enlace2 = this->mundo->CreateJoint(&joint2);
+				
+				Sonidos::stopMusic();
 
 				break;
 			}
