@@ -6,6 +6,11 @@
 
 JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
+
+	for(int i = 0;i<LARGO;i++){
+		vector[i] = NULL;
+	}
+
 	TerrenoCliente* ter = (TerrenoCliente*) tere;
 	this->fondo = fondo;
 	this->maq = maq;
