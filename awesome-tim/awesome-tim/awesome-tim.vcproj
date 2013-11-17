@@ -320,10 +320,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\JuegoPlay.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Linea.cpp"
 				>
 			</File>
@@ -592,6 +588,10 @@
 				</File>
 				<File
 					RelativePath=".\Juego.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\JuegoPlay.cpp"
 					>
 				</File>
 				<File

@@ -1248,7 +1248,7 @@ void CargadorYaml::cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno
 	}
 }
 
-void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, std::list<struct boton> botonera){
+void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, std::list<struct boton>* botonera){
 	
 	if (listaFiguras.size() == 0) {
 		imprimir_error_linea("La lista de figuras de la botonera se encuentra vacia. Se carga botonera con botones por defecto.",listaFiguras.GetMark().line);
@@ -1296,7 +1296,7 @@ void CargadorYaml::cargar_botones_de_cliente(const YAML::Node& listaFiguras, std
 		bot.cantInstancias = instancias;
 		bot.figura = fig;
 
-		botonera.push_back(bot);
+		botonera->push_back(bot);
 
 		cant_botones++;
 	};
@@ -1313,11 +1313,11 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 		const YAML::Node& listaClientes = nodoBotonera["lista_clientes"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga una sola botonera, con botones por defecto.",e.what());
-		cargarBotonesDefault(*botoneras[1]);
+		cargarBotonesDefault(botoneras[1]);
 		return;
 	}catch(YAML::BadDereference &e){
 		imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga una sola botonera, con botones por defecto.",e.what());
-		cargarBotonesDefault(*botoneras[1]);
+		cargarBotonesDefault(botoneras[1]);
 		return;
 	}
 
@@ -1328,17 +1328,17 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 			const YAML::Node& listaFiguras = listaClientes[i-1]["lista_figuras"];
 		}catch(YAML::TypedKeyNotFound<std::string> &e){
 			imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
-			cargarBotonesDefault(*botoneras[i]);
+			cargarBotonesDefault(botoneras[i]);
 			continue;
 		}catch(YAML::BadDereference &e){
 			imprimir_error_excepcion("Error al cargar lista de botones de la Botonera. Se carga botonera con botones por defecto.",e.what());
-			cargarBotonesDefault(*botoneras[i]);
+			cargarBotonesDefault(botoneras[i]);
 			continue;
 		}
 
 		const YAML::Node& listaFiguras = listaClientes[i-1]["lista_figuras"];
 
-		cargar_botones_de_cliente(listaFiguras,*botoneras[i]);
+		cargar_botones_de_cliente(listaFiguras,botoneras[i]);
 	}
 
 	if(listaClientes.size() == (cant_jugadores-1)) return;
@@ -1350,22 +1350,22 @@ void CargadorYaml::cargar_botones(const YAML::Node& nodoBotonera, std::list<stru
 
 	imprimir_error_sin_linea("La cantidad de Botoneras es menor a la cantidad de Jugadores. Las botoneras faltantes se cargan como botoneras default.");
 	for(unsigned i=listaClientes.size()+1;i<cant_jugadores ;i++){
-		cargarBotonesDefault(*botoneras[i]);
+		cargarBotonesDefault(botoneras[i]);
 	}
 
 }
 
-void CargadorYaml::agregarBoton(Figura* fig,std::list<struct boton> botonera){
+void CargadorYaml::agregarBoton(Figura* fig,std::list<struct boton>* botonera){
 	if(!fig) return;
 
 	struct boton bot;
 	bot.cantInstancias = INSTANCIAS_DEFAULT;
 	bot.figura = fig;
 
-	botonera.push_back(bot);
+	botonera->push_back(bot);
 }
 
-void CargadorYaml::cargarBotonesDefault(std::list<struct boton> botonera){
+void CargadorYaml::cargarBotonesDefault(std::list<struct boton>* botonera){
 	agregarBoton(new Arco(0,0),botonera);
 	agregarBoton(new Canio(0,0,0,0),botonera);
 	agregarBoton(new Carrito(0,0,0),botonera);
@@ -1497,7 +1497,7 @@ std::string CargadorYaml::cargarJuego(const char* file,Terreno* terreno, int* ca
 	//Busco nodo Terreno
 
 	try{
-		const YAML::Node& nodoBotonera = nodoRaiz["terreno"];
+		const YAML::Node& nodoTerreno = nodoRaiz["terreno"];
 	}catch(YAML::TypedKeyNotFound<std::string> &e){
 		if(file != RUTA_DEFAULT) {
 			imprimir_error_excepcion("No se encontro nodo terreno. Se carga archivo default.",e.what()); 
