@@ -11,19 +11,19 @@ void HuevoB2ContactListener::BeginContact(b2Contact* contact){
 	Figura* fig1 = (Figura*)contact->GetFixtureA()->GetBody()->GetUserData();
 	Figura* fig2 = (Figura*)contact->GetFixtureB()->GetBody()->GetUserData();
 	
-	if((fig1 == NULL)||(fig2 == NULL)) return;
+	if((fig1 == NULL)&&(fig2 == NULL)) return;
 
 	Huevo* huevo = NULL;
 	Figura* fig = NULL;
 	b2Body* bodyHuevo = NULL;
 	b2Body* bodyFig = NULL;
 
-	if(fig1->getTipoFigura() == HUEVO){
+	if((fig1 != NULL) && (fig1->getTipoFigura() == HUEVO)){
 		huevo = (Huevo*) fig1; 
 		bodyHuevo = contact->GetFixtureA()->GetBody();
 		bodyFig = contact->GetFixtureB()->GetBody();
 		fig = fig2;
-	}else if(fig2->getTipoFigura() == HUEVO){
+	}else if((fig2 != NULL) && (fig2->getTipoFigura() == HUEVO)){
 		huevo = (Huevo*) fig2;
 		bodyHuevo = contact->GetFixtureB()->GetBody();
 		bodyFig = contact->GetFixtureA()->GetBody();
@@ -32,9 +32,11 @@ void HuevoB2ContactListener::BeginContact(b2Contact* contact){
 		return;
 	}
 
-	if(!fig->rompeHuevo(huevo->getDimension())){
+	if((fig != NULL) && (!fig->rompeHuevo(huevo->getDimension()))){
 		return;
 	}
+
+	if (bodyFig->GetFixtureList()->IsSensor()) return;
 
 	b2Vec2 velocityHuevo = bodyHuevo->GetLinearVelocity();
 	//int velYHuevo = velocityHuevo.y;
@@ -47,8 +49,8 @@ void HuevoB2ContactListener::BeginContact(b2Contact* contact){
 
 	//bool hayMovimientoQueRompa = ((velYHuevo > VELOCIDAD_MIN_RUPTURA) || (velYFig > VELOCIDAD_MIN_RUPTURA) || (velXFig > VELOCIDAD_MIN_RUPTURA) );
 	bool hayMovimientoQueRompa = (((velocityHuevo.Length()*masaH) > VELOCIDAD_MIN_RUPTURA) || ((velocityFig.Length()*masaF) > VELOCIDAD_MIN_RUPTURA) );
-	std::cout << (velocityHuevo.Length()*masaH) << " HUEVO \n";
-	std::cout << (velocityFig.Length()*masaF) << " FIGURA \n";
+	//std::cout << (velocityHuevo.Length()*masaH) << " HUEVO \n";
+	//std::cout << (velocityFig.Length()*masaF) << " FIGURA \n";
 
 	if (hayMovimientoQueRompa)
 		huevo->romper();

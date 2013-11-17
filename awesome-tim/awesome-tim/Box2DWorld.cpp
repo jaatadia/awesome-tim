@@ -321,8 +321,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma_pared12.SetAsBox((((Codo*)figura)->calcularAncho(x1,y1,x2,y2)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
 
 				fD.shape = &forma_pared12;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				fD.isSensor = false;
 				cuerpo_pared12->CreateFixture(&fD);
 
@@ -342,8 +342,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma_pared23.SetAsBox((((Codo*)figura)->calcularAncho(x2,y2,x3,y3)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
 
 				fD.shape = &forma_pared23;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				fD.isSensor = false;
 				cuerpo_pared23->CreateFixture(&fD);
 
@@ -363,8 +363,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma_pared54.SetAsBox((((Codo*)figura)->calcularAncho(x5,y5,x4,y4)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
 
 				fD.shape = &forma_pared54;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				fD.isSensor = false;
 				cuerpo_pared54->CreateFixture(&fD);
 
@@ -384,8 +384,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma_pared65.SetAsBox((((Codo*)figura)->calcularAncho(x6,y6,x5,y5)-CODO_CORRECCION_UNION)/2,CANIO_BORDE/2);
 
 				fD.shape = &forma_pared65;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				fD.isSensor = false;
 				cuerpo_pared65->CreateFixture(&fD);
 
@@ -404,8 +404,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma.SetAsBox(ancho/2,alto/2);
 				fD.shape = &forma;
 				fD.isSensor = true;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				cuerpo->CreateFixture(&fD);
 				//std::cout << cuerpo->GetAngle() << "\n";
 
@@ -424,8 +424,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				forma_pared2.SetAsBox(ancho/2,CANIO_BORDE/2);
 
 				fD.shape = &forma_pared1;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				fD.isSensor = false;
 				cuerpo_pared1->CreateFixture(&fD);
 				//std::cout << cuerpo_pared1->GetAngle() << "\n";
@@ -439,8 +439,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				b2Body* cuerpo_pared2 = this->mundo->CreateBody(&pared2);
 				
 				fD.shape = &forma_pared2;
-				fD.density = 1;
-				fD.friction = 10;
+				fD.density = PLATAFORMA_DENSIDAD;
+				fD.friction = PLATAFORMA_FRICCION;
 				fD.isSensor = false;
 				cuerpo_pared2->CreateFixture(&fD);
 				//std::cout << cuerpo_pared2->GetAngle() << "\n";

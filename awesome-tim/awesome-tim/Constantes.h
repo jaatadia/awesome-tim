@@ -409,7 +409,7 @@
 
 #define REPEAT_FROM INICIO_GANO5
 
-#define VELOCIDAD_MIN_RUPTURA 1150
+#define VELOCIDAD_MIN_RUPTURA 1850
 
 // Acciones posibles en play:
 
