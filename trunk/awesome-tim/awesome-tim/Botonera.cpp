@@ -9,8 +9,9 @@ Botonera::Botonera(int ancho,int alto){
 }
 
 void Botonera::agregarBoton(Figura * figura, int cantidadInstancias) {
-	std::map<Figura *, int> mapa;
-	mapa[figura] = cantidadInstancias;
+	struct boton mapa;
+	mapa.figura = figura;
+	mapa.cantInstancias = cantidadInstancias;
 	this->lstFiguras.push_back(mapa);
 }
 
@@ -18,7 +19,7 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 	Figura * retorno = 0;
 	bool encontrada = false;
 
-	std::list<map<Figura *, int>>::iterator itFig = this->lstFiguras.begin();
+	std::list<struct boton>::iterator itFig = this->lstFiguras.begin();
 	for (int i = 0; itFig != this->lstFiguras.end(); i++)
 	{
 		if (i == numeroFigura){
@@ -28,9 +29,9 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 		++itFig;
 	}
 	if (encontrada){ 
-		if (((std::map<Figura*,int>::iterator)((*itFig).begin()))->second) {    //para q funcione lo de la cant de instancias
-			retorno = (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first)->clonar();
-			--(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
+		if ((*itFig).cantInstancias!=0) {    //para q funcione lo de la cant de instancias
+			retorno = (*itFig).figura->clonar();
+			(*itFig).cantInstancias -= 1;
 			retorno->setTraslucido(true);
 		}
 	}
@@ -40,12 +41,12 @@ Figura * Botonera::obtenerFigura(int numeroFigura){
 
 void Botonera::restaurarInstanciaActual( int numeroFigActual ){
 
-	std::list<map<Figura *, int>>::iterator itFig = this->lstFiguras.begin();
+	std::list<struct boton>::iterator itFig = this->lstFiguras.begin();
 	
 	for (int i = 0; itFig != this->lstFiguras.end(); i++)
 	{
 		if (i == numeroFigActual){
-			++(((std::map<Figura*,int>::iterator)((*itFig).begin()))->second);
+			(*itFig).cantInstancias += 1;
 			break;
 		}
 		++itFig;
@@ -56,7 +57,7 @@ void Botonera::restaurarInstancias( std::vector<int> numsFigARestaurar ){
 	
 	int i = 0;
 	int tipoFig = -1;
-	std::list<map<Figura *, int>>::iterator itFig;
+	std::list<struct boton>::iterator itFig;
 	Figura* figBotonera = NULL;
 
 	while (i < numsFigARestaurar.size()){
@@ -64,9 +65,9 @@ void Botonera::restaurarInstancias( std::vector<int> numsFigARestaurar ){
 		
 		for (itFig = this->lstFiguras.begin(); itFig != this->lstFiguras.end(); ++itFig)
 		{
-			figBotonera = (*itFig).begin()->first;
+			figBotonera = (*itFig).figura;
 			if (figBotonera->getTipoFigura() == tipoFig){
-				++( (*itFig).begin()->second );
+				(*itFig).cantInstancias += 1;
 				break;
 			}
 		}
@@ -76,14 +77,14 @@ void Botonera::restaurarInstancias( std::vector<int> numsFigARestaurar ){
 }
 
 Botonera::~Botonera() {
-	std::list<map<Figura *, int>>::iterator itFig;
+	std::list<struct boton>::iterator itFig;
 	for (itFig = this->lstFiguras.begin(); itFig != this->lstFiguras.end(); itFig++)
 	{
-		delete (((std::map<Figura*,int>::iterator)((*itFig).begin()))->first);
+		delete (*itFig).figura;
 	}
 
 }
 
-std::list<map<Figura *, int>> Botonera::getListaFiguras() {
+std::list<struct boton> Botonera::getListaFiguras() {
 	return this->lstFiguras;
 }

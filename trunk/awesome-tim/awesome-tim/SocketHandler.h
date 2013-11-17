@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include "MessageHandler.h"
 #include "MaquinaEstados.h"
+#include "UnionMessage.h"
+#include "UnionMessage2.h"
 
 class SocketHandler : public ConnectionManager
 {

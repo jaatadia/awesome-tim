@@ -97,6 +97,12 @@ void SocketHandler::run()
 									case MSG_TYPE_SET_AREA:
 										msg = new SetAreaMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_UNION1:
+										msg = new UnionMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_UNION2:
+										msg = new UnionMessage2(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg->validate())

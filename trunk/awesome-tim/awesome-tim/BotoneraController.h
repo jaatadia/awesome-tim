@@ -68,7 +68,7 @@ public:
 
 	int getAncho();
 	int getAlto();
-	std::list<map<Figura *, int>> getListaFiguras();
+	std::list<struct boton> getListaFiguras();
 
 	bool estaVacia();
 

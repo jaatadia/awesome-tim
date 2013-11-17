@@ -456,6 +456,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UnionMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UnionMessage2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Vela.cpp"
 				>
 			</File>
@@ -955,6 +963,14 @@
 			</File>
 			<File
 				RelativePath=".\TransformFigureMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UnionMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UnionMessage2.h"
 				>
 			</File>
 			<File
