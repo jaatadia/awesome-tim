@@ -9,6 +9,7 @@ Figura::Figura(const char* ID,Dimension* dim,bool crearVista){
 	this->es_fija = false;
 	this->es_objetivo = false;
 	this->es_interactuable = false;
+	this->objetivo_cumplido = false;
 
 	this->ID = ID;
 	this->dimension = dim;
@@ -51,9 +52,9 @@ bool Figura::esInteractuable(){
 }
 
 void Figura::completarInteraccionesPosibles(Figura* nuevaFigura){
-	if(this->es_objetivo) nuevaFigura->hacerObjetivo();
-	if(this->es_interactuable) nuevaFigura->hacerInteractuable();
-	if(this->es_fija) nuevaFigura->fijarFigura();
+	if(this->esObjetivo()) nuevaFigura->hacerObjetivo();
+	if(this->esInteractuable()) nuevaFigura->hacerInteractuable();
+	if(this->esFija()) nuevaFigura->fijarFigura();
 }
 
 bool Figura::esObjetivo(){
@@ -145,6 +146,14 @@ void Figura::setTraslucido(bool flag){
 		this->traslucido=flag;
 		setCambio(true);
 	}
+}
+
+void Figura::cumplirObjetivo(){
+	this->objetivo_cumplido = true;
+}
+	
+bool Figura::cumplioObjetivo(){
+	return this->objetivo_cumplido;
 }
 
 void Figura::setSuperpuesta(bool flag){
