@@ -1118,8 +1118,10 @@ void Box2DWorld::actualizar(Figura * figura){
 				}
 			}else if(fig->getTipoFigura()==FLECHA){
 				b2Vec2 vel = cuerpo->GetLinearVelocity();
-				double ang = atan2(vel.y,vel.x);
-				cuerpo->SetTransform(cuerpo->GetPosition(),ang);
+				if (abs(vel.x)>1&&abs(vel.y)>1){
+					double ang = atan2(vel.y,vel.x);
+					cuerpo->SetTransform(cuerpo->GetPosition(),ang);
+				}
 			}
 		}
 		cuerpo = cuerpo->GetNext();
