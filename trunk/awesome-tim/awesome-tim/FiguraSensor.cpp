@@ -3,6 +3,7 @@
 FiguraSensor::FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,Figura* figura):Figura("",new Cuadrado(ancho,alto,posX,posY,angulo),false){
 
 	figuraInteractuar = figura;
+	this->numInteractuar = figura->numero;
 }
 
 FiguraSensor::~FiguraSensor(void){
@@ -26,7 +27,7 @@ void FiguraSensor::dibujar(Superficie* super){
 }
 Figura* FiguraSensor::clonar(){
 	Dimension* dim = this->getDimension();
-	return new FiguraSensor(dim->getAncho(),dim->getAlto(),dim->getX(),dim->getY(),dim->getAngulo(),this->figuraInteractuar);
+	return new FiguraSensor(dim->getAncho(),dim->getAlto(),dim->getX(),dim->getY(),dim->getAngulo(),(this->figuraInteractuar)->numero);
 }
 void FiguraSensor::accionarMotor(){
 
@@ -36,8 +37,7 @@ void FiguraSensor::accionarMotor(){
 }
 void FiguraSensor::cumplirObjetivo(Figura* fig){
 
-		if (figuraInteractuar == fig){
-		//if (figuraInteractuar->numero == fig->numero){
+		if (figuraInteractuar->numero == fig->numero){
 			figuraInteractuar->cumplirObjetivo();
 		}
 }

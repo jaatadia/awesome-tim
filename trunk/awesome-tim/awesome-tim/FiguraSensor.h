@@ -8,7 +8,13 @@ class FiguraSensor :
 {
 private:
 	Figura* figuraInteractuar;
+	int numInteractuar;
 	//int ID;
+
+	FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,int numero):Figura("",new Cuadrado(ancho,alto,posX,posY,angulo),false){
+	
+		this->numInteractuar = numero;
+	};
 
 public:
 	FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,Figura* figura);
