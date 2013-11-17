@@ -16,8 +16,8 @@
 Box2DWorld::Box2DWorld(void){
 }
 
-Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true)
-{
+Box2DWorld::Box2DWorld(float fuerzaX, float fuerzaY,bool flag = true){
+	this->sonidos = std::list<char*>();
 	this->activo = flag;
 	if(activo){
 		this->mundo = new b2World(b2Vec2(fuerzaX,fuerzaY));
@@ -38,8 +38,7 @@ void Box2DWorld::setFrecuenciaActualizacion(float tiempoStep, int velIteracion, 
 	this->posIteracion = posIteracion;
 }
 
-void Box2DWorld::actualizar()
-{
+void Box2DWorld::actualizar(){
 	this->mundo->Step(this->tiempoStep, this->velIteracion, this->posIteracion);
 	this->list->terminar();
 }
@@ -523,6 +522,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case VELA:{
+				this->sonidos.push_back(VELA_MUSIC);
 				b2PolygonShape forma;
 				double ancho = (dim)->getAncho()/2;
 				double alto = (dim)->getAlto()/2;
@@ -533,7 +533,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.friction = FRICCION_VELA;
 				fD.restitution = RESTITUCION_VELA;
 				cuerpo->CreateFixture(&fD);
-
+			
 				break;
 			}
 		case DOMINO:{
@@ -551,8 +551,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case CARRITO:{
+				this->sonidos.push_back(CARRITO_MUSIC);
 
-				Sonidos::playMusic(CARRITO_MUSIC);
 				//forma del carro con sus partes
 				b2PolygonShape forma_base;
 				//b2PolygonShape forma_pared1;
@@ -633,11 +633,12 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint2.collideConnected = false;
 				b2Joint* enlace2 = this->mundo->CreateJoint(&joint2);
 				
-				Sonidos::stopMusic();
-
 				break;
 			}
 		case GLOBOHELIO:{
+				
+				this->sonidos.push_back(GLOBO_MUSIC);
+
 				cuerpo->SetGravityScale(-1);
 				
 				b2CircleShape forma;
@@ -872,6 +873,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			}
 		case ENGRANAJE:
 			{
+
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;
 				ejeDef.position.Set(cuerpo->GetPosition().x,cuerpo->GetPosition().y);
@@ -899,6 +901,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);
 				
 				if(activo){
+					this->sonidos.push_back(ENGRANAJE_MUSIC);
 					for(b2Body* c = this->mundo->GetBodyList();c;c = c->GetNext()){
 						Figura* fig = (Figura*)c->GetUserData();
 						if((fig!=NULL)&&(fig!=figura)){
@@ -929,8 +932,9 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				break;
 			}
-		case MOTOR:
-			{
+		case MOTOR:{
+				this->sonidos.push_back(MOTOR_MUSIC);
+
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;
 				ejeDef.position.Set(figura->getDimension()->getX(),figura->getDimension()->getY());
@@ -991,6 +995,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				MotorRaton* motor = (MotorRaton*)figura;
 				if(activo && motor->motorActivo()){
+					this->sonidos.push_back(MOTOR_RATON_MUSIC);
+
 					cuerpo->SetFixedRotation(true);
 					cuerpo->SetAngularVelocity(VELOCIDAD_MOTOR*((MotorRaton*)figura)->sentido);
 				}
@@ -1011,6 +1017,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 		case CINTATRANSPORTADORA:
 			{
 				if(activo){
+					this->sonidos.push_back(CINTA_TRANSP_MUSIC);
+
 					cuerpo->SetType(b2_staticBody);
 					b2PolygonShape forma;
 					forma.SetAsBox((dim)->getAncho()/2,(dim)->getAlto()/2);
@@ -1047,7 +1055,17 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 	}
+	reproducirSonidos();
 	return true;
+}
+
+void Box2DWorld::reproducirSonidos(){
+	std::list<char*>::iterator iterSound;
+	Sonidos::stopMusic();
+
+	for (iterSound = this->sonidos.begin(); iterSound != this->sonidos.end(); iterSound++){
+		Sonidos::playMusic((*iterSound));
+	}
 }
 
 void Box2DWorld::actualizar(Figura * figura){
@@ -1127,6 +1145,7 @@ void Box2DWorld::actualizar(Figura * figura){
 		cuerpo = cuerpo->GetNext();
 
 	}
+
 }
 
 void Box2DWorld::cambiarParametros(Figura * figura)

@@ -47,7 +47,7 @@ public:
 			contador++;
 			
 			if(contador == 1){
-				Sonidos::playSound(HUEVO_MUSIC);		
+				Sonidos::playSound(HUEVO_SOUND);		
 				this->ID = ID_HUEVO_ROMPIENDO1; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);
