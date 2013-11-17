@@ -18,6 +18,17 @@
 #include "Clavo.h"
 #include "Tijera.h"
 #include "Chinche.h"
+#include "Carrito.h"
+#include "Arco.h"
+#include "Canio.h"
+#include "Codo.h"
+#include "Escopeta.h"
+#include "PaletaFlipper.h"
+#include "Domino.h"
+#include "Huevo.h"
+#include "MotorRaton.h"
+#include "Queso.h"
+
 #include "Boton.h"
 
 BotoneraControllerCliente::BotoneraControllerCliente(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
@@ -368,29 +379,34 @@ void BotoneraControllerCliente::ScrollDown(){
 
 bool BotoneraControllerCliente::agregarBotonesDefault(){
 	
+	this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Canio(0,0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Carrito(0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Codo(0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Escopeta(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new GloboHelio(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Chinche(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Clavo(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Vela(ID_VELA,0,0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Polea(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
-	
-	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);	
-
-	this->agregarBoton(new CintaTransportadora(3,0,0,0),INSTANCIAS_DEFAULT); 
 	this->agregarBoton(new Linea(0,0,0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Motor(0,0),INSTANCIAS_DEFAULT);
-	
-	this->agregarBoton(new Plataforma(LARGO_PLATAFORMA_DEFAULT,0,0,0),INSTANCIAS_DEFAULT); 
-	
-	this->agregarBoton(new PelotaBowling(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new PaletaFlipper(0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PelotaBasquet(0,0),INSTANCIAS_DEFAULT);
-	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Plataforma(LARGO_PLATAFORMA_DEFAULT,0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Polea(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Soga(0,0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Vela(ID_VELA,0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Aro(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
-	
+	this->agregarBoton(new Chinche(0,0),INSTANCIAS_DEFAULT);	
+	this->agregarBoton(new CintaTransportadora(3,0,0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Clavo(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Domino(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Huevo(0,0),INSTANCIAS_DEFAULT); 
+	this->agregarBoton(new Motor(0,0),INSTANCIAS_DEFAULT); 
+	this->agregarBoton(new MotorRaton(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new PelotaBowling(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new PelotaTenis(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Queso(0,0),INSTANCIAS_DEFAULT); 
+	this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
 
 	return true;
 }

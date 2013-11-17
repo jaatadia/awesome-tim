@@ -2,6 +2,7 @@
 #include "Circulo.h"
 #include "Constantes.h"
 #include "Figura.h"
+#include "Sonidos.h"
 
 #define FACTOR 4
 
@@ -44,8 +45,9 @@ public:
 	void actualizar(){
 		if(rompiendose){
 			contador++;
-
+			
 			if(contador == 1){
+				Sonidos::playSound(HUEVO_MUSIC);		
 				this->ID = ID_HUEVO_ROMPIENDO1; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);

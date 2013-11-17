@@ -69,6 +69,7 @@ private:
 	static std::string ruta_archivo;
 	
 	static void cargarBotonesDefault(std::list<struct boton> botonera);
+	static void agregarBoton(Figura* fig,std::list<struct boton> botonera);
 	static void cargar_botones(const YAML::Node& nodoBotonera, std::list<struct boton> botoneras[],int cant_jugadores);
 	static void cargar_botones_de_cliente(const YAML::Node& listaFiguras, std::list<struct boton> botonera);
 	static void cargar_terreno(const YAML::Node& nodoTerreno,Terreno* terreno,double areas[][4], int cant_jugadores);

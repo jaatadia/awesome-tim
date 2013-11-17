@@ -78,7 +78,9 @@ public:
 			disparado = true;
 			delete myVista;
 			this->ID = ID_ARCO2;
+			
 			Sonidos::playSound(SHOT_ARROW);
+			
 			this->myVista = new VistaFigura(this);
 			
 			double cx = dimension->getX();
@@ -88,7 +90,7 @@ public:
 
 			double x = cx + (dimension->getAncho()/2+ANCHO_FLECHA/2)*coseno;
 			double y = cy + (dimension->getAncho()/2+ANCHO_FLECHA/2)*seno;
-
+			
 			return new Flecha(x,y,dimension->getAngulo(),FUERZA_FLECHA*coseno,FUERZA_FLECHA*seno);
 		}else{
 			return NULL;

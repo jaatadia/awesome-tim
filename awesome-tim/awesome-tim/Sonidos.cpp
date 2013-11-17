@@ -8,10 +8,18 @@ std::map<std::string,void*>* Sonidos::mapa = new std::map<std::string,void*>;
 
 void Sonidos::initialize(){
 	initialized = true;
+
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 );
-	(*mapa)[POP_BALLOON] = (void*)Mix_LoadWAV(POP_BALLOON);
-	(*mapa)[FLIPPER_UP] = (void*)Mix_LoadWAV(FLIPPER_UP);
-	(*mapa)[FLIPPER_DOWN] = (void*)Mix_LoadWAV(FLIPPER_DOWN);
+	(*mapa)[POP_BALLOON] = (void*)Mix_LoadWAV(POP_BALLOON); //OK
+	(*mapa)[SHOT_ARROW] = (void*)Mix_LoadWAV(SHOT_ARROW); //No suena :S
+	(*mapa)[FIRE_GUN] = (void*)Mix_LoadWAV(FIRE_GUN); //OK
+	(*mapa)[FLIPPER_UP] = (void*)Mix_LoadWAV(FLIPPER_UP); //OK
+	(*mapa)[FLIPPER_DOWN] = (void*)Mix_LoadWAV(FLIPPER_DOWN); //OK
+
+	(*mapa)[CARRITO_MUSIC] = (void*)Mix_LoadWAV(CARRITO_MUSIC);
+	(*mapa)[HUEVO_MUSIC] = (void*)Mix_LoadWAV(HUEVO_MUSIC);
+	(*mapa)[MOTOR_MUSIC] = (void*)Mix_LoadWAV(MOTOR_MUSIC);
+	(*mapa)[VELA_MUSIC] = (void*)Mix_LoadWAV(VELA_MUSIC);
 
 	(*mapa)[VICTORY_MUS] = (void*)Mix_LoadMUS(VICTORY_MUS);
 	(*mapa)[MUSIC] = (void*)Mix_LoadMUS(MUSIC);
