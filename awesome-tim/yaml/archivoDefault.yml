@@ -21,11 +21,27 @@ juego:
           objetivo: SI
           sensores:
             - sensor:
-                posX: 25
-                posY: 42.3
+                posX: 50
+                posY: 0
                 angulo: 0
-                alto: 5
-                ancho: 5                
+                alto: 1
+                ancho: 100                
+          interactuable: NO
+      - figura:
+          tipo_figura: MOTOR_RATON
+          posX: 50
+          posY: 50
+          radio: 5
+          sentido: -1
+          fija: SI
+          objetivo: NO
+          sensores:
+            - sensor:
+                posX: 40
+                posY: 50
+                angulo: 0
+                alto: 10
+                ancho: 10  
           interactuable: NO
     lista_clientes:
       - terreno_cliente:
