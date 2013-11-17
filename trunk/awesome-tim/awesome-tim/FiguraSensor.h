@@ -7,11 +7,11 @@ class FiguraSensor :
 	public Figura
 {
 private:
-	std::list<Figura*> figurasInteractuar;
+	Figura* figuraInteractuar;
 	//int ID;
 
 public:
-	FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,std::list<Figura*> figuras);
+	FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,Figura* figura);
 	~FiguraSensor(void);
 	virtual int getTipoFigura();
 	virtual int getTipoDimension();

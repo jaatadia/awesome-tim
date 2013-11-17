@@ -692,10 +692,7 @@ Figura* CargadorYaml::crearSensorTransparente(const YAML::Node& nodoFigura, Figu
 	obtenerAlto(nodoFigura, &alto);
 	obtenerAncho(nodoFigura, &ancho);
 
-	std::list<Figura*> figuras;
-	figuras.push_back(figAsociada);
-
-	return new FiguraSensor(ancho, alto, posX, posY, angulo,figuras);
+	return new FiguraSensor(ancho, alto, posX, posY, angulo,figAsociada);
 }
 
 Figura* CargadorYaml::crearCodo(const YAML::Node& nodoFigura){

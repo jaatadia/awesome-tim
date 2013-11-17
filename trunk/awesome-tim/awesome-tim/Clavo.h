@@ -35,7 +35,7 @@ public:
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){
-		return false;
+		return true;
 	}
 
 };
