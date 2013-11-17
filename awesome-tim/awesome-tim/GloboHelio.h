@@ -96,6 +96,7 @@ public:
 
 			if(contador == FPS/4){
 				this->marcar(true);
+				this->cumplirObjetivo();
 			}
 		}
 	}
@@ -103,10 +104,6 @@ public:
 	void interactuar(int accion){
 		if (accion == CLICK_MOUSE)
 			this->pinchar();
-	}
-
-	virtual bool cumplioObjetivo(){
-		return (this->esObjetivo() && this->estaMarcada());
 	}
 
 	virtual bool rompeHuevo(Dimension* dim){

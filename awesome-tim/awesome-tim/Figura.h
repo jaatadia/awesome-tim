@@ -33,6 +33,7 @@ protected:
 	bool es_fija;
 	bool es_objetivo;
 	bool es_interactuable;
+	bool objetivo_cumplido;
 
 	int largoF;
 	
@@ -47,7 +48,6 @@ public:
 public:
 
 	bool esFija();
-
 	void fijarFigura();
 
 	Figura(const char* ID,Dimension* dim,bool crearVista = true);
@@ -155,11 +155,10 @@ public:
 		return marcada;
 	}
 
-	virtual bool cumplioObjetivo(){
-		return false;
-	}
 	void hacerObjetivo();
 	bool esObjetivo();
+	void cumplirObjetivo();
+	bool cumplioObjetivo();
 
 	virtual void corregirEstado(){};
 
@@ -171,5 +170,5 @@ public:
 	void completarInteraccionesPosibles(Figura* nuevaFigura);
 	void hacerInteractuable();
 	bool esInteractuable();
-
+	
 };
