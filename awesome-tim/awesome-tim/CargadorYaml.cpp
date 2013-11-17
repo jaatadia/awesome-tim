@@ -852,7 +852,7 @@ void CargadorYaml::agregarDetectorDeObjetivo(const YAML::Node& nodoFigura,Terren
 
 	for(unsigned i=0;i<sensores.size();i++) {
 	
-		Figura* fig = crearSensorTransparente(sensores[i],figAsociada);
+		Figura* fig = crearSensorTransparente(sensores[i]["sensor"],figAsociada);
 
 		if (!fig) continue;
 		
