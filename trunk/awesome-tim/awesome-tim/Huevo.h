@@ -3,6 +3,8 @@
 #include "Constantes.h"
 #include "Figura.h"
 
+#define FACTOR 4
+
 class Huevo : public Figura
 {
 
@@ -48,32 +50,32 @@ public:
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);
 			}
-			if(contador == (FPS/7)){
+			if(contador == (FPS/FACTOR)){
 				this->ID = ID_HUEVO_ROMPIENDO2; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-			if(contador == (2*FPS/7)){
+			if(contador == (2*FPS/FACTOR)){
 				this->ID = ID_HUEVO_ROMPIENDO3; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-			if(contador == (3*FPS/7)){
+			if(contador == (3*FPS/FACTOR)){
 				this->ID = ID_HUEVO_ROMPIENDO4; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-			if(contador == (4*FPS/7)){
+			if(contador == (4*FPS/FACTOR)){
 				this->ID = ID_HUEVO_ROMPIENDO5; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-			if(contador == (5*FPS/7)){
+			if(contador == (5*FPS/FACTOR)){
 				this->ID = ID_HUEVO_ROMPIENDO6; 
 				delete (this->myVista);
 				this->myVista = new VistaFigura(this);			
 			}
-			if(contador == (6*FPS/7)){
+			if(contador == (6*FPS/FACTOR)){
 				this->marcar(true);
 			}
 		}
