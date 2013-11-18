@@ -548,7 +548,7 @@ void JuegoCliente::sendReady(){
 	ClientMessage* c_msg = new ClientMessage();
 	c_msg->setClientID(this->numCliente);
 	c_msg->setAction(A_READY);
-	this->maq->pushSendMessage(c_msg);
+	this->maq->pushSendMessage(c_msg,numCliente);
 
 	this->block = true;
 }
@@ -557,7 +557,7 @@ void JuegoCliente::sendUnready(){
 	ClientMessage* c_msg = new ClientMessage();
 	c_msg->setClientID(this->numCliente);
 	c_msg->setAction(A_UNREADY);
-	this->maq->pushSendMessage(c_msg);
+	this->maq->pushSendMessage(c_msg,numCliente);
 
 	this->block = false;
 }

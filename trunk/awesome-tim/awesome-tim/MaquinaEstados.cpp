@@ -10,9 +10,9 @@ void MaquinaEstados::pushSendMessage(Message * msg, int id){
 	Lock lock(this->_mutex);
 	if(id < 0)
 	{
-		for (int i = 1; i <= MAX_CLIENTES; i++)
+		for (std::list<int>::iterator iter = clientesConectados.begin(); iter != clientesConectados.end(); iter++)
 		{
-			this->aEnviar[i].push_back(msg);
+			this->aEnviar[*iter].push_back(msg);
 		}
 	}
 	else

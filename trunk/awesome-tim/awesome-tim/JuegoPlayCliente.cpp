@@ -7,11 +7,14 @@
 #include "RemoveFigureMessage.h"
 #include "FireBowMessage.h"
 #include "FireShotgunMessage.h"
+#include "RotateMessage.h"
+#include "BreakEggMessage.h"
 
 #include "Tijera.h"
 #include "GloboHelio.h"
 #include "Arco.h"
 #include "Escopeta.h"
+#include "Huevo.h"
 
 JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -160,6 +163,13 @@ void JuegoPlayCliente::onLoop(){
 					delete msg;
 				}
 				break;
+			case MSG_TYPE_BREAK_EGG:
+				{
+					FigureMessage* r_msg = (FigureMessage*) msg;
+					((Huevo*)(vector[r_msg->getFigureID()]))->romper();
+					delete msg;
+				}
+				break;
 			case MSG_TYPE_POP_BALLOON:
 				{
 					FigureMessage* r_msg = (FigureMessage*) msg;
@@ -198,6 +208,13 @@ void JuegoPlayCliente::onLoop(){
 				{
 					this->gano = true;
 					this->actualizarVictoria();
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_ROTATE:
+				{
+					RotateMessage* r_msg = (RotateMessage*) msg;
+					vector[r_msg->getFigureID()]->setAnguloPartesRotables(r_msg->getAngle());
 					delete msg;
 				}
 				break;
@@ -345,5 +362,5 @@ void JuegoPlayCliente::sendUnready(){
 	ClientMessage* c_msg = new ClientMessage();
 	c_msg->setClientID(this->numCliente);
 	c_msg->setAction(A_UNREADY);
-	this->maq->pushSendMessage(c_msg);
+	this->maq->pushSendMessage(c_msg,numCliente);
 }

@@ -53,4 +53,8 @@ public:
 		*d1 = largo;
 		*d2 = -1;
 	}
+
+	virtual bool tienePartesRotables(){return true;};
+	virtual double getAnguloPartesRotables(){return circizq->getDimension()->getAngulo();};
+	virtual void setAnguloPartesRotables(double angulo){this->setAngulo(angulo);};
 };

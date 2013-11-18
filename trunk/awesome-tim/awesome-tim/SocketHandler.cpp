@@ -130,6 +130,12 @@ void SocketHandler::run()
 									case MSG_TYPE_VICTORY:
 										msg = new VictoryMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_ROTATE:
+										msg = new RotateMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_BREAK_EGG:
+										msg = new BreakEggMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg!=NULL && msg->validate())

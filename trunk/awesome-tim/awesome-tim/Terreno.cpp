@@ -13,6 +13,7 @@
 #include "CloseScissorMessage.h"
 #include "PopBalloonMessage.h"
 #include "FireShotgunMessage.h"
+#include "BreakEggMessage.h"
 
 Terreno::Terreno(int ancho,int alto,MaquinaEstados* maq,bool fisicaActiva){
 	
@@ -797,6 +798,12 @@ void Terreno::actualizarModelo(Figura* vector[]){
 			}else if((*iteradorLista)->getTipoFigura()==LINEA){
 				((Linea*)(*iteradorLista))->actualizar();
 			}else if((*iteradorLista)->getTipoFigura()==HUEVO){
+				if(((Huevo*)(*iteradorLista))->estaRompiendo()){
+					BreakEggMessage* be_msg = new BreakEggMessage();
+					be_msg->setFigureID((*iteradorLista)->numero);
+					this->maq->pushSendMessage(be_msg);
+					mundoBox2D->eliminarFigura((*iteradorLista));
+				}
 				((Huevo*)(*iteradorLista))->actualizar();
 				ActualizeFigureMessage* a_msg = new ActualizeFigureMessage();
 				a_msg->setFigureID((*iteradorLista)->numero);
