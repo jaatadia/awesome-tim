@@ -81,4 +81,6 @@ private:
 
 
 	void cambiarInstancias(int cliente,int tipoFigura,int cantidad);
+
+	void reload();
 };

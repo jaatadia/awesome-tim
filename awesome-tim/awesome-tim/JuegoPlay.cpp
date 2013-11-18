@@ -198,7 +198,7 @@ void JuegoPlay::onLoop(){
 
 	}else{
 		actualizarVictoria();
-		this->maq->pushSendMessage(new VictoryMessage());
+		if(contadorGano%2 == 0) this->maq->pushSendMessage(new VictoryMessage());
 	}
 }
 
