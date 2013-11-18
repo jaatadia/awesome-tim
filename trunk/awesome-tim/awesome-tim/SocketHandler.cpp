@@ -118,6 +118,9 @@ void SocketHandler::run()
 									case MSG_TYPE_CLOSE_SCISSOR:
 										msg = new CloseScissorMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_POP_BALLOON:
+										msg = new PopBalloonMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg->validate())

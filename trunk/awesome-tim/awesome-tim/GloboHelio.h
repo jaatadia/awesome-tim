@@ -11,7 +11,7 @@ private:
 	GloboHelio(const char* id,Dimension* dim,int color):Figura(id,dim){
 		pinchando = false;
 		atado = false;
-		contador = 0;
+		contador = -1;
 		miColor = color;
 	};
 	bool atado;
@@ -48,7 +48,7 @@ public:
 		this->myVista = new VistaFigura(this);
 		pinchando = false;
 		atado = false;
-		contador = 0;
+		contador = -1;
 	};
 	~GloboHelio(void){};
 
@@ -120,12 +120,14 @@ public:
 	void pinchar(){
 		if(!pinchando){
 			pinchando = true;
+			contador ++;
 			Sonidos::playSound(POP_BALLOON);
 		}
 	}
 
 	bool estaPinchando(){
-		return pinchando;
+		//return pinchando;
+		return contador == 0;
 	}
 
 	void actualizar(){

@@ -7,6 +7,7 @@
 #include "RemoveFigureMessage.h"
 
 #include "Tijera.h"
+#include "GloboHelio.h"
 
 JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -152,6 +153,13 @@ void JuegoPlayCliente::onLoop(){
 				{
 					FigureMessage* r_msg = (FigureMessage*) msg;
 					((Tijera*)(vector[r_msg->getFigureID()]))->cerrar();
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_POP_BALLOON:
+				{
+					FigureMessage* r_msg = (FigureMessage*) msg;
+					((GloboHelio*)(vector[r_msg->getFigureID()]))->pinchar();
 					delete msg;
 				}
 				break;
