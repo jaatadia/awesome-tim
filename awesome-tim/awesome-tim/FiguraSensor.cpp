@@ -2,8 +2,8 @@
 
 FiguraSensor::FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,Figura* figura):Figura("",new Cuadrado(ancho,alto,posX,posY,angulo),false){
 
-	figuraInteractuar = figura;
-	this->numInteractuar = figura->numero;
+	this->figInteractuar = figura;
+	this->numInteractuar = figura->numero; //este no sirve
 }
 
 FiguraSensor::~FiguraSensor(void){
@@ -27,17 +27,18 @@ void FiguraSensor::dibujar(Superficie* super){
 }
 Figura* FiguraSensor::clonar(){
 	Dimension* dim = this->getDimension();
-	return new FiguraSensor(dim->getAncho(),dim->getAlto(),dim->getX(),dim->getY(),dim->getAngulo(),(this->figuraInteractuar)->numero);
+	return new FiguraSensor(dim->getAncho(),dim->getAlto(),dim->getX(),dim->getY(),dim->getAngulo(),/*NECESITO EL NUMERO ACTUALIZADO*/(this->figInteractuar)->numero);
 }
-void FiguraSensor::accionarMotor(){
+void FiguraSensor::accionarMotor(Figura** vector){
 
-		if (figuraInteractuar->getTipoFigura() == MOTOR_RATON){
-			((MotorRaton*)figuraInteractuar)->ActivarMotor();
-		}
+	if ((vector[this->numInteractuar])->getTipoFigura() == MOTOR_RATON){
+		((MotorRaton*)(vector[this->numInteractuar]))->ActivarMotor();
+	}
+
 }
-void FiguraSensor::cumplirObjetivo(Figura* fig){
+void FiguraSensor::cumplirObjetivo(Figura** vec,Figura* fig){
 
-		if (figuraInteractuar->numero == fig->numero){
-			figuraInteractuar->cumplirObjetivo();
+		if (this->numInteractuar == fig->numero){
+			(vec[this->numInteractuar])->cumplirObjetivo();
 		}
 }
