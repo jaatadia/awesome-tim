@@ -551,7 +551,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case CARRITO:{
-				this->sonidos.push_back(CARRITO_MUSIC);
 
 				//forma del carro con sus partes
 				b2PolygonShape forma_base;
@@ -571,7 +570,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				cuerpo->CreateFixture(&fD);
 				cuerpo->SetUserData(((Carrito*)figura)->getCarro());
 				
-				b2BodyDef mybodyDef;
+			/*	b2BodyDef mybodyDef;
 				mybodyDef.type = b2_dynamicBody;
 				mybodyDef.position.Set(dim->getX(),dim->getY());
 				forma_base.SetAsBox(dim->getAncho()/2,dim->getAlto()/2);
@@ -584,33 +583,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fondo->SetUserData(figura);
 				b2WeldJointDef myJoint;
 				myJoint.Initialize(cuerpo,fondo,b2Vec2(dim->getX(),dim->getY()));
-				this->mundo->CreateJoint(&myJoint);
-
-
-				//b2BodyDef pared1;
-				//pared1.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());
-				//pared1.type = b2_dynamicBody;
-				//b2Body* cuerpo_pared1 = this->mundo->CreateBody(&pared1);
-
-				//fD.shape = &forma_pared1;
-				//cuerpo_pared1->CreateFixture(&fD);
-
-				//b2BodyDef pared2;
-				//pared2.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()+ancho-ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());
-				//pared2.type = b2_dynamicBody;
-				//b2Body* cuerpo_pared2 = this->mundo->CreateBody(&pared2);
-				//
-				//fD.shape = &forma_pared2;
-				//cuerpo_pared2->CreateFixture(&fD);
-
-				//union del carro
-				//b2WeldJointDef jointcarro1;
-				//jointcarro1.Initialize(cuerpo_pared1,cuerpo,b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2));
-				//b2Joint* enlace_carro1 = this->mundo->CreateJoint(&jointcarro1);
-
-				//b2WeldJointDef jointcarro2;
-				//jointcarro2.Initialize(cuerpo_pared2,cuerpo,b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX()+ancho-ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY()-alto/2));
-				//b2Joint* enlace_carro2 = this->mundo->CreateJoint(&jointcarro2);
+				this->mundo->CreateJoint(&myJoint);*/
 
 				//def de cuerpo de rueda izq
 				b2BodyDef rueda1;
@@ -648,6 +621,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				joint2.collideConnected = false;
 				b2Joint* enlace2 = this->mundo->CreateJoint(&joint2);
 				
+				((Carrito*)figura)->setCuerpo(cuerpo);
+
 				break;
 			}
 		case GLOBOHELIO:{
@@ -981,8 +956,9 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				}
 				break;
 			}
-		case MOTOR_RATON:
-			{
+		case MOTOR_RATON:{
+				this->sonidos.push_back(MOTOR_RATON_MUSIC);
+
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;
 				ejeDef.position.Set(figura->getDimension()->getX(),figura->getDimension()->getY());

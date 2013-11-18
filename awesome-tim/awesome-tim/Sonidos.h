@@ -4,11 +4,10 @@
 #include <string>
 #include "Constantes.h"
 
-#define MUSIC "../music/modoEstatico.wav"
-#define VICTORY_MUS "../music/victory.ogg"
+#define MUSIC ""//"../music/modoEstatico.wav"
+#define VICTORY_MUS ""//"../music/victory.ogg"
 
 //MUSICA
-#define CARRITO_MUSIC "../music/carrito.wav"
 #define MOTOR_MUSIC "../music/motor.wav"
 #define VELA_MUSIC "../music/vela.wav"
 #define GLOBO_MUSIC ""
@@ -23,6 +22,7 @@
 #define FLIPPER_UP "../music/flipperup.wav"
 #define FLIPPER_DOWN "../music/flipperdown.wav"
 #define HUEVO_SOUND "../music/Huevo_rompiendose.wav"
+#define CARRITO_MUSIC "../music/carrito.wav"
 #define CANIO_SOUND ""
 #define CODO_SOUND ""
 #define BASKET_SOUND ""
