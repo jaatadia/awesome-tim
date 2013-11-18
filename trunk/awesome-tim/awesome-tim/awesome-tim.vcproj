@@ -416,6 +416,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NoneMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PaletaFlipper.cpp"
 				>
 			</File>
@@ -971,6 +975,10 @@
 			</File>
 			<File
 				RelativePath=".\Mutex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NoneMessage.h"
 				>
 			</File>
 			<File

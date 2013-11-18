@@ -33,6 +33,7 @@
 #include "StringMessage.h"
 #include "DropFigureMessage.h"
 #include "DeleteFigureMessage.h"
+#include "NoneMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

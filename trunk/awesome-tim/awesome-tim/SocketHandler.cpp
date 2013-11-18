@@ -151,6 +151,8 @@ void SocketHandler::run()
 									case MSG_TYPE_DELETE:
 										msg = new RemoveFigureMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_NONE:
+										break;
 								}
 
 								if (msg!=NULL && msg->validate())
