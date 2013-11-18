@@ -486,6 +486,7 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 	std::vector<int> tiposBorradas;
 
 	Figura* figuraABorrar = buscarFigura(posClickX, posClickY,true);
+	if (figuraABorrar==NULL) return tiposBorradas;
 
 	//no le deja si no la cero el
 	if(figuraABorrar->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){
@@ -676,8 +677,9 @@ Figura* TerrenoCliente::buscarFigura(double posClickX, double posClickY,bool sol
 		}
 
 		if (figuraEncontrada){
-			if(figuraBuscada->esFija())
+			if(figuraBuscada->esFija()){
 				return NULL;
+			}
 
 			if(soloMias){
 				if(figuraBuscada->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){

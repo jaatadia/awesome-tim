@@ -125,6 +125,7 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 		}
 	}
 	return aux;
+	return false;
 }
 
 void JuegoPlay::onLoop(){
@@ -279,44 +280,44 @@ void JuegoPlay::quit(){
 
 void JuegoPlay::actualizarVictoria(){
 	contadorGano++;
-	int ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
-	int alto = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
-	if (contadorGano==INICIO_GANO1){
-		Sonidos::playMusic(VICTORY_MUS);
-		delete imgGano;
-		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_1);
-		imgGano = imgGano->scaleImagen(ancho,alto);
-		this->dibujar = true;
-	}else if (contadorGano==INICIO_GANO2){
-		delete imgGano;
-		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_2);
-		imgGano = imgGano->scaleImagen(ancho,alto);
-		this->dibujar = true;
-	}else if (contadorGano==INICIO_GANO3){
-		delete imgGano;
-		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_3);
-		imgGano = imgGano->scaleImagen(ancho,alto);
-		this->dibujar = true;
-	}else if (contadorGano==INICIO_GANO4){
-		delete imgGano;
-		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_4);
-		imgGano = imgGano->scaleImagen(ancho,alto);
-		this->dibujar = true;
-	}else if (contadorGano==INICIO_GANO5){
-		delete imgGano;
-		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_5);
-		imgGano = imgGano->scaleImagen(ancho,alto);
-		this->dibujar = true;
-	}else if (contadorGano==INICIO_GANO6){
-		delete imgGano;
-		imgGano = (Imagen*)Contenedor::getMultimedia(GANO_6);
-		imgGano = imgGano->scaleImagen(ancho,alto);
-		this->dibujar = true;
-	}else if (contadorGano==DURACION_FRAMES){
-		if(REPEAT){
-			contadorGano = REPEAT_FROM -1;
-		}
-	}
+	//int ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
+	//int alto = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
+	//if (contadorGano==INICIO_GANO1){
+	//	Sonidos::playMusic(VICTORY_MUS);
+	//	delete imgGano;
+	//	imgGano = (Imagen*)Contenedor::getMultimedia(GANO_1);
+	//	imgGano = imgGano->scaleImagen(ancho,alto);
+	//	this->dibujar = true;
+	//}else if (contadorGano==INICIO_GANO2){
+	//	delete imgGano;
+	//	imgGano = (Imagen*)Contenedor::getMultimedia(GANO_2);
+	//	imgGano = imgGano->scaleImagen(ancho,alto);
+	//	this->dibujar = true;
+	//}else if (contadorGano==INICIO_GANO3){
+	//	delete imgGano;
+	//	imgGano = (Imagen*)Contenedor::getMultimedia(GANO_3);
+	//	imgGano = imgGano->scaleImagen(ancho,alto);
+	//	this->dibujar = true;
+	//}else if (contadorGano==INICIO_GANO4){
+	//	delete imgGano;
+	//	imgGano = (Imagen*)Contenedor::getMultimedia(GANO_4);
+	//	imgGano = imgGano->scaleImagen(ancho,alto);
+	//	this->dibujar = true;
+	//}else if (contadorGano==INICIO_GANO5){
+	//	delete imgGano;
+	//	imgGano = (Imagen*)Contenedor::getMultimedia(GANO_5);
+	//	imgGano = imgGano->scaleImagen(ancho,alto);
+	//	this->dibujar = true;
+	//}else if (contadorGano==INICIO_GANO6){
+	//	delete imgGano;
+	//	imgGano = (Imagen*)Contenedor::getMultimedia(GANO_6);
+	//	imgGano = imgGano->scaleImagen(ancho,alto);
+	//	this->dibujar = true;
+	//}else if (contadorGano==DURACION_FRAMES){
+	//	if(REPEAT){
+	//		contadorGano = REPEAT_FROM -1;
+	//	}
+	//}
 }
 
 void JuegoPlay::dibujarVictoria(Superficie* sup){
