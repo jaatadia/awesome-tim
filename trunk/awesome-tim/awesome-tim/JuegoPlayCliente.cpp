@@ -5,9 +5,13 @@
 #include "FactoryFiguras.h"
 #include "ActualizeFigureMessage.h"
 #include "RemoveFigureMessage.h"
+#include "FireBowMessage.h"
+#include "FireShotgunMessage.h"
 
 #include "Tijera.h"
 #include "GloboHelio.h"
+#include "Arco.h"
+#include "Escopeta.h"
 
 JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -160,6 +164,33 @@ void JuegoPlayCliente::onLoop(){
 				{
 					FigureMessage* r_msg = (FigureMessage*) msg;
 					((GloboHelio*)(vector[r_msg->getFigureID()]))->pinchar();
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_FIRE_BOW:
+				{
+					FireBowMessage* fb_msg = (FireBowMessage*) msg;
+					int gunID  = fb_msg->getGunID();
+					int proyectileID  = fb_msg->getProyectileID();
+					Arco* gun = (Arco*)vector[gunID];
+					gun->desatarSoga(0);
+					Figura* fig = gun->disparar();
+					fig->numero = proyectileID;
+					this->terreno->agregarFigura(fig);
+					vector[proyectileID] = fig;
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_FIRE_SHOTGUN:
+				{
+					FireShotgunMessage* fb_msg = (FireShotgunMessage*) msg;
+					int gunID  = fb_msg->getGunID();
+					int proyectileID  = fb_msg->getProyectileID();
+					Escopeta* gun = (Escopeta*)vector[gunID];
+					Figura* fig = gun->disparar();
+					fig->numero = proyectileID;
+					this->terreno->agregarFigura(fig);
+					vector[proyectileID] = fig;
 					delete msg;
 				}
 				break;

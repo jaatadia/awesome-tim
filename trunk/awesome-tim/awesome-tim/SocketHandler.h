@@ -24,6 +24,7 @@
 #include "ActualizeFigureMessage.h"
 #include "CloseScissorMessage.h"
 #include "PopBalloonMessage.h"
+#include "FireShotgunMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

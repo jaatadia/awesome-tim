@@ -42,7 +42,7 @@ public:
 	~Box2DWorld(void);
 
 	void eliminarSoga(Soga* figura);
-	void dispararEscopeta(Escopeta* escopeta,std::list<Figura*>* lista);
+	Figura* dispararEscopeta(Escopeta* escopeta);
 private:
 	void ponerEnPolea(Figura* soga, b2Body* cuerpo1,Figura* fig1,int num1,b2Body* cuerpo2,Figura* fig2,int num2);
 	void actuarTijera(b2Body* cuerpo, Tijera* fig);
