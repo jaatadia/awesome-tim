@@ -333,6 +333,8 @@ void Juego:: onLoop(){
 								StringMessage* s_msg = new StringMessage();
 								s_msg->setString(this->objetivo);
 								this->maq->pushSendMessage(s_msg,c_msg->getClientID());
+								
+								std::cout<<"Se conecto el cliente n: "<< c_msg->getClientID() <<"\n";
 
 								delete msg;
 							}
@@ -363,6 +365,8 @@ void Juego:: onLoop(){
 								if(this->myClients.size()==0){
 									this->reload();
 								}
+
+								std::cout<<"Se desconecto el cliente n: "<< c_msg->getClientID() <<"\n";
 							}
 							break;
 						case A_READY:
