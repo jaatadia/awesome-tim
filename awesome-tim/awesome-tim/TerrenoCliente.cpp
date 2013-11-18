@@ -481,13 +481,16 @@ bool TerrenoCliente::hayFiguras(){
 	return false;
 }
 
-std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY,Figura* vec[]){
+std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY,Figura* vec[],Figura* fig){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-click
 
 	std::vector<int> tiposBorradas;
-
-	Figura* figuraABorrar = buscarFigura(posClickX, posClickY,true);
-	if (figuraABorrar==NULL) return tiposBorradas;
+	Figura* figuraABorrar = NULL;
+	if(fig!=NULL){
+		 figuraABorrar = buscarFigura(posClickX, posClickY,true);
+		if (figuraABorrar==NULL) return tiposBorradas;
+	}
+	figuraABorrar = fig;
 
 	//no le deja si no la cero el
 	if(figuraABorrar->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){

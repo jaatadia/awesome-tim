@@ -31,6 +31,8 @@
 #include "InteractMessage.h"
 #include "ActualizeCounterMessage.h"
 #include "StringMessage.h"
+#include "DropFigureMessage.h"
+#include "DeleteFigureMessage.h"
 
 class SocketHandler : public ConnectionManager
 {
