@@ -296,7 +296,18 @@ while(SDL_PollEvent(&evento)){
 
 			if (evento.key.keysym.sym == SDLK_TAB){
 				if(clickPressed){
-					if(figurasEnAire[this->numCliente]) figurasEnAire[this->numCliente]->shift();
+					if(figurasEnAire[this->numCliente]){
+						figurasEnAire[this->numCliente]->shift();
+						
+						TransformFigureMessage* t_msg = new TransformFigureMessage();
+						t_msg->setClientID(numCliente);
+						t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+						t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+						t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+						t_msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
+						t_msg->setSizeChange(T_SHIFT);
+						this->maq->pushSendMessage(t_msg,this->numCliente);
+					}
 					else terreno->shiftFigura();
 				}
 			}	
@@ -317,10 +328,32 @@ while(SDL_PollEvent(&evento)){
 			charIngresado = evento.text.text[0];
 //			if(clickPressed){
 				if(charIngresado == '+'){
-					if(figurasEnAire[this->numCliente]) figurasEnAire[this->numCliente]->agrandar();
+					if(figurasEnAire[this->numCliente]){
+
+						TransformFigureMessage* t_msg = new TransformFigureMessage();
+						t_msg->setClientID(numCliente);
+						t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+						t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+						t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+						t_msg->setSizeChange(T_GROW);
+						this->maq->pushSendMessage(t_msg,this->numCliente);
+
+						figurasEnAire[this->numCliente]->agrandar();
+					}
 					else terreno->agrandarFigura();
 				}else if(charIngresado == '-'){
-					if(figurasEnAire[this->numCliente]) figurasEnAire[this->numCliente]->achicar();
+					if(figurasEnAire[this->numCliente]){
+
+						TransformFigureMessage* t_msg = new TransformFigureMessage();
+						t_msg->setClientID(numCliente);
+						t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+						t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+						t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+						t_msg->setSizeChange(T_SHRINK);
+						this->maq->pushSendMessage(t_msg,this->numCliente);
+
+						figurasEnAire[this->numCliente]->achicar();
+					}
 					else terreno->achicarFigura();
 //				}
 			}else comandos->agregarLetra(charIngresado);
@@ -484,7 +517,17 @@ while(SDL_PollEvent(&evento)){
 			if (evento.wheel.y > 0){	
 				if(clickPressed){
 					if(figurasEnAire[this->numCliente]){
+						
+						TransformFigureMessage* t_msg = new TransformFigureMessage();
+						t_msg->setClientID(numCliente);
+						t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+						t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+						t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+						t_msg->setSizeChange(T_GROW);
+						this->maq->pushSendMessage(t_msg,this->numCliente);
+
 						figurasEnAire[this->numCliente]->agrandar();
+
 						if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX() - X_TERRENO_LOGICO,figurasEnAire[this->numCliente]->getDimension()->getY() - Y_TERRENO_LOGICO)){
 							figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
 						}else{
@@ -497,6 +540,15 @@ while(SDL_PollEvent(&evento)){
 			}else if (evento.wheel.y < 0){
 				if(clickPressed){
 					if(figurasEnAire[this->numCliente]){
+	
+						TransformFigureMessage* t_msg = new TransformFigureMessage();
+						t_msg->setClientID(numCliente);
+						t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+						t_msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+						t_msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+						t_msg->setSizeChange(T_SHRINK);
+						this->maq->pushSendMessage(t_msg,this->numCliente);
+	
 						figurasEnAire[this->numCliente]->achicar();
 						if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX() - X_TERRENO_LOGICO,figurasEnAire[this->numCliente]->getDimension()->getY() - Y_TERRENO_LOGICO)){
 							figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
@@ -808,7 +860,7 @@ void JuegoCliente::set2Click(){
 		double x = linea->getDimension()->getX();
 		double y = linea->getDimension()->getY();
 
-		Figura* result = terreno->getFiguraAtableCorrea(x,y);
+		Figura* result = terreno->getFiguraAtableCorrea(x,y,true);
 		
 		if(result==NULL){
 			
@@ -902,7 +954,7 @@ void JuegoCliente::set2Click(){
 		double x = linea->getDimension()->getX();
 		double y = linea->getDimension()->getY();
 
-		Figura* result = terreno->getFiguraAtableSoga(x,y);
+		Figura* result = terreno->getFiguraAtableSoga(x,y,true);
 		
 		if(result==NULL){
 			botonera->restaurarInstanciaActual();
