@@ -260,6 +260,13 @@ void JuegoCliente:: onLoop(){
 					comandos->setImagenObjetivo(((StringMessage*)msg)->getString());
 				}
 				break;
+			case MSG_TYPE_DELETE:
+				{
+					DeleteFigureMessage* d_msg = (DeleteFigureMessage*) d_msg;
+					std::vector<int> tipoFig = this->terreno->borrarFigura(0,0,vector,vector[d_msg->getFigureID()]);
+					botonera->restaurarInstancias(tipoFig);
+				}
+				break;
 		}
 		delete msg;
 		if(continuar){

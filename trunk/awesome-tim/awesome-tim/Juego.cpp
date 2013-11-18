@@ -429,10 +429,17 @@ void Juego:: onLoop(){
 								if(figuraEnAire[t_msg->getClientID()]==NULL) terreno->setCambio(true);
 								break;
 							case T_DROP:
-								figuraEnAire[t_msg->getClientID()] = NULL;
-								terreno->agregarFigura(fig);
-								fig->setX(t_msg->getX());
-								fig->setY(t_msg->getY());
+								{
+									figuraEnAire[t_msg->getClientID()] = NULL;
+									terreno->agregarFigura(fig);
+									fig->setX(t_msg->getX());
+									fig->setY(t_msg->getY());
+
+									DropFigureMessage* d_msg = new DropFigureMessage();
+									d_msg->setClientID(t_msg->getClientID());
+									d_msg->setFigureID(t_msg->getFigureID());
+									this->maq->returnProcessMessage(d_msg);
+								}
 								break;
 							case T_DROPDEAD:
 								cambiarInstancias(t_msg->getClientID(),fig->getTipoFigura(),1);
@@ -501,12 +508,10 @@ void Juego:: onLoop(){
 					Figura* fig = vector[figureID];
 
 					if(terreno->posicionOcupada(fig)){
-						terreno->eliminarFigura(fig);
-
 						DeleteFigureMessage* d_msg = (DeleteFigureMessage*) msg;
 						d_msg->setClientID(clientID);
 						d_msg->setFigureID(figureID);
-						this->maq->pushSendMessage(d_msg);
+						this->maq->pushSendMessage(d_msg,clientID);
 					}
 				}
 				break;
