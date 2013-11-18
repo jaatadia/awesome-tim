@@ -27,6 +27,7 @@ JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados*
 	this->fondo = fondo;
 	this->maq = maq;
 	this->numCliente = maq->getId();
+	this->contador = 0;
 		
 	comandos = new ComandosPlayCliente(ANCHO_COMANDOS,ALTO_COMANDOS);
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,true);
@@ -93,7 +94,9 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 
-				terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+				if((!gano)&&(contador>=FPS)){
+					terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+				}
 				break;
 			}
 			case SDL_MOUSEBUTTONUP:
@@ -102,6 +105,24 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 				posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
 				comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux ,this);
+				break;
+			}
+			case SDL_KEYDOWN:
+			{
+				if (evento.key.keysym.sym == SDLK_SPACE){
+					if((!gano)&&(contador>=FPS)){
+						terreno->interactuar(PRESS_SPACE);
+					}
+				}
+				break;
+			}
+			case SDL_KEYUP:
+			{
+				if (evento.key.keysym.sym == SDLK_SPACE){
+					if((!gano)&&(contador>=FPS)){
+						terreno->interactuar(RELEASE_SPACE);
+					}
+				}
 				break;
 			}
 		}
@@ -153,6 +174,12 @@ void JuegoPlayCliente::onLoop(){
 				{
 					FigureMessage* r_msg = (FigureMessage*) msg;
 					vector[r_msg->getFigureID()]->actualizar();
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_COUNTER:
+				{
+					contador++;
 					delete msg;
 				}
 				break;

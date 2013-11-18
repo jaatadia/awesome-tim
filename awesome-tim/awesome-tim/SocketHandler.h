@@ -28,6 +28,8 @@
 #include "VictoryMessage.h"
 #include "RotateMessage.h"
 #include "BreakEggMessage.h"
+#include "InteractMessage.h"
+#include "ActualizeCounterMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

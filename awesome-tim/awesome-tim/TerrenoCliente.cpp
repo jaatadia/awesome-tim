@@ -924,11 +924,28 @@ void TerrenoCliente::borrarAtadura(Figura* fig){
 
 
 void TerrenoCliente::interactuar(double posClickX, double posClickY){
-
 	Figura* figAInteract;
 	
 	if (this->adentroZonaTerreno(posClickX,posClickY)){
 		figAInteract = this->buscarFigura(posClickX,posClickY,false);
+		if(figAInteract!=NULL){
+			InteractMessage* i_msg = new InteractMessage();
+			i_msg->setFigureID(figAInteract->numero);
+			i_msg->setAction(CLICK_MOUSE);
+			this->maq->pushSendMessage(i_msg,this->numCliente);
+		}
 	}
 
+}
+
+void TerrenoCliente::interactuar(int accion){
+
+	for (std::list<Figura*>::iterator iter = figuras.begin();iter != figuras.end();iter++){
+		if((*iter)->numero/(LARGO/(MAX_CLIENTES+1)) == this->numCliente){
+			InteractMessage* i_msg = new InteractMessage();
+			i_msg->setFigureID((*iter)->numero);
+			i_msg->setAction(accion);
+			this->maq->pushSendMessage(i_msg,this->numCliente);
+		}
+	}
 }

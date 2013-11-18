@@ -5,6 +5,8 @@
 #include "ActualizeFigureMessage.h"
 #include "VictoryMessage.h"
 #include "RotateMessage.h"
+#include "InteractMessage.h"
+#include "ActualizeCounterMessage.h"
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -145,6 +147,14 @@ void JuegoPlay::onLoop(){
 				break;
 
 			/* +++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			case MSG_TYPE_INTERACT:
+				{
+					InteractMessage* i_msg = (InteractMessage*) msg;
+					vector[i_msg->getFigureID()]->interactuar(i_msg->getAction());
+					delete msg;
+				}
+				break;
+			/* +++++++++++++++++++++++++++++++++++++++++++++++++++ */
 			//case
 			}
 	}
@@ -153,6 +163,7 @@ void JuegoPlay::onLoop(){
 
 	if(contador<FPS){
 		contador++;
+		this->maq->pushSendMessage(new ActualizeCounterMessage());
 		return;
 	}
 
