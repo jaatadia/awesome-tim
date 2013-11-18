@@ -12,6 +12,8 @@
 #include "TransformFigureMessage.h"
 #include "SetAreaMessage.h"
 #include "CreateButtonMessage.h"
+#include "UnionMessage.h"
+#include "UnionMessage2.h"
 
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
@@ -200,7 +202,12 @@ void Juego:: onLoop(){
 								this->myClients.push_back(c_msg->getClientID());
 								//mando las figuras del terreno
 								std::list<Figura*> lista = terreno->getListaFigs();
+								std::list<Figura*> listaUniones;
 								for (std::list<Figura*>::iterator iter = lista.begin(); iter != lista.end();iter++){
+									if((*iter)->esUnion()){//si es una union la mando despues
+										listaUniones.push_back((*iter));
+										continue;
+									}
 									CreateFigureMessage* f_msg = new CreateFigureMessage();
 									f_msg->setId(0);
 									f_msg->setFigureID((*iter)->numero);
@@ -216,6 +223,52 @@ void Juego:: onLoop(){
 
 									this->maq->pushSendMessage(f_msg,c_msg->getClientID());
 								}
+
+								//mando las uniones
+								for (std::list<Figura*>::iterator iter = listaUniones.begin(); iter != listaUniones.end();iter++){
+
+									//creo la union
+									CreateFigureMessage* f_msg = new CreateFigureMessage();
+									f_msg->setId(0);
+									f_msg->setFigureID((*iter)->numero);
+									f_msg->setFigureType((*iter)->getTipoFigura());
+									f_msg->setX((*iter)->getDimension()->getX());
+									f_msg->setY((*iter)->getDimension()->getY());
+									f_msg->setAngle((*iter)->getDimension()->getAngulo());
+									f_msg->setInAir(true);
+									double data1,data2;
+									(*iter)->getExtraData(&data1,&data2);
+									f_msg->setData1(data1);
+									f_msg->setData2(data2);
+									this->maq->pushSendMessage(f_msg,c_msg->getClientID());
+
+									//le asigno el punto1
+									double x,y;
+									UnionMessage* u_msg = new UnionMessage();
+									u_msg->setClientID(0);
+									((Linea*)(*iter))->getPunto1(&x,&y);
+									u_msg->setFigsNum((*iter)->numero,x,y);
+									this->maq->pushSendMessage(u_msg,c_msg->getClientID());
+									
+									//le asigno el punto2
+									u_msg = new UnionMessage2();
+									u_msg->setClientID(0);
+									((Linea*)(*iter))->getPunto2(&x,&y);
+									u_msg->setFigsNum((*iter)->numero,x,y);
+									this->maq->pushSendMessage(u_msg,c_msg->getClientID());
+
+									//la suelto
+									TransformFigureMessage* t_msg = new TransformFigureMessage();
+									t_msg->setClientID(0);
+									t_msg->setFigureID((*iter)->numero);
+									t_msg->setX((*iter)->getDimension()->getX());
+									t_msg->setY((*iter)->getDimension()->getY());
+									t_msg->setSizeChange(T_DROP);
+									this->maq->pushSendMessage(t_msg,c_msg->getClientID());
+									
+								}
+
+
 								
 								//mando los botones
 								std::list<struct boton>::iterator iter;
@@ -256,8 +309,20 @@ void Juego:: onLoop(){
 										figuraEnAire[i]->getExtraData(&data1,&data2);
 										f_msg->setData1(data1);
 										f_msg->setData2(data2);
-
 										this->maq->pushSendMessage(f_msg,c_msg->getClientID());
+
+										//si es una linea y el primer punto ya fue puesto tengo que mandarlo
+										if(figuraEnAire[i]->esUnion()){
+											double x,y;
+											((Linea*)figuraEnAire[i])->getPunto1(&x,&y);
+											if(!(x==y==-1)){
+												UnionMessage* u_msg = new UnionMessage();
+												u_msg->setClientID(i);
+												u_msg->setFigsNum(figuraEnAire[i]->numero,x,y);
+												this->maq->pushSendMessage(u_msg,c_msg->getClientID());
+											}
+										}
+
 									}
 								}
 
@@ -369,6 +434,38 @@ void Juego:: onLoop(){
 					
 					for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
 						if((*iter)!=((CreateFigureMessage*)msg)->getId()){
+							this->maq->pushSendMessage(msg,(*iter));
+						}
+					}
+				}
+				break;
+			/* +++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			case MSG_TYPE_UNION1:
+				{
+					UnionMessage* u_msg = (UnionMessage*) msg;
+					int numFig;
+					double x,y;
+					u_msg->getFigsNum(&numFig,&x,&y);
+					((Linea*)vector[numFig])->setPunto1(x,y);
+
+					for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
+						if((*iter)!=u_msg->getClientID()){
+							this->maq->pushSendMessage(msg,(*iter));
+						}
+					}
+				}
+				break;
+			/* +++++++++++++++++++++++++++++++++++++++++++++++++++ */
+			case MSG_TYPE_UNION2:
+				{
+					UnionMessage2* u_msg = (UnionMessage2*) msg;
+					int numFig;
+					double x,y;
+					u_msg->getFigsNum(&numFig,&x,&y);
+					((Linea*)vector[numFig])->setPunto2(x,y);
+
+					for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
+						if((*iter)!=u_msg->getClientID()){
 							this->maq->pushSendMessage(msg,(*iter));
 						}
 					}

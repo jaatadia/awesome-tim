@@ -41,6 +41,8 @@ private:
 	bool clickPressed;
 	int contEventosMov;
 
+	bool block;
+
 	Figura* vector[LARGO];
 	int posVector;
 	int numCliente;

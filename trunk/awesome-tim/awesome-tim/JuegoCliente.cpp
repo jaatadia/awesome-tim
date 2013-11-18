@@ -11,6 +11,8 @@
 #include "ClientMessage.h"
 #include "SetAreaMessage.h"
 #include "CreateButtonMessage.h"
+#include "UnionMessage.h"
+#include "UnionMessage2.h"
 
 //Definicion de constantes que no se que son: Jenny :P
 #define MSG_SUBTYPE_MOVEMENT 0
@@ -23,6 +25,7 @@
 JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	
 	this->numCliente = numCliente;
+	this->block = false;
 	posVector = LARGO/5 * (numCliente);
 	for(int i = 0;i<LARGO;i++){
 		vector[i] = NULL;
@@ -137,6 +140,7 @@ void JuegoCliente:: onLoop(){
 						case A_UNREADY:
 							{
 								this->comandos->setListoUnpressed();
+								this->block = false;
 							}
 							break;
 					}
@@ -160,7 +164,7 @@ void JuegoCliente:: onLoop(){
 					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
 					if(fig!=NULL){
 						this->botonera->agregarBoton(fig,((CreateFigureMessage*)msg)->getData2());
-						this->botonera->ScrollUp();
+						this->botonera->resizear();
 					}
 				}
 				break;
@@ -170,6 +174,24 @@ void JuegoCliente:: onLoop(){
 					double x1,y1,x2,y2;
 					a_msg->getPuntos(&x1,&y1,&x2,&y2);
 					this->terreno->setMiPorcion(x1,y1,x2,y2);
+				}
+				break;
+			case MSG_TYPE_UNION1:
+				{
+					UnionMessage* u_msg = (UnionMessage*) msg;
+					int numFig;
+					double x,y;
+					u_msg->getFigsNum(&numFig,&x,&y);
+					((Linea*)vector[numFig])->setPunto1(x,y);
+				}
+				break;
+			case MSG_TYPE_UNION2:
+				{
+					UnionMessage2* u_msg = (UnionMessage2*) msg;
+					int numFig;
+					double x,y;
+					u_msg->getFigsNum(&numFig,&x,&y);
+					((Linea*)vector[numFig])->setPunto2(x,y);
 				}
 				break;
 			case MSG_TYPE_TRANSFORM_FIGURE:
@@ -375,53 +397,55 @@ while(SDL_PollEvent(&evento)){
 			posClickX = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(evento.button.x);
 			posClickY = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(evento.button.y);
 
-			if (terreno->adentroZonaTerreno(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO))
-				//es del terreno
-				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
-					//al borrar algo restauro su contador de instancias
-					std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
-					botonera->restaurarInstancias(tipoFig);
-				}
-				else
-					terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
-				
-
-			if (posEnBotonera(posClickX,posClickY)){
-				//es de la botonera
-				botonera->handleEventBotonera(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
-			}
-
-			//puede que me haya devuelto la figura en aire
-			figurasEnAire[this->numCliente] = botonera->obtenerFiguraActual();
-			if (figurasEnAire[this->numCliente]){
-				estaActiva = true;
-				//innecesario pero por si acaso
-				figurasEnAire[this->numCliente]->setX(posClickX);
-				figurasEnAire[this->numCliente]->setY(posClickY);
-				
-				while(vector[posVector]!=NULL){
-					posVector++;
-					if (posVector == LARGO/5*(numCliente+1)){
-						posVector = LARGO/5*(numCliente);
+			if(!this->block){
+				if (terreno->adentroZonaTerreno(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO))
+					//es del terreno
+					if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
+						//al borrar algo restauro su contador de instancias
+						std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
+						botonera->restaurarInstancias(tipoFig);
 					}
-				}
-				figurasEnAire[this->numCliente]->numero = posVector;
-				vector[posVector] = figurasEnAire[this->numCliente];
-					CreateFigureMessage * msg = new CreateFigureMessage();
-					msg->setId(this->maq->getId());
-					msg->setFigureType(figurasEnAire[this->numCliente]->getTipoFigura());
-					msg->setFigureID(figurasEnAire[this->numCliente]->numero);
-					msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
-					msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
-					msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
-					msg->setInAir(true);
-					double d1,d2;
-					figurasEnAire[this->numCliente]->getExtraData(&d1,&d2);
-					msg->setData1(d1);
-					msg->setData2(d2);
+					else
+						terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
+					
 
-				this->maq->pushSendMessage(msg,numCliente);
-				std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
+				if (posEnBotonera(posClickX,posClickY)){
+					//es de la botonera
+					botonera->handleEventBotonera(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
+				}
+
+				//puede que me haya devuelto la figura en aire
+				figurasEnAire[this->numCliente] = botonera->obtenerFiguraActual();
+				if (figurasEnAire[this->numCliente]){
+					estaActiva = true;
+					//innecesario pero por si acaso
+					figurasEnAire[this->numCliente]->setX(posClickX);
+					figurasEnAire[this->numCliente]->setY(posClickY);
+					
+					while(vector[posVector]!=NULL){
+						posVector++;
+						if (posVector == LARGO/5*(numCliente+1)){
+							posVector = LARGO/5*(numCliente);
+						}
+					}
+					figurasEnAire[this->numCliente]->numero = posVector;
+					vector[posVector] = figurasEnAire[this->numCliente];
+						CreateFigureMessage * msg = new CreateFigureMessage();
+						msg->setId(this->maq->getId());
+						msg->setFigureType(figurasEnAire[this->numCliente]->getTipoFigura());
+						msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+						msg->setX(figurasEnAire[this->numCliente]->getDimension()->getX());
+						msg->setY(figurasEnAire[this->numCliente]->getDimension()->getY());
+						msg->setAngle(figurasEnAire[this->numCliente]->getDimension()->getAngulo());
+						msg->setInAir(true);
+						double d1,d2;
+						figurasEnAire[this->numCliente]->getExtraData(&d1,&d2);
+						msg->setData1(d1);
+						msg->setData2(d2);
+
+					this->maq->pushSendMessage(msg,numCliente);
+					std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
+				}
 			}
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos
@@ -525,6 +549,8 @@ void JuegoCliente::sendReady(){
 	c_msg->setClientID(this->numCliente);
 	c_msg->setAction(A_READY);
 	this->maq->pushSendMessage(c_msg);
+
+	this->block = true;
 }
 
 void JuegoCliente::sendUnready(){
@@ -532,6 +558,8 @@ void JuegoCliente::sendUnready(){
 	c_msg->setClientID(this->numCliente);
 	c_msg->setAction(A_UNREADY);
 	this->maq->pushSendMessage(c_msg);
+
+	this->block = false;
 }
 
 void JuegoCliente::actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento){
@@ -783,6 +811,17 @@ void JuegoCliente::set2Click(){
 		Figura* result = terreno->getFiguraAtableCorrea(x,y);
 		
 		if(result==NULL){
+			
+			figurasAMover.unique();
+			figurasAMover.remove(figurasEnAire[this->numCliente]);
+
+			TransformFigureMessage* t_msg = new TransformFigureMessage();
+			t_msg->setClientID(this->numCliente);
+			t_msg->setSizeChange(T_DROPDEAD);
+			t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+			this->maq->pushSendMessage(t_msg,this->numCliente);
+			
+			
 			botonera->restaurarInstanciaActual();
 
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
@@ -799,11 +838,27 @@ void JuegoCliente::set2Click(){
 				linea->setFigura1(result);
 				linea->actualizar();
 
+				UnionMessage* u_msg = new UnionMessage();
+				double x,y;
+				linea->getPunto1(&x,&y);
+				u_msg->setClientID(this->numCliente);
+				u_msg->setFigsNum(linea->numero,x,y);
+				this->maq->pushSendMessage(u_msg,this->numCliente);
+
 			}else{
 				if(linea->getFigura1() == result){
 					botonera->restaurarInstanciaActual();
 
 					vector[figurasEnAire[this->numCliente]->numero] = NULL;
+
+					figurasAMover.unique();
+					figurasAMover.remove(figurasEnAire[this->numCliente]);
+
+					TransformFigureMessage* t_msg = new TransformFigureMessage();
+					t_msg->setClientID(this->numCliente);
+					t_msg->setSizeChange(T_DROPDEAD);
+					t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+					this->maq->pushSendMessage(t_msg,this->numCliente);
 
 					delete figurasEnAire[this->numCliente];
 					figurasEnAire[this->numCliente] = NULL;
@@ -819,6 +874,22 @@ void JuegoCliente::set2Click(){
 					terreno->agregarFigura( figurasEnAire[this->numCliente] );
 
 					linea->actualizar();
+
+					UnionMessage2* u_msg = new UnionMessage2();
+					double x,y;
+					linea->getPunto2(&x,&y);
+					u_msg->setClientID(this->numCliente);
+					u_msg->setFigsNum(linea->numero,x,y);
+					this->maq->pushSendMessage(u_msg,this->numCliente);
+
+					TransformFigureMessage* t_msg = new TransformFigureMessage();
+					t_msg->setClientID(this->numCliente);
+					t_msg->setFigureID(linea->numero);
+					t_msg->setX(linea->getDimension()->getX());
+					t_msg->setY(linea->getDimension()->getY());
+					t_msg->setSizeChange(T_DROP);
+					this->maq->pushSendMessage(t_msg,this->numCliente);
+
 					figurasEnAire[this->numCliente] = NULL;
 				}
 			}
@@ -838,6 +909,15 @@ void JuegoCliente::set2Click(){
 
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
 
+			figurasAMover.unique();
+			figurasAMover.remove(figurasEnAire[this->numCliente]);
+
+			TransformFigureMessage* t_msg = new TransformFigureMessage();
+			t_msg->setClientID(this->numCliente);
+			t_msg->setSizeChange(T_DROPDEAD);
+			t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+			this->maq->pushSendMessage(t_msg,this->numCliente);
+
 			delete figurasEnAire[this->numCliente];
 			figurasEnAire[this->numCliente] = NULL;
 			this->setCambio(true);
@@ -851,12 +931,30 @@ void JuegoCliente::set2Click(){
 
 				((Soga*)linea)->setNumsPosAtable(res,0);
 				linea->actualizar();
+
+				UnionMessage* u_msg = new UnionMessage();
+				double x,y;
+				linea->getPunto1(&x,&y);
+				u_msg->setClientID(this->numCliente);
+				u_msg->setFigsNum(linea->numero,x,y);
+				this->maq->pushSendMessage(u_msg,this->numCliente);
+
 			}else{
 				if (result == linea->getFigura1()){
 					botonera->restaurarInstanciaActual();			
 					
 					vector[figurasEnAire[this->numCliente]->numero] = NULL;
-					
+			
+					figurasAMover.unique();
+					figurasAMover.remove(figurasEnAire[this->numCliente]);
+
+					TransformFigureMessage* t_msg = new TransformFigureMessage();
+					t_msg->setClientID(this->numCliente);
+					t_msg->setSizeChange(T_DROPDEAD);
+					t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+					this->maq->pushSendMessage(t_msg,this->numCliente);
+				
+
 					delete figurasEnAire[this->numCliente];
 					figurasEnAire[this->numCliente] = NULL;
 					this->setCambio(true);
@@ -872,11 +970,35 @@ void JuegoCliente::set2Click(){
 					linea->getFigura2()->atarSoga(((Soga*)linea)->num2);
 					terreno->agregarFigura( figurasEnAire[this->numCliente] );
 
+					UnionMessage2* u_msg = new UnionMessage2();
+					double x,y;
+					linea->getPunto2(&x,&y);
+					u_msg->setClientID(this->numCliente);
+					u_msg->setFigsNum(linea->numero,x,y);
+					this->maq->pushSendMessage(u_msg,this->numCliente);
+
+					TransformFigureMessage* t_msg = new TransformFigureMessage();
+					t_msg->setClientID(this->numCliente);
+					t_msg->setFigureID(linea->numero);
+					t_msg->setX(linea->getDimension()->getX());
+					t_msg->setY(linea->getDimension()->getY());
+					t_msg->setSizeChange(T_DROP);
+					this->maq->pushSendMessage(t_msg,this->numCliente);
+
 					figurasEnAire[this->numCliente] = NULL;
 				}
 			}
 		}
 	}else{
+			figurasAMover.unique();
+			figurasAMover.remove(figurasEnAire[this->numCliente]);
+
+			TransformFigureMessage* t_msg = new TransformFigureMessage();
+			t_msg->setClientID(this->numCliente);
+			t_msg->setSizeChange(T_DROPDEAD);
+			t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
+			this->maq->pushSendMessage(t_msg,this->numCliente);
+
 			botonera->restaurarInstanciaActual();
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
 	}
