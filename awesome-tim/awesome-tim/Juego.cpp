@@ -435,13 +435,13 @@ void Juego:: onLoop(){
 								fig->setY(t_msg->getY());
 								break;
 							case T_DROPDEAD:
-								cambiarInstancias(t_msg->getFigureID(),fig->getTipoFigura(),1);
+								cambiarInstancias(t_msg->getClientID(),fig->getTipoFigura(),1);
 								figuraEnAire[t_msg->getClientID()] = NULL;
 								vector[t_msg->getFigureID()] = NULL;
 								delete fig;
 								break;
 							case T_REMOVE:
-								cambiarInstancias(t_msg->getFigureID(),fig->getTipoFigura(),1);
+								cambiarInstancias(t_msg->getClientID(),fig->getTipoFigura(),1);
 								fig->desUnir();
 								vector[t_msg->getFigureID()] = NULL;
 								terreno->eliminarFigura(fig);
