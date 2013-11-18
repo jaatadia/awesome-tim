@@ -3,7 +3,8 @@
 
 PaletaFlipper::PaletaFlipper(double posX,double posY,int sentido):Figura(ID_PALETA,new Cuadrado(ANCHO_PALETA,ALTO_PALETA,posX,posY,0),true){
 
-	this->es_objetivo = true;
+	this->es_objetivo = false;
+	this->es_interactuable = true;
 	this->is_pushed = false;
 	this->sentido = sentido;
 
@@ -94,7 +95,10 @@ void PaletaFlipper::corregirEstado(){
 	}
 }
 void PaletaFlipper::interactuar(int accion){
-	
+
+	if(!this->esInteractuable())
+		return;
+
 	if (accion == PRESS_SPACE){
 		if (!this->is_pushed) Sonidos::playSound(FLIPPER_UP);
 		this->is_pushed = true;

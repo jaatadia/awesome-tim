@@ -7,6 +7,7 @@
 #include "Soga.h"
 #include "Tijera.h"
 #include "Huevo.h"
+#include "Carrito.h"
 #include "PaletaFlipper.h"
 #include "RemoveFigureMessage.h"
 #include "ActualizeFigureMessage.h"
@@ -757,6 +758,11 @@ void Terreno::actualizarModelo(Figura* vector[]){
 				}
 				((Tijera*)(*iteradorLista))->actualizar();
 			}
+
+			if((*iteradorLista)->getTipoFigura()==CARRITO){
+				((Carrito*)(*iteradorLista))->actualizar();
+			}
+
 			if((*iteradorLista)->getTipoFigura()==ESCOPETA){
 				Figura* bala = mundoBox2D->dispararEscopeta((Escopeta*)(*iteradorLista));
 				if(bala != NULL){

@@ -148,6 +148,9 @@ public:
 	}
 
 	void interactuar(int accion){
+		if(!this->esInteractuable())
+			return;
+
 		if (accion == CLICK_MOUSE)
 			this->pinchar();
 	}

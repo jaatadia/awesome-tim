@@ -17,7 +17,8 @@ juego:
           tipo_figura: GLOBO_HELIO
           posX: 73.8
           posY: 41.6
-          fija: NO
+          fija: NO                
+          interactuable: SI
           objetivo: SI
           sensores:
             - sensor:
@@ -25,8 +26,7 @@ juego:
                 posY: 1
                 angulo: 0
                 alto: 0.05
-                ancho: 100                
-          interactuable: NO
+                ancho: 100
       - figura:
           tipo_figura: MOTOR_RATON
           posX: 50

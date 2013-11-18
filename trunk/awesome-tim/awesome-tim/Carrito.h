@@ -1,5 +1,6 @@
 #pragma once
 #include "FiguraCompuesta.h"
+#include "Box2D/Box2D.h"
 
 #include "Dimension.h"
 #include "Circulo.h"
@@ -12,7 +13,8 @@ private:
 	CarroAtable* carro;
 	Figura* ruedaIzq;
 	Figura* ruedaDer;
-	
+	b2Body* b2dCuerpo;
+
 	bool atado;
 
 public:
@@ -33,6 +35,8 @@ public:
 	virtual void posAtableSoga(int numero,double* x,double* y);
 	virtual void atarSoga(int numero);//le dice que ate una soga en su pocicion atable numero
 	virtual void desatarSoga(int numero);//le dice que desate una soga de su posicion atable numero
+	void setCuerpo(b2Body* cuerpo);
+	void actualizar();
 
 	virtual bool tienePartesRotables(){return true;};
 	virtual double getAnguloPartesRotables(){return ruedaIzq->getDimension()->getAngulo();};

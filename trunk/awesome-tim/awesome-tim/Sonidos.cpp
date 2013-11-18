@@ -18,6 +18,7 @@ void Sonidos::initialize(){
 	(*mapa)[FLIPPER_UP] = (void*)Mix_LoadWAV(FLIPPER_UP); //OK
 	(*mapa)[FLIPPER_DOWN] = (void*)Mix_LoadWAV(FLIPPER_DOWN); //OK
 	(*mapa)[HUEVO_SOUND] = (void*)Mix_LoadWAV(HUEVO_SOUND); //OK
+	(*mapa)[CARRITO_MUSIC] = (void*)Mix_LoadWAV(CARRITO_MUSIC); //OK
 	(*mapa)[CANIO_SOUND] = (void*)Mix_LoadWAV(CANIO_SOUND);
 	(*mapa)[CODO_SOUND] = (void*)Mix_LoadWAV(CODO_SOUND);
 	(*mapa)[BASKET_SOUND] = (void*)Mix_LoadWAV(BASKET_SOUND);
@@ -28,13 +29,12 @@ void Sonidos::initialize(){
 	(*mapa)[YUNQUE_SOUND] = (void*)Mix_LoadWAV(YUNQUE_SOUND);
 	
 	//Musica:
-	(*mapa)[CARRITO_MUSIC] = (void*)Mix_LoadMUS(CARRITO_MUSIC);
 	(*mapa)[MOTOR_MUSIC] = (void*)Mix_LoadMUS(MOTOR_MUSIC); //OK
 	(*mapa)[VELA_MUSIC] = (void*)Mix_LoadMUS(VELA_MUSIC); //OK
 	(*mapa)[GLOBO_MUSIC] = (void*)Mix_LoadMUS(GLOBO_MUSIC);
 	(*mapa)[CINTA_TRANSP_MUSIC] = (void*)Mix_LoadMUS(CINTA_TRANSP_MUSIC);
 	(*mapa)[ENGRANAJE_MUSIC] = (void*)Mix_LoadMUS(ENGRANAJE_MUSIC);
-	(*mapa)[MOTOR_RATON_MUSIC] = (void*)Mix_LoadMUS(MOTOR_RATON_MUSIC);
+	(*mapa)[MOTOR_RATON_MUSIC] = (void*)Mix_LoadMUS(MOTOR_RATON_MUSIC); //Puesto, queda probarlo
 
 	(*mapa)[VICTORY_MUS] = (void*)Mix_LoadMUS(VICTORY_MUS); //OK
 	(*mapa)[MUSIC] = (void*)Mix_LoadMUS(MUSIC); //OK
