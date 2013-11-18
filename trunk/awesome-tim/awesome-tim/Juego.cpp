@@ -177,20 +177,22 @@ void Juego:: onLoop(){
 			/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 			case MSG_TYPE_CREATE_FIGURE:
 				{
-					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
+					CreateFigureMessage* c_msg = (CreateFigureMessage*)msg;
+					Figura* fig = FactoryFiguras::create(c_msg);
 					if(fig!=NULL){
 						vector[fig->numero] = fig;
-						if (((CreateFigureMessage*)msg)->isInAir()){
-							figuraEnAire[((CreateFigureMessage*)msg)->getId()] = fig;
+						if (c_msg->isInAir()){
+							figuraEnAire[c_msg->getId()] = fig;
 						}else{
 							terreno->agregarFigura(fig);
 						}
 						for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
-							if((*iter)!=((CreateFigureMessage*)msg)->getId()){
+							if((*iter)!=(c_msg->getId())){
 								this->maq->pushSendMessage(msg,(*iter));
 							}
 						}
 					}
+					cambiarInstancias(c_msg->getId(),c_msg->getFigureType(),-1);
 				}
 				break;
 			/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
@@ -337,6 +339,14 @@ void Juego:: onLoop(){
 							break;
 						case A_DISCONECT:
 							{
+								if(this->figuraEnAire[c_msg->getClientID()]!=NULL){
+									TransformFigureMessage* t_msg = new TransformFigureMessage();
+									t_msg->setClientID(c_msg->getClientID());
+									t_msg->setSizeChange(T_DROPDEAD);
+									t_msg->setFigureID(figuraEnAire[c_msg->getClientID()]->numero);
+									this->maq->returnProcessMessage(t_msg);
+								}
+
 								if(this->jugadoresListos.size()==this->cant_jugadores){
 									for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
 										if((*iter)!=((ClientMessage*)msg)->getClientID()){
@@ -422,11 +432,13 @@ void Juego:: onLoop(){
 								fig->setY(t_msg->getY());
 								break;
 							case T_DROPDEAD:
+								cambiarInstancias(t_msg->getFigureID(),fig->getTipoFigura(),1);
 								figuraEnAire[t_msg->getClientID()] = NULL;
 								vector[t_msg->getFigureID()] = NULL;
 								delete fig;
 								break;
 							case T_REMOVE:
+								cambiarInstancias(t_msg->getFigureID(),fig->getTipoFigura(),1);
 								fig->desUnir();
 								vector[t_msg->getFigureID()] = NULL;
 								terreno->eliminarFigura(fig);
@@ -1036,6 +1048,15 @@ void Juego::set2Click(){
 					figuraEnAire [0]= NULL;
 				}
 			}
+		}
+	}
+}
+
+void Juego::cambiarInstancias(int cliente,int tipoFigura,int cantidad){
+	std::list<struct boton>::iterator it;
+	for(it = botoneras[cliente]->begin();it != botoneras[cliente]->end();it++){
+		if((*it).figura->getTipoFigura()==tipoFigura){
+			(*it).cantInstancias += cantidad;
 		}
 	}
 }

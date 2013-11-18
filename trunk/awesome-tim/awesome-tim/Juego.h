@@ -79,4 +79,6 @@ private:
 	void resizear();
 	void set2Click();
 
+
+	void cambiarInstancias(int cliente,int tipoFigura,int cantidad);
 };
