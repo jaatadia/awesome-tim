@@ -9,7 +9,7 @@ DropFigureMessage::DropFigureMessage(void)
 DropFigureMessage::DropFigureMessage(string msg)
 {
 	this->type = MSG_TYPE_DROP;
-	this->type = MSG_VALID;
+	this->valid = MSG_VALID;
 	size_t pos = msg.find("|");
 	if(pos != std::string::npos){
 		this->clientID = atoi(msg.substr(0,pos).c_str());
