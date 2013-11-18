@@ -116,7 +116,7 @@ void ComandosCliente::redraw(){
 		sup->dibujarImagen(BotonQuitSinApretar,NULL,X_B_QUIT,Y_B_QUIT);
 	}
 
-	if(ready /*botonPlayActivo*/){
+	if(ready || botonPlayActivo){
 		sup->dibujarImagen(BotonPlayApretado,NULL,X_B_PLAY,Y_B_PLAY);
 	}
 	else{
@@ -259,5 +259,6 @@ void ComandosCliente::setImagenObjetivo(std::string id_imagen_texto_objetivo){
 
 void ComandosCliente::setListoUnpressed(){
 	ready = false;
-	redraw();
+	botonPlayActivo = false;
+	this->setCambio(true);
 }

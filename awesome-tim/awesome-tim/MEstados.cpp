@@ -53,6 +53,7 @@ bool MEstados::isRunning(){
 
 bool MEstados::onEvent(){
 	return getEstadoActivo()->onEvent(ventana,&superficie);
+	return false;
 }
 
 void MEstados::onLoop(){

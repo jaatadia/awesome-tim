@@ -30,6 +30,12 @@ void SocketHandler::flushThread()
 
 void SocketHandler::run()
 {
+	if(getMode()==WRITE_MODE){
+		while(this->id<0&&!this->finalizando){
+			this->id = this->maq->getId();
+			this->_thread.sleep(1000);
+		}
+	}
 	while(!this->finalizando)
 	{
 		switch(getMode())
@@ -123,10 +129,6 @@ void SocketHandler::run()
 				}
 			case WRITE_MODE:
 				//Message * msg = this->getOutputMessage();
-				while(this->id<0){
-					this->id = this->maq->getId();
-					this->_thread.sleep(1000);
-				}
 				Message * msg = this->maq->getSendMessage(this->id);
 				while(msg!=NULL){
 					try

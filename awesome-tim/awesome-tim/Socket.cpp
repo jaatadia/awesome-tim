@@ -50,7 +50,6 @@ std::string Socket::read()
 			salida += buffer[i];
 		}
 		salida = salida.substr(0,cantidadLeida);
-		salida = salida.substr(0,cantidadLeida);
 	}
 	else if (cantidadLeida == 0){
 		throw SocketException("Fin de la conexion");

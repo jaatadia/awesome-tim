@@ -36,6 +36,10 @@ void CommunicationManager::initThread()
 
 void CommunicationManager::flushThread()
 {
+	if((socketWriter!=NULL)&&(!socketWriter->getActiveState())) socketWriter->kill();
+	if((socketReader!=NULL)&&(!socketReader->getActiveState())) socketReader->kill();
+	delete socketWriter;
+	delete socketReader;
 
 }
 
@@ -63,6 +67,8 @@ void CommunicationManager::run()
 			//messageReader->kill();
 			delete socketWriter;
 			delete socketReader;
+			socketWriter = NULL;
+			socketReader = NULL;
 			//delete messageWriter;
 			//delete messageReader;
 			this->kill();
