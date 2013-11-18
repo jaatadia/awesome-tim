@@ -1625,7 +1625,7 @@ bool CargadorYaml::alto_valido(double alto){
 }
 
 bool CargadorYaml::ancho_valido(double ancho){
-	return ((ancho > 0) && (ancho < ANCHO_TERRENO_LOGICO));
+	return ((ancho > 0) && (ancho <= ANCHO_TERRENO_LOGICO));
 }
 
 bool CargadorYaml::opcion_valida(const char* opcion){

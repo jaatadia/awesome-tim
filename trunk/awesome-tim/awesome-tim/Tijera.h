@@ -168,17 +168,31 @@ public:
 		double cy = dimension->getY();
 		double ancho = dimension->getAncho();
 		double alto = dimension->getAlto();
+	
+		//busco el punto1 que pincha
+		double px = cx+ancho/2+1;
+		double py = cy + 2; //separacion = 2
 		
-		if(pos == 0){
+		//busco donde esta el punto que pincha segun mi angulo
+		double coseno = cos( -dimension->getAngulo() * PI / 180);
+		double seno = sin( -dimension->getAngulo() * PI / 180);
 
-		}else if(pos == 3){
+		double puntaRealX = cx + (px - cx) * coseno - (py - cy) * seno;
+		double puntaRealY = cy + (px - cx) * seno + (py - cy) * coseno;
 
-		}else if(pos == 2){
+		bool punto1 = dim->puntoPertenece(puntaRealX,puntaRealY);
 
-		}else{
+		//busco el punto2 que pincha
+		px = cx+ancho/2+1;
+		py = cy - 2; //separacion = 2
 
-		}
-		return false;
+		puntaRealX = cx + (px - cx) * coseno - (py - cy) * seno;
+		puntaRealY = cy + (px - cx) * seno + (py - cy) * coseno;
+
+		bool punto2 = dim->puntoPertenece(puntaRealX,puntaRealY);
+
+		return (punto1||punto2);
+
 	}
 
 	

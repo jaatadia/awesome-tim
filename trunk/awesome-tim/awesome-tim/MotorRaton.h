@@ -1,3 +1,4 @@
+#pragma once
 #include "Engranaje.h"
 #include "Constantes.h"
 #include "Circulo.h"

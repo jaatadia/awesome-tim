@@ -1,5 +1,5 @@
 #pragma once
-#include "b2contactlistener.h"
+
 #include "FiguraSensor.h"
 
 class SensorB2ContactListener :
