@@ -194,6 +194,13 @@ void JuegoPlayCliente::onLoop(){
 					delete msg;
 				}
 				break;
+			case MSG_TYPE_VICTORY:
+				{
+					this->gano = true;
+					this->actualizarVictoria();
+					delete msg;
+				}
+				break;
 			case MSG_TYPE_CLIENT_MESSAGE:
 				{
 					ClientMessage* c_msg = (ClientMessage*)  msg;

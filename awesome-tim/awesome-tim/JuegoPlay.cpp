@@ -3,6 +3,7 @@
 #include "ClientMessage.h";
 #include "RemoveFigureMessage.h"
 #include "ActualizeFigureMessage.h"
+#include "VictoryMessage.h"
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -174,6 +175,7 @@ void JuegoPlay::onLoop(){
 
 	}else{
 		actualizarVictoria();
+		this->maq->pushSendMessage(new VictoryMessage());
 	}
 }
 

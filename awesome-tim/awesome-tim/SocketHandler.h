@@ -25,6 +25,7 @@
 #include "CloseScissorMessage.h"
 #include "PopBalloonMessage.h"
 #include "FireShotgunMessage.h"
+#include "VictoryMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

@@ -127,6 +127,9 @@ void SocketHandler::run()
 									case MSG_TYPE_FIRE_SHOTGUN:
 										msg = new FireShotgunMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_VICTORY:
+										msg = new VictoryMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg!=NULL && msg->validate())
