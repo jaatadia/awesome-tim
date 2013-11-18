@@ -492,6 +492,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VictoryMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VistaFigAgrandable.cpp"
 				>
 			</File>
@@ -1031,6 +1035,10 @@
 			</File>
 			<File
 				RelativePath=".\Vela.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VictoryMessage.h"
 				>
 			</File>
 			<File
