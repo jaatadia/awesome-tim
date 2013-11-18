@@ -14,6 +14,7 @@
 #include "CreateButtonMessage.h"
 #include "UnionMessage.h"
 #include "UnionMessage2.h"
+#include "StringMessage.h"
 
 
 Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
@@ -326,6 +327,10 @@ void Juego:: onLoop(){
 									}
 								}
 
+								//mando el objetivo
+								StringMessage* s_msg = new StringMessage();
+								s_msg->setString(this->objetivo);
+								this->maq->pushSendMessage(s_msg,c_msg->getClientID());
 
 								delete msg;
 							}

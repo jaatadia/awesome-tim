@@ -30,6 +30,7 @@
 #include "BreakEggMessage.h"
 #include "InteractMessage.h"
 #include "ActualizeCounterMessage.h"
+#include "StringMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

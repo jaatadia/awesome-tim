@@ -6,6 +6,8 @@ class SensorB2ContactListener :
 	public b2ContactListener
 {
 public:
+
+	static Figura** vector;
 	SensorB2ContactListener(void);
 	~SensorB2ContactListener(void);
 

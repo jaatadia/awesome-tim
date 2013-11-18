@@ -1,5 +1,7 @@
 #include "SensorB2ContactListener.h"
 
+Figura** SensorB2ContactListener::vector = NULL;
+
 SensorB2ContactListener::SensorB2ContactListener(void){
 }
 

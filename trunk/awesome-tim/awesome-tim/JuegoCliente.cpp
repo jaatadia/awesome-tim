@@ -13,6 +13,7 @@
 #include "CreateButtonMessage.h"
 #include "UnionMessage.h"
 #include "UnionMessage2.h"
+#include "StringMessage.h"
 
 //Definicion de constantes que no se que son: Jenny :P
 #define MSG_SUBTYPE_MOVEMENT 0
@@ -252,6 +253,11 @@ void JuegoCliente:: onLoop(){
 								break;
 						}
 					}
+				}
+				break;
+			case MSG_TYPE_STRING:
+				{
+					comandos->setImagenObjetivo(((StringMessage*)msg)->getString());
 				}
 				break;
 		}
