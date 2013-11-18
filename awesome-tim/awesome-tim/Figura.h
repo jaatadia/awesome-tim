@@ -171,4 +171,9 @@ public:
 	void hacerInteractuable();
 	bool esInteractuable();
 	virtual void actualizar(){};
+
+
+	virtual bool tienePartesRotables(){return false;};
+	virtual double getAnguloPartesRotables(){return 0;};
+	virtual void setAnguloPartesRotables(double angulo){};
 };

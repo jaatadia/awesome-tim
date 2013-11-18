@@ -33,5 +33,12 @@ public:
 	virtual void posAtableSoga(int numero,double* x,double* y);
 	virtual void atarSoga(int numero);//le dice que ate una soga en su pocicion atable numero
 	virtual void desatarSoga(int numero);//le dice que desate una soga de su posicion atable numero
+
+	virtual bool tienePartesRotables(){return true;};
+	virtual double getAnguloPartesRotables(){return ruedaIzq->getDimension()->getAngulo();};
+	virtual void setAnguloPartesRotables(double angulo){
+		this->ruedaIzq->setAngulo(angulo);
+		this->ruedaDer->setAngulo(angulo);
+	};
 	
 };

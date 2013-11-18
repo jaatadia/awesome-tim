@@ -12,7 +12,7 @@ class Huevo : public Figura
 private:
 	Huevo(const char* id,Dimension* dim,bool flag):Figura(id,dim){
 		rompiendose = false;
-		contador = 0;
+		contador = -1;
 	};
 	
 	bool rompiendose;
@@ -21,7 +21,7 @@ private:
 public:
 	Huevo(double pos_X,double pos_Y):Figura(ID_HUEVO,new Circulo(RADIO_HUEVO,pos_X,pos_Y,0)){
 		rompiendose = false;
-		contador = 0;
+		contador = -1;
 	};
 	~Huevo(void){};
 
@@ -36,10 +36,11 @@ public:
 
 	void romper(){
 		rompiendose = true;
+		contador++;
 	}
 
 	bool estaRompiendo(){
-		return rompiendose;
+		return contador==0;
 	}
 
 	void actualizar(){

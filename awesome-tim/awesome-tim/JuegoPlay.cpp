@@ -4,6 +4,7 @@
 #include "RemoveFigureMessage.h"
 #include "ActualizeFigureMessage.h"
 #include "VictoryMessage.h"
+#include "RotateMessage.h"
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -171,6 +172,14 @@ void JuegoPlay::onLoop(){
 			t_msg->setAngle((*iter)->getDimension()->getAngulo());
 			t_msg->setSizeChange(T_ROTATE);
 			this->maq->pushSendMessage(t_msg);
+
+			if((*iter)->tienePartesRotables()){
+				RotateMessage* r_msg = new RotateMessage();
+				r_msg->setFigureID((*iter)->numero);
+				r_msg->setAngle((*iter)->getAnguloPartesRotables());
+				this->maq->pushSendMessage(r_msg);
+			}
+
 		}
 
 	}else{

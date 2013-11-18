@@ -559,10 +559,9 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				//b2PolygonShape forma_pared2;
 				double ancho = ((Carrito*)figura)->getCarro()->getDimension()->getAncho()/2;
 				double alto = ((Carrito*)figura)->getCarro()->getDimension()->getAlto()/2;
-				//forma_base.SetAsBox(ancho,alto/2);
+				forma_base.SetAsBox(ancho,alto/2);
 				//forma_pared1.SetAsBox(ancho/8,alto);
 				//forma_pared2.SetAsBox(ancho/8,alto);
-				forma_base.SetAsBox(ancho,alto);
 
 				fD.shape = &forma_base;
 				fD.density = DENSIDAD_CARRITO;
@@ -571,6 +570,22 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				//cuerpo->SetTransform(b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX(),((Carrito*)figura)->getCarro()->getDimension()->getY()+alto/2),cuerpo->GetAngle());
 				cuerpo->CreateFixture(&fD);
 				cuerpo->SetUserData(((Carrito*)figura)->getCarro());
+				
+				b2BodyDef mybodyDef;
+				mybodyDef.type = b2_dynamicBody;
+				mybodyDef.position.Set(dim->getX(),dim->getY());
+				forma_base.SetAsBox(dim->getAncho()/2,dim->getAlto()/2);
+				b2Body* fondo = this->mundo->CreateBody(&mybodyDef);
+				b2FixtureDef myFixtureDef;
+				myFixtureDef.isSensor = true;
+				forma_base.SetAsBox(dim->getAncho()/2,dim->getAlto()/2);
+				myFixtureDef.shape = &forma_base;
+				fondo->CreateFixture(&myFixtureDef);
+				fondo->SetUserData(figura);
+				b2WeldJointDef myJoint;
+				myJoint.Initialize(cuerpo,fondo,b2Vec2(dim->getX(),dim->getY()));
+				this->mundo->CreateJoint(&myJoint);
+
 
 				//b2BodyDef pared1;
 				//pared1.position.Set(((Carrito*)figura)->getCarro()->getDimension()->getX()-ancho+ancho/8,((Carrito*)figura)->getCarro()->getDimension()->getY());

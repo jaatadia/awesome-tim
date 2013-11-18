@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BreakEggMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Canio.cpp"
 				>
 			</File>
@@ -425,6 +429,10 @@
 			</File>
 			<File
 				RelativePath=".\RemoveFigureMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\RotateMessage.cpp"
 				>
 			</File>
 			<File
@@ -706,6 +714,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BreakEggMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Canio.h"
 				>
 			</File>
@@ -967,6 +979,10 @@
 			</File>
 			<File
 				RelativePath=".\RemoveFigureMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RotateMessage.h"
 				>
 			</File>
 			<File
