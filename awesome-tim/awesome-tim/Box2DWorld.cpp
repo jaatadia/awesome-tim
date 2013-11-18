@@ -1394,8 +1394,8 @@ void Box2DWorld::actuarTijera(b2Body* cuerpo, Tijera* fig){
 	}
 }
 
-void Box2DWorld::dispararEscopeta(Escopeta* escopeta,std::list<Figura*>* lista){
-	if(escopeta->disparada)return;
+Figura* Box2DWorld::dispararEscopeta(Escopeta* escopeta){
+	if(escopeta->disparada)return NULL;
 	
 	double angulo = -escopeta->getDimension()->getAngulo()*PI/180;
 	b2Body* cuerpo = escopeta->cuerpo;
@@ -1414,6 +1414,8 @@ void Box2DWorld::dispararEscopeta(Escopeta* escopeta,std::list<Figura*>* lista){
 		joint = joint->next;
 	}
 	if(disparar){
-		lista->push_back(escopeta->disparar());
+		return (escopeta->disparar());
 	}
+
+	return NULL;
 }

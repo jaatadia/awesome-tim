@@ -121,9 +121,15 @@ void SocketHandler::run()
 									case MSG_TYPE_POP_BALLOON:
 										msg = new PopBalloonMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_FIRE_BOW:
+										msg = new FireBowMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_FIRE_SHOTGUN:
+										msg = new FireShotgunMessage(cadena.substr(npos+1));
+										break;
 								}
 
-								if (msg->validate())
+								if (msg!=NULL && msg->validate())
 								{
 									//this->pushInputMessage(msg);
 									//m_handler->pushInputMessage(msg);

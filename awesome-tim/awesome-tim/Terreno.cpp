@@ -12,6 +12,7 @@
 #include "ActualizeFigureMessage.h"
 #include "CloseScissorMessage.h"
 #include "PopBalloonMessage.h"
+#include "FireShotgunMessage.h"
 
 Terreno::Terreno(int ancho,int alto,MaquinaEstados* maq,bool fisicaActiva){
 	
@@ -756,12 +757,37 @@ void Terreno::actualizarModelo(Figura* vector[]){
 				((Tijera*)(*iteradorLista))->actualizar();
 			}
 			if((*iteradorLista)->getTipoFigura()==ESCOPETA){
-				mundoBox2D->dispararEscopeta((Escopeta*)(*iteradorLista),&nuevasFiguras);
+				Figura* bala = mundoBox2D->dispararEscopeta((Escopeta*)(*iteradorLista));
+				if(bala != NULL){
+					nuevasFiguras.push_back(bala);
+					int i = 0;
+					while(true){
+						if(vector[i]==NULL) break;
+						i++;
+					}
+					bala->numero = i;
+					vector[i] = bala;
+					FireShotgunMessage* fs_msg = new FireShotgunMessage();
+					fs_msg->setGunID((*iteradorLista)->numero);
+					fs_msg->setProyectileID(i);
+					this->maq->pushSendMessage(fs_msg);
+				}
 			}
 			if((*iteradorLista)->getTipoFigura()==ARCO){
 				Figura* flecha = ((Arco*)(*iteradorLista))->disparar();
 				if(flecha != NULL){
 					nuevasFiguras.push_back(flecha);
+					int i = 0;
+					while(true){
+						if(vector[i]==NULL) break;
+						i++;
+					}
+					flecha->numero = i;
+					vector[i] = flecha;
+					FireBowMessage* fb_msg = new FireBowMessage();
+					fb_msg->setGunID((*iteradorLista)->numero);
+					fb_msg->setProyectileID(i);
+					this->maq->pushSendMessage(fb_msg);
 				}
 			}
 			
@@ -784,7 +810,7 @@ void Terreno::actualizarModelo(Figura* vector[]){
 					p_msg->setFigureID((*iteradorLista)->numero);
 					this->maq->pushSendMessage(p_msg);
 					
-					borrarAtadura(*iteradorLista,&nuevasFiguras);
+					borrarAtadura(*iteradorLista);
 					mundoBox2D->eliminarFigura((*iteradorLista));
 				}
 				((GloboHelio*)(*iteradorLista))->actualizar();
@@ -993,7 +1019,7 @@ bool Terreno::posicionOcupada(Figura* figAPosicionar){
 	return (choca1 || choca2);
 }
 
-void Terreno::borrarAtadura(Figura* fig,std::list<Figura*>* lista){
+void Terreno::borrarAtadura(Figura* fig){
 	std::list<Figura*>::iterator iter;
 	for(iter = figuras.begin();iter!=figuras.end();iter++){
 		if((*iter)->getTipoFigura()==SOGA){

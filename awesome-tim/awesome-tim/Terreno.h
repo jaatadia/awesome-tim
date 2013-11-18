@@ -107,7 +107,7 @@ private:
 
 	bool posEnTerrenoExtendido(double posX,double posY);
 
-	void borrarAtadura(Figura* fig,std::list<Figura*>* lista);
+	void borrarAtadura(Figura* fig);
 	//corrije la posicion de las sogas en las poleas para que se dibujen "alrededor" 
 	//y no por el centro
 	void arreglarPosicionSogas();

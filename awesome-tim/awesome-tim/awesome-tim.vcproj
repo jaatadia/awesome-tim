@@ -300,6 +300,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FireBowMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FireShotgunMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Flecha.cpp"
 				>
 			</File>
@@ -803,6 +811,14 @@
 			</File>
 			<File
 				RelativePath=".\FilesMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FireBowMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FireShotgunMessage.h"
 				>
 			</File>
 			<File
