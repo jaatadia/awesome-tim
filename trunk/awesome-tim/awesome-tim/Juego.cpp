@@ -492,7 +492,24 @@ void Juego:: onLoop(){
 				}
 				break;
 			/* +++++++++++++++++++++++++++++++++++++++++++++++++++ */
-			//case
+			case MSG_TYPE_DROP:
+				{
+					DropFigureMessage* d_msg = (DropFigureMessage*) msg;
+					int clientID = d_msg->getClientID();
+					int figureID = d_msg->getFigureID();
+
+					Figura* fig = vector[figureID];
+
+					if(terreno->posicionOcupada(fig)){
+						terreno->eliminarFigura(fig);
+
+						DeleteFigureMessage* d_msg = (DeleteFigureMessage*) msg;
+						d_msg->setClientID(clientID);
+						d_msg->setFigureID(figureID);
+						this->maq->pushSendMessage(d_msg);
+					}
+				}
+				break;
 			}
 	}
 
@@ -1117,3 +1134,19 @@ void Juego::reload(){
 
 
 }
+/*
+bool Juego::posicionOcupada(){
+	
+	bool choca1 = false;
+	bool choca2 = false;
+
+	for(int i = 0 ; i < MAX_CLIENTES+1 ; i++){
+		if (figuraEnAire[i]){
+			choca1 = figuraEnAire[0]->choqueConFigura(figuraEnAire[i]);
+			choca2 = figuraEnAire[i]->choqueConFigura(figuraEnAire[0]);
+		}
+	}
+
+	return (choca1 || choca2);
+}
+*/

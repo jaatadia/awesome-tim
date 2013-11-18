@@ -165,7 +165,7 @@ void FiguraCompuesta::setAngulo(double angulo){
 	iterAngulosCentroActuales = angulosCentroActuales.begin();
 
 	for (iterFig = partesFigura.begin(); iterFig != partesFigura.end(); iterFig++){
-		//la variacion mas el inicial propio
+		//la el nuevo mas el inicial propio
 		(*iterFig)->setAngulo(angulo + (*iterAngulosLocales));
 		(*iterAngulosCentroActuales) = (angulo + (*iterAngulosCentro));
 		

@@ -399,15 +399,12 @@ while(SDL_PollEvent(&evento)){
 					//para saber si choca con las de terreno tengo que relativizar su posicion!
 					figurasEnAire[this->numCliente]->cambiarPosicion(-X_TERRENO_LOGICO,-Y_TERRENO_LOGICO);
 
-					if (contEventosMov % ITER_CHOQUE == 0){
-						//si choca es superpuesta
-						//para que no choque con las de terreno que sobrepasan el canvas
-						if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX() - X_TERRENO_LOGICO, figurasEnAire[this->numCliente]->getDimension()->getY() - Y_TERRENO_LOGICO)){
-							figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
-						}else{
-							figurasEnAire[this->numCliente]->setSuperpuesta( false );
-						}
+					if (terreno->adentroZonaTerreno(figurasEnAire[this->numCliente]->getDimension()->getX() - X_TERRENO_LOGICO, figurasEnAire[this->numCliente]->getDimension()->getY() - Y_TERRENO_LOGICO)){
+						figurasEnAire[this->numCliente]->setSuperpuesta( terreno->posicionOcupada(figurasEnAire[this->numCliente]) );
+					}else{
+						figurasEnAire[this->numCliente]->setSuperpuesta( false );
 					}
+
 					//y vuelvo para atras
 					figurasEnAire[this->numCliente]->cambiarPosicion(X_TERRENO_LOGICO,Y_TERRENO_LOGICO);
 

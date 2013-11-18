@@ -347,7 +347,7 @@ void TerrenoCliente::arrastrarFigura(double posClickX,double posClickY,double ca
 		//si se fue el centro del terreno lo vuelvo a meter
 		corregirPosicion(figuraActiva);
 
-		//como ver si se superpone tarda demasiado lo hago solo cada 5 movimientos!
+		//como ver si se superpone tarda demasiado lo hago solo cada 4 movimientos!
 		if (contEventosMov % ITER_CHOQUE == 0){
 			//si choca va de rojo
 			figuraActiva->setSuperpuesta( this->posicionOcupada(figuraActiva) );						
@@ -443,8 +443,6 @@ void TerrenoCliente::soltarFigura(bool flag)
 			t_msg->setY(figuraActiva->getDimension()->getY());
 			t_msg->setSizeChange(T_NONE);
 			this->maq->pushSendMessage(t_msg,this->numCliente);
-
-			figuraActiva=NULL;
 		}else{
 			//la meto con su posicion / angulo / largo anterior
 			figuraActiva->setX(posAntFigActiva.getX());
@@ -466,10 +464,13 @@ void TerrenoCliente::soltarFigura(bool flag)
 
 			//y ya no esta chocando
 			figuraActiva->setSuperpuesta(false);
-
-			figuraActiva = NULL;
 		}
+		DropFigureMessage* d_msg = new DropFigureMessage();
+		d_msg->setClientID(numCliente);
+		d_msg->setFigureID(figuraActiva->numero);
+		this->maq->pushSendMessage(d_msg,this->numCliente);
 	}
+	figuraActiva = NULL;
 }
 
 bool TerrenoCliente::hayFiguras(){
@@ -910,7 +911,7 @@ bool TerrenoCliente::posicionOcupada(Figura* figAPosicionar){
 	iteradorLista = figuras.begin();
 
 	while ( iteradorLista != figuras.end() && !choca1 && !choca2 ) {
-		if(!(*iteradorLista)->esUnion()){
+		if((!(*iteradorLista)->esUnion()) && ((*iteradorLista)!=figAPosicionar)){
 			choca1 = figAPosicionar->choqueConFigura((*iteradorLista));
 			choca2 = (*iteradorLista)->choqueConFigura(figAPosicionar);
 		}
