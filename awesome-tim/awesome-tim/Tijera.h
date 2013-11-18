@@ -162,6 +162,27 @@ public:
 
 	}
 
+	virtual bool pinchaGlobo(Dimension* dim){
+
+		double cx = dimension->getX();
+		double cy = dimension->getY();
+		double ancho = dimension->getAncho();
+		double alto = dimension->getAlto();
+		
+		if(pos == 0){
+
+		}else if(pos == 3){
+
+		}else if(pos == 2){
+
+		}else{
+
+		}
+		return false;
+	}
+
+	
+
 	virtual void actualizar(){
 		if (cerrada){
 			contador++;

@@ -57,10 +57,11 @@ bool Vela::cortaSoga(){
 	return true;
 }
 
-
 bool Vela::pinchaGlobo(Dimension* dim){
-	return true;
+
+	return dim->choqueConDimension(this->getLlama()->getDimension());
 }
+
 void Vela::getCuadradoCortante(double* x1,double* y1,double* x2,double* y2){
 
 	float X = this->llama->getDimension()->getX();

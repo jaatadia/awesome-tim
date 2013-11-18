@@ -370,10 +370,12 @@ void BotoneraController::ScrollDown(){
 #include "Codo.h"
 #include "Huevo.h"
 #include "Queso.h"
+#include "Carrito.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 
 	this->agregarBoton(new Queso(0,0),INSTANCIAS_DEFAULT);
+	this->agregarBoton(new Carrito(0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Canio(LARGO_CANIO_DEFAULT,0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Codo(0,0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Huevo(0,0),INSTANCIAS_DEFAULT);
