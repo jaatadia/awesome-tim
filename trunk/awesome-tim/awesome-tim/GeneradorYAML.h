@@ -34,7 +34,7 @@ private:
 	YAML::Emitter& operator << (DLinea* dimlinea);
 
 public:
-	static bool guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno);
+	static bool guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno,std::string obj);
 	static int pruebayaml();
 
 };

@@ -4,6 +4,9 @@
 #include "PaletaFlipper.h"
 #include "GloboHelio.h"
 
+std::string objetivo = "";
+
+
 YAML::Emitter& operator << (YAML::Emitter& out,Cuadrado* cuad){
 //out << YAML::BeginMap;
 //out << YAML::Key << "ancho";
@@ -416,8 +419,9 @@ YAML::Emitter& operator << (YAML::Emitter& out,Terreno* terreno){
 	return out;
 };
 
-bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno){
+bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,Terreno* terreno,std::string obj){
 
+	objetivo = obj;
 	//creacion del arhchivo
 	std::ofstream arch;
 
@@ -445,7 +449,7 @@ bool GeneradorYaml::guardarJuego(const char* file,BotoneraController* botonera,T
 				out << YAML::Value << 2;
 
 				out << YAML::Key << "objetivo";
-				out << YAML::Value << "./images/texto_objetivo1.png";
+				out << YAML::Value << objetivo;
 
 				out << YAML::Key << "terreno";
 				out << YAML::Value << terreno; //adentro de terreno

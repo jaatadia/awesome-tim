@@ -257,7 +257,7 @@ int main (int argc, char** argv){
 
 	switch (opcion){
 		case OPC_JUEGO:
-			jugar(rutaIn, rutaOut,IP);
+			jugar( "../yaml/ReventarGlobosRojos.yml", "../yaml/ReventarGlobosRojos.yml",IP);
 			break;
 		case OPC_IMPRIMIR_AYUDA:
 			imprimir_ayuda();

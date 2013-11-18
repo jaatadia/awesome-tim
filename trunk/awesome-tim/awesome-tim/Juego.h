@@ -23,7 +23,7 @@ class Comandos;
 class Juego: public Estado, Cambiable
 {
 private:
-	
+	std::string objetivo;
 	MaquinaEstados* maq;
 	const char* fileIn;
 	const char* fileOut;

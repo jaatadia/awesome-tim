@@ -40,8 +40,6 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	for (int i = 0;i<=MAX_CLIENTES;i++){
 		figuraEnAire[i]=NULL;
 	}
-
-	std::string objetivo;
 	
 	objetivo = cargar();
 
@@ -94,7 +92,7 @@ std::string Juego::cargar(){
 bool Juego::guardar(){
 	bool seGuardo = false;
 	
-	seGuardo = GeneradorYaml::guardarJuego(fileOut,botonera,terreno);
+	seGuardo = GeneradorYaml::guardarJuego(fileOut,botonera,terreno,this->objetivo);
 	
 	if (!seGuardo){
 		ErrorLogHandler::addError("GeneradorYaml", "Error al abrir o cerrar los archivos al guardar la partida.");
@@ -618,6 +616,7 @@ return aux;
 
 
 void Juego::quit(){
+	guardar();
 	maq->salir();
 }
 
