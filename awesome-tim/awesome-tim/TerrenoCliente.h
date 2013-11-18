@@ -79,8 +79,8 @@ public:
 	void agrandarFigura();
 	void achicarFigura();
 	void shiftFigura();
-	Figura* getFiguraAtableCorrea(double x,double y);
-	Figura* getFiguraAtableSoga(double x,double y);
+	Figura* getFiguraAtableCorrea(double x,double y,bool soloMias);
+	Figura* getFiguraAtableSoga(double x,double y,bool soloMias);
 
 	bool posicionOcupada(Figura* figAPosicionar);
 
@@ -88,7 +88,7 @@ public:
 
 private:
 	bool hayFiguras();
-	Figura* buscarFigura(double posClickX, double posClickY);
+	Figura* buscarFigura(double posClickX, double posClickY,bool soloMias);
 	void corregirPosicion(Figura* fig);
 	void redraw();
 

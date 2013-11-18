@@ -220,9 +220,9 @@ bool TerrenoCliente::agregarFigura(Figura* fig){
 			Linea* linea = (Linea*)fig;
 			double x,y;
 			linea->getPunto1(&x,&y);
-			Figura* result1 = getFiguraAtableCorrea(x,y);
+			Figura* result1 = getFiguraAtableCorrea(x,y,false);
 			linea->getPunto2(&x,&y);
-			Figura* result2 = getFiguraAtableCorrea(x,y);
+			Figura* result2 = getFiguraAtableCorrea(x,y,false);
 			if((result1 == NULL) || (result2 == NULL)){
 				delete fig;
 				return false;
@@ -236,9 +236,9 @@ bool TerrenoCliente::agregarFigura(Figura* fig){
 			Soga* soga = (Soga*)fig;
 			double x1,y1,x2,y2;
 			soga->getPunto1(&x1,&y1);
-			Figura* result1 = getFiguraAtableSoga(x1,y1);
+			Figura* result1 = getFiguraAtableSoga(x1,y1,false);
 			soga->getPunto2(&x2,&y2);
-			Figura* result2 = getFiguraAtableSoga(x2,y2);
+			Figura* result2 = getFiguraAtableSoga(x2,y2,false);
 			
 			if((result1 == NULL) || (result2 == NULL)){
 				delete soga;
@@ -485,7 +485,12 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 
 	std::vector<int> tiposBorradas;
 
-	Figura* figuraABorrar = buscarFigura(posClickX, posClickY);
+	Figura* figuraABorrar = buscarFigura(posClickX, posClickY,true);
+
+	//no le deja si no la cero el
+	if(figuraABorrar->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){
+		return tiposBorradas;
+	}
 
 	if (figuraABorrar){
 		//saco de la lista y libero memoria
@@ -598,11 +603,18 @@ void TerrenoCliente::buscarActiva(double posClickX ,double posClickY){
 	//si todavia no hay una
 	if (!figuraActiva){ 
 
-		figuraActiva = buscarFigura(posClickX ,posClickY);
+		figuraActiva = buscarFigura(posClickX ,posClickY,true);
 		//si no la encontre confirmo que es null (o podria no hacer nada...)
 		if (!figuraActiva){
 			figuraActiva=NULL;
 		}else{
+
+			//Si no es mia vuelvo
+			if(figuraActiva->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){
+				figuraActiva=NULL;
+				return;
+			}
+
 			//la pongo traslucida, cambio el terreno y la saco de la lista
 			
 			figuraActiva->setTraslucido(true);
@@ -642,7 +654,7 @@ bool TerrenoCliente::adentroZonaTerreno(double posX,double posY){
 
 }
 
-Figura* TerrenoCliente::buscarFigura(double posClickX, double posClickY){
+Figura* TerrenoCliente::buscarFigura(double posClickX, double posClickY,bool soloMias){
 
 	if(! adentroZonaTerreno(posClickX,posClickY)){
 		return NULL;
@@ -667,6 +679,11 @@ Figura* TerrenoCliente::buscarFigura(double posClickX, double posClickY){
 			if(figuraBuscada->esFija())
 				return NULL;
 
+			if(soloMias){
+				if(figuraBuscada->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){
+					return NULL;
+				}
+			}
 			return figuraBuscada;
 		}
 	}
@@ -820,7 +837,7 @@ double TerrenoCliente::calcularAngulo(Dimension* dim, double XVector1,double YVe
 }
 
 
-Figura* TerrenoCliente::getFiguraAtableCorrea(double x,double y){
+Figura* TerrenoCliente::getFiguraAtableCorrea(double x,double y,bool soloMias){
 	if(hayFiguras()){	
 		Figura* figuraBuscada = NULL;
 
@@ -837,14 +854,20 @@ Figura* TerrenoCliente::getFiguraAtableCorrea(double x,double y){
 			iteradorLista++;
 		}
 
-		if (figuraEncontrada)
+		if (figuraEncontrada){
+			if(soloMias){
+				if(figuraBuscada->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){
+					return NULL;
+				}
+			}
 			return figuraBuscada;
+		}
 	}
 	return NULL;
 }
 
 
-Figura* TerrenoCliente::getFiguraAtableSoga(double x,double y){
+Figura* TerrenoCliente::getFiguraAtableSoga(double x,double y,bool soloMias){
 	if(hayFiguras()){	
 		
 		Figura* figuraBuscada = NULL;
@@ -863,8 +886,14 @@ Figura* TerrenoCliente::getFiguraAtableSoga(double x,double y){
 			iteradorLista++;
 		}
 
-		if (figuraEncontrada)
+		if (figuraEncontrada){
+			if(soloMias){
+				if(figuraBuscada->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){
+					return NULL;
+				}
+			}
 			return figuraBuscada;
+		}
 	}
 	return NULL;
 }
@@ -899,7 +928,7 @@ void TerrenoCliente::interactuar(double posClickX, double posClickY){
 	Figura* figAInteract;
 	
 	if (this->adentroZonaTerreno(posClickX,posClickY)){
-		figAInteract = this->buscarFigura(posClickX,posClickY);
+		figAInteract = this->buscarFigura(posClickX,posClickY,false);
 	}
 
 }
