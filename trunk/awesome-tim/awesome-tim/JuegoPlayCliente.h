@@ -29,6 +29,7 @@ private:
 	Figura* vector[LARGO];
 	int posVector;
 	int numCliente;
+	int contador;
 
 public:
 	JuegoPlayCliente(Superficie* fondo,void* ter,MaquinaEstados* maq);

@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ActualizeCounterMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ActualizeFigureMessage.cpp"
 				>
 			</File>
@@ -341,6 +345,10 @@
 			</File>
 			<File
 				RelativePath=".\IdMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InteractMessage.cpp"
 				>
 			</File>
 			<File
@@ -682,6 +690,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ActualizeCounterMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ActualizeFigureMessage.h"
 				>
 			</File>
@@ -871,6 +883,10 @@
 			</File>
 			<File
 				RelativePath=".\IdMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InteractMessage.h"
 				>
 			</File>
 			<File

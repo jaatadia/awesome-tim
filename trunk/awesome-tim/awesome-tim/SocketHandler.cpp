@@ -136,6 +136,12 @@ void SocketHandler::run()
 									case MSG_TYPE_BREAK_EGG:
 										msg = new BreakEggMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_INTERACT:
+										msg = new InteractMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_COUNTER:
+										msg = new ActualizeCounterMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg!=NULL && msg->validate())

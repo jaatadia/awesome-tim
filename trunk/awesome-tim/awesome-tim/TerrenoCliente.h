@@ -11,6 +11,7 @@
 #include <list>
 #include <vector>
 #include "TransformFigureMessage.h"
+#include "InteractMessage.h"
 #include "MaquinaEstados.h"
 
 /* terreno es el que contiene todas las figuras
@@ -85,6 +86,7 @@ public:
 	bool posicionOcupada(Figura* figAPosicionar);
 
 	void interactuar(double posClickX, double posClickY);
+	void interactuar(int accion);
 
 private:
 	bool hayFiguras();
