@@ -265,6 +265,12 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << YAML::Value << fig->getLargo();
 				break;
 
+			case CHINCHE:
+				out << YAML::Value << "CHINCHE";
+				out << (Cuadrado*) fig->getDimension();
+				break;
+
+
 			default:
 				out << YAML::Value << "";
 		};
