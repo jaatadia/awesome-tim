@@ -12,7 +12,7 @@
 #include <string>
 #include <list>
 #include <vector>
-
+#include "MaquinaEstados.h"
 /* terreno es el que contiene todas las figuras
 y tiene las funciones necesarias para que le roten algun objeto le eliminen y dibuje todos los objetos en una superficie
 */
@@ -42,8 +42,10 @@ private:
 
 	int contEventosMov;
 
+	MaquinaEstados* maq;
+
 public:
-	Terreno(int ancho,int alto,bool fisicaActiva=true);
+	Terreno(int ancho,int alto,MaquinaEstados* maq,bool fisicaActiva=true);
 	~Terreno(void);
 
 	void setMiPorcion(double x1, double y1, double x2, double y2);

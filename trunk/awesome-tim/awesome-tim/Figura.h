@@ -170,5 +170,5 @@ public:
 	void completarInteraccionesPosibles(Figura* nuevaFigura);
 	void hacerInteractuable();
 	bool esInteractuable();
-	
+	virtual void actualizar(){};
 };

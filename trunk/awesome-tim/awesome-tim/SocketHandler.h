@@ -20,6 +20,9 @@
 #include "MaquinaEstados.h"
 #include "UnionMessage.h"
 #include "UnionMessage2.h"
+#include "RemoveFigureMessage.h"
+#include "ActualizeFigureMessage.h"
+#include "CloseScissorMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

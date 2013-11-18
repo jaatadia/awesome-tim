@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="awesome-tim"
 	ProjectGUID="{C56CF460-3656-4967-A7C2-4580941FF051}"
 	RootNamespace="awesometim"
@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ActualizeFigureMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Arco.cpp"
 				>
 			</File>
@@ -240,6 +244,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CloseScissorMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Codo.cpp"
 				>
 			</File>
@@ -281,6 +289,10 @@
 			</File>
 			<File
 				RelativePath=".\FiguraSensor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FigureMessage.cpp"
 				>
 			</File>
 			<File
@@ -397,6 +409,10 @@
 			</File>
 			<File
 				RelativePath=".\Polea.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\RemoveFigureMessage.cpp"
 				>
 			</File>
 			<File
@@ -642,6 +658,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ActualizeFigureMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Arco.h"
 				>
 			</File>
@@ -710,6 +730,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CloseScissorMessage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Codo.h"
 				>
 			</File>
@@ -767,6 +791,10 @@
 			</File>
 			<File
 				RelativePath=".\FiguraSensor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FigureMessage.h"
 				>
 			</File>
 			<File
@@ -907,6 +935,10 @@
 			</File>
 			<File
 				RelativePath=".\Queso.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RemoveFigureMessage.h"
 				>
 			</File>
 			<File

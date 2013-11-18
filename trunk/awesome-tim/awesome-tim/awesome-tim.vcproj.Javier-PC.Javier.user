@@ -39,7 +39,7 @@
 			<DebugSettings
 				Command="$(TargetPath)"
 				WorkingDirectory=""
-				CommandArguments="--IP 25.169.117.108"
+				CommandArguments=""
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"

@@ -3,6 +3,10 @@
 #include "CreateFigureMessage.h"
 #include "ClientMessage.h"
 #include "FactoryFiguras.h"
+#include "ActualizeFigureMessage.h"
+#include "RemoveFigureMessage.h"
+
+#include "Tijera.h"
 
 JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -125,6 +129,29 @@ void JuegoPlayCliente::onLoop(){
 								break;
 						}
 					}
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_REMOVE:
+				{
+					FigureMessage* r_msg = (FigureMessage*) msg;
+					Figura* fig = vector[r_msg->getFigureID()];
+					terreno->eliminarFigura(fig);
+					vector[r_msg->getFigureID()] = NULL;
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_ACTUALIZE:
+				{
+					FigureMessage* r_msg = (FigureMessage*) msg;
+					vector[r_msg->getFigureID()]->actualizar();
+					delete msg;
+				}
+				break;
+			case MSG_TYPE_CLOSE_SCISSOR:
+				{
+					FigureMessage* r_msg = (FigureMessage*) msg;
+					((Tijera*)(vector[r_msg->getFigureID()]))->cerrar();
 					delete msg;
 				}
 				break;
