@@ -151,7 +151,7 @@ void test(void){
 
 //Corre el programa del juego
 void jugar(char* rutaIn, char* rutaOut,char* IP){
-	
+	bool imprimir = true;
 	MaquinaEstados* juego;
 
 #ifdef SERVER_MODE
@@ -159,6 +159,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 		juego = new MEstados(rutaIn,rutaOut);
 		std::cout << "Initializing game in: SERVER MODE" << std::endl;
 		Server * server = new Server(juego);
+		imprimir = false;
 	}else{
 		juego = new MEstadosCliente();
 		std::cout << "Initializing game in: CLIENT MODE" << std::endl;
@@ -181,7 +182,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 	while (juego->isRunning()){
 		
 		if(tiempo>=1000){
-			std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
+			if(imprimir) std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
 			tiempo = 0;
 			frames = 0;
 			cant=0;

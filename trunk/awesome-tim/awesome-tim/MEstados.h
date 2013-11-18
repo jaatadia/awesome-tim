@@ -39,16 +39,6 @@ public:
 	virtual void editor();
 	virtual void play(void* ter);
 
-	//PARA RECIBIR MENSAJES
-	//todos los mensajes tipo interactuar, mover, agregar figura ,etc...
-	virtual void procesarMensaje(Message* msj);
-	//mensaje de clase MessageState
-	virtual void procesarCambioEstado(Message* msj);
-
-	//PARA ENVIAR MENSAJES
-	//devuelve todos los mensajes a enviar Y limpia la lista
-//	virtual std::list<Message*> obtenerMensajes();
-
 private:
 	Estado* getEstadoActivo(){return Eactivo;}
 

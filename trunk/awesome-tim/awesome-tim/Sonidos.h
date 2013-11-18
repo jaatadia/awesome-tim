@@ -4,8 +4,8 @@
 #include <string>
 #include "Constantes.h"
 
-#define MUSIC ""//"../music/modoEstatico.wav"
-#define VICTORY_MUS ""//"../music/victory.ogg"
+#define MUSIC "../music/modoEstatico.wav"
+#define VICTORY_MUS "../music/victory.ogg"
 
 //MUSICA
 #define MOTOR_MUSIC "../music/motor.wav"
@@ -36,12 +36,14 @@ class Sonidos{
 private:
 	static bool initialized;
 	static std::map<std::string,void*>* mapa;
+	static bool playSounds;
 
 public:
 	static void playSound(const char *file,int cant=0);
 	static void playMusic(const char *file);
 	static void stopMusic();
 	static void end();
+	static void noSound();
 
 private:
 	static void initialize();

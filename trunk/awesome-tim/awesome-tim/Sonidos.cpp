@@ -3,13 +3,18 @@
 
 
 bool Sonidos::initialized = false;
+bool Sonidos::playSounds = true;
 std::map<std::string,void*>* Sonidos::mapa = new std::map<std::string,void*>;
 
+#include <iostream>
 
 void Sonidos::initialize(){
 	initialized = true;
 
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 );
+	int aux = Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 );
+	if(aux==-1){
+		 printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
 
 	//Sonidos:
 	(*mapa)[POP_BALLOON] = (void*)Mix_LoadWAV(POP_BALLOON); //OK
@@ -58,6 +63,7 @@ void Sonidos::end(){
 }
 
 void Sonidos::playSound(const char *file,int cant){
+	if(!playSounds) return;
 	try{
 		if(!initialized) initialize();
 		Mix_PlayChannel(-1,(Mix_Chunk*)(*mapa)[file],cant);
@@ -66,6 +72,7 @@ void Sonidos::playSound(const char *file,int cant){
 }
 
 void Sonidos::playMusic(const char* file){
+	if(!playSounds) return;
 	try{
 		if(!initialized) initialize();
 		stopMusic();
@@ -75,9 +82,14 @@ void Sonidos::playMusic(const char* file){
 }
 
 void Sonidos::stopMusic(){
+	if(!playSounds) return;
 	try{
 		if(!initialized) initialize();
 		Mix_HaltMusic();
 	}catch(...){
 	}
+}
+
+void Sonidos::noSound(){
+	playSounds = false;
 }
