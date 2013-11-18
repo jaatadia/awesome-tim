@@ -23,6 +23,7 @@
 #include "RemoveFigureMessage.h"
 #include "ActualizeFigureMessage.h"
 #include "CloseScissorMessage.h"
+#include "PopBalloonMessage.h"
 
 class SocketHandler : public ConnectionManager
 {

@@ -11,6 +11,7 @@
 #include "RemoveFigureMessage.h"
 #include "ActualizeFigureMessage.h"
 #include "CloseScissorMessage.h"
+#include "PopBalloonMessage.h"
 
 Terreno::Terreno(int ancho,int alto,MaquinaEstados* maq,bool fisicaActiva){
 	
@@ -778,14 +779,19 @@ void Terreno::actualizarModelo(Figura* vector[]){
 					mundoBox2D->eliminarFigura((*iteradorLista));
 				}
 			}else if((*iteradorLista)->getTipoFigura()==GLOBOHELIO){
+				if(((GloboHelio*)(*iteradorLista))->estaPinchando()){
+					PopBalloonMessage* p_msg = new PopBalloonMessage();
+					p_msg->setFigureID((*iteradorLista)->numero);
+					this->maq->pushSendMessage(p_msg);
+					
+					borrarAtadura(*iteradorLista,&nuevasFiguras);
+					mundoBox2D->eliminarFigura((*iteradorLista));
+				}
 				((GloboHelio*)(*iteradorLista))->actualizar();
 				ActualizeFigureMessage* a_msg = new ActualizeFigureMessage();
 				a_msg->setFigureID((*iteradorLista)->numero);
 				this->maq->pushSendMessage(a_msg);
-				if(((GloboHelio*)(*iteradorLista))->estaPinchando()){
-					borrarAtadura(*iteradorLista,&nuevasFiguras);
-					mundoBox2D->eliminarFigura((*iteradorLista));
-				}
+
 			}else if((*iteradorLista)->cortaSoga()){
 				listaCortanSoga.push_back((*iteradorLista));
 			}

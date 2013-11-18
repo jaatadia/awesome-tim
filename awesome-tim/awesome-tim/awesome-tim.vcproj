@@ -412,6 +412,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PopBalloonMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RemoveFigureMessage.cpp"
 				>
 			</File>
@@ -931,6 +935,10 @@
 			</File>
 			<File
 				RelativePath=".\Polea.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PopBalloonMessage.h"
 				>
 			</File>
 			<File
