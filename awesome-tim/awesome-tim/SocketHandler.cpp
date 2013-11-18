@@ -109,6 +109,15 @@ void SocketHandler::run()
 									case MSG_TYPE_UNION2:
 										msg = new UnionMessage2(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_ACTUALIZE:
+										msg = new ActualizeFigureMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_REMOVE:
+										msg = new RemoveFigureMessage(cadena.substr(npos+1));
+										break;
+									case MSG_TYPE_CLOSE_SCISSOR:
+										msg = new CloseScissorMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg->validate())

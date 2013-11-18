@@ -8,9 +8,13 @@
 #include "Tijera.h"
 #include "Huevo.h"
 #include "PaletaFlipper.h"
+#include "RemoveFigureMessage.h"
+#include "ActualizeFigureMessage.h"
+#include "CloseScissorMessage.h"
 
-Terreno::Terreno(int ancho,int alto,bool fisicaActiva){
+Terreno::Terreno(int ancho,int alto,MaquinaEstados* maq,bool fisicaActiva){
 	
+	this->maq = maq;
 	this->fisicaActiva = fisicaActiva;
 	
 	x1 = 0;
@@ -743,6 +747,11 @@ void Terreno::actualizarModelo(Figura* vector[]){
 		for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
 			
 			if((*iteradorLista)->getTipoFigura()==TIJERA){
+				if(((Tijera*)(*iteradorLista))->cortaSoga()){
+					CloseScissorMessage* c_msg = new CloseScissorMessage();
+					c_msg->setFigureID((*iteradorLista)->numero);
+					this->maq->pushSendMessage(c_msg);
+				}
 				((Tijera*)(*iteradorLista))->actualizar();
 			}
 			if((*iteradorLista)->getTipoFigura()==ESCOPETA){
@@ -762,11 +771,17 @@ void Terreno::actualizarModelo(Figura* vector[]){
 				((Linea*)(*iteradorLista))->actualizar();
 			}else if((*iteradorLista)->getTipoFigura()==HUEVO){
 				((Huevo*)(*iteradorLista))->actualizar();
+				ActualizeFigureMessage* a_msg = new ActualizeFigureMessage();
+				a_msg->setFigureID((*iteradorLista)->numero);
+				this->maq->pushSendMessage(a_msg);
 				if(((Huevo*)(*iteradorLista))->estaRompiendo()){
 					mundoBox2D->eliminarFigura((*iteradorLista));
 				}
 			}else if((*iteradorLista)->getTipoFigura()==GLOBOHELIO){
 				((GloboHelio*)(*iteradorLista))->actualizar();
+				ActualizeFigureMessage* a_msg = new ActualizeFigureMessage();
+				a_msg->setFigureID((*iteradorLista)->numero);
+				this->maq->pushSendMessage(a_msg);
 				if(((GloboHelio*)(*iteradorLista))->estaPinchando()){
 					borrarAtadura(*iteradorLista,&nuevasFiguras);
 					mundoBox2D->eliminarFigura((*iteradorLista));
@@ -800,6 +815,9 @@ void Terreno::actualizarModelo(Figura* vector[]){
 
 		for(iterLista = listaABorrar.begin();iterLista != listaABorrar.end();iterLista++){
 			figuras.remove(*iterLista);
+			RemoveFigureMessage* r_msg = new RemoveFigureMessage();
+			r_msg->setFigureID((*iterLista)->numero);
+			this->maq->pushSendMessage(r_msg);
 			if(!(*iterLista)->esObjetivo())	delete((*iterLista));
 		}
 

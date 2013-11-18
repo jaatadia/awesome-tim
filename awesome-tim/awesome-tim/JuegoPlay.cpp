@@ -1,6 +1,8 @@
 #include "JuegoPlay.h"
 #include "TransformFigureMessage.h"
 #include "ClientMessage.h";
+#include "RemoveFigureMessage.h"
+#include "ActualizeFigureMessage.h"
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -14,7 +16,7 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 	this->maq = maq;
 		
 	comandos = new ComandosPlay(ANCHO_COMANDOS,ALTO_COMANDOS);
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,true);
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,true);
 
 	terreno->setFondo(ter->getFondo().c_str());
 	
