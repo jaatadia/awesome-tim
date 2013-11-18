@@ -255,9 +255,12 @@ int main (int argc, char** argv){
 		return 1;
 	}
 
+	char* ruta = "../yaml/ReventarGlobosRojos.yml";
+			
 	switch (opcion){
 		case OPC_JUEGO:
 			jugar( rutaIn, rutaOut,IP);
+			//jugar(ruta , ruta,IP);
 			break;
 		case OPC_IMPRIMIR_AYUDA:
 			imprimir_ayuda();

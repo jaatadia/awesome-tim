@@ -64,6 +64,24 @@ void CargadorYaml::obtenerAngulo(const YAML::Node& nodoFigura, double* angulo){
 	}
 }
 
+void CargadorYaml::obtenerDistancia(const YAML::Node& nodoFigura, double* distancia){
+	try{
+		nodoFigura["distancia"] >> *distancia;
+	}catch(YAML::TypedKeyNotFound<std::string> &e){
+		imprimir_error_excepcion("No existe distancia de figura. Se carga distancia por defecto.",e.what());
+		*distancia = DISTANCIA_RATON_DEFAULT;
+	}catch(YAML::InvalidScalar &e){
+		imprimir_error_excepcion("Dato erroneo del angulo de figura. Se carga distancia por defecto.",e.what());
+		*distancia = DISTANCIA_RATON_DEFAULT;
+	}
+
+	if(!distancia_valida(*distancia)){
+		int linea = nodoFigura["distancia"].GetMark().line;
+		imprimir_error_linea("Distancia de Figura invalida. Se carga distancia por defecto.", linea);
+		*distancia = DISTANCIA_RATON_DEFAULT;
+	}
+}
+
 void CargadorYaml::obtenerID(const YAML::Node& nodoFigura, std::string* ID){
 
 	try{
@@ -520,12 +538,13 @@ Figura* CargadorYaml::crearMotor(const YAML::Node& nodoFigura){
 }
 
 Figura* CargadorYaml::crearMotorRaton(const YAML::Node& nodoFigura){
-	double posX,posY,radio;
+	double posX,posY,radio,distancia;
 	int sentido;
 
 	obtenerPosicion(nodoFigura,&posX,&posY);
 	obtenerSentido(nodoFigura,&sentido);
 	obtenerRadio(nodoFigura,&radio);
+	obtenerDistancia(nodoFigura,&distancia);
 
 	Figura* figura = new MotorRaton(posX,posY,radio,0);
 
@@ -534,6 +553,7 @@ Figura* CargadorYaml::crearMotorRaton(const YAML::Node& nodoFigura){
 	if(sentido == SENT_ANTIHORARIO)
 		figura->shift();
 
+	((MotorRaton*)figura)->setDistancia(distancia);
 	return figura;
 }
 
@@ -1593,6 +1613,10 @@ bool CargadorYaml::posicion_validaX(double posX){
 
 bool CargadorYaml::posicion_validaY(double posY){
 	return ((posY >= 0) && (posY <= ALTO_TERRENO_LOGICO)); //menor estricto o no???;
+}
+
+bool CargadorYaml::distancia_valida(double distancia){
+	return true;
 }
 
 bool CargadorYaml::angulo_valido(double angulo){

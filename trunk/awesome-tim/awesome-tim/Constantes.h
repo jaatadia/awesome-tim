@@ -94,6 +94,8 @@
 
 //valores fisicos
 
+#define DISTANCIA_RATON_DEFAULT 3
+
 #define FUERZA_BALA 100000
 #define ANCHO_BALA 2
 #define ALTO_BALA 1

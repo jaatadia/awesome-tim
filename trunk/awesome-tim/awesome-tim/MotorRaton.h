@@ -18,18 +18,24 @@ private:
 public:
 	int sentido;
 	bool activo;
+	double distancia;
 
 public:
 	MotorRaton(double pos_X,double pos_Y,double radio1 = RADIO_MINENGRANAJE, double angulo = 0):Engranaje(ID_MOTOR_RATON,pos_X,pos_Y,radio1){
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
+		distancia = 0;
 	}
 
 	~MotorRaton(void){
 		delete myVista2;
 	};
 	
+	void setDistancia(double dist){
+		this->distancia =dist;
+	}
+
 	virtual Figura* clonar(){
 		MotorRaton* eng = new MotorRaton(ID_MOTOR_RATON_1,dimension->clonar(),true);
 		eng->setRadio(this->radio1);

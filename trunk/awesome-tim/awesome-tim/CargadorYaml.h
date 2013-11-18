@@ -94,6 +94,7 @@ private:
 	static bool opcion_valida(const char* opcion);
 	static bool cantidad_jugadores_valida(int cantidad);
 	static bool color_valido(int color);
+	static bool distancia_valida(double distancia);
 
 	static std::string concatenar_archivo(std::string mensaje, int linea, std::string archivo);
 	static std::string concatenar_archivo(std::string mensaje, std::string archivo);
@@ -156,5 +157,7 @@ private:
 	static void obtenerZona(const YAML::Node& nodoZona,double* x1,double* y1,double* x2,double* y2);
 	static void obtenerPos(const YAML::Node& nodoFigura,double* posX, double* posY, double X_Default, double Y_Default);
 	static std::string obtenerObjetivo(const YAML::Node& nodo);
+	static void obtenerDistancia(const YAML::Node& nodoFigura, double* distancia);
+
 
 };

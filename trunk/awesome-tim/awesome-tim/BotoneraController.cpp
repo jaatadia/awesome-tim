@@ -371,6 +371,8 @@ void BotoneraController::ScrollDown(){
 #include "Huevo.h"
 #include "Queso.h"
 #include "Carrito.h"
+#include "Domino.h"
+#include "MotorRaton.h"
 
 bool BotoneraController::agregarBotonesDefault(){
 
@@ -400,6 +402,8 @@ bool BotoneraController::agregarBotonesDefault(){
 	this->agregarBoton(new Engranaje(0,0),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new Balancin(0,0,ANGULO_BALANCIN_IZQ),INSTANCIAS_DEFAULT);
 	this->agregarBoton(new PaletaFlipper(0,0,IZQUIERDA),INSTANCIAS_DEFAULT);	
+	this->agregarBoton(new Domino(0,0),INSTANCIAS_DEFAULT);	
+	this->agregarBoton(new MotorRaton(0,0),INSTANCIAS_DEFAULT);	
 
 	return true;
 }
