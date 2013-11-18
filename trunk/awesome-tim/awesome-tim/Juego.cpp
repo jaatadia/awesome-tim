@@ -360,6 +360,9 @@ void Juego:: onLoop(){
 									this->jugadoresListos.remove(c_msg->getClientID());
 								}catch(...){
 								}
+								if(this->myClients.size()==0){
+									this->reload();
+								}
 							}
 							break;
 						case A_READY:
@@ -1059,4 +1062,58 @@ void Juego::cambiarInstancias(int cliente,int tipoFigura,int cantidad){
 			(*it).cantInstancias += cantidad;
 		}
 	}
+}
+
+void Juego::reload(){
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		delete this->botoneras[i];
+	}
+	for(int i=0;i<=MAX_CLIENTES;i++){
+		if(figuraEnAire[i]!=NULL)delete figuraEnAire[i];
+	}
+
+	delete terreno;
+	delete botonera;
+	delete comandos;
+	
+
+
+	for(int i = 0;i<=MAX_CLIENTES;i++){
+		this->botoneras[i] = new std::list<struct boton>;
+	}
+
+	for(int i=0;i<=MAX_CLIENTES;i++){
+		areas[i][0] = i*10;
+		areas[i][1] = i*10;
+		areas[i][2] = (i+1)*10;
+		areas[i][3] = (i+1)*10;
+	}
+
+	posVector = 0;
+	for(int i = 0;i<LARGO;i++){
+		vector[i] = NULL;
+	}
+
+	for (int i = 0;i<=MAX_CLIENTES;i++){
+		figuraEnAire[i]=NULL;
+	}
+
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,false);
+	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+
+	
+	objetivo = cargar();
+
+	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
+
+	this->setCambio(true);
+
+	shiftPressed = false;
+	estaActiva = false;
+	clickPressed = false;
+	contEventosMov = 0;
+
+	Sonidos::playMusic(MUSIC);
+
+
 }
