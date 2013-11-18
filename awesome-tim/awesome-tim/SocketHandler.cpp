@@ -142,6 +142,9 @@ void SocketHandler::run()
 									case MSG_TYPE_COUNTER:
 										msg = new ActualizeCounterMessage(cadena.substr(npos+1));
 										break;
+									case MSG_TYPE_STRING:
+										msg = new StringMessage(cadena.substr(npos+1));
+										break;
 								}
 
 								if (msg!=NULL && msg->validate())

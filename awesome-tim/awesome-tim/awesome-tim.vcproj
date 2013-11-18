@@ -488,6 +488,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\StringMessage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Thread.cpp"
 				>
 			</File>
@@ -1043,6 +1047,10 @@
 			</File>
 			<File
 				RelativePath=".\Sonidos.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StringMessage.h"
 				>
 			</File>
 			<File

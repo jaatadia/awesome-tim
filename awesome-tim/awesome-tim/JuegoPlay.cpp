@@ -7,6 +7,7 @@
 #include "RotateMessage.h"
 #include "InteractMessage.h"
 #include "ActualizeCounterMessage.h"
+#include "SensorB2ContactListener.h"
 
 JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 {
@@ -14,6 +15,8 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 	for(int i = 0;i<LARGO;i++){
 		vector[i] = NULL;
 	}
+
+	SensorB2ContactListener::vector = vector;
 
 	Terreno* ter = (Terreno*) tere;
 	this->fondo = fondo;
