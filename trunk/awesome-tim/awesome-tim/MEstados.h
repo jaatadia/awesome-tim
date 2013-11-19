@@ -20,6 +20,7 @@ private:
 	Estado* Eplay;
 
 	bool running;
+	
 	const char* fileIn;
 	const char* fileOut;
 	
@@ -27,7 +28,8 @@ private:
 	Superficie* superficie;
 
 public:
-	MEstados(const char *fileIn,const char *fileOut);
+	bool usarVista;
+	MEstados(const char *fileIn,const char *fileOut,bool usarVista);
 	~MEstados(void);
 
 	bool isRunning();

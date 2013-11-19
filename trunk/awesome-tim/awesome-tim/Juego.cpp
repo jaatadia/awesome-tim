@@ -17,7 +17,9 @@
 #include "StringMessage.h"
 
 
-Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
+Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq,bool usarVista){
+
+	this->usarVista = usarVista;
 
 	for(int i = 0;i<=MAX_CLIENTES;i++){
 		this->botoneras[i] = new std::list<struct boton>;
@@ -38,15 +40,21 @@ Juego::Juego(const char *fileIn,const char *fileOut,MaquinaEstados* maq){
 	this->maq = maq;
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
+	
 	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,false);
-	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+	if(usarVista){
+		botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+	}
+	
 	for (int i = 0;i<=MAX_CLIENTES;i++){
 		figuraEnAire[i]=NULL;
 	}
 	
 	objetivo = cargar();
 
-	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
+	if(usarVista){
+		comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
+	}
 
 	this->setCambio(true);
 
@@ -82,12 +90,14 @@ std::string Juego::cargar(){
 		botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
 	}
 
-	if(botonera->estaVacia()){
-		botonera->agregarBotonesDefault();
-		botonera->resizear();
+	if(usarVista){
+		if(botonera->estaVacia()){
+			botonera->agregarBotonesDefault();
+			botonera->resizear();
+		}
+		//necesario para que se ordenen cosas dentro de botonera
+		botonera->ScrollUp();
 	}
-	//necesario para que se ordenen cosas dentro de botonera
-	botonera->ScrollUp();
 	
 	return objetivo;
 }
@@ -111,10 +121,12 @@ Juego::~Juego(){
 	}
 
 	delete terreno;
-	delete botonera;
-	delete comandos;
-	delete EscalasDeEjes::getInstance();
-	Contenedor::deleteContenedor();
+	if(usarVista){
+		delete botonera;
+		delete comandos;
+		delete EscalasDeEjes::getInstance();
+		Contenedor::deleteContenedor();
+	}
 	for(int i=0;i<=MAX_CLIENTES;i++){
 		if(figuraEnAire[i]!=NULL)delete figuraEnAire[i];
 	}
@@ -124,6 +136,8 @@ Juego::~Juego(){
 //dibuja en pantalla
 
 bool Juego:: onRender(Superficie* superficie){
+
+	if (!usarVista) return false;
 
 	bool dibujar = false;
 	
@@ -530,6 +544,8 @@ void Juego:: onLoop(){
 
 //manejo de eventos
 bool Juego:: onEvent(Ventana* ventana,Superficie** sup){
+
+if(!usarVista) return false;
 
 SDL_Event evento;
 double posClickX, posClickY;
@@ -1103,8 +1119,10 @@ void Juego::reload(){
 	}
 
 	delete terreno;
-	delete botonera;
-	delete comandos;
+	if(this->usarVista){
+		delete botonera;
+		delete comandos;
+	}
 	
 
 
@@ -1127,14 +1145,16 @@ void Juego::reload(){
 	for (int i = 0;i<=MAX_CLIENTES;i++){
 		figuraEnAire[i]=NULL;
 	}
-
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,false);
-	botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
-
+	if(usarVista){
+		terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,false);
+		botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+	}
 	
 	objetivo = cargar();
 
-	comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
+	if(usarVista){
+		comandos = new Comandos(ANCHO_COMANDOS,ALTO_COMANDOS,objetivo);
+	}
 
 	this->setCambio(true);
 

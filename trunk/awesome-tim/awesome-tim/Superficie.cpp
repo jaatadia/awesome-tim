@@ -18,7 +18,7 @@ Superficie::Superficie(int ancho,int alto){
 		if(SdlSurfaceManager::huboFallas())	fallar();
 		else restore();
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -28,7 +28,7 @@ Superficie::~Superficie(void){
 		if(superficie == NULL) return;
 		SDL_FreeSurface(superficie);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -41,7 +41,7 @@ void Superficie::restore(){
 		SdlSurfaceManager::pintarSup(superficie,negro);
 
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -51,7 +51,7 @@ void Superficie::restoreAlpha(){
 		Uint32 alpha = SDL_MapRGBA(superficie->format,0,0,0,0);
 		SdlSurfaceManager::pintarSup(superficie,alpha);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -62,7 +62,7 @@ int Superficie::getAlto(){
 		if(superficie == NULL) return -1;
 		return superficie->clip_rect.h;
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 		return 1;
 	}
 }
@@ -72,7 +72,7 @@ int Superficie::getAncho(){
 		if(superficie == NULL) return -1;
 		return superficie->clip_rect.w;
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 		return 1;
 	}
 }
@@ -83,7 +83,7 @@ void Superficie::setTransparency(Uint8 alpha){
 		if(superficie == NULL) return;
 		SDL_SetSurfaceAlphaMod(superficie,alpha);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -95,7 +95,7 @@ void Superficie::dibujarSupreficie(Superficie* sup,Rectangulo* rectOrigen,int xD
 		if((this!=NULL)&&(sup!=NULL))
 			SdlSurfaceManager::blitSurfaces(sup->superficie,this->superficie,rectOrigen,xDestino,yDestino);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -106,7 +106,7 @@ void Superficie::dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,i
 		if((this!=NULL)&&(img!=NULL))
 			SdlSurfaceManager::blitSurfaces(img->superficie,this->superficie,rectOrigen,xDestino,yDestino);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -122,7 +122,7 @@ Superficie* Superficie::rotarSuperficie(double ang){
 		}
 		return sup;
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 		return NULL;
 	}
 }
@@ -152,7 +152,7 @@ Superficie* Superficie::scaleSurface(int pixelesAncho,int pixelesAlto){
 		}
 		return sup;
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 		return NULL;
 	}
 }
@@ -172,7 +172,7 @@ Superficie* Superficie::rotarCuadradoSuperficie(double ang){
 		}
 		return sup;
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 		return NULL;
 	}
 }
@@ -183,7 +183,7 @@ void Superficie::dibujarCuadradoNegro(int x, int y, int ancho,int alto){
 		Uint32 negro = SDL_MapRGBA(this->superficie->format,0,0,0,255);
 		SdlSurfaceManager::dibujarCuadrado(superficie,x,y,ancho,alto,negro);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -193,7 +193,7 @@ void Superficie::restoreGris(){
 		Uint32 gris = SDL_MapRGBA(this->superficie->format,200,200,200,255);
 		SdlSurfaceManager::pintarSup(superficie,gris);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }
 
@@ -202,7 +202,7 @@ Uint32 Superficie::getPixel(int x, int y) {
 	if(superficie == NULL) return 0;
 	return SdlSurfaceManager::getPixel(this->superficie, x, y);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 		return 0;
 	}
 }
@@ -212,6 +212,6 @@ void Superficie::dibujarLinea(int x1,int y1,int x2, int y2,int ancho,int r,int g
 		if(superficie == NULL) return;
 		SdlSurfaceManager::dibujarLinea(this->superficie,x1,y1,x2,y2,ancho,r,g,b);
 	}catch(...){
-		this->fallar();
+		if(this!=NULL)this->fallar();
 	}
 }

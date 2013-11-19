@@ -13,7 +13,9 @@ Server::Server(MaquinaEstados * juego)
 		PrintIP();
 	} catch (SocketException &sE)
 	{
-		cout << sE.what() << endl;
+		//cout << sE.what() << endl;
+		cout << "No se pudo establecer el servidor, verifique que no se encuentra ya uno corriendo...\n";
+		juego->salir();
 	}
 }
 

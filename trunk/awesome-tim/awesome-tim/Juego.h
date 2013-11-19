@@ -47,8 +47,10 @@ private:
 	(std::list<struct boton>*) botoneras[MAX_CLIENTES+1];
 	double areas[MAX_CLIENTES+1][4];
 
+	bool usarVista;
+
 public:
-	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq);//se crea el juego
+	Juego(const char* fileIn,const char* fileOut,MaquinaEstados* maq,bool usarVista);//se crea el juego
 	~Juego(void);
 
 	std::string cargar();

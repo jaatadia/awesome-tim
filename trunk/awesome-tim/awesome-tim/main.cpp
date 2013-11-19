@@ -156,7 +156,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 #ifdef SERVER_MODE
 	if (IP==NULL){
-		juego = new MEstados(rutaIn,rutaOut);
+		juego = new MEstados(rutaIn,rutaOut,true);
 		std::cout << "Initializing game in: SERVER MODE" << std::endl;
 		Server * server = new Server(juego);
 		imprimir = false;
@@ -220,7 +220,8 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 				cant++;
 				
 				ftime(&tInicial);
-				juego->onEvent();
+				bool aux = juego->onEvent();
+				if(aux) break;
 				juego->onLoop();
 				ftime(&tFinal);
 
