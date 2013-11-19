@@ -849,18 +849,22 @@ void Juego::resume(){
 }
 
 void Juego::resizear(){
-	terreno->cambioVistaFiguras();
-	terreno->resizear();
+	if(usarVista){
+		terreno->cambioVistaFiguras();
+		terreno->resizear();
 
-	botonera->resizear();
-	//necesario moverla para que se ajuste la vista...
-	botonera->ScrollDown();
+		botonera->resizear();
+		//necesario moverla para que se ajuste la vista...
+		botonera->ScrollDown();
 
-	comandos->resizear();
+		comandos->resizear();
+	}
 }
 
 void Juego::setFondo(const char* dir){
-	terreno->setFondo(dir);
+	if(usarVista){
+		terreno->setFondo(dir);
+	}
 }
 
 bool Juego::posEnTerreno(double posX,double posY){
@@ -1145,8 +1149,9 @@ void Juego::reload(){
 	for (int i = 0;i<=MAX_CLIENTES;i++){
 		figuraEnAire[i]=NULL;
 	}
+
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,false);
 	if(usarVista){
-		terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,false);
 		botonera = new BotoneraController(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	}
 	

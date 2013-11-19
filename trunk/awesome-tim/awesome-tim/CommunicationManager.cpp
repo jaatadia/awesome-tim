@@ -38,7 +38,7 @@ void CommunicationManager::run()
 		this->_thread.sleep(5000);
 
 		vuelta++;
-		vuelta%=2;
+		vuelta%=3;
 		if(vuelta==0){
 			if(socketReader->mensajesRecibidos == 0){
 				socketWriter->kill();
