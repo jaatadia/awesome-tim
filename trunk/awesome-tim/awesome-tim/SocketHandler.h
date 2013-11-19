@@ -40,6 +40,7 @@ class SocketHandler : public ConnectionManager
 public:
 	SocketHandler(Socket * s, int mode,MessageHandler* m_handler,MaquinaEstados* maq,int id);
 	virtual ~SocketHandler(void);
+	int mensajesRecibidos;
 
 private:
 	SocketHandler(void);

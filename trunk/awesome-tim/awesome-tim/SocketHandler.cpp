@@ -4,6 +4,7 @@
 SocketHandler::SocketHandler(void)
 {
 	this->msgRemainder = "";
+	this->mensajesRecibidos = 0;
 }
 
 SocketHandler::SocketHandler(Socket * socket, int mode,MessageHandler* m_handler,MaquinaEstados* maq,int id) : _socket(socket), ConnectionManager(mode)
@@ -12,6 +13,7 @@ SocketHandler::SocketHandler(Socket * socket, int mode,MessageHandler* m_handler
 	this->msgRemainder = "";
 	this->maq = maq;
 	this->id = id;
+	this->mensajesRecibidos = 0;
 }
 
 SocketHandler::~SocketHandler(void)
@@ -66,6 +68,7 @@ void SocketHandler::run()
 						}
 						while((pos = cadena.find("$")) > 0)
 						{
+							this->mensajesRecibidos++;
 							Message * msg = NULL;
 							int npos = cadena.find("|");
 							int type = std::atoi(cadena.substr(0,npos).c_str());
@@ -163,7 +166,9 @@ void SocketHandler::run()
 								}
 								else
 								{
-									cout << "Mensaje invalido: " << cadena << endl;
+									if(type != MSG_TYPE_NONE){
+										cout << "Mensaje invalido: " << cadena << endl;
+									}
 								}
 								cadena = cadena.substr(pos + 1);
 							}

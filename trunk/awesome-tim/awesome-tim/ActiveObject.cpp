@@ -5,9 +5,11 @@ ActiveObject::ActiveObject() : finalizando(0), _thread(threadEntry, this)
 }
 
 void ActiveObject::kill() {
-	finalizando++;
-	flushThread();
-	_thread.waitForDeath();
+	if(!finalizando){
+		finalizando++;
+		flushThread();
+		_thread.waitForDeath();
+	}
 }
 
 DWORD WINAPI ActiveObject::threadEntry(void * pArg)

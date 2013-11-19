@@ -17,6 +17,7 @@ public:
 	void pushSendMessage(Message * msg, int id = -1);
 	void pushProcessMessage(Message * msg);
 	void returnProcessMessage(Message * msg);
+	void returnSendMessage(Message * msg,int id);
 	Message * getSendMessage(int id);
 	Message * getProcessMessage();
 	
