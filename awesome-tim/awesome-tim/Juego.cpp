@@ -362,11 +362,12 @@ void Juego:: onLoop(){
 									this->jugadoresListos.remove(c_msg->getClientID());
 								}catch(...){
 								}
+								
+								std::cout<<"Se desconecto el cliente n: "<< c_msg->getClientID() <<"\n";
 								if(this->myClients.size()==0){
 									this->reload();
+									std::cout << "Se han desconectado todos los clientes reiniciando el juego...\n";
 								}
-
-								std::cout<<"Se desconecto el cliente n: "<< c_msg->getClientID() <<"\n";
 							}
 							break;
 						case A_READY:
@@ -1093,6 +1094,7 @@ void Juego::cambiarInstancias(int cliente,int tipoFigura,int cantidad){
 }
 
 void Juego::reload(){
+	
 	for(int i = 0;i<=MAX_CLIENTES;i++){
 		delete this->botoneras[i];
 	}

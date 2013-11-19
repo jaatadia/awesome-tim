@@ -52,7 +52,7 @@ std::string Socket::read()
 		salida = salida.substr(0,cantidadLeida);
 	}
 	else if (cantidadLeida == 0){
-		throw SocketException("Fin de la conexion");
+		throw SocketException("El servidor se encuentra lleno, intente mas tarde...");
 	}
 	else
 	{

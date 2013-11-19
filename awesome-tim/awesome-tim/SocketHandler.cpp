@@ -51,7 +51,7 @@ void SocketHandler::run()
 						cadena = this->_socket->read();
 					} catch (SocketException &sE)
 					{
-						cout << sE.what() << endl;
+						//cout << sE.what() << endl;
 						this->kill();
 					}
 					if (cadena.size())
@@ -185,7 +185,7 @@ void SocketHandler::run()
 						this->_socket->write(msg->serialize());
 					} catch (SocketException &sE)
 					{
-						cout << sE.what() << endl;
+						//cout << sE.what() << endl;
 						this->kill();
 						break;
 					}

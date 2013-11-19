@@ -3,10 +3,11 @@
 #include "Message.h"
 #include "Mutex.h"
 #include "Lock.h"
+#include "Fallable.h"
 
 class Terrreno;
 
-class MaquinaEstados
+class MaquinaEstados: public Fallable
 {
 public:
 	
