@@ -53,15 +53,15 @@ void Botonera::restaurarInstanciaActual( int numeroFigActual ){
 	}
 }
 
-void Botonera::restaurarInstancias( std::vector<int> numsFigARestaurar ){
+void Botonera::restaurarInstancias( std::list<int> numsFigARestaurar ){
 	
 	int i = 0;
 	int tipoFig = -1;
 	std::list<struct boton>::iterator itFig;
 	Figura* figBotonera = NULL;
 
-	while (i < numsFigARestaurar.size()){
-		tipoFig = numsFigARestaurar[i];
+	for (std::list<int>::iterator it = numsFigARestaurar.begin();it != numsFigARestaurar.end();it++){
+		tipoFig = (*it);
 		
 		for (itFig = this->lstFiguras.begin(); itFig != this->lstFiguras.end(); ++itFig)
 		{
@@ -71,8 +71,6 @@ void Botonera::restaurarInstancias( std::vector<int> numsFigARestaurar ){
 				break;
 			}
 		}
-
-		++i;
 	}
 }
 

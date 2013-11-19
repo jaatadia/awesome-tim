@@ -468,10 +468,10 @@ bool Terreno::hayFiguras(){
 	return false;
 }
 
-std::vector<int> Terreno::borrarFigura(double posClickX, double posClickY,Figura* vector[]){
+std::list<int> Terreno::borrarFigura(double posClickX, double posClickY,Figura* vector[]){
 //aca ya no puede haber una figura activa, porque solo se llega al hacer un shift-clickt
 
-	std::vector<int> tiposBorradas;
+	std::list<int> tiposBorradas;
 
 	Figura* figuraABorrar = buscarFigura(posClickX, posClickY);
 

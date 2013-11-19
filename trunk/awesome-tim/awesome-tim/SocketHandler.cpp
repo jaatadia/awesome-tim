@@ -149,7 +149,7 @@ void SocketHandler::run()
 										msg = new DropFigureMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_DELETE:
-										msg = new RemoveFigureMessage(cadena.substr(npos+1));
+										msg = new DeleteFigureMessage(cadena.substr(npos+1));
 										break;
 									case MSG_TYPE_NONE:
 										break;

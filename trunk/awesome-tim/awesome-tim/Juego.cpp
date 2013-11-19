@@ -439,10 +439,12 @@ void Juego:: onLoop(){
 									fig->setX(t_msg->getX());
 									fig->setY(t_msg->getY());
 
-									DropFigureMessage* d_msg = new DropFigureMessage();
-									d_msg->setClientID(t_msg->getClientID());
-									d_msg->setFigureID(t_msg->getFigureID());
-									this->maq->returnProcessMessage(d_msg);
+									if(!fig->esUnion()){
+										DropFigureMessage* d_msg = new DropFigureMessage();
+										d_msg->setClientID(t_msg->getClientID());
+										d_msg->setFigureID(t_msg->getFigureID());
+										this->maq->returnProcessMessage(d_msg);
+									}
 								}
 								break;
 							case T_DROPDEAD:
@@ -512,7 +514,7 @@ void Juego:: onLoop(){
 					Figura* fig = vector[figureID];
 
 					if(terreno->posicionOcupada(fig)){
-						DeleteFigureMessage* d_msg = (DeleteFigureMessage*) msg;
+						DeleteFigureMessage* d_msg = new DeleteFigureMessage();
 						d_msg->setClientID(clientID);
 						d_msg->setFigureID(figureID);
 						this->maq->pushSendMessage(d_msg,clientID);
@@ -655,7 +657,7 @@ while(SDL_PollEvent(&evento)){
 				//es del terreno
 				if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
 					//al borrar algo restauro su contador de instancias
-					std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
+					std::list<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
 					botonera->restaurarInstancias(tipoFig);
 				}
 				else
