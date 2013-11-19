@@ -235,8 +235,8 @@
 #define ANCHO_DOMINO 1.8
 #define ALTO_DOMINO 4
 #define RESTITUCION_DOMINO 0.5
-#define DENSIDAD_DOMINO 0.05
-#define FRICCION_DOMINO 0.001
+#define DENSIDAD_DOMINO 1
+#define FRICCION_DOMINO 1
 
 #define ANCHO_CARRITO 20
 #define ALTO_CARRITO 6
@@ -303,8 +303,6 @@
 #define ID_MOTOR_1 "../images/engranaje2-1.png"
 #define ID_MOTOR_2 "../images/engranaje2-2.png"
 
-#define ID_RATON_COMPLETO "../images/ratonCompleto.png"
-
 #define ID_CINTA "../images/cintamedio2.png"
 #define ID_CTRANSP_CIRC "../images/cintacirculo.png"
 #define ID_CTRANSP_CLAVO "../images/clavo.png"
@@ -360,10 +358,25 @@
 #define ID_CANIO "../images/canioventana.png"
 #define ID_CODO "../images/codoventana.png"
 
+#define ID_RATON_COMPLETO "../images/ratonCompleto.png"
 #define ID_MOTOR_RATON "../images/FondoRaton.png"
 #define ID_MOTOR_RATON_OPUESTO "../images/FondoRatonOpuesto.png"
 #define ID_MOTOR_RATON_1 "../images/ratonDer.png"
 #define ID_MOTOR_RATON_2 "../images/RatonIzq.png"
+#define ID_RATON_MOVIENDOSE_DERECHA0 "../images/ratonMovDerecha1.png"
+#define ID_RATON_MOVIENDOSE_DERECHA1 "../images/ratonMovDerecha1.png"
+#define ID_RATON_MOVIENDOSE_DERECHA2 "../images/ratonMovDerecha2.png"
+#define ID_RATON_MOVIENDOSE_DERECHA3 "../images/ratonMovDerecha3.png"
+#define ID_RATON_MOVIENDOSE_DERECHA4 "../images/ratonMovDerecha4.png"
+#define ID_RATON_MOVIENDOSE_DERECHA5 "../images/ratonMovDerecha5.png"
+#define ID_RATON_MOVIENDOSE_DERECHA6 "../images/ratonMovDerecha6.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA0 "../images/ratonMovIzquierda0.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA1 "../images/ratonMovIzquierda1.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA2 "../images/ratonMovIzquierda2.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA3 "../images/ratonMovIzquierda3.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA4 "../images/ratonMovIzquierda4.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA5 "../images/ratonMovIzquierda5.png"
+#define ID_RATON_MOVIENDOSE_IZQUIERDA6 "../images/ratonMovIzquierda6.png"
 
 //posiciones de balancin
 #define IZQUIERDA 1

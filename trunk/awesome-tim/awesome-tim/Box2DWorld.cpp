@@ -957,7 +957,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case MOTOR_RATON:{
-				this->sonidos.push_back(MOTOR_RATON_MUSIC);
 
 				b2BodyDef ejeDef;
 				ejeDef.type = b2_staticBody;

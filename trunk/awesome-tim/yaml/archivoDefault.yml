@@ -14,34 +14,54 @@ juego:
           objetivo: NO
           interactuable: NO
       - figura:
-          tipo_figura: GLOBO_HELIO
-          posX: 73.8
-          posY: 41.6
-          fija: NO                
-          interactuable: SI
-          objetivo: SI
-          sensores:
-            - sensor:
-                posX: 50
-                posY: 1
-                angulo: 0
-                alto: 0.05
-                ancho: 100
-      - figura:
-          tipo_figura: MOTOR_RATON
-          posX: 50
-          posY: 50
-          radio: 5
-          sentido: -1
-          fija: SI
+          tipo_figura: DOMINO
+          posX: 25
+          posY: 35.3
+          fija: NO
           objetivo: NO
-          sensores:
-            - sensor:
-                posX: 40
-                posY: 50
-                angulo: 0
-                alto: 10
-                ancho: 10  
+          interactuable: NO
+      - figura:
+          tipo_figura: DOMINO
+          posX: 29
+          posY: 35.3
+          fija: NO
+          objetivo: NO
+          interactuable: NO
+      - figura:
+          tipo_figura: DOMINO
+          posX: 33
+          posY: 35.3
+          fija: NO
+          objetivo: NO
+          interactuable: NO
+      - figura:
+          tipo_figura: DOMINO
+          posX: 37
+          posY: 35.3
+          fija: NO
+          objetivo: NO
+          interactuable: NO
+      - figura:
+          tipo_figura: DOMINO
+          posX: 41
+          posY: 35.3
+          fija: NO
+          objetivo: NO
+          interactuable: NO
+      - figura:
+          tipo_figura: DOMINO
+          posX: 45
+          posY: 35.3
+          fija: NO
+          objetivo: NO
+          interactuable: NO
+      - figura:
+          tipo_figura: PELOTA_TENIS
+          posX: 50
+          posY: 20
+          angulo: 0
+          fija: NO
+          objetivo: NO
           interactuable: NO
     lista_clientes:
       - terreno_cliente:
