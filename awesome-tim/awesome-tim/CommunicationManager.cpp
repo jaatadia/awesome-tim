@@ -7,19 +7,6 @@ CommunicationManager::CommunicationManager(Socket * socket, MaquinaEstados * gam
 
 	this->socketWriter = new SocketHandler(socket, WRITE_MODE,NULL,game,id);
 	this->socketReader = new SocketHandler(socket, READ_MODE,NULL,game,id);
-	if(server){
-		//this->socketWriter = new SocketHandler(socket, WRITE_MODE,NULL,game);
-		//this->messageWriter = new ClientHandler(WRITE_MODE, game, id,this->socketWriter);
-		//this->messageReader = new ClientHandler(READ_MODE, game, id,NULL,game);
-		//this->socketReader = new SocketHandler(socket, READ_MODE,this->messageReader);
-		
-		
-	}else{
-		//this->socketWriter = new SocketHandler(socket, WRITE_MODE,NULL);
-		//this->messageWriter = new ServerHandler(WRITE_MODE, game, id,this->socketWriter);
-		//this->messageReader = new ServerHandler(READ_MODE, game, id,NULL);
-		//this->socketReader = new SocketHandler(socket, READ_MODE,this->messageReader);
-	}
 	this->game = game;
 	this->_thread.resume();
 }
@@ -45,32 +32,33 @@ void CommunicationManager::flushThread()
 
 void CommunicationManager::run()
 {
+	int vuelta = 0;
 	while(!this->finalizando)
 	{
-		//Message * msg = this->messageWriter->getOutputMessage();
-		//if(msg)
-		//{
-		//	this->socketWriter->pushOutputMessage(msg);
-		//}
-		//msg = this->socketReader->getInputMessage();
-		//if(msg)
-		//{
-		//	this->messageReader->pushInputMessage(msg);
-		//}
 		this->_thread.sleep(5000);
 
-		
+		vuelta++;
+		vuelta%=2;
+		if(vuelta==0){
+			if(socketReader->mensajesRecibidos == 0){
+				socketWriter->kill();
+				socketReader->kill();
+			}else{
+				socketReader->mensajesRecibidos = 0;
+			}
+		}
+		if(this->ID<0){
+			this->ID = this->game->getId();
+		}
+		this->game->returnSendMessage(new NoneMessage(),this->ID);
+
 		if((socketWriter->getActiveState())||(socketReader->getActiveState())){
 			if(!socketWriter->getActiveState()) socketWriter->kill();
 			if(!socketReader->getActiveState()) socketReader->kill();
-			//messageWriter->kill();
-			//messageReader->kill();
 			delete socketWriter;
 			delete socketReader;
 			socketWriter = NULL;
 			socketReader = NULL;
-			//delete messageWriter;
-			//delete messageReader;
 			this->kill();
 			if(server){
 				ClientMessage* c_msg = new ClientMessage();

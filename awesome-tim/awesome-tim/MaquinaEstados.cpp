@@ -38,6 +38,12 @@ Message * MaquinaEstados::getSendMessage(int id)
 	}
 }
 
+void MaquinaEstados::returnSendMessage(Message * msg, int id){
+	if (id<0) return;
+	Lock lock(this->_mutex);
+	this->aEnviar[id].push_front(msg);
+}
+
 Message * MaquinaEstados::getProcessMessage()
 {
 	Lock lock(this->_mutex);
