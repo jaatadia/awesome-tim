@@ -49,6 +49,8 @@ void Sonidos::end(){
 	//try{
 	//	if(!initialized) return;
 
+	//  stopMusic()
+
 	//	Mix_FreeChunk((Mix_Chunk*)(*mapa)[POP_BALLOON]);
 	//	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_UP]);
 	//	Mix_FreeChunk((Mix_Chunk*)(*mapa)[FLIPPER_DOWN]);
@@ -66,7 +68,9 @@ void Sonidos::playSound(const char *file,int cant){
 	if(!playSounds) return;
 	try{
 		if(!initialized) initialize();
-		Mix_PlayChannel(-1,(Mix_Chunk*)(*mapa)[file],cant);
+		if((*mapa)[file]!=NULL){
+			Mix_PlayChannel(-1,(Mix_Chunk*)(*mapa)[file],cant);
+		}
 	}catch(...){
 	}
 }
@@ -76,7 +80,9 @@ void Sonidos::playMusic(const char* file){
 	try{
 		if(!initialized) initialize();
 		stopMusic();
-		Mix_PlayMusic((Mix_Music*)(*mapa)[file],-1);
+		if((*mapa)[file]!=NULL){
+			Mix_PlayMusic((Mix_Music*)(*mapa)[file],-1);
+		}
 	}catch(...){
 	}
 }
