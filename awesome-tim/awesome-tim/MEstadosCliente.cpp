@@ -3,6 +3,7 @@
 #include "Constantes.h"
 #include "JuegoPlayCliente.h"
 #include "JuegoCliente.h"
+#include "Sonidos.h"
 
 
 MEstadosCliente::MEstadosCliente(){
@@ -11,6 +12,7 @@ MEstadosCliente::MEstadosCliente(){
 		ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
 		fallar();
 	}
+	Sonidos::initialize();
 	
 	Eactivo = NULL;
 	Eanterior = NULL;
