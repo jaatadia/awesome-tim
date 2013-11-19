@@ -45,7 +45,7 @@ public:
 	static void end();
 	static void noSound();
 
-private:
+//private:
 	static void initialize();
 	
 };

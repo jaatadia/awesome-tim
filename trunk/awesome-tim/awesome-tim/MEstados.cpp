@@ -29,7 +29,7 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 
 	this->setId(0);
 
-	//Sonidos::noSound();
+	Sonidos::noSound();
 
 	Eactivo = Eeditor = new Juego(fileIn,fileOut,this);
 	Eanterior = Eplay = NULL;

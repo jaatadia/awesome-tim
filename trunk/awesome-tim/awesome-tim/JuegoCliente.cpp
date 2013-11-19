@@ -276,7 +276,6 @@ void JuegoCliente:: onLoop(){
 	}
 
 	terreno->actualizarModelo(vector);
-	Sonidos::playMusic(MUSIC);
 }
 
 //manejo de eventos
