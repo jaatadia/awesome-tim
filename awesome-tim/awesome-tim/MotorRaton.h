@@ -4,6 +4,8 @@
 #include "Constantes.h"
 #include "Circulo.h"
 #include "VistaFiguraEstatica.h"
+#include "SensorMRaton.h"
+#include "Box2D/Box2D.h"
 
 class MotorRaton : public Engranaje {
 
@@ -15,23 +17,29 @@ private:
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
 		contador = -1;
+		distancia = 0;
+		figAux = new SensorMRaton(this);
 	};
+	
+	SensorMRaton* figAux;//la uso para meterle user data al contactListener en el box2d
 	
 public:
 	int sentido;
 	int contador;
 	bool activo;
 	double distancia;
-
+	b2Body* B2Motor; //referencia al motor en el box 2d
 public:
 	MotorRaton(double pos_X,double pos_Y,double radio1 = RADIO_MINENGRANAJE, double angulo = 0):Engranaje(ID_MOTOR_RATON,pos_X,pos_Y,radio1){
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
 		distancia = 0;
+		figAux = new SensorMRaton(this);
 	}
 
 	~MotorRaton(void){
+		delete figAux;
 		delete myVista2;
 	};
 	
@@ -44,6 +52,7 @@ public:
 		eng->setRadio(this->radio1);
 		if(this->sentido == -1) eng->shift();
 		this->completarInteraccionesPosibles(eng);
+		eng->setDistancia(this->distancia);
 		return eng;
 	};
 
@@ -112,15 +121,17 @@ public:
 		return choca;
 	}
 
+	virtual SensorMRaton* getFigAux(){return figAux;};
+
 	virtual bool cortaSoga(){return false;}
 	virtual bool pinchaGlobo(Dimension* dim){return false;}
 
 	void ActivarMotor(){
-		activo = true;
+		this->activo = true;
 	}
 
 	void DesactivarMotor(){
-		activo = false;
+		this->activo = false;
 	}
 
 

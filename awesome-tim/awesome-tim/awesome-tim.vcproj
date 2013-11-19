@@ -448,6 +448,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RatonB2ContactListener.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RemoveFigureMessage.cpp"
 				>
 			</File>
@@ -1022,6 +1026,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RatonB2ContactListener.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RemoveFigureMessage.h"
 				>
 			</File>
@@ -1031,6 +1039,10 @@
 			</File>
 			<File
 				RelativePath=".\SensorB2ContactListener.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SensorMRaton.h"
 				>
 			</File>
 			<File
