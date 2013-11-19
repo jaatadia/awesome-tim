@@ -80,6 +80,7 @@ public:
 			}
 			if(contador == (6*FPS/FACTOR)){
 				this->marcar(true);
+				this->cumplirObjetivo();
 			}
 		}
 	}

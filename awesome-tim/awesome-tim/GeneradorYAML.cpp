@@ -46,8 +46,8 @@ return out;
 
 YAML::Emitter& operator << (YAML::Emitter& out,Circulo* circ){
 //out << YAML::BeginMap;
-/*out << YAML::Key << "radio";
-out << YAML::Value << circ->getRadio();*/
+out << YAML::Key << "radio";
+out << YAML::Value << circ->getRadio();
 out << YAML::Key << "posX";
 out << YAML::Value << circ->getX();
 out << YAML::Key << "posY";
