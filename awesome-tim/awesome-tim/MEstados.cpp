@@ -13,15 +13,15 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 	}
 	ventana = NULL;
 	superficie = NULL;
-	//ventana = new Ventana();
-	//superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
-	//if(superficie->huboFallos()||ventana->huboFallos()){
-	//	if(superficie->huboFallos()) ErrorLogHandler::addError("Programa","No se pudieron crear la superficie");
-	//	else ErrorLogHandler::addError(M_ESTADOS,"No se pudo crear la ventana");
-	//	delete superficie;
-	//	delete ventana;
-	//	fallar();
-	//}
+	ventana = new Ventana();
+	superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
+	if(superficie->huboFallos()||ventana->huboFallos()){
+		if(superficie->huboFallos()) ErrorLogHandler::addError("Programa","No se pudieron crear la superficie");
+		else ErrorLogHandler::addError(M_ESTADOS,"No se pudo crear la ventana");
+		delete superficie;
+		delete ventana;
+		fallar();
+	}
 
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
@@ -29,7 +29,7 @@ MEstados::MEstados(const char *fileIn,const char *fileOut){
 
 	this->setId(0);
 
-	Sonidos::noSound();
+	//Sonidos::noSound();
 
 	Eactivo = Eeditor = new Juego(fileIn,fileOut,this);
 	Eanterior = Eplay = NULL;
@@ -56,7 +56,7 @@ bool MEstados::isRunning(){
 }
 
 bool MEstados::onEvent(){
-	//return getEstadoActivo()->onEvent(ventana,&superficie);
+	return getEstadoActivo()->onEvent(ventana,&superficie);
 	return false;
 }
 
@@ -69,8 +69,8 @@ void MEstados::onLoop(){
 }
 
 void MEstados::onRender(){
-	//bool dibujar = getEstadoActivo()->onRender(superficie);
-	//if (dibujar) ventana->dibujar(superficie);
+	bool dibujar = getEstadoActivo()->onRender(superficie);
+	if (dibujar) ventana->dibujar(superficie);
 }
 
 void MEstados::salir(){
@@ -86,8 +86,8 @@ void MEstados::editor(){
 
 void MEstados::play(void* ter){
 	
-	Superficie* aux = NULL;//superficie->scaleSurface(superficie->getAncho(),superficie->getAlto());
-	//superficie->restore();
+	Superficie* aux = superficie->scaleSurface(superficie->getAncho(),superficie->getAlto());
+	superficie->restore();
 	
 	Eplay = new JuegoPlay(aux,ter,this);
 	Eactivo = Eplay;
