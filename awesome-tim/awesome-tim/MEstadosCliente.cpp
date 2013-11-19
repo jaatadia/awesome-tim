@@ -38,9 +38,9 @@ MEstadosCliente::~MEstadosCliente(void){
 	delete ventana;
 	delete superficie;
 	
-	delete Eanterior;
-	delete Eeditor;
-	delete Eplay;
+	if(Eanterior!=NULL)delete Eanterior;
+	if(Eeditor!=NULL)delete Eeditor;
+	if(Eplay!=NULL)delete Eplay;
 	
 	SDL_Quit();
 	ErrorLogHandler::closeLog();

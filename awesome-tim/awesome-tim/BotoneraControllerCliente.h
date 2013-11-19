@@ -63,7 +63,7 @@ public:
 
 	Figura * obtenerFiguraActual() {return this->figuraActual;}
 	void restaurarInstanciaActual();
-	void restaurarInstancias( std::vector<int> numsFigARestaurar );
+	void restaurarInstancias( std::list<int> numsFigARestaurar );
 
 	int getAncho();
 	int getAlto();

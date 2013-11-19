@@ -32,14 +32,17 @@ void Ventana::dibujar(Superficie* sup){
 	
 	if(sup==NULL) return;
 
-	SDL_Texture* tex = NULL;
-	tex = SDL_CreateTextureFromSurface(ren,sup->superficie);
-	if(tex!=NULL){
-		SDL_RenderCopy(ren,tex,NULL,NULL);
-		SDL_DestroyTexture(tex);
-		SDL_RenderPresent(ren);
-	}else{
-		ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
+	try{
+		SDL_Texture* tex = NULL;
+		tex = SDL_CreateTextureFromSurface(ren,sup->superficie);
+		if(tex!=NULL){
+			SDL_RenderCopy(ren,tex,NULL,NULL);
+			SDL_DestroyTexture(tex);
+			SDL_RenderPresent(ren);
+		}else{
+			ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
+		}
+	}catch(...){
 	}
 }
 

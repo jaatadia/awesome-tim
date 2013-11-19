@@ -262,8 +262,9 @@ void JuegoCliente:: onLoop(){
 				break;
 			case MSG_TYPE_DELETE:
 				{
-					DeleteFigureMessage* d_msg = (DeleteFigureMessage*) d_msg;
-					std::vector<int> tipoFig = this->terreno->borrarFigura(0,0,vector,vector[d_msg->getFigureID()]);
+					DeleteFigureMessage* d_msg = (DeleteFigureMessage*) msg;
+					int figID = d_msg->getFigureID();
+					std::list<int> tipoFig = this->terreno->borrarFigura(0,0,vector,vector[figID]);
 					botonera->restaurarInstancias(tipoFig);
 				}
 				break;
@@ -445,7 +446,7 @@ while(SDL_PollEvent(&evento)){
 					//es del terreno
 					if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
 						//al borrar algo restauro su contador de instancias
-						std::vector<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
+						std::list<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
 						botonera->restaurarInstancias(tipoFig);
 					}
 					else

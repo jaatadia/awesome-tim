@@ -26,7 +26,7 @@ public:
 
 	Figura * obtenerFigura(int numFigura);
 	void restaurarInstanciaActual( int numeroFigActual );
-	void restaurarInstancias( std::vector<int> numsFigARestaurar );
+	void restaurarInstancias( std::list<int> numsFigARestaurar );
 
 	// Getters
 	int getX(){return this->x;}

@@ -327,7 +327,7 @@ void BotoneraControllerCliente::restaurarInstanciaActual(){
 	this->botonera->restaurarInstanciaActual( this->numeroFigActual );
 }
 
-void BotoneraControllerCliente::restaurarInstancias( std::vector<int> numsFigARestaurar ){
+void BotoneraControllerCliente::restaurarInstancias( std::list<int> numsFigARestaurar ){
 	this->botonera->restaurarInstancias(numsFigARestaurar);
 }
 
