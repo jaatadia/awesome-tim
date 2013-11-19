@@ -36,6 +36,7 @@ void SdlSurfaceManager::putPixel( SDL_Surface *surface,int x, int y, Uint32 pixe
 
 //pinta la superficie de un color
 void SdlSurfaceManager::pintarSup(SDL_Surface *sup, Uint32 color){
+	if (sup==NULL)return;
 	SDL_Rect rect;
 	rect.x = 0;
 	rect.y = 0;
@@ -45,6 +46,7 @@ void SdlSurfaceManager::pintarSup(SDL_Surface *sup, Uint32 color){
 }
 
 void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int ancho,int alto,Uint32 color){
+	if ((sup==NULL)||(ancho<=0)||(alto<=0))return;
 	SDL_Rect rect;
 	rect.x = x;
 	rect.y = y;
@@ -56,6 +58,7 @@ void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int anch
 
 //carga una imagen de direccion cadena
 SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){
+	if (cadena==NULL)return NULL;
 
 	SDL_Surface* temp = NULL; 
 	SDL_Surface* superficie = NULL; 
@@ -248,6 +251,8 @@ void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDest
 			rectO.y = int(rectOrigen->y);
 			rectO.h = int(rectOrigen->alto);
 			rectO.w = int(rectOrigen->ancho);
+			if(rectOrigen->alto<=0)return;
+			if(rectOrigen->ancho<=0)return;
 			rO = &rectO;
 		}
 			rectD.x = xDestino;
@@ -261,6 +266,7 @@ void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDest
 
 //rota la imagen 90 grados
 SDL_Surface* SdlSurfaceManager::rotar90(SDL_Surface *sur,bool mismaSup){
+	if (sur==NULL)return NULL;
 	int alto = sur->w;
 	int ancho = sur->h;
 	
@@ -287,6 +293,7 @@ SDL_Surface* SdlSurfaceManager::rotar90(SDL_Surface *sur,bool mismaSup){
 
 //rota la imagen 180 grados
 SDL_Surface* SdlSurfaceManager::rotar180(SDL_Surface *sur,bool mismaSup){
+	if (sur==NULL)return NULL;
 	int ancho = sur->w;
 	int alto = sur->h;
 	
@@ -308,6 +315,7 @@ SDL_Surface* SdlSurfaceManager::rotar180(SDL_Surface *sur,bool mismaSup){
 }
 //rota la imagen 270 grados
 SDL_Surface* SdlSurfaceManager::rotar270(SDL_Surface *sur,bool mismaSup){
+	if (sur==NULL)return NULL;
 	int ancho = sur->h;
 	int alto = sur->w;
 
@@ -466,6 +474,8 @@ Uint32 SdlSurfaceManager::blendPixels(SDL_PixelFormat* format,Uint32 pixel1,Uint
 
 SDL_Surface* SdlSurfaceManager::scale(SDL_Surface* superficie,int pixelesAncho,int pixelesAlto){
 	if(superficie==NULL)return NULL;
+	if (pixelesAncho<=0)return NULL;
+	if (pixelesAlto<=0)return NULL;
 	double relacionPixelX = pixelesAncho/(double(superficie->w));
 	double relacionPixelY = pixelesAlto/(double(superficie->h));
 	
@@ -494,7 +504,9 @@ SDL_Surface* SdlSurfaceManager::scale(SDL_Surface* superficie,int pixelesAncho,i
 }
 
 SDL_Surface* SdlSurfaceManager::rotarZoom(SDL_Surface* sur, int pixAncho, int pixAlto, double ang){
-	
+	if(sur==NULL)return NULL;
+	if (pixAncho<=0)return NULL;
+	if (pixAlto<=0)return NULL;
 	SDL_Surface* img;
 	
 	while(ang>=360) ang -= 360;
@@ -568,6 +580,8 @@ SDL_Surface* SdlSurfaceManager::scale(SDL_Surface* superficie,int pixelesAncho,i
 	
 	
 	if(superficie==NULL)return NULL;
+	if (pixelesAncho<=0)return NULL;
+	if (pixelesAlto<=0)return NULL;
 
 	double relacionPixelX = pixelesAncho/(double(anchoOrig));
 	double relacionPixelY = pixelesAlto/(double(altoOrig));
@@ -599,7 +613,9 @@ SDL_Surface* SdlSurfaceManager::scale(SDL_Surface* superficie,int pixelesAncho,i
 
 
 SDL_Surface* SdlSurfaceManager::rotarZoom2(SDL_Surface* sur, int pixAncho, int pixAlto, double ang){
-	
+	if(sur==NULL)return NULL;
+	if (pixAncho<=0)return NULL;
+	if (pixAlto<=0)return NULL;
 	while(ang>=360) ang -= 360;
 	while(ang<0) ang += 360;
 
@@ -662,6 +678,8 @@ SDL_Surface* SdlSurfaceManager::rotarZoom2(SDL_Surface* sur, int pixAncho, int p
 
 void SdlSurfaceManager::dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int y2,int ancho,int r,int g,int b){
 	
+	if(sup==NULL)return;
+
 	SDL_LockSurface(sup); 
 
 	Uint32 color = SDL_MapRGBA(sup->format,r,g,b,255);
@@ -709,7 +727,7 @@ void SdlSurfaceManager::dibujarLinea(SDL_Surface* sup,int x1,int y1,int x2, int 
 }
 
 void SdlSurfaceManager::pintar(SDL_Surface* sup,int r,int g,int b,int a){
-	
+	if (sup==NULL) return;
 	Uint32 color = SDL_MapRGBA(sup->format,r,g,b,a);
 	
 	SDL_Surface* nsup = crearSup(sup->w,sup->h);
@@ -728,7 +746,7 @@ void SdlSurfaceManager::pintar(SDL_Surface* sup,int r,int g,int b,int a){
 }
 
 void SdlSurfaceManager::replace(SDL_Surface* sur,Uint32 col1,Uint32 col2){
-
+	if(sur==NULL)return;
 	SDL_LockSurface(sur);
 
 		for(int i=0;i<sur->w;i++){

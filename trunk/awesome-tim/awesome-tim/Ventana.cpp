@@ -31,6 +31,7 @@ Ventana::~Ventana(void)
 void Ventana::dibujar(Superficie* sup){
 	
 	if(sup==NULL) return;
+	if (sup->superficie == NULL) return;
 
 	try{
 		SDL_Texture* tex = NULL;
