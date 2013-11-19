@@ -54,7 +54,7 @@ void RatonB2ContactListener::EndContact(b2Contact* contact){
 	//-1 es lo que devuelve la fig auxiliar en el data user del sensor
 	if((fig2->getTipoFigura() == QUESO) && (fig1->getTipoFigura() == -1)){
 		raton = (MotorRaton*) (((SensorMRaton*)fig1)->getMotor()); 	
-		raton->ActivarMotor();
+		raton->DesactivarMotor();
 		raton->B2Motor->SetFixedRotation(true);
 		raton->B2Motor->SetAngularVelocity(0);
 		//bodyRaton = contact->GetFixtureA()->GetBody();
@@ -62,7 +62,7 @@ void RatonB2ContactListener::EndContact(b2Contact* contact){
 		//fig = fig2;
 	}else if((fig1->getTipoFigura() == QUESO) && (fig2->getTipoFigura() == -1)){
 		raton = (MotorRaton*) (((SensorMRaton*)fig2)->getMotor());
-		raton->ActivarMotor();
+		raton->DesactivarMotor();
 		raton->B2Motor->SetFixedRotation(true);
 		raton->B2Motor->SetAngularVelocity(0);
 		//bodyRaton = contact->GetFixtureB()->GetBody();

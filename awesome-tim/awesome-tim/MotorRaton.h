@@ -17,7 +17,7 @@ private:
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
 		contador = -1;
-		distancia = 0;
+		distancia = DISTANCIA_RATON_DEFAULT;
 		figAux = new SensorMRaton(this);
 	};
 	
@@ -34,7 +34,7 @@ public:
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
-		distancia = 0;
+		distancia = DISTANCIA_RATON_DEFAULT;
 		figAux = new SensorMRaton(this);
 	}
 
@@ -52,6 +52,9 @@ public:
 		eng->setRadio(this->radio1);
 		if(this->sentido == -1) eng->shift();
 		this->completarInteraccionesPosibles(eng);
+		if (this->distancia < DISTANCIA_RATON_DEFAULT){
+			this->distancia = DISTANCIA_RATON_DEFAULT;
+		}
 		eng->setDistancia(this->distancia);
 		return eng;
 	};

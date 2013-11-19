@@ -25,7 +25,7 @@ public:
 	virtual int getTipoDimension();
 	Figura* clonar();
 
-	virtual void accionarMotor(Figura** vector);
+	//virtual void accionarMotor(Figura** vector);
 	virtual void cumplirObjetivo(Figura** vec,Figura* fig);
 
 	//FIX: espero que sean estas las q tengo q hacer false (?) 
