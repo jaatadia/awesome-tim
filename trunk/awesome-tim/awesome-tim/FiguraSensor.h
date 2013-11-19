@@ -15,7 +15,6 @@ private:
 
 	FiguraSensor(double ancho,double alto,double posX,double posY,double angulo,int numero):Figura("",new Cuadrado(ancho,alto,posX,posY,angulo),false){
 	
-		//this->figInteractuar = ; FIX
 		this->numInteractuar = numero;
 	};
 

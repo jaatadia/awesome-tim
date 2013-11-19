@@ -1616,7 +1616,7 @@ bool CargadorYaml::posicion_validaY(double posY){
 }
 
 bool CargadorYaml::distancia_valida(double distancia){
-	return true;
+	return ((distancia >= BASE_QUESO)&&(distancia < ANCHO_TERRENO_LOGICO));
 }
 
 bool CargadorYaml::angulo_valido(double angulo){

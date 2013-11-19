@@ -58,19 +58,6 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 	switch(figura->getTipoFigura())
 	{
-		case FIG_SENSOR:{
-
-			cuerpo->SetType(b2_staticBody);
-			b2PolygonShape forma;
-			double ancho = (dim)->getAncho();
-			double alto = (dim)->getAlto();
-			forma.SetAsBox(ancho/2,alto/2);
-			fD.shape = &forma;
-			fD.isSensor = true;
-			cuerpo->CreateFixture(&fD);			
-
-			break;
-		}
 		case BALA:{
 
 			Bala* bala = (Bala*) figura;
@@ -990,6 +977,30 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					cuerpo->SetFixedRotation(true);
 					cuerpo->SetAngularVelocity(VELOCIDAD_MOTOR*((MotorRaton*)figura)->sentido);
 				}
+
+				//hago sensor
+				b2BodyDef sensorDef;
+				sensorDef.type = b2_staticBody;
+
+				double distancia = ((MotorRaton*)figura)->distancia;
+
+				if (((MotorRaton*)figura)->sentido == 1){
+					sensorDef.position.Set(dim->getX()+distancia/2+(dim->getAncho()/2),dim->getY());
+				} else {
+					sensorDef.position.Set(dim->getX()-distancia/2-(dim->getAncho()/2),dim->getY());
+				}
+							
+				b2FixtureDef sFix;
+				b2PolygonShape formaS;
+				formaS.SetAsBox(((MotorRaton*)figura)->distancia,(dim)->getAlto()/2);
+				sFix.shape = &formaS;
+				sFix.isSensor = true;
+				b2Body* sensor = this->mundo->CreateBody(&sensorDef);
+				sensor->CreateFixture(&sFix);
+				sensor->SetUserData(((MotorRaton*)figura)->getFigAux());
+
+				((MotorRaton*)figura)->B2Motor = cuerpo;
+				
 				break;
 			}
 		case PELOTATENIS:
