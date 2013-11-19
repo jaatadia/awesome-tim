@@ -58,23 +58,27 @@ void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int anch
 
 //carga una imagen de direccion cadena
 SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){
-	if (cadena==NULL)return NULL;
+	try{
+		if (cadena==NULL)return NULL;
 
-	SDL_Surface* temp = NULL; 
-	SDL_Surface* superficie = NULL; 
-	temp = IMG_Load(cadena);
-    if(temp == NULL){
-        ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
-		fallar();
-	}else{
-		superficie = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_RGBA8888,0);
-		if(superficie == NULL){
+		SDL_Surface* temp = NULL; 
+		SDL_Surface* superficie = NULL; 
+		temp = IMG_Load(cadena);
+		if(temp == NULL){
 			ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
 			fallar();
-		}else SDL_SetSurfaceBlendMode(superficie,SDL_BLENDMODE_BLEND);
-		SDL_FreeSurface(temp);
+		}else{
+			superficie = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_RGBA8888,0);
+			if(superficie == NULL){
+				ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
+				fallar();
+			}else SDL_SetSurfaceBlendMode(superficie,SDL_BLENDMODE_BLEND);
+			SDL_FreeSurface(temp);
+		}
+		return superficie;
+	}catch(...){
+		return NULL;
 	}
-	return superficie;
 }
 
 

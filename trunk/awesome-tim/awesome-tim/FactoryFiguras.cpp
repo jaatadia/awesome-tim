@@ -42,6 +42,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			break;
 		case GLOBOHELIO:
 			fig = new GloboHelio(msg->getX(),msg->getY(),msg->getData1());
+			fig->hacerInteractuable();
 			break;
 		case BALANCIN:
 			fig = new Balancin(msg->getX(),msg->getY(),msg->getAngle());
@@ -99,6 +100,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			break;
 		case PALETA:
 			fig = new PaletaFlipper(msg->getX(),msg->getY(),msg->getData1());
+			fig->hacerInteractuable();
 			break;
 		case QUESO:
 			fig = new Queso(msg->getX(),msg->getY());
