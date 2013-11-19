@@ -113,7 +113,13 @@ juego:
           angulo: 214.0628251795
           largo: 1
           fija: SI
-          objetivo: NO
+          objetivo: SI
+          sensores:
+            - sensor:
+                posX: 34.2
+                posY: 58.2
+                alto: 8
+                ancho: 8
           interactuable: NO
       - figura:
           tipo_figura: ENGRANAJE
