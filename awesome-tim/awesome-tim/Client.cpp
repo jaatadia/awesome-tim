@@ -8,7 +8,8 @@ Client::Client(MaquinaEstados * juego,char* IP)
 
 	} catch (SocketException & sE)
 	{
-		cout << sE.what() << endl;
+		//cout << sE.what() << endl;
+		cout <<"No se pudo conectar al servidor, cerrando el programa...\n";
 		juego->salir();
 	}
 }

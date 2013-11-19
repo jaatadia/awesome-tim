@@ -8,6 +8,7 @@ class Contenedor
 {
 private:
 	static Contenedor* cont;
+	static bool load;
 
 public:
 	static void putMultimedia(const char* ID,void* medio);
@@ -17,6 +18,8 @@ public:
 	static bool estaMultimedia(const char* ID);
 
 	static void pruebaContenedor();
+
+	static void noLoad();
 
 private:
 	

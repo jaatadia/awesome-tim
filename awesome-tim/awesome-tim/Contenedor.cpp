@@ -4,8 +4,18 @@
 #include <iostream>
 
 Contenedor* Contenedor::cont = NULL;
+bool Contenedor::load = true;
+
+void Contenedor::noLoad(){
+	load = false;
+}
 
 void Contenedor::putMultimedia(const char* ID,void* medio){
+	if(!load){
+		delete medio;
+		return;
+	}
+	
 	if (cont == NULL){
 		cont = new Contenedor();
 		cont->mapa["NONE"] = new Imagen();
@@ -26,6 +36,10 @@ void Contenedor::putMultimedia(const char* ID,void* medio){
 }
 
 void* Contenedor::getMultimedia(const char* ID){
+	if(!load){
+		return NULL;
+	}
+	
 	if (cont == NULL){
 		cont = new Contenedor();
 	}

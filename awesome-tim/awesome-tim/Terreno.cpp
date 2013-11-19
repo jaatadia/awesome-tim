@@ -224,20 +224,20 @@ Superficie* Terreno::getImpresion(){
 
 bool Terreno::setFondo(const char* ruta_img){
 	
-	Imagen* temp = new Imagen(ruta_img);
-	
-	if(!temp->huboFallos()){
-		delete this->fondo;
-		delete this->img;
-		
-		fondo = temp;
-		this->setCambio(true);
-		this->img = fondo->scaleImagen(this->ancho,this->alto);
-		fondoID = ruta_img;
-	} else {
-		delete temp;
-		return false;
-	}
+	//Imagen* temp = new Imagen(ruta_img);
+	//
+	//if(!temp->huboFallos()){
+	//	delete this->fondo;
+	//	delete this->img;
+	//	
+	//	fondo = temp;
+	//	this->setCambio(true);
+	//	this->img = fondo->scaleImagen(this->ancho,this->alto);
+	//	fondoID = ruta_img;
+	//} else {
+	//	delete temp;
+	//	return false;
+	//}
 	return true;
 }
 
