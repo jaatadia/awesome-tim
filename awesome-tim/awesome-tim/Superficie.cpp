@@ -63,6 +63,7 @@ int Superficie::getAlto(){
 		return superficie->clip_rect.h;
 	}catch(...){
 		this->fallar();
+		return 1;
 	}
 }
 //devuelve el ancho de la superficie
@@ -72,6 +73,7 @@ int Superficie::getAncho(){
 		return superficie->clip_rect.w;
 	}catch(...){
 		this->fallar();
+		return 1;
 	}
 }
 
@@ -121,6 +123,7 @@ Superficie* Superficie::rotarSuperficie(double ang){
 		return sup;
 	}catch(...){
 		this->fallar();
+		return NULL;
 	}
 }
 
@@ -150,6 +153,7 @@ Superficie* Superficie::scaleSurface(int pixelesAncho,int pixelesAlto){
 		return sup;
 	}catch(...){
 		this->fallar();
+		return NULL;
 	}
 }
 
@@ -169,6 +173,7 @@ Superficie* Superficie::rotarCuadradoSuperficie(double ang){
 		return sup;
 	}catch(...){
 		this->fallar();
+		return NULL;
 	}
 }
 
@@ -198,6 +203,7 @@ Uint32 Superficie::getPixel(int x, int y) {
 	return SdlSurfaceManager::getPixel(this->superficie, x, y);
 	}catch(...){
 		this->fallar();
+		return 0;
 	}
 }
 
