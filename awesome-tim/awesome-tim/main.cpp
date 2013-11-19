@@ -67,8 +67,8 @@ int obtener_parametros(int argc,char* argv[],char** rutaIn, char** rutaOut,char*
 				continue;
 			}
 			*rutaIn = argv[i+1];
-			if(strcmp(*rutaOut,RUTA_DEFAULT_OUT) == 0)
-				*rutaOut = argv[i+1];
+			//if(strcmp(*rutaOut,RUTA_DEFAULT_OUT) == 0)
+			//	*rutaOut = argv[i+1];
 			i = i+2;
 			continue;
 		}
