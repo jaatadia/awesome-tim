@@ -489,8 +489,9 @@ std::vector<int> TerrenoCliente::borrarFigura(double posClickX, double posClickY
 	if(fig!=NULL){
 		 figuraABorrar = buscarFigura(posClickX, posClickY,true);
 		if (figuraABorrar==NULL) return tiposBorradas;
+	}else{
+		figuraABorrar = fig;
 	}
-	figuraABorrar = fig;
 
 	//no le deja si no la cero el
 	if(figuraABorrar->numero/(LARGO/(MAX_CLIENTES+1)) != this->numCliente){

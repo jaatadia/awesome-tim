@@ -1022,7 +1022,7 @@ bool Terreno::posicionOcupada(Figura* figAPosicionar){
 	iteradorLista = figuras.begin();
 
 	while ( iteradorLista != figuras.end() && !choca1 && !choca2 ) {
-		if(!(*iteradorLista)->esUnion()){
+		if((!(*iteradorLista)->esUnion())&&((*iteradorLista)!=(figAPosicionar))){
 			choca1 = figAPosicionar->choqueConFigura((*iteradorLista));
 			choca2 = (*iteradorLista)->choqueConFigura(figAPosicionar);
 		}
