@@ -76,7 +76,7 @@ Imagen::~Imagen(void)
 
 //devuelve el alto de la superficie
 int Imagen::getAlto(){
-	if(superficie!=NULL){
+	if((this != NULL) && (superficie!=NULL)){
 		return superficie->clip_rect.h;
 	}else{
 		return 10;
@@ -84,7 +84,7 @@ int Imagen::getAlto(){
 }
 //devuelve el ancho de la superficie
 int Imagen::getAncho(){
-	if(superficie!=NULL){
+	if((this != NULL) && (superficie!=NULL)){
 		return superficie->clip_rect.w;
 	}else{
 		return 10;
