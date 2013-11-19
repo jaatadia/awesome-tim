@@ -1,0 +1,270 @@
+Descripcion de Zonas:
+
+* Zona A:
+Cant de Jugadores: 1
+Zona completa en pantalla
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona B:
+Cant Jugadores: 1
+Zona Cuadrada mas chica en Pantalla
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 20
+            posY: 20
+          puntoInfDer:
+            posX: 80
+            posY: 80
+
+* Zona C:
+Cant Jugadores: 2
+Zonas Separadas Punta Derecha y Punta Izquierda
+
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 50
+            posY: 50
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 50
+            posY: 50
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona D:
+Cant Jugadores: 2
+Mitad de terreno para cada jugador (Vertical)
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 50
+            posY: 100
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 50
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona E:
+Cant Jugadores: 2
+Mitad de terreno para cada jugador (Horizontal)
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 50
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 50
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona F:
+Cant Jugadores: 2
+Terrenos Superpuestos
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 10
+            posY: 10
+          puntoInfDer:
+            posX: 75
+            posY: 75
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 50
+            posY: 50
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona G:
+Cant Jugadores: 3
+Porciones Equitativas (Horizontal)
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 99.99
+            posY: 33.34
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 33.34
+          puntoInfDer:
+            posX: 100
+            posY: 66.67
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 66.67
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona H:
+Cant jugadores: 3
+Porciones Equitativas (Vertical)
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 33.34
+            posY: 100
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 33.34
+            posY: 0
+          puntoInfDer:
+            posX: 66.67
+            posY: 100
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 66.67
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona I:
+Cant Jugadores: 3
+No cubre todo el terreno pero no se superponen
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 45
+            posY: 45
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 50
+            posY: 15
+          puntoInfDer:
+            posX: 90
+            posY: 72
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 75
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona J:
+Cant Jugadores: 3
+Areas superpuestas
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 45
+            posY: 45
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 22.5
+            posY: 22.5
+          puntoInfDer:
+            posX: 67.5
+            posY: 67.5
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 45
+            posY: 45
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona K:
+Cant Jugadores: 4
+Cuadricula partida en partes iguales
+
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 50
+            posY: 50
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 50
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 50
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 50
+          puntoInfDer:
+            posX: 50
+            posY: 100
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 50
+            posY: 50
+          puntoInfDer:
+            posX: 100
+            posY: 100
+
+* Zona L:
+Cant Jugadores: 4
+Ocupacion no proporcional de todo el terreno (no superpuestas)
+
+
+
+* Zona M:
+Cant Jugadores: 4
+Areas superpuestas
+
+
+
+* Zona N:
+Cant Jugadores: 4
+Areas Superpuestas
+
+
+
+
