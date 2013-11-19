@@ -9,7 +9,11 @@ Superficie::Superficie(){
 
 //nueva superficie de las dimensiones pasadas
 Superficie::Superficie(int ancho,int alto){
-	superficie = SdlSurfaceManager::crearSup(ancho,alto);
+	if((ancho<=0)||(alto<=0)){
+		superficie = SdlSurfaceManager::crearSup(10,10);
+	}else{
+		superficie = SdlSurfaceManager::crearSup(ancho,alto);
+	}
 	if(SdlSurfaceManager::huboFallas())	fallar();
 	else restore();
 }
