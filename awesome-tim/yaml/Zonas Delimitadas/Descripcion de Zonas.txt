@@ -253,18 +253,100 @@ Cuadricula partida en partes iguales
 Cant Jugadores: 4
 Ocupacion no proporcional de todo el terreno (no superpuestas)
 
-
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 40
+            posY: 40
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 40
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 70
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 40
+          puntoInfDer:
+            posX: 40
+            posY: 100
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 40
+            posY: 70
+          puntoInfDer:
+            posX: 100
+            posY: 100
 
 * Zona M:
 Cant Jugadores: 4
 Areas superpuestas
 
-
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 50
+            posY: 70
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 60
+            posY: 15
+          puntoInfDer:
+            posX: 100
+            posY: 80
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 40
+            posY: 30
+          puntoInfDer:
+            posX: 100
+            posY: 100
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 0
+            posY: 0
+          puntoInfDer:
+            posX: 100
+            posY: 100
 
 * Zona N:
 Cant Jugadores: 4
 Areas Superpuestas
 
-
-
-
+    lista_clientes:
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 5
+            posY: 5
+          puntoInfDer:
+            posX: 50
+            posY: 50
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 60
+            posY: 15
+          puntoInfDer:
+            posX: 80
+            posY: 45
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 10
+            posY: 53
+          puntoInfDer:
+            posX: 60
+            posY: 75
+      - terreno_cliente:
+          puntoSupIzq:
+            posX: 52
+            posY: 75
+          puntoInfDer:
+            posX: 96
+            posY: 96
