@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include "SDL_mixer.h"
 #include "Constantes.h"
 
 #define MUSIC "../music/modoEstatico.wav"
@@ -35,7 +36,8 @@
 class Sonidos{
 private:
 	static bool initialized;
-	static std::map<std::string,void*>* mapa;
+	static std::map<std::string,Mix_Chunk*>* mapaS;
+	static std::map<std::string,Mix_Music*>* mapaM;
 	static bool playSounds;
 
 public:
