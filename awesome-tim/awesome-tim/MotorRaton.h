@@ -1,5 +1,6 @@
 #pragma once
 #include "Engranaje.h"
+#include "Sonidos.h"
 #include "Constantes.h"
 #include "Circulo.h"
 #include "VistaFiguraEstatica.h"
@@ -13,10 +14,12 @@ private:
 		sentido = 1;
 		myVista2 = new VistaFiguraEstatica(this,ID_MOTOR_RATON);
 		activo = false;
+		contador = -1;
 	};
 	
 public:
 	int sentido;
+	int contador;
 	bool activo;
 	double distancia;
 
@@ -119,4 +122,153 @@ public:
 	void DesactivarMotor(){
 		activo = false;
 	}
+
+
+	void actualizarImagenDerecha(){
+		int factor = 30;
+
+		if(contador == 1){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA0);
+		}
+		
+		if(contador == (FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA1);
+		}
+
+		if(contador == (2*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA2);
+		}
+
+		if(contador == (3*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA3);
+		}
+
+		if(contador == (4*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA2);
+		}
+		
+		if(contador == (5*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA1);
+		}
+		
+		if(contador == (6*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA0);
+		}
+		
+		if(contador == (7*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA4);
+		}
+		
+		if(contador == (8*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA5);
+		}
+		
+		if(contador == (9*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA6);
+		}
+		
+		if(contador == (10*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA5);
+		}
+		
+		if(contador == (11*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_DERECHA4);
+			contador = -1;
+		}
+		
+	}
+
+	void actualizarImagenIzquierda(){
+		int factor = 30;
+
+		if(contador == 1){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA0);
+		}
+		
+		if(contador == (FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA1);
+		}
+
+		if(contador == (2*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA2);
+		}
+
+		if(contador == (3*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA3);
+		}
+
+		if(contador == (4*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA2);
+		}
+		
+		if(contador == (5*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA1);
+		}
+		
+		if(contador == (6*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA0);
+		}
+		
+		if(contador == (7*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA4);
+		}
+		
+		if(contador == (8*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA5);
+		}
+		
+		if(contador == (9*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA6);
+		}
+		
+		if(contador == (10*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA5);
+		}
+		
+		if(contador == (11*FPS/factor)){
+			delete(myVista2);
+			myVista2 = new VistaFiguraEstatica(this,ID_RATON_MOVIENDOSE_IZQUIERDA4);
+			contador = -1;
+		}
+		
+	}
+
+	void actualizar(){
+
+		if(!motorActivo())
+			return;
+
+		Sonidos::playSound(MOTOR_RATON_MUSIC);
+		contador++;
+
+		if(this->sentido == 1)
+			actualizarImagenDerecha();
+		else
+			actualizarImagenIzquierda();
+
+	}
+
 };

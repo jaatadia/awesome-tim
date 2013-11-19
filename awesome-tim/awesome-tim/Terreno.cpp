@@ -763,6 +763,10 @@ void Terreno::actualizarModelo(Figura* vector[]){
 				((Carrito*)(*iteradorLista))->actualizar();
 			}
 
+			if((*iteradorLista)->getTipoFigura()==MOTOR_RATON){
+				((MotorRaton*)(*iteradorLista))->actualizar();
+			}
+
 			if((*iteradorLista)->getTipoFigura()==ESCOPETA){
 				Figura* bala = mundoBox2D->dispararEscopeta((Escopeta*)(*iteradorLista));
 				if(bala != NULL){

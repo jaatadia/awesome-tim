@@ -13,7 +13,6 @@
 #define GLOBO_MUSIC ""
 #define CINTA_TRANSP_MUSIC ""
 #define ENGRANAJE_MUSIC ""
-#define MOTOR_RATON_MUSIC ""
 
 //SONIDOS
 #define POP_BALLOON "../music/pop.wav"
@@ -23,6 +22,7 @@
 #define FLIPPER_DOWN "../music/flipperdown.wav"
 #define HUEVO_SOUND "../music/Huevo_rompiendose.wav"
 #define CARRITO_MUSIC "../music/carrito.wav"
+#define MOTOR_RATON_MUSIC "../music/raton.wav"
 #define CANIO_SOUND ""
 #define CODO_SOUND ""
 #define BASKET_SOUND ""
