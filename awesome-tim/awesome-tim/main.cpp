@@ -181,6 +181,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 	while (juego->isRunning()&&!juego->huboFallos()){
 		
+		try{
 		if(tiempo>=1000){
 			//if(imprimir) std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
 			tiempo = 0;
@@ -234,6 +235,8 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 		}
 		
+		}catch(...){
+		}
 
 	}
 	delete juego;
