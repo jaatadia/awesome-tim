@@ -36,10 +36,10 @@ void SensorB2ContactListener::BeginContact(b2Contact* contact){
 	
 	switch (fig->getTipoFigura()){
 
-		case QUESO:{
+		/*case QUESO:{
 			sensor->accionarMotor(vector);
 			break;
-		}
+		}*/
 		case GLOBOHELIO:{
 			sensor->cumplirObjetivo(vector,fig);
 			break;
@@ -49,6 +49,10 @@ void SensorB2ContactListener::BeginContact(b2Contact* contact){
 			break;
 		}
 		case PELOTABASQUET:{
+			sensor->cumplirObjetivo(vector,fig);
+			break;
+		}
+		case PELOTABOWLING:{
 			sensor->cumplirObjetivo(vector,fig);
 			break;
 		}

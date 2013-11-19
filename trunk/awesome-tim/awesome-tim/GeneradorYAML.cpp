@@ -175,15 +175,7 @@ YAML::Emitter& operator << (YAML::Emitter& out,Figura* fig){
 				out << YAML::Value << "MOTOR_RATON";
 				out << (Cuadrado*) fig->getDimension();
 				out << YAML::Key << "sentido";
-				out << YAML::Value << ((MotorRaton*) fig)->sentido;
-				out << YAML::Key << "sensores";
-				out << YAML::Value << YAML::BeginSeq;
-				out << YAML::BeginMap;
-					out << YAML::Key << "sensor";
-					out << YAML::Value << (Cuadrado*) fig->getDimension();
-				out << YAML::EndMap;
-				out << YAML::EndSeq;
-					
+				out << YAML::Value << ((MotorRaton*) fig)->sentido;					
 				break;
 
 			case VELA:

@@ -29,13 +29,13 @@ Figura* FiguraSensor::clonar(){
 	Dimension* dim = this->getDimension();
 	return new FiguraSensor(dim->getAncho(),dim->getAlto(),dim->getX(),dim->getY(),dim->getAngulo(),/*NECESITO EL NUMERO ACTUALIZADO*/(this->figInteractuar)->numero);
 }
-void FiguraSensor::accionarMotor(Figura** vector){
-
-	if ((vector[this->numInteractuar])->getTipoFigura() == MOTOR_RATON){
-		((MotorRaton*)(vector[this->numInteractuar]))->ActivarMotor();
-	}
-
-}
+//void FiguraSensor::accionarMotor(Figura** vector){
+//
+//	if ((vector[this->numInteractuar])->getTipoFigura() == MOTOR_RATON){
+//		((MotorRaton*)(vector[this->numInteractuar]))->ActivarMotor();
+//	}
+//
+//}
 void FiguraSensor::cumplirObjetivo(Figura** vec,Figura* fig){
 
 		if (this->numInteractuar == fig->numero){
