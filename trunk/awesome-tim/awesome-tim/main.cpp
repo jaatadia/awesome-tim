@@ -179,10 +179,10 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 	struct timeb tInicial, tFinal;
 
-	while (juego->isRunning()){
+	while (juego->isRunning()&&!juego->huboFallos()){
 		
 		if(tiempo>=1000){
-			if(imprimir) std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
+			//if(imprimir) std::cout<<"FPS: "<< frames*1000/tiempo << " FramesSkipped: "<<cant<<"\n";
 			tiempo = 0;
 			frames = 0;
 			cant=0;
@@ -215,7 +215,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 			tiempoExtra=0;
 		}else{
 			int ciclos = 0;
-			while(tiempoExtra<0){
+			while((tiempoExtra<0)&&(juego->isRunning())&&!(juego->huboFallos())){
 				ciclos ++;
 				cant++;
 				

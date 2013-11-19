@@ -9,7 +9,7 @@
 
 #define M_ESTADOS "Maquina de Estados"
 
-class MEstados: public MaquinaEstados,public Fallable
+class MEstados: public MaquinaEstados
 {
 private:
 

@@ -74,8 +74,8 @@ JuegoCliente::~JuegoCliente(){
 	delete terreno;
 	delete botonera;
 	delete comandos;
-	delete EscalasDeEjes::getInstance();
-	Contenedor::deleteContenedor();
+	//if(EscalasDeEjes::getInstance()!=NULL)delete EscalasDeEjes::getInstance();
+	//Contenedor::deleteContenedor();
 	for(int i=0;i<=MAX_CLIENTES;i++){
 		if(figurasEnAire[i]!=NULL)delete figurasEnAire[i];
 	}
@@ -488,7 +488,7 @@ while(SDL_PollEvent(&evento)){
 						msg->setData2(d2);
 
 					this->maq->pushSendMessage(msg,numCliente);
-					std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
+					//std::cout<<maq->getId()<<"|"<<numCliente<<"\n";
 				}
 			}
 			if (posEnComandos(posClickX,posClickY))

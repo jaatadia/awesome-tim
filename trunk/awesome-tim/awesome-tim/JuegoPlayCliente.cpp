@@ -32,7 +32,7 @@ JuegoPlayCliente::JuegoPlayCliente(Superficie* fondo, void* tere,MaquinaEstados*
 	comandos = new ComandosPlayCliente(ANCHO_COMANDOS,ALTO_COMANDOS);
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,true);
 
-	terreno->setFondo(ter->getFondo().c_str());
+	//terreno->setFondo(ter->getFondo().c_str());
 	
 	std::list<Figura*> figurasAux;
 	std::list<Figura*> figuras = ter->getListaFigs();
