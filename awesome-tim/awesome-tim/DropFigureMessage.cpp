@@ -3,7 +3,7 @@
 DropFigureMessage::DropFigureMessage(void)
 {
 	this->type = MSG_TYPE_DROP;
-	this->type = MSG_VALID;
+	this->valid = MSG_VALID;
 }
 
 DropFigureMessage::DropFigureMessage(string msg)
