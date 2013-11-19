@@ -9,24 +9,27 @@
 #include "ActualizeCounterMessage.h"
 #include "SensorB2ContactListener.h"
 
-JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
+JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq,bool usarVista)
 {
 	posVector = 0;
 	for(int i = 0;i<LARGO;i++){
 		vector[i] = NULL;
 	}
 
+	this->usarVista = usarVista;
+
 	SensorB2ContactListener::vector = vector;
 
 	Terreno* ter = (Terreno*) tere;
 	this->fondo = fondo;
 	this->maq = maq;
-		
-	comandos = new ComandosPlay(ANCHO_COMANDOS,ALTO_COMANDOS);
-	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,true);
-
-	terreno->setFondo(ter->getFondo().c_str());
 	
+	terreno = new Terreno(ANCHO_TERRENO,ALTO_TERRENO,maq,true);
+	if(usarVista){
+		comandos = new ComandosPlay(ANCHO_COMANDOS,ALTO_COMANDOS);
+		terreno->setFondo(ter->getFondo().c_str());
+	}
+		
 	std::list<Figura*> figurasAux;
 	std::list<Figura*> figuras = ter->getListaFigs();
 	std::list<Figura*>::iterator iteradorLista;
@@ -47,8 +50,10 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq)
 			vector[fig->numero] = fig;
 			terreno->agregarFigura(fig);
 	}
-	terreno->resizear();
-	this->setCambio(true);
+	if(usarVista){
+		terreno->resizear();
+		this->setCambio(true);
+	}
 
 	//cosas para informar que se gano
 	this->gano = false; //si quieren ver la animacion hay que ponerlo en true
@@ -70,6 +75,8 @@ JuegoPlay::~JuegoPlay(void)
 }
 
 bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
+
+	if(!usarVista) return false;
 
 	SDL_Event evento;
 	double posClickX, posClickY;
@@ -171,7 +178,7 @@ void JuegoPlay::onLoop(){
 		return;
 	}
 
-	gano = terreno->objetivosCumplidos();
+	if(!gano)gano = terreno->objetivosCumplidos();
 
 	if(!gano){
 		terreno->actualizarModelo(vector);
@@ -280,6 +287,7 @@ void JuegoPlay::quit(){
 
 void JuegoPlay::actualizarVictoria(){
 	contadorGano++;
+	if (!usarVista) return;
 	int ancho = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(ANCHO_TERRENO_LOGICO);
 	int alto = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(ALTO_TERRENO_LOGICO);
 	if (contadorGano==INICIO_GANO1){

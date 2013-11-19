@@ -54,6 +54,7 @@ void SocketHandler::run()
 						//cout << sE.what() << endl;
 						this->kill();
 					}
+					if(this->finalizando) return;
 					if (cadena.size())
 					{
 						cadena = msgRemainder + cadena;

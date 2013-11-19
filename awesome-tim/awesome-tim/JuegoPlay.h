@@ -17,6 +17,8 @@ private:
 	Superficie* fondo;
 	bool dibujar;
 	int contador;
+
+	bool usarVista;
 	
 	//cosas para dibujar que gano
 	bool gano;
@@ -28,7 +30,7 @@ private:
 
 
 public:
-	JuegoPlay(Superficie* fondo,void* ter,MaquinaEstados* maq);
+	JuegoPlay(Superficie* fondo,void* ter,MaquinaEstados* maq,bool usarVista);
 	~JuegoPlay(void);
 
 	virtual bool onEvent(Ventana* ventana,Superficie** sup);

@@ -104,6 +104,6 @@ void MEstados::play(void* ter){
 		superficie->restore();
 	}
 	
-	Eplay = new JuegoPlay(aux,ter,this);
+	Eplay = new JuegoPlay(aux,ter,this,usarVista);
 	Eactivo = Eplay;
 }
