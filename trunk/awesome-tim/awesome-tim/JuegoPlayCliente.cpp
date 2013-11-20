@@ -132,6 +132,8 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 
 bool JuegoPlayCliente::onLoop(){
 	bool continuar = true;
+	int ciclosTerminados = 0;
+	int ciclosMaximosSkippeados = 3;
 	Message * msg = this->maq->getProcessMessage();
 	while((continuar)&&(msg!=NULL)){
 		switch (msg->getType()){
@@ -249,6 +251,14 @@ bool JuegoPlayCliente::onLoop(){
 				{
 					ClientMessage* c_msg = (ClientMessage*)  msg;
 					switch(c_msg->getAction()){
+						case A_READY:
+							{
+								ciclosTerminados++;
+								if(ciclosTerminados>=ciclosMaximosSkippeados){
+									continuar = false;
+								}
+							}
+							break;
 						case A_DISCONECT:
 						case A_UNREADY:
 							{

@@ -205,6 +205,10 @@ bool JuegoPlay::onLoop(){
 			}
 
 		}
+		ClientMessage* c_msg = new ClientMessage();
+		c_msg->setClientID(0);
+		c_msg->setAction(A_READY);
+		this->maq->pushSendMessage(c_msg);
 
 	}else{
 		actualizarVictoria();
