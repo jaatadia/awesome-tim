@@ -285,16 +285,16 @@ public:
 
 	}
 
-	virtual bool tienePartesRotables(){return true;};
+	virtual bool tienePartesRotables(){return this->activo;};
 	virtual double getAnguloPartesRotables(){
 		return this->sentido;
 	};
 	virtual void setAnguloPartesRotables(double angulo){
 		double sentido = angulo;
 		contador++;
-		if(this->sentido == 1)
-			actualizarImagenDerecha();
-		else
-			actualizarImagenIzquierda();	
+			if(this->sentido == 1)
+				actualizarImagenDerecha();
+			else
+				actualizarImagenIzquierda();
 	};
 };
