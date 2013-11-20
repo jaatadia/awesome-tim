@@ -105,14 +105,6 @@ std::string Juego::cargar(){
 }
 
 bool Juego::guardar(){
-	bool seGuardo = false;
-	
-	seGuardo = GeneradorYaml::guardarJuego(fileOut,botonera,terreno,this->objetivo);
-	
-	if (!seGuardo){
-		ErrorLogHandler::addError("GeneradorYaml", "Error al abrir o cerrar los archivos al guardar la partida.");
-	}
-
 	return true;
 }
 
