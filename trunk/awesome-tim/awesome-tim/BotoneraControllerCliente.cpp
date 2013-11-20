@@ -32,7 +32,7 @@
 #include "Boton.h"
 
 BotoneraControllerCliente::BotoneraControllerCliente(int ancho,int alto, int cantBotonesMostrados, double factorAreaFiguras, double scrollScaleFactor, double buttonScaleFactor) {
-	try{
+	/*try{*/
 		
 		altoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasY(alto);
 		anchoOriginal = EscalasDeEjes::getInstance()->getCantidadUnidadesLogicasX(ancho);
@@ -72,11 +72,11 @@ BotoneraControllerCliente::BotoneraControllerCliente(int ancho,int alto, int can
 		Contenedor::putMultimedia("../images/ScrollButton.png", new Imagen("../images/ScrollButton.png"));
 		this->scrollButtonUp = ((Imagen *)Contenedor::getMultimedia("../images/ScrollButton.png"))->scaleImagen(scrollSide, scrollSide);
 
-		Contenedor::putMultimedia("../images/ScrollButtonPressed.png", new Imagen("../images/ScrollButtonPressed.png"));
+		Contenedor::putMultimedia("../images/ScrollButtonPressed.png", new Imagen("../images/ScrollButtonPressed.png\0"));
 		this->scrollButtonUpPressed = ((Imagen *)Contenedor::getMultimedia("../images/ScrollButtonPressed.png"))->scaleImagen(scrollSide, scrollSide);
 
-		this->scrollButtonDown = this->scrollButtonUp->rotarImagen(180);
-		this->scrollButtonDownPressed = this->scrollButtonUpPressed->rotarImagen(180);
+		this->scrollButtonDown = this->scrollButtonUp->rotarImagen180();
+		this->scrollButtonDownPressed = this->scrollButtonUpPressed->rotarImagen180();
 
 		int x = (this->scrollButtonUp->getAncho() >= this->botonera->getAncho()) ? 0 : ((this->botonera->getAncho() - this->scrollButtonUp->getAncho()) >> 1);
 		int y = ((this->scrollButtonUp->getAlto() >= (this->altoAreaScroll >> 1)) ? 0 : (((this->altoAreaScroll >> 1) - this->scrollButtonUp->getAlto()) >> 1));
@@ -85,13 +85,14 @@ BotoneraControllerCliente::BotoneraControllerCliente(int ancho,int alto, int can
 		this->layerScroll->dibujarCuadradoNegro(0, 0, ancho, alto);
 		this->layerScroll->dibujarImagen(this->scrollButtonUp, NULL, x, y);
 		this->layerScroll->dibujarImagen(this->scrollButtonDown, NULL, x, y + this->altoAreaFiguras + (this->altoAreaScroll >> 1));
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo constructor\n"
+	//}
 }
 
 void BotoneraControllerCliente::resizear(){
 
-	try{
+	//try{
 		setCambio(true);
 
 		double altoTemp = EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(altoOriginal);
@@ -154,12 +155,13 @@ void BotoneraControllerCliente::resizear(){
 		this->layerScroll->dibujarCuadradoNegro(0, 0, anchoTemp, altoTemp);
 		this->layerScroll->dibujarImagen(this->scrollButtonUp, NULL, x, y);
 		this->layerScroll->dibujarImagen(this->scrollButtonDown, NULL, x, y + this->altoAreaFiguras + (this->altoAreaScroll >> 1));
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo resizear\n"
+	//}
 }
 
 BotoneraControllerCliente::~BotoneraControllerCliente() {
-	try{
+	//try{
 		if (this->layerPrincipal) {
 			delete (this->layerPrincipal);
 			this->layerPrincipal = 0;
@@ -191,13 +193,14 @@ BotoneraControllerCliente::~BotoneraControllerCliente() {
 		delete this->scrollButtonUpPressed;
 		delete this->squareButton;
 		delete this->squareButtonPressed;
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo destructor\n"
+	//}
 }
 
 void BotoneraControllerCliente::handleEventBotonera(double mouseX, double mouseY, Uint32 type) {
 		//Analiza que tipo de accion recibio
-	try{
+	//try{
 		this->setCambio(false);
 		switch (type) {
 			case SDL_MOUSEBUTTONDOWN:
@@ -225,12 +228,13 @@ void BotoneraControllerCliente::handleEventBotonera(double mouseX, double mouseY
 				this->buttonPressed = false;
 				this->setCambio(true);
 		}
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo handle event botonera\n"
+	//}
 }
 
 Superficie* BotoneraControllerCliente::getImpresion(){
-	try{
+	/*try{*/
 		//Dibuja en el buffer principal (Double Buffer)
 		if (this->layerFiguras && this->huboCambios()) {
 
@@ -282,13 +286,13 @@ Superficie* BotoneraControllerCliente::getImpresion(){
 		}
 		//this->setCambio(false);
 		return layerPrincipal;
-	}catch(...){
-		return layerPrincipal;
-	}
+	//}catch(...){
+	//	std::cout<<"fallo getImpresion\n";
+	//}
 }
 
 void BotoneraControllerCliente::agregarBoton(Figura * figura, int cantidadInstancias) {
-	try{
+	/*try{*/
 		Imagen * img = new Imagen(figura->getID());
 		int buttonSide = (this->botonera->getAnchoBoton() > this->botonera->getAltoBoton()) ? this->botonera->getAltoBoton() * this->buttonScaleFactor : this->botonera->getAnchoBoton() * this->buttonScaleFactor;
 		
@@ -317,12 +321,13 @@ void BotoneraControllerCliente::agregarBoton(Figura * figura, int cantidadInstan
 		this->botonera->agregarBoton(figura, cantidadInstancias);
 		this->botonera->setAlturaMax(this->botonera->getAlturaMax() + this->botonera->getAltoBoton());
 		this->botonera->setAlturaMaxOrig(this->botonera->getAlturaMaxOrig() + this->botonera->getAltoBoton());
-	}catch(...){
-	}
+	/*}catch(...){
+		std::cout<<"fallo agregar boton\n"
+	}*/
 }
 
 void BotoneraControllerCliente::setScrollDirection(int direction) {
-	try{
+	/*try{*/
 		switch (direction) {
 			case this->SCROLL_BOT:
 				this->scrollBot = true;
@@ -336,58 +341,66 @@ void BotoneraControllerCliente::setScrollDirection(int direction) {
 				this->scrollBot = false;
 				this->scrollTop = false;
 		}
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo agregar boton\n"
+	//}
 }
 
 Figura * BotoneraControllerCliente::obtenerFigura(double x, double y){
-	try{
+	//try{
 		this->buttonPressed = true;
 		this->numeroFigActual= ((int)(this->botonera->getY() + y - (this->altoAreaScroll >> 1)))/this->botonera->getAltoBoton();
 		return this->botonera->obtenerFigura(this->numeroFigActual);
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo obtener figura\n"
+	//}
 }
 
 void BotoneraControllerCliente::restaurarInstanciaActual(){
-	try{
+	/*try{*/
 		this->botonera->restaurarInstanciaActual( this->numeroFigActual );
-	}catch(...){
-	}
+	/*}catch(...){
+		std::cout<<"fallo obtener instancia actual\n"
+	}*/
 }
 
 void BotoneraControllerCliente::restaurarInstancias( std::list<int> numsFigARestaurar ){
-	try{
+	/*try{*/
 		this->botonera->restaurarInstancias(numsFigARestaurar);
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo restaurar instancias\n"
+	//}
 }
 
 int BotoneraControllerCliente::getAlto() {
-	try{
+	/*try{*/
 		return this->botonera->getAlto();
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo getAlto\n"
+	//}
+	
 }
 
 int BotoneraControllerCliente::getAncho() {
-	try{
+	//try{
 		return this->botonera->getAncho();
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo getAncho\n"
+	//}
 }
 
 std::list<struct boton> BotoneraControllerCliente::getListaFiguras() {
-	try{
+	//try{
 		return this->botonera->getListaFiguras();
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo getListaFiguras\n"
+	//}
 }
 
 
 
 void BotoneraControllerCliente::ScrollUp(){
-	try{
+	/*try{*/
 		this->setScrollDirection(this->SCROLL_TOP);
 		if (this->scrollBot) {
 			int resto = this->botonera->getAlturaMax() - this->altoAreaFiguras - this->botonera->getY();
@@ -400,12 +413,13 @@ void BotoneraControllerCliente::ScrollUp(){
 		}
 		this->setScrollDirection(this->SCROLL_OFF);
 		this->setCambio(true);
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo scroll up\n"
+	//}
 }
 
 void BotoneraControllerCliente::ScrollDown(){
-	try{
+	//try{
 		this->setScrollDirection(this->SCROLL_BOT);
 		if (this->scrollBot) {
 			int resto = this->botonera->getAlturaMax() - this->altoAreaFiguras - this->botonera->getY();
@@ -418,14 +432,15 @@ void BotoneraControllerCliente::ScrollDown(){
 		}
 		this->setScrollDirection(this->SCROLL_OFF);
 		this->setCambio(true);
-	}catch(...){
-	}
+	//}catch(...){
+	//	std::cout<<"fallo scroll down\n"
+	//}
 }
 
 
 
 bool BotoneraControllerCliente::agregarBotonesDefault(){
-	try{
+	//try{
 		this->agregarBoton(new Arco(0,0),INSTANCIAS_DEFAULT);
 		this->agregarBoton(new Canio(0,0,0,0),INSTANCIAS_DEFAULT);
 		this->agregarBoton(new Carrito(0,0,0),INSTANCIAS_DEFAULT);
@@ -454,23 +469,23 @@ bool BotoneraControllerCliente::agregarBotonesDefault(){
 		this->agregarBoton(new Queso(0,0),INSTANCIAS_DEFAULT); 
 		this->agregarBoton(new Tijera(0,0),INSTANCIAS_DEFAULT);
 		this->agregarBoton(new Yunque(0,0),INSTANCIAS_DEFAULT);
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 	return true;
 }
 
 bool BotoneraControllerCliente::estaVacia(){
-	try{
+	/*try{*/
 		std::list<struct boton> lista = this->botonera->getListaFiguras();
 		return (lista.size()==0);
-	}catch(...){
-		return true;
-	}
+	//}catch(...){
+	//	return true;
+	//}
 }
 
 
 void BotoneraControllerCliente::dibujarCantInstancias(){
-	try{
+	//try{
 		int altoBoton = botonera->getAltoBoton();
 		int cantDeFig = layerFigurasOrig->getAlto()/altoBoton;
 
@@ -487,7 +502,7 @@ void BotoneraControllerCliente::dibujarCantInstancias(){
 		layerADibujar = layerFiguras->rotarSuperficie(0);
 
 		for(itFig = figs.begin(); itFig != figs.end(); itFig++){
-			try{
+			//try{
 				cantInstancias = (*itFig).cantInstancias;
 
 				//convertir a c string
@@ -505,10 +520,10 @@ void BotoneraControllerCliente::dibujarCantInstancias(){
 				posBotonY += altoBoton;
 
 				delete img;
-			}catch(...){
-			}
+			//}catch(...){
+			//}
 		}
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 
 }

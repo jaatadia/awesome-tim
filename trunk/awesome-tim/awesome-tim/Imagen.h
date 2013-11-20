@@ -48,7 +48,7 @@ public:
 	Imagen* rotarCuadradoImagen(double ang);//devuelve una copia rotada de la imagen manteniendo el tam original
 	Imagen* scaleImagen(int pixelesAncho,int pixelesAlto);//devuelve una copia resizeada de la imagen
 	Imagen* rotarZoom(int ancho,int alto,double angulo);//rota y zoomea la img
-
+	Imagen* rotarImagen180();
 
 	Imagen(int ancho,int alto);//nueva superficie de las dimensiones pasadas
 	void dibujarImagen(Imagen* img,Rectangulo* rectOrigen,int xDestino,int yDestino);

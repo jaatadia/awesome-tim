@@ -23,6 +23,8 @@
 #define MSG_SUBTYPE_SHIFT 4
 #define MSG_SUBTYPE_STRETCH 5
 
+bool JuegoCliente::initialized = false;
+
 JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	
 	this->numCliente = numCliente;
@@ -37,8 +39,9 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	this->fileOut = fileOut;
 
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,false);
-	//botonera = NULL;
+	botonera = NULL;
 	botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+	comandos = NULL;
 	comandos = new ComandosCliente(ANCHO_COMANDOS,ALTO_COMANDOS,"");
 
 	for (int i = 0;i<=MAX_CLIENTES;i++){
@@ -55,6 +58,8 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	contEventosMov = 0;
 
 	Sonidos::playMusic(MUSIC);
+
+	initialized = true;
 
 }
 
@@ -74,12 +79,14 @@ JuegoCliente::~JuegoCliente(){
 
 	delete terreno;
 	if (botonera!= NULL)delete botonera;
-	delete comandos;
+	if (comandos != NULL)delete comandos;
 	//if(EscalasDeEjes::getInstance()!=NULL)delete EscalasDeEjes::getInstance();
 	//Contenedor::deleteContenedor();
 	for(int i=0;i<=MAX_CLIENTES;i++){
 		if(figurasEnAire[i]!=NULL)delete figurasEnAire[i];
 	}
+
+	initialized = false;
 	
 }
 
@@ -87,7 +94,7 @@ JuegoCliente::~JuegoCliente(){
 //dibuja en pantalla
 
 bool JuegoCliente:: onRender(Superficie* superficie){
-
+	if(!initialized) return false;
 	bool dibujar = false;
 	
 	confirmarPosicionFiguraEnAire();
@@ -111,9 +118,11 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 		}
 	}
 
-	if(comandos->huboCambios()){
-		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
-		dibujar = true;
+	if (comandos != NULL){
+		if(comandos->huboCambios()){
+			superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
+			dibujar = true;
+		}
 	}
 
 	for(int i = 0;i<=MAX_CLIENTES;i++){
@@ -127,6 +136,7 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 }
 	
 bool JuegoCliente:: onLoop(){
+	if(!initialized) return false;
 	bool continuar = true;
 	Message * msg = this->maq->getProcessMessage();
 	while((continuar)&&(msg!=NULL)){
@@ -143,7 +153,7 @@ bool JuegoCliente:: onLoop(){
 							break;
 						case A_UNREADY:
 							{
-								this->comandos->setListoUnpressed();
+								if (comandos != NULL)this->comandos->setListoUnpressed();
 								this->block = false;
 							}
 							break;
@@ -261,7 +271,7 @@ bool JuegoCliente:: onLoop(){
 				break;
 			case MSG_TYPE_STRING:
 				{
-					comandos->setImagenObjetivo(((StringMessage*)msg)->getString());
+					if (comandos != NULL)comandos->setImagenObjetivo(((StringMessage*)msg)->getString());
 				}
 				break;
 			case MSG_TYPE_DELETE:
@@ -286,7 +296,7 @@ bool JuegoCliente:: onLoop(){
 
 //manejo de eventos
 bool JuegoCliente:: onEvent(Ventana* ventana,Superficie** sup){
-
+if(!initialized) return false;
 SDL_Event evento;
 double posClickX, posClickY;
 bool aux = false;
@@ -308,10 +318,10 @@ while(SDL_PollEvent(&evento)){
 
 			//si fue backtrace entonces borrar una letra de comandos
 			if (evento.key.keysym.sym == SDLK_BACKSPACE)
-				comandos->borrarLetra();
+				if (comandos != NULL)comandos->borrarLetra();
 
 			if (evento.key.keysym.sym == SDLK_KP_ENTER || evento.key.keysym.sym == SDLK_RETURN)
-				comandos->enterKeyPressed(this);
+				if (comandos != NULL)comandos->enterKeyPressed(this);
 
 			if (evento.key.keysym.sym == SDLK_TAB){
 				if(clickPressed){
@@ -375,7 +385,9 @@ while(SDL_PollEvent(&evento)){
 					}
 					else terreno->achicarFigura();
 //				}
-			}else comandos->agregarLetra(charIngresado);
+			}else{ 
+				if (comandos != NULL)comandos->agregarLetra(charIngresado);
+			}
 
 			break;
 		}
@@ -499,7 +511,7 @@ while(SDL_PollEvent(&evento)){
 			if (posEnComandos(posClickX,posClickY))
 				//es de comandos
 				if (evento.button.state == SDL_BUTTON_LMASK){
-					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
+					if (comandos != NULL)comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 
 			break;
@@ -523,7 +535,7 @@ while(SDL_PollEvent(&evento)){
 				}
 			}
 
-			comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux,this);
+			if (comandos != NULL)comandos->release(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO),&aux,this);
 
 			break;
 		}
@@ -699,7 +711,7 @@ void JuegoCliente::resizear(){
 	//necesario moverla para que se ajuste la vista...
 	if (botonera!= NULL)botonera->ScrollDown();
 
-	comandos->resizear();
+	if (comandos != NULL)comandos->resizear();
 }
 
 void JuegoCliente::setFondo(const char* dir){
@@ -748,14 +760,14 @@ void JuegoCliente::confirmarPosicionFiguraEnAire(){
 		setCambio(true);
 		terreno->setCambio(true);
 		if (botonera!= NULL)botonera->setCambio(true);
-		comandos->setCambio(true);
+		if (comandos != NULL)comandos->setCambio(true);
 	}else{
 		if (figEnBotonera())
 			if (botonera!= NULL)botonera->setCambio(true);
 		if (figEnTerreno())
 			terreno->setCambio(true);
 		if (figEnComandos())
-			comandos->setCambio(true);
+			if (comandos != NULL)comandos->setCambio(true);
 	}
 
 }
@@ -899,7 +911,7 @@ void JuegoCliente::set2Click(){
 			this->setCambio(true);
 			terreno->setCambio(true);
 			if (botonera!= NULL)botonera->setCambio(true);
-			comandos->setCambio(true);
+			if (comandos != NULL)comandos->setCambio(true);
 		}else{
 			result->posAtableCorrea(&x,&y);
 			if(!linea->primerPuntoPuesto()){
@@ -933,7 +945,7 @@ void JuegoCliente::set2Click(){
 					this->setCambio(true);
 					terreno->setCambio(true);
 					if (botonera!= NULL)botonera->setCambio(true);
-					comandos->setCambio(true);
+					if (comandos != NULL)comandos->setCambio(true);
 				}else{
 					linea->setFigura2(result);
 					
@@ -990,7 +1002,7 @@ void JuegoCliente::set2Click(){
 			figurasEnAire[this->numCliente] = NULL;
 			this->setCambio(true);
 			terreno->setCambio(true);
-			comandos->setCambio(true);
+			if (comandos != NULL)comandos->setCambio(true);
 			if (botonera!= NULL)botonera->setCambio(true);
 		}else{
 			int res = result->esAtableSoga(x,y);
@@ -1027,7 +1039,7 @@ void JuegoCliente::set2Click(){
 					figurasEnAire[this->numCliente] = NULL;
 					this->setCambio(true);
 					terreno->setCambio(true);
-					comandos->setCambio(true);
+					if (comandos != NULL)comandos->setCambio(true);
 					if (botonera!= NULL)botonera->setCambio(true);
 				}else{
 					linea->setFigura2(result);

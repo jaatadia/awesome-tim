@@ -39,7 +39,7 @@
 			<DebugSettings
 				Command="$(TargetPath)"
 				WorkingDirectory=""
-				CommandArguments=""
+				CommandArguments="-l ../yaml/NivelesGanados/PelotitaEnCuadro.yml"
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"

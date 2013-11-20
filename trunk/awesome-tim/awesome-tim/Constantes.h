@@ -93,7 +93,7 @@
 #define CANIO 36
 #define CODO 37
 #define FIG_SENSOR 38
-
+#define RATON_SENSOR 39
 //valores fisicos
 
 #define DISTANCIA_RATON_DEFAULT BASE_QUESO+1

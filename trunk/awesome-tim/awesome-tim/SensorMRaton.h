@@ -16,4 +16,8 @@ public:
 	~SensorMRaton(void){};
 
 	Figura* getMotor(){return motorRaton;};
+
+	int getTipoFigura(){
+		return RATON_SENSOR;
+	}
 };

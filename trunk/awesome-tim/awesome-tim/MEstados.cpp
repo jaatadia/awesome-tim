@@ -34,6 +34,8 @@ MEstados::MEstados(const char *fileIn,const char *fileOut,bool usarVista){
 		Contenedor::noLoad();
 	}
 
+	IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG);
+
 	this->fileIn = fileIn;
 	this->fileOut = fileOut;
 	running = true;
