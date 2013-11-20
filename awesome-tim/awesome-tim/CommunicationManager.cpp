@@ -37,20 +37,24 @@ void CommunicationManager::run()
 	{
 		this->_thread.sleep(5000);
 
-		vuelta++;
-		vuelta%=3;
-		if(vuelta==0){
-			if(socketReader->mensajesRecibidos == 0){
-				socketWriter->kill();
-				socketReader->kill();
-			}else{
-				socketReader->mensajesRecibidos = 0;
-			}
-		}
 		if(this->ID<0){
 			this->ID = this->game->getId();
 		}
-		this->game->returnSendMessage(new NoneMessage(),this->ID);
+		if(this->ID>=0){
+			NoneMessage* n_msg = new NoneMessage();
+			this->game->returnSendMessage(n_msg,this->ID);
+		}
+
+		//vuelta++;
+		//vuelta%=3;
+		//if(vuelta==0){
+		//	if(socketReader->mensajesRecibidos == 0){
+		//		socketWriter->kill();
+		//		socketReader->kill();
+		//	}else{
+		//		socketReader->mensajesRecibidos = 0;
+		//	}
+		//}
 
 		if((socketWriter->getActiveState())||(socketReader->getActiveState())){
 			if(!socketWriter->getActiveState()) socketWriter->kill();

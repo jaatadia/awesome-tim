@@ -135,7 +135,7 @@ bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
 	return false;
 }
 
-void JuegoPlay::onLoop(){
+bool JuegoPlay::onLoop(){
 	
 	Message * msg;
 	bool continuar = true;
@@ -170,12 +170,12 @@ void JuegoPlay::onLoop(){
 			}
 	}
 
-	if(!continuar) return;
+	if(!continuar) return true;
 
 	if(contador<FPS){
 		contador++;
 		this->maq->pushSendMessage(new ActualizeCounterMessage());
-		return;
+		return true;
 	}
 
 	if(!gano)gano = terreno->objetivosCumplidos();
@@ -208,6 +208,8 @@ void JuegoPlay::onLoop(){
 		actualizarVictoria();
 		if(contadorGano%2 == 0) this->maq->pushSendMessage(new VictoryMessage());
 	}
+
+	return !continuar;
 }
 
 bool JuegoPlay::onRender(Superficie* sup){

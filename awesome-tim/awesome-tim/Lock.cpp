@@ -2,10 +2,16 @@
 
 Lock::Lock(Mutex & mutex) : _mutex(mutex)
 {
-    _mutex.acquire();
+	try{
+		_mutex.acquire();
+	}catch(...){
+	}
 }
 
 Lock::~Lock(void)
 {
-	_mutex.release();
+	try{
+		_mutex.release();
+	}catch(...){
+	}
 }

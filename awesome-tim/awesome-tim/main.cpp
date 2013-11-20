@@ -180,7 +180,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 	struct timeb tInicial, tFinal;
 
-	while (juego->isRunning()&&!juego->huboFallos()){
+	while (juego->isRunning()/*&&!juego->huboFallos()*/){
 		
 		try{
 		if(tiempo>=1000){
@@ -195,13 +195,11 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
    		ftime(&tInicial);
 
 		bool aux = juego->onEvent();
-		juego->onLoop();
+		if (aux)continue;
+		aux = juego->onLoop();
+		if (aux)continue;
 		juego->onRender();
 		
-		if (aux){
-			continue;
-		}
-
 		ftime(&tFinal);
 		
 		tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
@@ -217,14 +215,15 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 			tiempoExtra=0;
 		}else{
 			int ciclos = 0;
-			while((tiempoExtra<0)&&(juego->isRunning())&&!(juego->huboFallos())){
+			while((tiempoExtra<0)&&(juego->isRunning())/*&&!(juego->huboFallos())*/){
 				ciclos ++;
 				cant++;
 				
 				ftime(&tInicial);
 				bool aux = juego->onEvent();
 				if(aux) break;
-				juego->onLoop();
+				aux = juego->onLoop();
+				if(aux) break;
 				ftime(&tFinal);
 
 				tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);

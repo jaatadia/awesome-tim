@@ -130,7 +130,7 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 	return aux;
 }
 
-void JuegoPlayCliente::onLoop(){
+bool JuegoPlayCliente::onLoop(){
 	bool continuar = true;
 	Message * msg = this->maq->getProcessMessage();
 	while((continuar)&&(msg!=NULL)){
@@ -274,6 +274,8 @@ void JuegoPlayCliente::onLoop(){
 
 	terreno->actualizarModelo(vector);
 	terreno->setCambio(true);
+
+	return !continuar;
 }
 
 bool JuegoPlayCliente::onRender(Superficie* sup){
