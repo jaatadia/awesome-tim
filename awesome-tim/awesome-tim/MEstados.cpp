@@ -4,6 +4,7 @@
 #include "Juego.h"
 #include "JuegoPlay.h"
 #include "Fuente.h"
+#include "SDL_image.h"
 
 MEstados::MEstados(const char *fileIn,const char *fileOut,bool usarVista){
 	
@@ -17,6 +18,7 @@ MEstados::MEstados(const char *fileIn,const char *fileOut,bool usarVista){
 			ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
 			fallar();
 		}
+		IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG);
 		ventana = new Ventana();
 		superficie = new Superficie(ANCHO_PANTALLA,ALTO_PANTALLA);
 		if(superficie->huboFallos()||ventana->huboFallos()){

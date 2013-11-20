@@ -57,13 +57,13 @@ void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int anch
 }
 
 //carga una imagen de direccion cadena
-SDL_Surface* SdlSurfaceManager::cargarImagen(const char *cadena){
+SDL_Surface* SdlSurfaceManager::cargarImagen(std::string cadena){
 	try{
 		if (cadena==NULL)return NULL;
 
 		SDL_Surface* temp = NULL; 
 		SDL_Surface* superficie = NULL; 
-		temp = IMG_Load(cadena);
+		temp = IMG_Load(cadena.c_str());
 		if(temp == NULL){
 			ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
 			fallar();

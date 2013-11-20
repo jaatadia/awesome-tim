@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "Rectangulo.h"
 #include "Constantes.h"
+#include <string>
 
 
 #define SSM_TAG "SdlSurfaceManager"
@@ -21,7 +22,7 @@ private:
 public:
 	static bool huboFallas();//indica si se produjeron fallas al realizar una operacion
 		
-	static SDL_Surface* cargarImagen(const char* cadena);//carga la imagen
+	static SDL_Surface* cargarImagen(std::string cadena);//carga la imagen
 	static SDL_Surface* crearSup (int ancho,int alto);//crea una superficie de las dimensiones pasadas
 	static SDL_Surface* crearSup ();//crea una superficie dedault	
 	static void pintarSup(SDL_Surface* sup, Uint32 color);//pinta la superficie de un color
