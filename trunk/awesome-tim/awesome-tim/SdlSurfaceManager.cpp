@@ -62,10 +62,8 @@ void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int anch
 SDL_Surface* SdlSurfaceManager::cargarImagen(std::string cadena){
 	try{
 
-
 		SDL_Surface* temp = NULL; 
 		SDL_Surface* superficie = NULL;
-		try{
 		temp = IMG_Load(cadena.c_str());
 		if(temp == NULL){
 			ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
@@ -92,7 +90,7 @@ SDL_Surface* SdlSurfaceManager::cargarImagen(std::string cadena){
 
 //crea una sdl surface de anchoxalto
 SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
-	//try{
+	try{
 		if((ancho==0)||(alto==0)){
 			ErrorLogHandler::addError(SSM_TAG,"Se quiere crear una imagen donde ancho o alto es 0");
 			return NULL;
