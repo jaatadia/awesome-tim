@@ -26,19 +26,22 @@ void VistaFigura::dibujarEnPixel(Superficie *canvas){
 }
 
 void VistaFigura::dibujar(Superficie *canvas){
-	if (this==NULL) return;
-	if (canvas==NULL) return;
-	if (this->fig==NULL) return;
 
-	if (this->fig->huboCambios()||(orig==NULL)||(rotada==NULL)){
-		redraw();
-		this->fig->setCambio(false);
+	try{
+		if (this==NULL) return;
+		if (canvas==NULL) return;
+		if (this->fig==NULL) return;
+		if (this->fig->huboCambios()||(orig==NULL)||(rotada==NULL)){
+			redraw();
+			this->fig->setCambio(false);
+		}
+		
+		int calcX = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->getDimension()->getX()) - rotada->getAncho()/2.0);
+		int calcY = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->getDimension()->getY()) - rotada->getAlto()/2.0);
+
+		canvas->dibujarImagen(rotada,NULL,calcX,calcY);
+	}catch(...){
 	}
-	
-	int calcX = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(fig->getDimension()->getX()) - rotada->getAncho()/2.0);
-	int calcY = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->getDimension()->getY()) - rotada->getAlto()/2.0);
-
-	canvas->dibujarImagen(rotada,NULL,calcX,calcY);
 }
 
 void VistaFigura::dibujar(Superficie *canvas,int xIni,int yIni){

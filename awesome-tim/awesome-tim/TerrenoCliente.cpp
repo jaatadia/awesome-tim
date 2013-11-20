@@ -47,7 +47,7 @@ TerrenoCliente::TerrenoCliente(int ancho,int alto,MaquinaEstados* maq,int numCli
 }
 
 TerrenoCliente::~TerrenoCliente(void){
-
+	try{
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
@@ -60,6 +60,8 @@ TerrenoCliente::~TerrenoCliente(void){
 	if (fondo) delete fondo;
 
 	delete sup;
+	}catch(...){
+	}
 }
 
 
