@@ -77,7 +77,7 @@ void TerrenoCliente::setMiPorcion(double x1, double y1, double x2, double y2){
 }
 
 void TerrenoCliente::redraw(){
-
+	try{
 	//recorro todas las figuras y las voy dibujando
 
 	if(this->img == NULL)
@@ -87,8 +87,8 @@ void TerrenoCliente::redraw(){
 		sup->dibujarImagen(this->img,NULL,0,0);
 	}
 
-	std::list<Figura*> figurasAux;
-	std::list<Figura*> figurasFinales;
+	std::list<Figura*>* figurasAux = new std::list<Figura*>();
+	std::list<Figura*>* figurasFinales = new std::list<Figura*>();
 	std::list<Figura*>::iterator iteradorLista;
 	
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
@@ -99,18 +99,20 @@ void TerrenoCliente::redraw(){
 			double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 			
 			if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
+				try{	
 					(*iteradorLista)->dibujar(this->sup);	
-			
+				}catch(...){
+				}
 		}else{
 			if (! ( (*iteradorLista)->getTipoFigura()== CANIO||(*iteradorLista)->getTipoFigura()== CODO ) ){
-				figurasAux.push_back((*iteradorLista));
+				figurasAux->push_back((*iteradorLista));
 			} else {
-				figurasFinales.push_back((*iteradorLista));
+				figurasFinales->push_back((*iteradorLista));
 			}
 		}
 	}
 
-	for (iteradorLista = figurasAux.begin() ; iteradorLista != figurasAux.end(); iteradorLista++){
+	for (iteradorLista = figurasAux->begin() ; iteradorLista != figurasAux->end(); iteradorLista++){
 		double x = (*iteradorLista)->getDimension()->getX();
 		double y = (*iteradorLista)->getDimension()->getY();
 		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
@@ -122,21 +124,27 @@ void TerrenoCliente::redraw(){
 	}
 
 	//dibujo los canios y codos
-	for (iteradorLista = figurasFinales.begin() ; iteradorLista != figurasFinales.end(); iteradorLista++){
+	for (iteradorLista = figurasFinales->begin() ; iteradorLista != figurasFinales->end(); iteradorLista++){
 		double x = (*iteradorLista)->getDimension()->getX();
 		double y = (*iteradorLista)->getDimension()->getY();
 		double ancho = (*iteradorLista)->getDimension()->getAncho()/2.0;
 		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 		
 		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
-			(*iteradorLista)->dibujar(this->sup);
+			try{
+				(*iteradorLista)->dibujar(this->sup);
+			}catch(...){
+			}
 		}
 	}
 
 
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
-		figuraActiva->dibujar(this->sup);
+		try{
+			figuraActiva->dibujar(this->sup);
+		}catch(...){
+		}
 
 	if(!fisicaActiva){
 		
@@ -180,7 +188,11 @@ void TerrenoCliente::redraw(){
 	sup->dibujarLinea(ex1,ey2,ex2,ey2,2,30,30,30);	 
 	sup->dibujarLinea(ex2,ey1,ex2,ey2,2,30,30,30);	 
 	
-	
+	delete figurasAux;
+	delete figurasFinales;
+	}catch(...){
+		this->resizear();
+	}
 
 }
 

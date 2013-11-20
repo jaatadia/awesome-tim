@@ -22,9 +22,12 @@ Ventana::Ventana(void)
 //destruye la ventana
 Ventana::~Ventana(void)
 {
-	SDL_DestroyWindow(win);
-	SDL_DestroyRenderer(ren);
-	SDL_FreeSurface(icon);
+	try{
+		SDL_DestroyWindow(win);
+		SDL_DestroyRenderer(ren);
+		SDL_FreeSurface(icon);
+	}catch(...){
+	}
 }
 
 //dibuja en la ventana la superficie pasada
