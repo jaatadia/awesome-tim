@@ -128,28 +128,34 @@ SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
 
 //crea una sdl surface de anchoxalto
 SDL_Surface* SdlSurfaceManager::crearSup(){
-	SDL_Surface* sup = crearSup(100,100);
-	Uint32 rojo = SDL_MapRGBA(sup->format,255,0,0,255);
-	Uint32 blanco = SDL_MapRGBA(sup->format,255,255,255,255);
-	Uint32 negro = SDL_MapRGBA(sup->format,0,0,0,255);
+	try{
+		SDL_Surface* sup = crearSup(100,100);
+		Uint32 rojo = SDL_MapRGBA(sup->format,255,0,0,255);
+		Uint32 blanco = SDL_MapRGBA(sup->format,255,255,255,255);
+		Uint32 negro = SDL_MapRGBA(sup->format,0,0,0,255);
 
-	SDL_LockSurface(sup);
-	double r2 = pow(double(50),2);
-	for(int i=0;i<100;i++){
-		for(int j=0;j<100;j++){
-			if( pow(double(i-50),2)+pow(double(j-50),2) <= r2) putPixel(sup,i,j,blanco);
+		SDL_LockSurface(sup);
+		double r2 = pow(double(50),2);
+		for(int i=0;i<100;i++){
+			for(int j=0;j<100;j++){
+				if( pow(double(i-50),2)+pow(double(j-50),2) <= r2) putPixel(sup,i,j,blanco);
+			}
 		}
+		SDL_UnlockSurface(sup);
+
+		dibujarDiagonales(sup,rojo,negro);
+
+		return sup;
+	}catch(...){
+		return NULL;
 	}
-	SDL_UnlockSurface(sup);
-
-	dibujarDiagonales(sup,rojo,negro);
-
-	return sup;
 }
 
 
 void SdlSurfaceManager::dibujarDiagonales(SDL_Surface* sup,Uint32 colorD,Uint32 colorB){
 	
+	if (sup == NULL) return;
+
 	SDL_LockSurface(sup); 
 	
 	int inicio = sup->w/3;
