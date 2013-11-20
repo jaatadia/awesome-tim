@@ -178,6 +178,7 @@ bool JuegoCliente:: onLoop(){
 					double x1,y1,x2,y2;
 					a_msg->getPuntos(&x1,&y1,&x2,&y2);
 					this->terreno->setMiPorcion(x1,y1,x2,y2);
+					this->terreno->setCambio(true);
 				}
 				break;
 			case MSG_TYPE_UNION1:
