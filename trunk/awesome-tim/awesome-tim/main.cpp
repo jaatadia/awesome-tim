@@ -195,11 +195,11 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
    		ftime(&tInicial);
 
 		bool aux = juego->onEvent();
-		if (aux)continue;
-		aux = juego->onLoop();
-		if (aux)continue;
-		juego->onRender();
+		aux |= juego->onLoop();
 		
+		juego->onRender();
+		if (aux)continue;
+
 		ftime(&tFinal);
 		
 		tiempoTardado = (1000.0 *tFinal.time + tFinal.millitm) - (1000.0 *tInicial.time + tInicial.millitm);
@@ -221,8 +221,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 				
 				ftime(&tInicial);
 				bool aux = juego->onEvent();
-				if(aux) break;
-				aux = juego->onLoop();
+				aux |= juego->onLoop();
 				if(aux) break;
 				ftime(&tFinal);
 
@@ -230,7 +229,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 				tiempo += tiempoTardado;
 				tiempoExtra += (FRAME_FRECUENCY /*-tiempoTardado*/);
 
-				if (ciclos>5) break;
+				if (ciclos>2) break;
 			}
 
 		}

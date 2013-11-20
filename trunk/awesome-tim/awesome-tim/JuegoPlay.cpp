@@ -69,9 +69,11 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq,bool usar
 JuegoPlay::~JuegoPlay(void)
 {
 	delete terreno;
-	delete comandos;
-	delete fondo;
-	delete imgGano;
+	if(!usarVista){
+		delete comandos;
+		delete fondo;
+		delete imgGano;
+	}
 }
 
 bool JuegoPlay::onEvent(Ventana* ventana,Superficie **sup){
@@ -172,9 +174,9 @@ bool JuegoPlay::onLoop(){
 
 	if(!continuar) return true;
 
-	if(contador<FPS){
+	if(contador<WAIT_TIME){
 		contador++;
-		this->maq->pushSendMessage(new ActualizeCounterMessage());
+		if(contador==WAIT_TIME) this->maq->pushSendMessage(new ActualizeCounterMessage());
 		return true;
 	}
 

@@ -94,7 +94,7 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 					comandos->click(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_COMANDOS_LOGICO), EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_COMANDOS_LOGICO), this);
 				}
 
-				if((!gano)&&(contador>=FPS)){
+				if((!gano)&&(contador>=WAIT_TIME)){
 					terreno->interactuar(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
 				}
 				break;
@@ -110,7 +110,7 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 			case SDL_KEYDOWN:
 			{
 				if (evento.key.keysym.sym == SDLK_SPACE){
-					if((!gano)&&(contador>=FPS)){
+					if((!gano)&&(contador>=WAIT_TIME)){
 						terreno->interactuar(PRESS_SPACE);
 					}
 				}
@@ -119,7 +119,7 @@ bool JuegoPlayCliente::onEvent(Ventana* ventana,Superficie **sup){
 			case SDL_KEYUP:
 			{
 				if (evento.key.keysym.sym == SDLK_SPACE){
-					if((!gano)&&(contador>=FPS)){
+					if((!gano)&&(contador>=WAIT_TIME)){
 						terreno->interactuar(RELEASE_SPACE);
 					}
 				}
@@ -179,7 +179,7 @@ bool JuegoPlayCliente::onLoop(){
 				break;
 			case MSG_TYPE_COUNTER:
 				{
-					contador++;
+					contador+= (WAIT_TIME+5);
 					delete msg;
 				}
 				break;

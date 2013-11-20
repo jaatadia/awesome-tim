@@ -11,6 +11,8 @@
 #define FPS 30
 #define FRAME_FRECUENCY 1000.0/FPS
 
+#define WAIT_TIME 5*FPS
+
 #define ITER_CHOQUE 4 //cantidad de movimientos a realizar entre verificaciones de choques
 #define ANCHO_PANTALLA 600 //ancho de la superficie
 #define ANCHO_PANTALLA_LOGICO 120
