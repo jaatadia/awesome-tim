@@ -1075,10 +1075,12 @@ Figura* CargadorYaml::crearFigura(const YAML::Node& nodoFigura, const char* tipo
 	}
 
 	if (strcmp(tipo_figura,"CARRITO") == 0){
-		Figura* figura = crearCarrito(nodoFigura);
+/*		Figura* figura = crearCarrito(nodoFigura);
 		if(!figura)
 			ErrorLogHandler::addError("CargadorYaml","Error al crear figura Carrito."); 	
-		return figura;
+		return figura;*/
+		imprimir_error_sin_linea("Lo sentimos. Carrito no ha sido Implementado aun");
+		return NULL;
 	}
 
 	if (strcmp(tipo_figura,"QUESO") == 0){
