@@ -112,7 +112,11 @@ void BotoneraControllerCliente::resizear(){
 		this->scrollStep = botonera->getAltoBoton() / this->FACTOR_SCROLL;
 
 		Superficie* layerPrincipalTemp = layerPrincipal->scaleSurface(anchoTemp, altoTemp);
-		Superficie* layerFigurasTemp = layerFigurasOrig->scaleSurface(anchoTemp, botonera->getAlturaMax() );
+		int alt = botonera->getAlturaMax();
+		if (botonera->getAlturaMax() == 0){
+			alt = 100;
+		}
+		Superficie* layerFigurasTemp = layerFigurasOrig->scaleSurface(anchoTemp, alt );
 
 		delete layerPrincipal;
 		delete layerFiguras;
