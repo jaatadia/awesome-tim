@@ -4,7 +4,7 @@
 #include "JuegoPlayCliente.h"
 #include "JuegoCliente.h"
 #include "Sonidos.h"
-
+#include "SDL_image.h"
 
 MEstadosCliente::MEstadosCliente(){
 	
@@ -12,6 +12,7 @@ MEstadosCliente::MEstadosCliente(){
 		ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
 		fallar();
 	}
+	IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG);
 	Sonidos::initialize();
 	
 	Eactivo = NULL;
