@@ -75,10 +75,10 @@ bool MEstadosCliente::onLoop(){
 }
 
 void MEstadosCliente::onRender(){
-	if(getEstadoActivo()!=NULL){
-		bool dibujar = getEstadoActivo()->onRender(superficie);
-		if (dibujar) ventana->dibujar(superficie);
-	}
+		if(getEstadoActivo()!=NULL){
+			bool dibujar = getEstadoActivo()->onRender(superficie);
+			if (dibujar) ventana->dibujar(superficie);
+		}
 }
 
 void MEstadosCliente::salir(){

@@ -39,7 +39,7 @@
 			<DebugSettings
 				Command="$(TargetPath)"
 				WorkingDirectory=""
-				CommandArguments="-l ../yaml/NivelesGanados/PelotitaEnCuadro.yml"
+				CommandArguments="--IP 25.169.117.108"
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
