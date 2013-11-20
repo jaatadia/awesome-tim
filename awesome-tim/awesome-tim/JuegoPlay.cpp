@@ -69,7 +69,7 @@ JuegoPlay::JuegoPlay(Superficie* fondo, void* tere,MaquinaEstados* maq,bool usar
 JuegoPlay::~JuegoPlay(void)
 {
 	delete terreno;
-	if(!usarVista){
+	if(usarVista){
 		delete comandos;
 		delete fondo;
 		delete imgGano;

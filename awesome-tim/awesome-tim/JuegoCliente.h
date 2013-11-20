@@ -24,6 +24,8 @@ class ComandosCliente;
 
 class JuegoCliente: public Estado, Cambiable
 {
+public:
+	static bool initialized;
 private:
 	
 	MaquinaEstados* maq;

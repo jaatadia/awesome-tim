@@ -230,7 +230,16 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 			this->mundo->CreateJoint(&rJD);
 			break;
 		}
-
+		case FIG_SENSOR:{
+			cuerpo->SetType(b2_staticBody);
+			b2PolygonShape myShape;
+			myShape.SetAsBox(dim->getAncho()/2,dim->getAlto()/2);
+			b2FixtureDef myFix;
+			myFix.isSensor = true;
+			myFix.shape = &myShape;
+			cuerpo->CreateFixture(&myFix);
+			break;
+		}
 		case BALANCIN:{
 				
 				cuerpo->SetTransform(cuerpo->GetPosition(),0); 

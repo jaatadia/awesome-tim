@@ -8,7 +8,7 @@
 
 MEstadosCliente::MEstadosCliente(){
 	
-	if(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS)!=0){
+	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
 		ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
 		fallar();
 	}
@@ -39,14 +39,14 @@ MEstadosCliente::~MEstadosCliente(void){
 	delete ventana;
 	delete superficie;
 	
-	try{
-		//if(Eanterior!=NULL)delete Eanterior;
-		if(Eeditor!=NULL)delete Eeditor;
-		if(Eplay!=NULL)delete Eplay;
-	}catch(...){
-	}
+	//try{
+	//	if(Eanterior!=NULL)delete Eanterior;
+	//	if(Eeditor!=NULL)delete Eeditor;
+	//	if(Eplay!=NULL)delete Eplay;
+	//}catch(...){
+	//}
 	
-	SDL_Quit();
+	//SDL_Quit();
 	ErrorLogHandler::closeLog();
 }
 
@@ -104,6 +104,7 @@ void MEstadosCliente::play(void* ter){
 void MEstadosCliente::init(int id)
 {
 	running = true;
-	Eactivo = Eeditor = new JuegoCliente(id,this);
+	Eeditor = new JuegoCliente(id,this);
+	Eactivo = Eeditor;
 	Eanterior = Eplay = NULL;
 }
