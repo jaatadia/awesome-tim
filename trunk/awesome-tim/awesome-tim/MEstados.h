@@ -34,7 +34,7 @@ public:
 
 	bool isRunning();
 	bool onEvent();
-	void onLoop();
+	bool onLoop();
 	void onRender();
 
 	virtual void salir();

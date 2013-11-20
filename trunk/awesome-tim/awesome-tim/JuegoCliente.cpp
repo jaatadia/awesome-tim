@@ -37,7 +37,8 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	this->fileOut = fileOut;
 
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,false);
-	botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+	botonera = NULL;
+	//botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new ComandosCliente(ANCHO_COMANDOS,ALTO_COMANDOS,"");
 
 	for (int i = 0;i<=MAX_CLIENTES;i++){
@@ -72,7 +73,7 @@ bool JuegoCliente::guardar(){
 JuegoCliente::~JuegoCliente(){
 
 	delete terreno;
-	delete botonera;
+	if (botonera!= NULL)delete botonera;
 	delete comandos;
 	//if(EscalasDeEjes::getInstance()!=NULL)delete EscalasDeEjes::getInstance();
 	//Contenedor::deleteContenedor();
@@ -92,6 +93,7 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 	confirmarPosicionFiguraEnAire();
 	
 	if(this->huboCambios()){
+		//superficie->restoreGris();
 		superficie->restore();
 		setCambio(false);
 		dibujar = true;
@@ -102,12 +104,13 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 		superficie->dibujarSupreficie(terreno->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_TERRENO_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_TERRENO_LOGICO));
 		dibujar = true;
 	}
-
-	if(botonera->huboCambios()){
-		superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
-		dibujar = true;
+	if (botonera!= NULL){
+		if(botonera->huboCambios()){
+			superficie->dibujarSupreficie(botonera->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_BOTONERA_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_BOTONERA_LOGICO));
+			dibujar = true;
+		}
 	}
-	
+
 	if(comandos->huboCambios()){
 		superficie->dibujarSupreficie(comandos->getImpresion(),NULL,EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(X_COMANDOS_LOGICO),EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(Y_COMANDOS_LOGICO));
 		dibujar = true;
@@ -123,7 +126,7 @@ bool JuegoCliente:: onRender(Superficie* superficie){
 	return dibujar;
 }
 	
-void JuegoCliente:: onLoop(){
+bool JuegoCliente:: onLoop(){
 	bool continuar = true;
 	Message * msg = this->maq->getProcessMessage();
 	while((continuar)&&(msg!=NULL)){
@@ -164,8 +167,8 @@ void JuegoCliente:: onLoop(){
 				{
 					Figura* fig = FactoryFiguras::create((CreateFigureMessage*)msg);
 					if(fig!=NULL){
-						this->botonera->agregarBoton(fig,((CreateFigureMessage*)msg)->getData2());
-						this->botonera->resizear();
+						if (botonera!= NULL)this->botonera->agregarBoton(fig,((CreateFigureMessage*)msg)->getData2());
+						if (botonera!= NULL)this->botonera->resizear();
 					}
 				}
 				break;
@@ -265,7 +268,7 @@ void JuegoCliente:: onLoop(){
 					DeleteFigureMessage* d_msg = (DeleteFigureMessage*) msg;
 					int figID = d_msg->getFigureID();
 					std::list<int> tipoFig = this->terreno->borrarFigura(0,0,vector,vector[figID]);
-					botonera->restaurarInstancias(tipoFig);
+					if (botonera!= NULL)botonera->restaurarInstancias(tipoFig);
 				}
 				break;
 		}
@@ -277,6 +280,7 @@ void JuegoCliente:: onLoop(){
 	}
 
 	terreno->actualizarModelo(vector);
+	return !continuar;
 }
 
 //manejo de eventos
@@ -447,7 +451,7 @@ while(SDL_PollEvent(&evento)){
 					if ((evento.button.state == SDL_BUTTON_LMASK) && (shiftPressed)){
 						//al borrar algo restauro su contador de instancias
 						std::list<int> tipoFig = terreno->borrarFigura(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO,vector);
-						botonera->restaurarInstancias(tipoFig);
+						if (botonera!= NULL)botonera->restaurarInstancias(tipoFig);
 					}
 					else
 						terreno->buscarActiva(posClickX - X_TERRENO_LOGICO,posClickY - Y_TERRENO_LOGICO);
@@ -455,11 +459,11 @@ while(SDL_PollEvent(&evento)){
 
 				if (posEnBotonera(posClickX,posClickY)){
 					//es de la botonera
-					botonera->handleEventBotonera(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
+					if (botonera!= NULL)botonera->handleEventBotonera(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasX(posClickX - X_BOTONERA_LOGICO),  EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(posClickY - Y_BOTONERA_LOGICO),  evento.button.type);
 				}
 
 				//puede que me haya devuelto la figura en aire
-				figurasEnAire[this->numCliente] = botonera->obtenerFiguraActual();
+				if (botonera!= NULL)figurasEnAire[this->numCliente] = botonera->obtenerFiguraActual();
 				if (figurasEnAire[this->numCliente]){
 					estaActiva = true;
 					//innecesario pero por si acaso
@@ -509,7 +513,7 @@ while(SDL_PollEvent(&evento)){
 			terreno->soltarFigura();
 
 			//Es siempre para la botonera, hasta que no se deja de clickear sigue scrolleando
-			botonera->handleEventBotonera(posClickX - X_BOTONERA_LOGICO,  posClickY - Y_BOTONERA_LOGICO,  evento.button.type);
+			if (botonera!= NULL)botonera->handleEventBotonera(posClickX - X_BOTONERA_LOGICO,  posClickY - Y_BOTONERA_LOGICO,  evento.button.type);
 
 			if (figurasEnAire[this->numCliente]){
 				//o es de figura viva
@@ -546,7 +550,7 @@ while(SDL_PollEvent(&evento)){
 						}
 					}else terreno->agrandarFigura();
 				}else{
-					this->botonera->ScrollUp();
+					if (botonera!= NULL)this->botonera->ScrollUp();
 				}
 			}else if (evento.wheel.y < 0){
 				if(clickPressed){
@@ -568,7 +572,7 @@ while(SDL_PollEvent(&evento)){
 						}
 					}else terreno->achicarFigura();
 				}else{
-					this->botonera->ScrollDown();
+					if (botonera!= NULL)this->botonera->ScrollDown();
 				}
 			}
 			break;
@@ -690,9 +694,9 @@ void JuegoCliente::resizear(){
 	terreno->cambioVistaFiguras();
 	terreno->resizear();
 
-	botonera->resizear();
+	if (botonera!= NULL)botonera->resizear();
 	//necesario moverla para que se ajuste la vista...
-	botonera->ScrollDown();
+	if (botonera!= NULL)botonera->ScrollDown();
 
 	comandos->resizear();
 }
@@ -742,11 +746,11 @@ void JuegoCliente::confirmarPosicionFiguraEnAire(){
 	if (figEnEspacioIntermedio()){
 		setCambio(true);
 		terreno->setCambio(true);
-		botonera->setCambio(true);
+		if (botonera!= NULL)botonera->setCambio(true);
 		comandos->setCambio(true);
 	}else{
 		if (figEnBotonera())
-			botonera->setCambio(true);
+			if (botonera!= NULL)botonera->setCambio(true);
 		if (figEnTerreno())
 			terreno->setCambio(true);
 		if (figEnComandos())
@@ -843,7 +847,7 @@ void JuegoCliente::soltarFiguraEnAire(){
 		figurasEnAire[this->numCliente] = NULL;
 	}else{
 
-		botonera->restaurarInstanciaActual();
+		if (botonera!= NULL)botonera->restaurarInstanciaActual();
 		vector[figurasEnAire[this->numCliente]->numero] = NULL;
 
 		TransformFigureMessage* t_msg = new TransformFigureMessage();
@@ -885,7 +889,7 @@ void JuegoCliente::set2Click(){
 			this->maq->pushSendMessage(t_msg,this->numCliente);
 			
 			
-			botonera->restaurarInstanciaActual();
+			if (botonera!= NULL)botonera->restaurarInstanciaActual();
 
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
 
@@ -893,7 +897,7 @@ void JuegoCliente::set2Click(){
 			figurasEnAire[this->numCliente] = NULL;
 			this->setCambio(true);
 			terreno->setCambio(true);
-			botonera->setCambio(true);
+			if (botonera!= NULL)botonera->setCambio(true);
 			comandos->setCambio(true);
 		}else{
 			result->posAtableCorrea(&x,&y);
@@ -910,7 +914,7 @@ void JuegoCliente::set2Click(){
 
 			}else{
 				if(linea->getFigura1() == result){
-					botonera->restaurarInstanciaActual();
+					if (botonera!= NULL)botonera->restaurarInstanciaActual();
 
 					vector[figurasEnAire[this->numCliente]->numero] = NULL;
 
@@ -927,7 +931,7 @@ void JuegoCliente::set2Click(){
 					figurasEnAire[this->numCliente] = NULL;
 					this->setCambio(true);
 					terreno->setCambio(true);
-					botonera->setCambio(true);
+					if (botonera!= NULL)botonera->setCambio(true);
 					comandos->setCambio(true);
 				}else{
 					linea->setFigura2(result);
@@ -968,7 +972,7 @@ void JuegoCliente::set2Click(){
 		Figura* result = terreno->getFiguraAtableSoga(x,y,true);
 		
 		if(result==NULL){
-			botonera->restaurarInstanciaActual();
+			if (botonera!= NULL)botonera->restaurarInstanciaActual();
 
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
 
@@ -986,7 +990,7 @@ void JuegoCliente::set2Click(){
 			this->setCambio(true);
 			terreno->setCambio(true);
 			comandos->setCambio(true);
-			botonera->setCambio(true);
+			if (botonera!= NULL)botonera->setCambio(true);
 		}else{
 			int res = result->esAtableSoga(x,y);
 			if(!linea->primerPuntoPuesto()){
@@ -1004,7 +1008,7 @@ void JuegoCliente::set2Click(){
 
 			}else{
 				if (result == linea->getFigura1()){
-					botonera->restaurarInstanciaActual();			
+					if (botonera!= NULL)botonera->restaurarInstanciaActual();			
 					
 					vector[figurasEnAire[this->numCliente]->numero] = NULL;
 			
@@ -1023,7 +1027,7 @@ void JuegoCliente::set2Click(){
 					this->setCambio(true);
 					terreno->setCambio(true);
 					comandos->setCambio(true);
-					botonera->setCambio(true);
+					if (botonera!= NULL)botonera->setCambio(true);
 				}else{
 					linea->setFigura2(result);
 
@@ -1062,7 +1066,7 @@ void JuegoCliente::set2Click(){
 			t_msg->setFigureID(figurasEnAire[this->numCliente]->numero);
 			this->maq->pushSendMessage(t_msg,this->numCliente);
 
-			botonera->restaurarInstanciaActual();
+			if (botonera!= NULL)botonera->restaurarInstanciaActual();
 			vector[figurasEnAire[this->numCliente]->numero] = NULL;
 	}
 }

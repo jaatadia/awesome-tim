@@ -38,7 +38,7 @@ public:
 
 	virtual bool isRunning()=0;
 	virtual bool onEvent()=0;
-	virtual void onLoop()=0;
+	virtual bool onLoop()=0;
 	virtual void onRender()=0;
 	virtual void esperar(double tiempo);
 

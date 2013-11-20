@@ -27,10 +27,13 @@ Message * MaquinaEstados::getSendMessage(int id)
 	try{
 		Lock lock(this->_mutex);
 		Message * msg = NULL;
-		if(!this->aEnviar[id].empty())
+		if(this->aEnviar[id].size()!=0)
 		{
-			msg = (Message *) this->aEnviar[id].front();
+			msg = this->aEnviar[id].front();
 			this->aEnviar[id].pop_front();
+			if(msg->getType()<0){
+				return NULL;
+			}
 		}
 		return msg;
 	}catch(...){
@@ -50,7 +53,7 @@ Message * MaquinaEstados::getProcessMessage()
 	Message * msg = NULL;
 	if(!this->aProcesar.empty())
 	{
-		msg = (Message *) this->aProcesar.front();
+		msg = this->aProcesar.front();
 		this->aProcesar.pop_front();
 	}
 	return msg;

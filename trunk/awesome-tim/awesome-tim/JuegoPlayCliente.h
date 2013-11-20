@@ -36,7 +36,7 @@ public:
 	~JuegoPlayCliente(void);
 
 	virtual bool onEvent(Ventana* ventana,Superficie** sup);
-	virtual void onLoop();
+	virtual bool onLoop();
 	virtual bool onRender(Superficie* sup);
 	
 	void quit();

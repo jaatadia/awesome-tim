@@ -72,7 +72,7 @@ void Sonidos::playSound(const char *file,int cant){
 		if(!initialized) initialize();
 		if((*mapaS).count(file)<=0) return;
 		if((*mapaS)[file]!=NULL){
-			Mix_PlayChannel(-1,(*mapaS)[file],cant);
+			Mix_PlayChannel(-1,(*mapaS)[file],0);
 		}
 	}catch(...){
 	}

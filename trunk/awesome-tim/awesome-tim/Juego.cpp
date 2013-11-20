@@ -86,8 +86,10 @@ std::string Juego::cargar(){
 		vector[posVector] = (*iter);
 	}
 
-	for (std::list<struct boton>::iterator iter = botoneras[0]->begin(); iter != botoneras[0]->end();iter++){
-		botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
+	if(usarVista){
+		for (std::list<struct boton>::iterator iter = botoneras[0]->begin(); iter != botoneras[0]->end();iter++){
+			botonera->agregarBoton((*iter).figura,(*iter).cantInstancias);
+		}
 	}
 
 	if(usarVista){
@@ -175,7 +177,7 @@ bool Juego:: onRender(Superficie* superficie){
 	return dibujar;
 }
 	
-void Juego:: onLoop(){
+bool Juego:: onLoop(){
 	
 	//std::cout<<"Clientes Conectados: ";
 	//for(std::list<int>::iterator iter = myClients.begin();iter != myClients.end();iter++){
@@ -540,6 +542,7 @@ void Juego:: onLoop(){
 	}
 
 	terreno->actualizarModelo(vector);
+	return !continuar;
 }
 
 //manejo de eventos
@@ -904,21 +907,21 @@ bool Juego::posEnComandos(double posX,double posY){
 }
 
 void Juego::confirmarPosicionFiguraEnAire(){
-
-	if (figEnEspacioIntermedio()){
-		setCambio(true);
-		terreno->setCambio(true);
-		botonera->setCambio(true);
-		comandos->setCambio(true);
-	}else{
-		if (figEnBotonera())
-			botonera->setCambio(true);
-		if (figEnTerreno())
+	if(usarVista){
+		if (figEnEspacioIntermedio()){
+			setCambio(true);
 			terreno->setCambio(true);
-		if (figEnComandos())
+			botonera->setCambio(true);
 			comandos->setCambio(true);
+		}else{
+			if (figEnBotonera())
+				botonera->setCambio(true);
+			if (figEnTerreno())
+				terreno->setCambio(true);
+			if (figEnComandos())
+				comandos->setCambio(true);
+		}
 	}
-
 }
 
 bool Juego::figEnEspacioIntermedio(){
@@ -992,6 +995,7 @@ bool Juego::figEnComandos(){
 
 void Juego::soltarFiguraEnAire(){
 
+	if(!usarVista) return;
 	confirmarPosicionFiguraEnAire();
 
 	if (terreno->adentroZonaTerreno(figuraEnAire[0]->getDimension()->getX()-X_TERRENO_LOGICO,figuraEnAire[0]->getDimension()->getY()-Y_TERRENO_LOGICO) && !figuraEnAire[0]->superpuesta){
@@ -1010,7 +1014,7 @@ void Juego::soltarFiguraEnAire(){
 
 
 void Juego::set2Click(){
-	
+	if(!usarVista) return;
 	if(figuraEnAire[0]->getTipoFigura()==LINEA){
 		
 		Linea* linea = ((Linea*)figuraEnAire[0]);

@@ -8,7 +8,7 @@
 
 MEstadosCliente::MEstadosCliente(){
 	
-	if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
+	if(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS)!=0){
 		ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
 		fallar();
 	}
@@ -39,7 +39,7 @@ MEstadosCliente::~MEstadosCliente(void){
 	delete superficie;
 	
 	try{
-		if(Eanterior!=NULL)delete Eanterior;
+		//if(Eanterior!=NULL)delete Eanterior;
 		if(Eeditor!=NULL)delete Eeditor;
 		if(Eplay!=NULL)delete Eplay;
 	}catch(...){
@@ -61,13 +61,15 @@ bool MEstadosCliente::onEvent(){
 	}
 }
 
-void MEstadosCliente::onLoop(){
+bool MEstadosCliente::onLoop(){
 	if(Eanterior){
 		delete Eanterior;
 		Eanterior = NULL;
 	}
 	if(getEstadoActivo()!=NULL){
-		getEstadoActivo()->onLoop();
+		return getEstadoActivo()->onLoop();
+	}else{
+		return false;
 	}
 }
 

@@ -61,7 +61,7 @@ public:
 	void actuarVentana(Ventana* ventana,Superficie** sup,Uint32 IDventana,SDL_WindowEvent evento);
 
 	bool onEvent(Ventana* ventana,Superficie** sup);//maneja los eventos
-	void onLoop();//actualiza el modelo
+	bool onLoop();//actualiza el modelo
 	bool onRender(Superficie* superficie);//dibuja en la ventana
 
 	void setFondo(const char* dir);

@@ -13,7 +13,7 @@ MEstados::MEstados(const char *fileIn,const char *fileOut,bool usarVista){
 	superficie = NULL;
 		
 	if(usarVista){
-		if(SDL_Init(SDL_INIT_EVERYTHING)!=0){
+		if(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO |SDL_INIT_EVENTS)!=0){
 			ErrorLogHandler::addError(M_ESTADOS,SDL_GetError());
 			fallar();
 		}
@@ -27,6 +27,7 @@ MEstados::MEstados(const char *fileIn,const char *fileOut,bool usarVista){
 			fallar();
 		}
 	}else{
+		SDL_Init(SDL_INIT_VIDEO);
 		Sonidos::noSound();
 		Contenedor::noLoad();
 	}
@@ -70,12 +71,12 @@ bool MEstados::onEvent(){
 	return false;
 }
 
-void MEstados::onLoop(){
+bool MEstados::onLoop(){
 	if(Eanterior){
 		delete Eanterior;
 		Eanterior = NULL;
 	}
-	getEstadoActivo()->onLoop();
+	return getEstadoActivo()->onLoop();
 }
 
 void MEstados::onRender(){

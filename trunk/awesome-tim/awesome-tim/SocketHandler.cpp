@@ -179,18 +179,23 @@ void SocketHandler::run()
 				}
 			case WRITE_MODE:
 				//Message * msg = this->getOutputMessage();
-				Message * msg = this->maq->getSendMessage(this->id);
+				Message * msg = NULL;
+				msg = this->maq->getSendMessage(this->id);
 				while(msg!=NULL){
 					try
 					{
+						if(this->finalizando) return;
 						this->_socket->write(msg->serialize());
 					} catch (SocketException &sE)
 					{
-						//cout << sE.what() << endl;
 						this->kill();
+						msg = NULL;
 						break;
 					}
-					//msg = this->getOutputMessage();
+					catch(...){
+						std::cout<<"\a";
+					}
+					//delete msg;
 					msg = this->maq->getSendMessage(this->id);
 				}
 				this->_thread.sleep(100);
