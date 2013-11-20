@@ -37,8 +37,8 @@ JuegoCliente::JuegoCliente(int numCliente,MaquinaEstados* maq){
 	this->fileOut = fileOut;
 
 	terreno = new TerrenoCliente(ANCHO_TERRENO,ALTO_TERRENO,maq,numCliente,false);
-	botonera = NULL;
-	//botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
+	//botonera = NULL;
+	botonera = new BotoneraControllerCliente(ANCHO_BOTONERA,ALTO_BOTONERA, 4);
 	comandos = new ComandosCliente(ANCHO_COMANDOS,ALTO_COMANDOS,"");
 
 	for (int i = 0;i<=MAX_CLIENTES;i++){
