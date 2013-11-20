@@ -119,6 +119,7 @@ void imprimir_ayuda(){
 	fprintf(stdout,"-v	--version	    Imprime en pantalla la version del juego. \n");
 	fprintf(stdout,"-l	--load          Especifica la ruta para cargar un juego desde un archivo. \n");
 	fprintf(stdout,"-s	--save	        Especifica la ruta para guardar el juego. Por default es la misma que la de carga. \n");
+	fprintf(stdout,"--IP numeroIP       Para jugar como cliente. Debe haber un servidor activo. \n");
 }
 
 //Imprime ayuda avanzada
@@ -156,7 +157,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 #ifdef SERVER_MODE
 	if (IP==NULL){
-		juego = new MEstados(rutaIn,rutaOut,false);
+		juego = new MEstados(rutaIn,rutaOut,false); //Flag para que se vea o no se vea la pantalla del server
 		std::cout << "Initializing game in: SERVER MODE" << std::endl;
 		Server * server = new Server(juego);
 		imprimir = false;
@@ -260,12 +261,9 @@ int main (int argc, char** argv){
 		return 1;
 	}
 
-	char* ruta = "../yaml/ReventarGlobosRojos.yml";
-			
 	switch (opcion){
 		case OPC_JUEGO:
-			jugar( rutaIn, rutaOut,IP);
-			//jugar(ruta , ruta,IP);
+			jugar(rutaIn , rutaOut,IP);
 			break;
 		case OPC_IMPRIMIR_AYUDA:
 			imprimir_ayuda();
