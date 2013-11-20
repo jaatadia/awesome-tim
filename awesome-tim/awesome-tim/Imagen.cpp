@@ -62,7 +62,7 @@ Imagen::Imagen(const char* file)
 //crea una imagen a partir del texto pasado
 Imagen::Imagen(const char* texto,int alto,int r,int g,int b){
 	
-	//try{
+	try{
 		TTF_Font* font = Fuente::openFont("../images/font.ttf", alto);
 		if(font ==NULL){
 			ErrorLogHandler::addError(IMAGEN_TAG,TTF_GetError());
@@ -81,7 +81,7 @@ Imagen::Imagen(const char* texto,int alto,int r,int g,int b){
 //destructor que libera la memoria de la superfice
 Imagen::~Imagen(void)
 {
-	//try{
+	try{
 		if(superficie!=NULL){
 			if(superficie->map!=NULL){
 				try{
@@ -135,7 +135,7 @@ void Imagen::setTransparency(Uint8 alpha){
 
 //devuelve una copia rotada de la imagen
 Imagen* Imagen::rotarImagen(double ang){
-	//try{
+	try{
 		if((this==NULL)||(superficie==NULL)) return NULL;
 		Imagen* img = new Imagen(false);
 		img->superficie = SdlSurfaceManager::rotar(superficie,ang);
