@@ -27,7 +27,7 @@ void VistaFigura::dibujarEnPixel(Superficie *canvas){
 
 void VistaFigura::dibujar(Superficie *canvas){
 
-	try{
+	//try{
 		if (this==NULL) return;
 		if (canvas==NULL) return;
 		if (this->fig==NULL) return;
@@ -40,8 +40,8 @@ void VistaFigura::dibujar(Superficie *canvas){
 		int calcY = int(EscalasDeEjes::getInstance()->getCantidadUnidadesFisicasY(fig->getDimension()->getY()) - rotada->getAlto()/2.0);
 
 		canvas->dibujarImagen(rotada,NULL,calcX,calcY);
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 }
 
 void VistaFigura::dibujar(Superficie *canvas,int xIni,int yIni){

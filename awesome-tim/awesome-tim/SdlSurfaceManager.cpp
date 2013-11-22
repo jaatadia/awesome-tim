@@ -60,7 +60,7 @@ void SdlSurfaceManager::dibujarCuadrado(SDL_Surface* sup, int x, int y, int anch
 
 //carga una imagen de direccion cadena
 SDL_Surface* SdlSurfaceManager::cargarImagen(std::string cadena){
-	try{
+	//try{
 
 		SDL_Surface* temp = NULL; 
 		SDL_Surface* superficie = NULL;
@@ -69,12 +69,12 @@ SDL_Surface* SdlSurfaceManager::cargarImagen(std::string cadena){
 			ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
 			fallar();
 		}else{
-			try{
+			//try{
 				superficie = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_RGBA8888,0);
-			}catch(...){
-				std::cout<<"couldnt convert format\n";
-				return temp;
-			}
+			//}catch(...){
+			//	std::cout<<"couldnt convert format\n";
+			//	return temp;
+			//}
 			if(superficie == NULL){
 				ErrorLogHandler::addError(SSM_TAG,SDL_GetError());
 				fallar();
@@ -82,15 +82,15 @@ SDL_Surface* SdlSurfaceManager::cargarImagen(std::string cadena){
 			SDL_FreeSurface(temp);
 		}
 		return superficie;
-	}catch(...){
-		return NULL;
-	}
+	//}catch(...){
+	//	return NULL;
+	//}
 }
 
 
 //crea una sdl surface de anchoxalto
 SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
-	try{
+	//try{
 		if((ancho==0)||(alto==0)){
 			ErrorLogHandler::addError(SSM_TAG,"Se quiere crear una imagen donde ancho o alto es 0");
 			return NULL;
@@ -121,14 +121,14 @@ SDL_Surface* SdlSurfaceManager::crearSup(int ancho,int alto){
 			}
 		}
 		return sur;
-	}catch(...){
-		return NULL;
-	}
+	//}catch(...){
+	//	return NULL;
+	//}
 }
 
 //crea una sdl surface de anchoxalto
 SDL_Surface* SdlSurfaceManager::crearSup(){
-	try{
+	//try{
 		SDL_Surface* sup = crearSup(100,100);
 		Uint32 rojo = SDL_MapRGBA(sup->format,255,0,0,255);
 		Uint32 blanco = SDL_MapRGBA(sup->format,255,255,255,255);
@@ -146,9 +146,9 @@ SDL_Surface* SdlSurfaceManager::crearSup(){
 		dibujarDiagonales(sup,rojo,negro);
 
 		return sup;
-	}catch(...){
-		return NULL;
-	}
+	//}catch(...){
+	//	return NULL;
+	//}
 }
 
 
@@ -257,7 +257,7 @@ SDL_Surface* SdlSurfaceManager::rotarLock(SDL_Surface* sur,double angulo){
 
 //imprime en la las coordenadas x/yDestino de la superficie destino el rectoOrigen de la superficieOrigen
 void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDestino,Rectangulo* rectOrigen,int xDestino,int yDestino){
-	try{
+	//try{
 		if((supOrigen==NULL)||(supDestino==NULL))return;
 		SDL_Rect* rO;
 		SDL_Rect rectO,rectD;
@@ -275,9 +275,9 @@ void SdlSurfaceManager::blitSurfaces(SDL_Surface* supOrigen,SDL_Surface* supDest
 			rectD.y = yDestino;
 		if(supDestino==NULL) return;
 		SDL_BlitSurface(supOrigen,rO,supDestino,&rectD);
-	}catch(...){
-		return;
-	}
+	//}catch(...){
+	//	return;
+	//}
 }
 
 //rota la imagen 90 grados
