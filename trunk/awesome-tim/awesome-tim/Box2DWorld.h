@@ -27,7 +27,7 @@ private:
 	b2World * mundo;
 	float tiempoStep;
 	int velIteracion, posIteracion;
-	std::list<char*> sonidos;
+	//std::list<char*> sonidos;
 	bool activo;
 
 public:

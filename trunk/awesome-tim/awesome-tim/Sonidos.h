@@ -5,33 +5,23 @@
 #include "SDL_mixer.h"
 #include "Constantes.h"
 
-#define MUSIC "../music/modoEstatico.wav"
+#define MUSIC "../music/modoEstatico.ogg"
 #define VICTORY_MUS "../music/victory.ogg"
 
 //MUSICA
-#define MOTOR_MUSIC "../music/motor.wav"
-#define VELA_MUSIC "../music/vela.wav"
-#define GLOBO_MUSIC ""
-#define CINTA_TRANSP_MUSIC ""
-#define ENGRANAJE_MUSIC ""
+#define MOTOR_MUSIC "../music/motor.ogg"
+#define VELA_MUSIC "../music/vela.ogg"
+
 
 //SONIDOS
-#define POP_BALLOON "../music/pop.wav"
-#define SHOT_ARROW "..music/flecha.wav"
-#define FIRE_GUN "../music/disparoEscopeta.wav"
-#define FLIPPER_UP "../music/flipperup.wav"
-#define FLIPPER_DOWN "../music/flipperdown.wav"
-#define HUEVO_SOUND "../music/Huevo_rompiendose.wav"
-#define CARRITO_MUSIC "../music/carrito.wav"
-#define MOTOR_RATON_MUSIC "../music/raton.wav"
-#define CANIO_SOUND ""
-#define CODO_SOUND ""
-#define BASKET_SOUND ""
-#define BALANCIN_SOUND ""
-#define BOWLING_SOUND ""
-#define TENIS_SOUND ""
-#define TIJERA_SOUND ""
-#define YUNQUE_SOUND ""
+#define POP_BALLOON "../music/pop.ogg"
+#define SHOT_ARROW "..music/flecha.ogg"
+#define FIRE_GUN "../music/disparoEscopeta.ogg"
+#define FLIPPER_UP "../music/flipperup.ogg"
+#define FLIPPER_DOWN "../music/flipperdown.ogg"
+#define HUEVO_SOUND "../music/Huevo_rompiendose.ogg"
+#define CARRITO_MUSIC "../music/carrito.ogg"
+#define MOTOR_RATON_MUSIC "../music/raton.ogg"
 
 class Sonidos{
 private:
@@ -39,7 +29,6 @@ private:
 	static std::map<std::string,Mix_Chunk*>* mapaS;
 	static std::map<std::string,Mix_Music*>* mapaM;
 	static bool playSounds;
-
 public:
 	static void playSound(const char *file,int cant=0);
 	static void playMusic(const char *file);
