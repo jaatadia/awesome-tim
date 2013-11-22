@@ -291,7 +291,7 @@ bool Terreno::agregarFigura(Figura* fig){
 	Dimension* dim = fig->getDimension();
 	corregirPosicion(fig);
 
-	try{
+	//try{
 		bool aux;
 		if(fisicaActiva){
 			aux = this->mundoBox2D->agregarFigura(fig);
@@ -320,9 +320,9 @@ bool Terreno::agregarFigura(Figura* fig){
 						this->objetivos.push_back(fig);
 			}
 		}
-	} catch (...) {
-		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
-	};
+	//} catch (...) {
+	//	ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
+	//};
 
 	return true;
 }

@@ -24,7 +24,7 @@ void MaquinaEstados::pushSendMessage(Message * msg, int id){
 Message * MaquinaEstados::getSendMessage(int id)
 {
 	if(id==-1) return NULL;
-	try{
+	//try{
 		Lock lock(this->_mutex);
 		Message * msg = NULL;
 		if(this->aEnviar[id].size()!=0)
@@ -36,9 +36,9 @@ Message * MaquinaEstados::getSendMessage(int id)
 			}
 		}
 		return msg;
-	}catch(...){
-		return NULL;
-	}
+	//}catch(...){
+	//	return NULL;
+	//}
 }
 
 void MaquinaEstados::returnSendMessage(Message * msg, int id){

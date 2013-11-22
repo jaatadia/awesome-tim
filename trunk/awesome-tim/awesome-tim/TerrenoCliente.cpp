@@ -47,7 +47,7 @@ TerrenoCliente::TerrenoCliente(int ancho,int alto,MaquinaEstados* maq,int numCli
 }
 
 TerrenoCliente::~TerrenoCliente(void){
-	try{
+	//try{
 	std::list<Figura*>::iterator iteradorLista;
 
 	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
@@ -60,8 +60,8 @@ TerrenoCliente::~TerrenoCliente(void){
 	if (fondo) delete fondo;
 
 	delete sup;
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 }
 
 
@@ -79,7 +79,7 @@ void TerrenoCliente::setMiPorcion(double x1, double y1, double x2, double y2){
 }
 
 void TerrenoCliente::redraw(){
-	try{
+	//try{
 	//recorro todas las figuras y las voy dibujando
 
 	if(this->img == NULL)
@@ -101,10 +101,10 @@ void TerrenoCliente::redraw(){
 			double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 			
 			if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO))
-				try{	
+				//try{	
 					(*iteradorLista)->dibujar(this->sup);	
-				}catch(...){
-				}
+				//}catch(...){
+				//}
 		}else{
 			if (! ( (*iteradorLista)->getTipoFigura()== CANIO||(*iteradorLista)->getTipoFigura()== CODO ) ){
 				figurasAux->push_back((*iteradorLista));
@@ -133,20 +133,20 @@ void TerrenoCliente::redraw(){
 		double alto = (*iteradorLista)->getDimension()->getAlto()/2.0;
 		
 		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
-			try{
+			//try{
 				(*iteradorLista)->dibujar(this->sup);
-			}catch(...){
-			}
+			//}catch(...){
+			//}
 		}
 	}
 
 
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
-		try{
+		//try{
 			figuraActiva->dibujar(this->sup);
-		}catch(...){
-		}
+		//}catch(...){
+		//}
 
 	if(!fisicaActiva){
 		
@@ -190,11 +190,11 @@ void TerrenoCliente::redraw(){
 	sup->dibujarLinea(ex1,ey2,ex2,ey2,2,30,30,30);	 
 	sup->dibujarLinea(ex2,ey1,ex2,ey2,2,30,30,30);	 
 	
-	delete figurasAux;
-	delete figurasFinales;
-	}catch(...){
-		this->resizear();
-	}
+	//delete figurasAux;
+	//delete figurasFinales;
+	//}catch(...){
+	//	this->resizear();
+	//}
 
 }
 
@@ -277,7 +277,7 @@ bool TerrenoCliente::agregarFigura(Figura* fig){
 	Dimension* dim = fig->getDimension();
 	corregirPosicion(fig);
 
-	try{
+	//try{
 		bool aux = true;
 		if(fisicaActiva){
 			if(aux){
@@ -299,9 +299,9 @@ bool TerrenoCliente::agregarFigura(Figura* fig){
 		}else{
 			(this->figuras).push_back(fig);
 		}
-	} catch (...) {
-		ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
-	};
+	//} catch (...) {
+	//	ErrorLogHandler::addError("agregarFigura","excepcion al agregar en la lista (figuras.push_back)");
+	//};
 
 	return true;
 }

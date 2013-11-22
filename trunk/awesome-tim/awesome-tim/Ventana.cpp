@@ -22,12 +22,12 @@ Ventana::Ventana(void)
 //destruye la ventana
 Ventana::~Ventana(void)
 {
-	try{
+	//try{
 		SDL_DestroyWindow(win);
 		SDL_DestroyRenderer(ren);
 		SDL_FreeSurface(icon);
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 }
 
 //dibuja en la ventana la superficie pasada
@@ -36,7 +36,7 @@ void Ventana::dibujar(Superficie* sup){
 	if(sup==NULL) return;
 	if (sup->superficie == NULL) return;
 
-	try{
+	//try{
 		SDL_Texture* tex = NULL;
 		tex = SDL_CreateTextureFromSurface(ren,sup->superficie);
 		if(tex!=NULL){
@@ -46,8 +46,8 @@ void Ventana::dibujar(Superficie* sup){
 		}else{
 			ErrorLogHandler::addError(VENTANA_TAG,SDL_GetError());
 		}
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 }
 
 //devuelve el ID de la ventana

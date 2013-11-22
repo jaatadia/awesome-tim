@@ -415,7 +415,7 @@ bool BotoneraController::estaVacia(){
 
 
 void BotoneraController::dibujarCantInstancias(){
-	try{
+	//try{
 		int anchoBoton = botonera->getAnchoBoton();
 		int altoBoton = botonera->getAltoBoton();
 
@@ -454,7 +454,7 @@ void BotoneraController::dibujarCantInstancias(){
 				delete img;
 			}
 		}
-	}catch(...){
-	}
+	//}catch(...){
+	//}
 
 }
