@@ -3,12 +3,14 @@
 
 bool Sonidos::initialized = false;
 bool Sonidos::playSounds = true;
+//bool Sonidos::playSounds = false;
 std::map<std::string,Mix_Chunk*>* Sonidos::mapaS = new std::map<std::string,Mix_Chunk*>;
 std::map<std::string,Mix_Music*>* Sonidos::mapaM = new std::map<std::string,Mix_Music*>;
 
 #include <iostream>
 
 void Sonidos::initialize(){
+	if(initialized) return;
 	initialized = true;
 
 	int aux = Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 );
@@ -19,22 +21,14 @@ void Sonidos::initialize(){
 	}
 
 	//Sonidos:
-	(*mapaS)[POP_BALLOON] = Mix_LoadWAV(POP_BALLOON); //OK
-	(*mapaS)[SHOT_ARROW] = Mix_LoadWAV(SHOT_ARROW); //No suena :S
-	(*mapaS)[FIRE_GUN] = Mix_LoadWAV(FIRE_GUN); //OK
-	(*mapaS)[FLIPPER_UP] = Mix_LoadWAV(FLIPPER_UP); //OK
-	(*mapaS)[FLIPPER_DOWN] = Mix_LoadWAV(FLIPPER_DOWN); //OK
-	(*mapaS)[HUEVO_SOUND] = Mix_LoadWAV(HUEVO_SOUND); //OK
-	(*mapaS)[CARRITO_MUSIC] = Mix_LoadWAV(CARRITO_MUSIC); //OK
-	(*mapaS)[MOTOR_RATON_MUSIC] = Mix_LoadWAV(MOTOR_RATON_MUSIC); //No suena :S
-	(*mapaS)[CANIO_SOUND] = Mix_LoadWAV(CANIO_SOUND);
-	(*mapaS)[CODO_SOUND] = Mix_LoadWAV(CODO_SOUND);
-	(*mapaS)[BASKET_SOUND] = Mix_LoadWAV(BASKET_SOUND);
-	(*mapaS)[BALANCIN_SOUND] = Mix_LoadWAV(BALANCIN_SOUND);
-	(*mapaS)[BOWLING_SOUND] = Mix_LoadWAV(BOWLING_SOUND);
-	(*mapaS)[TENIS_SOUND] = Mix_LoadWAV(TENIS_SOUND);
-	(*mapaS)[TIJERA_SOUND] = Mix_LoadWAV(TIJERA_SOUND);
-	(*mapaS)[YUNQUE_SOUND] = Mix_LoadWAV(YUNQUE_SOUND);
+	(*mapaM)[POP_BALLOON] = Mix_LoadMUS(POP_BALLOON); //OK
+	(*mapaM)[SHOT_ARROW] = Mix_LoadMUS(SHOT_ARROW); //No suena :S
+	(*mapaM)[FIRE_GUN] = Mix_LoadMUS(FIRE_GUN); //OK
+	(*mapaM)[FLIPPER_UP] = Mix_LoadMUS(FLIPPER_UP); //OK
+	(*mapaM)[FLIPPER_DOWN] = Mix_LoadMUS(FLIPPER_DOWN); //OK
+	(*mapaM)[HUEVO_SOUND] = Mix_LoadMUS(HUEVO_SOUND); //OK
+	(*mapaM)[CARRITO_MUSIC] = Mix_LoadMUS(CARRITO_MUSIC); //OK
+	(*mapaM)[MOTOR_RATON_MUSIC] = Mix_LoadMUS(MOTOR_RATON_MUSIC); //No suena :S
 	
 	//Musica:
 	//(*mapaM)[MOTOR_MUSIC] = Mix_LoadMUS(MOTOR_MUSIC); //OK
@@ -67,15 +61,17 @@ void Sonidos::end(){
 }
 
 void Sonidos::playSound(const char *file,int cant){
-	if(!playSounds) return;
-	try{
-		if(!initialized) initialize();
-		if((*mapaS).count(file)<=0) return;
-		if((*mapaS)[file]!=NULL){
-			Mix_PlayChannel(-1,(*mapaS)[file],0);
-		}
-	}catch(...){
-	}
+	
+	playMusic(file);
+	//if(!playSounds) return;
+	//try{
+	//	if(!initialized) initialize();
+	//	if((*mapaS).count(file)<=0) return;
+	//	if((*mapaS)[file]!=NULL){
+	//		Mix_PlayChannel(-1,(*mapaS)[file],0);
+	//	}
+	//}catch(...){
+	//}
 }
 
 void Sonidos::playMusic(const char* file){
@@ -85,7 +81,7 @@ void Sonidos::playMusic(const char* file){
 		stopMusic();
 		if((*mapaM).count(file)<=0) return;
 		if((*mapaM)[file]!=NULL){
-			Mix_PlayMusic((*mapaM)[file],-1);
+			Mix_PlayMusic((*mapaM)[file],0);
 		}
 	}catch(...){
 	}
@@ -94,7 +90,7 @@ void Sonidos::playMusic(const char* file){
 void Sonidos::stopMusic(){
 	if(!playSounds) return;
 	try{
-		if(!initialized) initialize();
+		if(!initialized)initialize();
 		Mix_HaltMusic();
 	}catch(...){
 	}
