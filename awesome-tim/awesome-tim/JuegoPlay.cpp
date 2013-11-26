@@ -163,7 +163,9 @@ bool JuegoPlay::onLoop(){
 			case MSG_TYPE_INTERACT:
 				{
 					InteractMessage* i_msg = (InteractMessage*) msg;
-					vector[i_msg->getFigureID()]->interactuar(i_msg->getAction());
+					if(vector[i_msg->getFigureID()]!=NULL){
+						vector[i_msg->getFigureID()]->interactuar(i_msg->getAction());
+					}
 					delete msg;
 				}
 				break;
