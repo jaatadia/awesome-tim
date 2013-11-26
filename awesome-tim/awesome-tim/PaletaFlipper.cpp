@@ -75,23 +75,25 @@ void PaletaFlipper::corregirEstado(){
 	if (this->is_pushed){
 		if (this->sentido == IZQUIERDA){
 			//this->b2dJoint->SetMotorSpeed(-200);
-			//this->b2dCuerpo->ApplyTorque(150000);
+			//this->b2dCuerpo->ApplyTorque(-150);
 			//b2dCuerpo->ApplyForce(b2Vec2(0,50),b2dCuerpo->GetPosition());
 			//if (this->b2dCuerpo->GetAngle() > -7.45)
-				this->b2dCuerpo->SetAngularVelocity(-150);
+				this->b2dCuerpo->SetAngularVelocity(-55);
 			
 			//this->b2dCuerpo->ApplyAngularImpulse(-150);
 		} else {
 			//std::cout << this->b2dCuerpo->GetAngle() << "\n";
 			//this->b2dJoint->SetMotorSpeed(-20.0f);
-			//this->b2dCuerpo->ApplyTorque(-150);
+			//this->b2dCuerpo->ApplyTorque(150);
 			//if (this->b2dCuerpo->GetAngle() < -2.34)
-				this->b2dCuerpo->SetAngularVelocity(150);
+				this->b2dCuerpo->SetAngularVelocity(55);
 		}
 	} else if (this->sentido == IZQUIERDA){
-			this->b2dCuerpo->SetAngularVelocity(800);
+			this->b2dCuerpo->SetAngularVelocity(60);
+			//this->b2dCuerpo->ApplyTorque(150);
 		} else {
-			this->b2dCuerpo->SetAngularVelocity(-800);
+			this->b2dCuerpo->SetAngularVelocity(-60);
+			//this->b2dCuerpo->ApplyTorque(-150);
 	}
 }
 void PaletaFlipper::interactuar(int accion){
@@ -100,10 +102,10 @@ void PaletaFlipper::interactuar(int accion){
 		return;
 
 	if (accion == PRESS_SPACE){
-		if (!this->is_pushed) Sonidos::playSound(FLIPPER_UP);
+		//if (!this->is_pushed) Sonidos::playSound(FLIPPER_UP);
 		this->is_pushed = true;
 	} else if (accion == RELEASE_SPACE){
-		if (this->is_pushed) Sonidos::playSound(FLIPPER_DOWN);
+		//if (this->is_pushed) Sonidos::playSound(FLIPPER_DOWN);
 		this->is_pushed = false;
 	}
 		//if (((PaletaFlipper*)figura)->estaApretada()){

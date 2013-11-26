@@ -22,13 +22,13 @@ void Sonidos::initialize(){
 
 	//Sonidos:
 	(*mapaM)[POP_BALLOON] = Mix_LoadMUS(POP_BALLOON); //OK
-	(*mapaM)[SHOT_ARROW] = Mix_LoadMUS(SHOT_ARROW); //No suena :S
+	//(*mapaM)[SHOT_ARROW] = Mix_LoadMUS(SHOT_ARROW); //No suena :S
 	(*mapaM)[FIRE_GUN] = Mix_LoadMUS(FIRE_GUN); //OK
-	(*mapaM)[FLIPPER_UP] = Mix_LoadMUS(FLIPPER_UP); //OK
-	(*mapaM)[FLIPPER_DOWN] = Mix_LoadMUS(FLIPPER_DOWN); //OK
+	//(*mapaM)[FLIPPER_UP] = Mix_LoadMUS(FLIPPER_UP); //OK
+	//(*mapaM)[FLIPPER_DOWN] = Mix_LoadMUS(FLIPPER_DOWN); //OK
 	(*mapaM)[HUEVO_SOUND] = Mix_LoadMUS(HUEVO_SOUND); //OK
-	(*mapaM)[CARRITO_MUSIC] = Mix_LoadMUS(CARRITO_MUSIC); //OK
-	(*mapaM)[MOTOR_RATON_MUSIC] = Mix_LoadMUS(MOTOR_RATON_MUSIC); //No suena :S
+	//(*mapaM)[CARRITO_MUSIC] = Mix_LoadMUS(CARRITO_MUSIC); //OK
+	//(*mapaM)[MOTOR_RATON_MUSIC] = Mix_LoadMUS(MOTOR_RATON_MUSIC); //No suena :S
 	
 	//Musica:
 	//(*mapaM)[MOTOR_MUSIC] = Mix_LoadMUS(MOTOR_MUSIC); //OK

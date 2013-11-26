@@ -79,7 +79,7 @@ public:
 			delete myVista;
 			this->ID = ID_ARCO2;
 			
-			Sonidos::playSound(SHOT_ARROW);
+			//Sonidos::playSound(SHOT_ARROW);
 			
 			this->myVista = new VistaFigura(this);
 			

@@ -71,10 +71,10 @@ void Carrito::setCuerpo(b2Body* cuerpo){
 
 void Carrito::actualizar(){
 	int VEL_MIN = 5;
-	if((this->b2dCuerpo)->GetLinearVelocity().x > VEL_MIN){
+	/*if((this->b2dCuerpo)->GetLinearVelocity().x > VEL_MIN){
 		Sonidos::playSound(CARRITO_MUSIC);
 
-	}
+	}*/
 }
 
 Figura* Carrito::getRuedaIzq(){

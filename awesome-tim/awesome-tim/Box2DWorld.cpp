@@ -469,8 +469,8 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 												
 				b2FixtureDef ejeFix;
 				b2CircleShape ejeCirculo;
-				ejeCirculo.m_radius = 0.0001;
-				ejeFix.density = 9999999;
+				ejeCirculo.m_radius = 0.001;
+				ejeFix.density = 9999;
 				ejeFix.shape = &ejeCirculo;
 				ejeFix.isSensor = true;
 				
@@ -489,7 +489,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 					joint.upperAngle = PI/2;
 				}
 				joint.enableMotor = true;
-				joint.maxMotorTorque = 1000.0f;
+				joint.maxMotorTorque = 100.0f;
 				joint.motorSpeed = 0.0f;
 						
 				b2Joint* enlace = this->mundo->CreateJoint(&joint);

@@ -275,7 +275,7 @@ public:
 		if(!motorActivo())
 			return;
 
-		Sonidos::playSound(MOTOR_RATON_MUSIC);
+		//Sonidos::playSound(MOTOR_RATON_MUSIC);
 		contador++;
 
 		if(this->sentido == 1)
