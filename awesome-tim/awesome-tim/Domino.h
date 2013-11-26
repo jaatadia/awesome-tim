@@ -13,7 +13,7 @@ public:
 	virtual int getTipoDimension(){return CUADRADO;}
 	
 	Figura* clonar(){
-		Figura* domino = new Domino(this->getDimension()->getX(),this->getDimension()->getY(), ID_DOMINO);
+		Figura* domino = new Domino(this->getDimension()->getX(),this->getDimension()->getY());
 		this->completarInteraccionesPosibles(domino);
 		return domino;
 	}

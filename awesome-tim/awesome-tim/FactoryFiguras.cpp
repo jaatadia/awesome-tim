@@ -48,7 +48,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new Balancin(msg->getX(),msg->getY(),msg->getAngle());
 			break;
 		case SOGA:
-			fig = new Soga(msg->getX(),msg->getY(),msg->getX(),msg->getY());
+			fig = new Soga(-200,-200,msg->getX(),msg->getY());
 			break;
 		case PLATAFORMA:
 			fig = new Plataforma(msg->getData1(),msg->getX(),msg->getY(),msg->getAngle());
@@ -66,7 +66,7 @@ Figura* FactoryFiguras::create(CreateFigureMessage* msg){
 			fig = new Motor(msg->getX(),msg->getY());
 			break;
 		case LINEA:
-			fig = new Linea(msg->getX(),msg->getY(),msg->getX(),msg->getY());
+			fig = new Linea(-200,-200,msg->getX(),msg->getY());
 			break;
 		case VELA:
 			fig = new Vela(ID_VELA,msg->getX(),msg->getY(),msg->getAngle());
