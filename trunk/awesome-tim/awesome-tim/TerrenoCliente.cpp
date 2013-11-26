@@ -80,6 +80,9 @@ void TerrenoCliente::setMiPorcion(double x1, double y1, double x2, double y2){
 
 void TerrenoCliente::redraw(){
 	//try{
+	//antes que nada corrijo posiciones para que las sogas se dibujen lindo
+	arreglarPosicionSogas();
+
 	//recorro todas las figuras y las voy dibujando
 
 	if(this->img == NULL)
@@ -124,8 +127,8 @@ void TerrenoCliente::redraw(){
 			(*iteradorLista)->dibujar(this->sup);
 		}
 	}
-
 	//dibujo los canios y codos
+
 	for (iteradorLista = figurasFinales->begin() ; iteradorLista != figurasFinales->end(); iteradorLista++){
 		double x = (*iteradorLista)->getDimension()->getX();
 		double y = (*iteradorLista)->getDimension()->getY();
@@ -139,7 +142,22 @@ void TerrenoCliente::redraw(){
 			//}
 		}
 	}
+	
+	//dibujo las sogas extra
+	std::list<Soga*>::iterator iteradorLstSogas;
+	for (iteradorLstSogas = sogasExtra.begin() ; iteradorLstSogas != sogasExtra.end(); iteradorLstSogas++){
+		double x = (*iteradorLstSogas)->getDimension()->getX();
+		double y = (*iteradorLstSogas)->getDimension()->getY();
+		double ancho = (*iteradorLstSogas)->getDimension()->getAncho()/2.0;
+		double alto = (*iteradorLstSogas)->getDimension()->getAlto()/2.0;
+		
+		if(((x+ancho)>0)&&((x-ancho)<ANCHO_TERRENO_LOGICO)&&((y+alto)>0)&&((y-alto)<ALTO_TERRENO_LOGICO)){
+			(*iteradorLstSogas)->dibujar(this->sup);
+		}
+	}
 
+	//borro las sogas extra
+	sogasExtra.clear();
 
 	//por ultimo dibujo la que estoy manipulando;
 	if (figuraActiva)
@@ -148,6 +166,7 @@ void TerrenoCliente::redraw(){
 		//}catch(...){
 		//}
 
+	//dibujo la zona del jugador en modo edicion
 	if(!fisicaActiva){
 		
 		Superficie super(sup->getAncho(),sup->getAlto());
@@ -972,4 +991,120 @@ void TerrenoCliente::interactuar(int accion){
 			this->maq->pushSendMessage(i_msg,this->numCliente);
 		}
 	}
+}
+
+
+void TerrenoCliente::arreglarPosicionSogas(){
+//todo el metodo es horrible pero no se como mas hacerlo
+	std::list<Figura*>::iterator iteradorLista;
+
+	for (iteradorLista = figuras.begin() ; iteradorLista != figuras.end(); iteradorLista++){
+		if ((*iteradorLista)->esPolea()){
+
+			//obtengo las sogas y seteo sus extremos a las esquinas de arriba de la polea
+			//luego creo una soga entre ellos
+			Soga* sogaIzq = ((Polea*)(*iteradorLista))->getSogaIzq();
+			Soga* sogaDer = ((Polea*)(*iteradorLista))->getSogaDer();
+
+			double xIzq1,yIzq1,xIzq2,yIzq2;
+			double xDer1,yDer1,xDer2,yDer2;
+			double nuevoXIzq,nuevoYIzq,nuevoXDer,nuevoYDer;
+			//si no estan ambas sogas no necesito hacer nada (ya se dibuja "bien") 
+			if ((sogaIzq) && (sogaDer)){
+				//obtengo los puntos de las sogas
+				sogaIzq->getPunto1(&xIzq1, &yIzq1);
+				sogaIzq->getPunto2(&xIzq2, &yIzq2);
+				//analogo para la soga derecha
+				sogaDer->getPunto1(&xDer1,&yDer1);
+				sogaDer->getPunto2(&xDer2,&yDer2);
+
+				Dimension* dim = (*iteradorLista)->getDimension();
+				//me quedo con el punto que esta en el centro de la polea
+				//mejor dicho el que este a menor distancia del centro porque aparentemente
+				//ninguno esta en el centro, pero sí es casi una disposicion radial
+				double dist1, dist2;
+
+				dist1 = sqrt ( (xIzq1-dim->getX()) * (xIzq1-dim->getX()) + (yIzq1-dim->getY()) * (yIzq1-dim->getY()));
+				dist2 = sqrt ( (xIzq2-dim->getX()) * (xIzq2-dim->getX()) + (yIzq2-dim->getY()) * (yIzq2-dim->getY()));
+
+				if ( dist1 <= dist2 ){
+					//lo corro a la izq y arriba de la polea
+					nuevoXIzq = xIzq1;
+					nuevoYIzq = yIzq1;
+					//sogaIzq->setPunto1(nuevoXIzq, nuevoYIzq);
+				}else{
+				//si no era el otro punto mas vale que este sea
+					nuevoXIzq = xIzq2;
+					nuevoYIzq = yIzq2;
+					//sogaIzq->setPunto2(nuevoXIzq, nuevoYIzq);
+				}
+	
+				//altero el punto que esta en el centro de la polea
+				//mejor dicho el que este a menor distancia del centro porque aparentemente
+				//ninguno esta en el centro
+
+				dist1 = sqrt ( (xDer1-dim->getX()) * (xDer1-dim->getX()) + (yDer1-dim->getY()) * (yDer1-dim->getY()));
+				dist2 = sqrt ( (xDer2-dim->getX()) * (xDer2-dim->getX()) + (yDer2-dim->getY()) * (yDer2-dim->getY()));
+
+				if ( dist1 <= dist2 ){
+					//lo corro a la der y arriba de la polea
+					nuevoXDer = xDer1;
+					nuevoYDer = yDer1;
+					//sogaIzq->setPunto1(nuevoXDer, nuevoYDer);
+				}else{
+				//si no era el otro punto mas vale que este sea
+					nuevoXDer = xDer2;
+					nuevoYDer = yDer2;
+					//sogaIzq->setPunto2(nuevoXDer, nuevoYDer);
+				}
+			
+				//verifico que soga es en realidad la izq y la der porque los nombres de javier
+				//no significan nada
+				if (nuevoXDer < nuevoXIzq){
+					//si estan al reves swapeo
+					Soga* sogaAux = sogaIzq;
+					sogaIzq = sogaDer;
+					sogaDer = sogaAux;
+				}
+
+				//corro los puntos a las esquinas de arriba de la polea
+				//de nuevo tengo que verificar cual es el mas cercano al centro
+				dist1 = sqrt ( (xIzq1-dim->getX()) * (xIzq1-dim->getX()) + (yIzq1-dim->getY()) * (yIzq1-dim->getY()));
+				dist2 = sqrt ( (xIzq2-dim->getX()) * (xIzq2-dim->getX()) + (yIzq2-dim->getY()) * (yIzq2-dim->getY()));
+
+				if ( dist1 <= dist2 ){
+					nuevoXIzq = xIzq1 + dim->getAncho()/2 - 3;
+					nuevoYIzq = yIzq1 - dim->getAlto()/2 ;
+					sogaIzq->setPunto1(nuevoXIzq, nuevoYIzq);
+				}else{
+					nuevoXIzq = xIzq2 + dim->getAncho()/2 - 3;
+					nuevoYIzq = yIzq2 - dim->getAlto()/2 ;
+					sogaIzq->setPunto2(nuevoXIzq, nuevoYIzq);
+				}
+	
+				dist1 = sqrt ( (xDer1-dim->getX()) * (xDer1-dim->getX()) + (yDer1-dim->getY()) * (yDer1-dim->getY()));
+				dist2 = sqrt ( (xDer2-dim->getX()) * (xDer2-dim->getX()) + (yDer2-dim->getY()) * (yDer2-dim->getY()));
+
+				if ( dist1 <= dist2 ){
+					nuevoXDer = xDer1 - dim->getAncho()/2 + 3;
+					nuevoYDer = yDer1 - dim->getAlto()/2 ;
+					sogaDer->setPunto1(nuevoXDer, nuevoYDer);
+				}else{
+					nuevoXDer = xDer2 - dim->getAncho()/2 + 3;
+					nuevoYDer = yDer2 - dim->getAlto()/2;
+					sogaDer->setPunto2(nuevoXDer, nuevoYDer);
+				}
+
+				//ahora creo una soga que une los puntos
+				//se eliminan luego de dibujar (en el metodo redraw())
+				Soga* sogaUnion = new Soga(nuevoXIzq, nuevoYIzq, nuevoXDer, nuevoYDer);
+				
+				//tengo que hacer esto para que cambie la vista...
+				sogaUnion->setPunto1(nuevoXIzq, nuevoYIzq);
+
+				sogasExtra.push_back(sogaUnion);
+			}
+		}
+	}
+
 }

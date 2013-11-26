@@ -326,7 +326,7 @@ bool Juego:: onLoop(){
 										if(figuraEnAire[i]->esUnion()){
 											double x,y;
 											((Linea*)figuraEnAire[i])->getPunto1(&x,&y);
-											if(!(x<-100)){
+											if(!(x < -100)){
 												UnionMessage* u_msg = new UnionMessage();
 												u_msg->setClientID(i);
 												u_msg->setFigsNum(figuraEnAire[i]->numero,x,y);

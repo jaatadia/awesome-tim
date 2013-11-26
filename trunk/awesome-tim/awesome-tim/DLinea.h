@@ -34,7 +34,7 @@ public:
 	virtual Dimension* clonar(){return new DLinea(x1,y1,x2,y2,ancho);};
 
 	bool puntoPertenece(double pos_X, double pos_Y){
-		bool pertenece = false;
+/*		bool pertenece = false;
 		if(y1<=y2){
 			pertenece = ((pos_Y>=y1)&&(pos_Y<=y2));
 		}else{
@@ -60,6 +60,8 @@ public:
 		}
 
 		return true;
+*/
+		return false;
 	};
 
 	

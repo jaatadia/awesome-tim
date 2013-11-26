@@ -39,8 +39,8 @@ void Carrito::calcularPosiciones(double& posXizq,double& posXder, double& posYiz
 	posY_Carro = posY + ALTO_CARRITO/2 -(RADIO_RUEDA_CARRITO + RADIO_PUNTA_CARRITO);
 	
 	posXizq = ( posX_Carro - (ANCHO_CARRITO / 2) + RADIO_RUEDA_CARRITO + RADIO_RUEDA_CARRITO/2);
-	posXder = ( posX_Carro + (ANCHO_CARRITO / 2) - RADIO_RUEDA_CARRITO - + RADIO_RUEDA_CARRITO/2);
-	posYizq = posYder = posY_Carro + (ALTO_CARRITO/2);
+	posXder = ( posX_Carro + (ANCHO_CARRITO / 2) - RADIO_RUEDA_CARRITO - RADIO_RUEDA_CARRITO/2);
+	posYizq = posYder = posY_Carro + (ALTO_CARRITO/2) - 0.1;
 
 }
 

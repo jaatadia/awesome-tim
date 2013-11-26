@@ -38,14 +38,14 @@ MEstadosCliente::~MEstadosCliente(void){
 	
 	delete ventana;
 	delete superficie;
-	
+	/*
 	//try{
 	//	if(Eanterior!=NULL)delete Eanterior;
 	//	if(Eeditor!=NULL)delete Eeditor;
 	//	if(Eplay!=NULL)delete Eplay;
 	//}catch(...){
 	//}
-	
+	*/
 	//SDL_Quit();
 	ErrorLogHandler::closeLog();
 }
