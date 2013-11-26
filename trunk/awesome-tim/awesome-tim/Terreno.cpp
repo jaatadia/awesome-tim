@@ -867,6 +867,7 @@ void Terreno::actualizarModelo(Figura* vector[]){
 			RemoveFigureMessage* r_msg = new RemoveFigureMessage();
 			r_msg->setFigureID((*iterLista)->numero);
 			this->maq->pushSendMessage(r_msg);
+			vector[(*iterLista)->numero] = NULL;
 			if(!(*iterLista)->esObjetivo())	delete((*iterLista));
 		}
 
