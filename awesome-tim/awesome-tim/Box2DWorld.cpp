@@ -547,14 +547,29 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				break;
 			}
 		case CARRITO:{
+/*************************Debug***********************************************/
+				double posXRuedaDer = ((Carrito*)figura)->getRuedaDer()->getDimension()->getX();
+				double posYRuedaDer = ((Carrito*)figura)->getRuedaDer()->getDimension()->getY();
+/************************************************************************/
+				//quiero que cree el cuerpo con la posicion del carro no de la figura compuesta completa
+				this->mundo->DestroyBody(cuerpo);
+
+				Dimension* dimCarro;
+				dimCarro = ((Carrito*)figura)->getCarro()->getDimension();
+
+				bD.position.Set(dimCarro->getX(), dimCarro->getY());
+				bD.type = b2_dynamicBody;
+				b2Body * cuerpo = this->mundo->CreateBody(&bD);
+
+				cuerpo->SetTransform(cuerpo->GetPosition(),-dimCarro->getAngulo()/180*PI); //nuestros angulos son al reves de box2d
 
 				//forma del carro con sus partes
 				b2PolygonShape forma_base;
 				//b2PolygonShape forma_pared1;
 				//b2PolygonShape forma_pared2;
-				double ancho = ((Carrito*)figura)->getCarro()->getDimension()->getAncho()/2;
-				double alto = ((Carrito*)figura)->getCarro()->getDimension()->getAlto()/2;
-				forma_base.SetAsBox(ancho,alto/2);
+				double ancho = dimCarro->getAncho()/2;
+				double alto = dimCarro->getAlto()/2;
+				forma_base.SetAsBox(ancho,alto);
 				//forma_pared1.SetAsBox(ancho/8,alto);
 				//forma_pared2.SetAsBox(ancho/8,alto);
 
@@ -564,8 +579,12 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				fD.restitution = RESTITUCION_CARRITO;
 				//cuerpo->SetTransform(b2Vec2(((Carrito*)figura)->getCarro()->getDimension()->getX(),((Carrito*)figura)->getCarro()->getDimension()->getY()+alto/2),cuerpo->GetAngle());
 				cuerpo->CreateFixture(&fD);
-				cuerpo->SetUserData(((Carrito*)figura)->getCarro());
+				cuerpo->SetUserData(((Carrito*)figura)/*((Carrito*)figura)->getCarro()*/);
 				
+				/*************************Debug***********************************************/
+				posXRuedaDer = ((Carrito*)figura)->getRuedaDer()->getDimension()->getX();
+				posYRuedaDer = ((Carrito*)figura)->getRuedaDer()->getDimension()->getY();
+				/************************************************************************/
 			/*	b2BodyDef mybodyDef;
 				mybodyDef.type = b2_dynamicBody;
 				mybodyDef.position.Set(dim->getX(),dim->getY());
@@ -590,7 +609,9 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 
 				//def de cuerpo de rueda der
 				b2BodyDef rueda2;
-				rueda2.position.Set(((Carrito*)figura)->getRuedaDer()->getDimension()->getX(),((Carrito*)figura)->getRuedaDer()->getDimension()->getY());
+				posXRuedaDer = ((Carrito*)figura)->getRuedaDer()->getDimension()->getX();
+				posYRuedaDer = ((Carrito*)figura)->getRuedaDer()->getDimension()->getY();
+				rueda2.position.Set(posXRuedaDer, posYRuedaDer);
 				rueda2.type = b2_dynamicBody;
 				b2Body* cuerpo_rueda2 = this->mundo->CreateBody(&rueda2);
 				cuerpo_rueda2->SetUserData(((Carrito*)figura)->getRuedaDer());
@@ -599,7 +620,7 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				b2CircleShape forma_rueda;
 				forma_rueda.m_radius = ((Carrito*)figura)->getRuedaIzq()->getRadio();
 				fD.shape = &forma_rueda;
-				fD.density = DENSIDAD_CARRITO;
+				fD.density = 0.5;
 				fD.friction = FRICCION_CARRITO;
 				fD.restitution = RESTITUCION_CARRITO;
 				cuerpo_rueda1->CreateFixture(&fD);
@@ -608,13 +629,13 @@ bool Box2DWorld::agregarFigura(Figura * figura)
 				//union izq
 				b2RevoluteJointDef joint1;
 				joint1.Initialize(cuerpo_rueda1,cuerpo,cuerpo_rueda1->GetPosition());
-				joint1.collideConnected = false;
+				//joint1.collideConnected = false; //esto ya se da por default
 				b2Joint* enlace1 = this->mundo->CreateJoint(&joint1);
 
 				//union der
 				b2RevoluteJointDef joint2;
 				joint2.Initialize(cuerpo_rueda2,cuerpo,cuerpo_rueda2->GetPosition());
-				joint2.collideConnected = false;
+				//joint2.collideConnected = false; //esto ya se da por default
 				b2Joint* enlace2 = this->mundo->CreateJoint(&joint2);
 				
 				((Carrito*)figura)->setCuerpo(cuerpo);

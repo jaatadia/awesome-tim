@@ -7,6 +7,7 @@
 #include "Constantes.h"
 #include "Linea.h"
 #include "Soga.h"
+#include "Polea.h"
 #include <string>
 #include <list>
 #include <vector>
@@ -31,6 +32,7 @@ private:
 	Imagen* fondo;
 	Superficie* sup;
 	std::list<Figura*> figuras;
+	std::list<Soga*> sogasExtra; //sogas para dibujar bien las poleas
 
 	Figura* figuraActiva; // se mantiene separada la que se esta arrastrando o girando
 	Posicion posAntFigActiva; 
@@ -102,4 +104,6 @@ private:
 	bool posEnTerrenoExtendido(double posX,double posY);
 
 	void borrarAtadura(Figura* fig);
+
+	void arreglarPosicionSogas();
 };

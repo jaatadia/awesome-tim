@@ -157,7 +157,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 
 #ifdef SERVER_MODE
 	if (IP==NULL){
-		juego = new MEstados(rutaIn,rutaOut,false); //Flag para que se vea o no se vea la pantalla del server
+		juego = new MEstados(rutaIn,rutaOut,true); //Flag para que se vea o no se vea la pantalla del server
 		std::cout << "Initializing game in: SERVER MODE" << std::endl;
 		Server * server = new Server(juego);
 		imprimir = false;
@@ -243,6 +243,7 @@ void jugar(char* rutaIn, char* rutaOut,char* IP){
 int main (int argc, char** argv){
 
 //	Client* cliente = new Client();
+	Sonidos::noSound();
 
 	int opcion; //guarda el modo del programa
 
